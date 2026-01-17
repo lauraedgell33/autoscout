@@ -1,0 +1,6 @@
+<svg width="200" height="50" viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+  <rect x="5" y="10" width="30" height="30" rx="5" fill="#FF6C0C"/>
+  <path d="M 15 20 L 25 30 L 30 25" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="45" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#2D3748">AutoScout24</text>
+  <text x="45" y="42" font-family="Arial, sans-serif" font-size="10" fill="#FF6C0C">SafeTrade Admin</text>
+</svg>

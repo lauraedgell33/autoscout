@@ -1,0 +1,195 @@
+<?php
+
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\AutoScout24WebhookController;
+use App\Http\Controllers\API\BankAccountController;
+use App\Http\Controllers\API\TransactionController;
+use App\Http\Controllers\API\PaymentController;
+use App\Http\Controllers\API\VehicleController;
+use App\Http\Controllers\API\LegalController;
+use App\Http\Controllers\API\VerificationController;
+use App\Http\Controllers\API\DisputeController;
+use App\Http\Controllers\API\NotificationController;
+use App\Http\Controllers\API\KYCController;
+use App\Http\Controllers\API\ContractController;
+use App\Http\Controllers\API\InvoiceController;
+use App\Http\Controllers\API\LocaleController;
+use App\Http\Controllers\Api\CookieConsentController;
+use Illuminate\Support\Facades\Route;
+
+// Locale routes (public)
+Route::prefix('locale')->group(function () {
+    Route::get('/', [LocaleController::class, 'getCurrentLocale']);
+    Route::get('/available', [LocaleController::class, 'getAvailableLocales']);
+    Route::post('/set', [LocaleController::class, 'setLocale']);
+    Route::get('/translations/{file}', [LocaleController::class, 'getTranslations']);
+});
+
+// Public routes
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+// AutoScout24 Webhooks (no auth - signature verified internally)
+Route::post('/webhooks/autoscout24', [AutoScout24WebhookController::class, 'handleWebhook']);
+
+// Public legal documents
+Route::get('/legal/documents', [LegalController::class, 'getAllDocuments']);
+Route::get('/legal/documents/{type}', [LegalController::class, 'getDocument']);
+
+// Public vehicle routes (browsing)
+Route::get('/vehicles', [VehicleController::class, 'index']);
+Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show']);
+Route::get('/vehicles-featured', [VehicleController::class, 'featured']);
+Route::get('/vehicles-statistics', [VehicleController::class, 'statistics']);
+
+// Public review routes
+Route::get('/users/{user}/reviews', [App\Http\Controllers\API\ReviewController::class, 'getUserReviews']);
+Route::get('/vehicles/{vehicle}/reviews', [App\Http\Controllers\API\ReviewController::class, 'getVehicleReviews']);
+
+// Cookie consent routes (public)
+Route::prefix('cookies')->group(function () {
+    Route::get('/preferences', [CookieConsentController::class, 'show']);
+    Route::post('/preferences', [CookieConsentController::class, 'update']);
+    Route::post('/accept-all', [CookieConsentController::class, 'acceptAll']);
+    Route::post('/accept-essential', [CookieConsentController::class, 'acceptEssential']);
+});
+
+// Protected routes
+Route::middleware('auth:sanctum')->group(function () {
+    // Auth
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    
+    // KYC
+    Route::post('/kyc/submit', [KYCController::class, 'submit'])->middleware('throttle:10,60');
+    Route::get('/kyc/status', [KYCController::class, 'status']);
+    
+    // Vehicles (CRUD)
+    Route::post('/vehicles', [VehicleController::class, 'store']);
+    Route::put('/vehicles/{vehicle}', [VehicleController::class, 'update']);
+    Route::delete('/vehicles/{vehicle}', [VehicleController::class, 'destroy']);
+    Route::post('/vehicles/{vehicle}/images', [VehicleController::class, 'uploadImages'])->middleware('throttle:10,60');
+    Route::get('/my-vehicles', [VehicleController::class, 'myVehicles']);
+    
+    // Transactions (Bank Transfer Escrow Flow)
+    Route::get('transactions', [TransactionController::class, 'index']);
+    Route::post('transactions', [TransactionController::class, 'store']);
+    Route::get('transactions/{id}', [TransactionController::class, 'show']);
+    Route::post('transactions/{id}/upload-payment-proof', [TransactionController::class, 'uploadPaymentProof'])->middleware('throttle:10,60');
+    Route::post('transactions/{id}/verify-payment', [TransactionController::class, 'verifyPayment']);
+    Route::post('transactions/{id}/release-funds', [TransactionController::class, 'releaseFunds']);
+    Route::post('transactions/{id}/cancel', [TransactionController::class, 'cancel']);
+    
+    // Contracts
+    Route::post('transactions/{transaction}/contract/generate', [ContractController::class, 'generate'])->name('api.contracts.generate');
+    Route::get('transactions/{transaction}/contract/download', [ContractController::class, 'download'])->name('api.contracts.download');
+    Route::get('transactions/{transaction}/contract/preview', [ContractController::class, 'preview'])->name('api.contracts.preview');
+    
+    // Invoices
+    Route::get('invoices', [InvoiceController::class, 'index']);
+    Route::post('transactions/{transaction}/invoice/generate', [InvoiceController::class, 'generate'])->name('api.invoices.generate');
+    Route::get('transactions/{transaction}/invoice/download', [InvoiceController::class, 'download'])->name('api.invoices.download');
+    Route::get('transactions/{transaction}/invoice/preview', [InvoiceController::class, 'preview'])->name('api.invoices.preview');
+    
+    // Payments
+    Route::get('payments', [PaymentController::class, 'index']);
+    Route::post('payments/initiate', [PaymentController::class, 'initiate']);
+    Route::post('payments/upload-proof', [PaymentController::class, 'uploadProof'])->middleware('throttle:10,60');
+    Route::get('payments/{payment}', [PaymentController::class, 'show']);
+    Route::post('payments/{payment}/verify', [PaymentController::class, 'verify']);
+    
+    // Bank Accounts (Verified Bank Transfer System)
+    Route::get('bank-accounts', [BankAccountController::class, 'index']);
+    Route::post('bank-accounts', [BankAccountController::class, 'store']);
+    Route::get('bank-accounts/{bank_account}', [BankAccountController::class, 'show']);
+    Route::put('bank-accounts/{bank_account}', [BankAccountController::class, 'update']);
+    Route::delete('bank-accounts/{bank_account}', [BankAccountController::class, 'destroy']);
+    Route::post('bank-accounts/{bank_account}/set-primary', [BankAccountController::class, 'setPrimary']);
+    Route::post('bank-accounts/{bank_account}/verify', [BankAccountController::class, 'verify']); // Admin only
+    
+    // Legal - User consents
+    Route::post('legal/consents', [LegalController::class, 'recordConsent']);
+    Route::get('legal/consents', [LegalController::class, 'getUserConsents']);
+    Route::get('legal/consents/check', [LegalController::class, 'checkConsents']);
+    
+    // Verifications (KYC, VIN checks)
+    Route::get('verifications', [VerificationController::class, 'index']);
+    Route::post('verifications', [VerificationController::class, 'store']);
+    Route::get('verifications/{id}', [VerificationController::class, 'show']);
+    Route::post('verifications/vin-check', [VerificationController::class, 'checkVin']);
+    Route::get('my-verifications', [VerificationController::class, 'myVerifications']);
+    
+    // Disputes
+    Route::get('disputes', [DisputeController::class, 'index']);
+    Route::post('disputes', [DisputeController::class, 'store']);
+    Route::get('disputes/{id}', [DisputeController::class, 'show']);
+    Route::post('disputes/{id}/response', [DisputeController::class, 'addResponse']);
+    Route::get('my-disputes', [DisputeController::class, 'myDisputes']);
+    
+    // Messages
+    Route::get('messages/conversations', [App\Http\Controllers\API\MessageController::class, 'conversations']);
+    Route::get('messages/unread-count', [App\Http\Controllers\API\MessageController::class, 'unreadCount']);
+    Route::get('transactions/{transaction}/messages', [App\Http\Controllers\API\MessageController::class, 'index']);
+    Route::post('transactions/{transaction}/messages', [App\Http\Controllers\API\MessageController::class, 'store']);
+    Route::post('transactions/{transaction}/messages/{message}/read', [App\Http\Controllers\API\MessageController::class, 'markAsRead']);
+    Route::post('transactions/{transaction}/messages/read-all', [App\Http\Controllers\API\MessageController::class, 'markAllAsRead']);
+    Route::delete('transactions/{transaction}/messages/{message}', [App\Http\Controllers\API\MessageController::class, 'destroy']);
+    
+    // Reviews
+    Route::post('reviews', [App\Http\Controllers\API\ReviewController::class, 'store']);
+    Route::put('reviews/{review}', [App\Http\Controllers\API\ReviewController::class, 'update']);
+    Route::delete('reviews/{review}', [App\Http\Controllers\API\ReviewController::class, 'destroy']);
+    Route::get('my-reviews', [App\Http\Controllers\API\ReviewController::class, 'myReviews']);
+    
+    // Notifications
+    Route::get('notifications', [NotificationController::class, 'index']);
+    Route::get('notifications/unread-count', [NotificationController::class, 'unreadCount']);
+    Route::post('notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+    Route::post('notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+    Route::delete('notifications/{id}', [NotificationController::class, 'delete']);
+    Route::delete('notifications', [NotificationController::class, 'deleteAll']);
+    
+    // GDPR - Privacy & Data Rights
+    Route::prefix('gdpr')->group(function () {
+        Route::get('/export', [App\Http\Controllers\API\GdprController::class, 'exportData']);
+        Route::post('/delete-account', [App\Http\Controllers\API\GdprController::class, 'requestDeletion']);
+        Route::post('/cancel-deletion', [App\Http\Controllers\API\GdprController::class, 'cancelDeletion']);
+        Route::get('/privacy-settings', [App\Http\Controllers\API\GdprController::class, 'getPrivacySettings']);
+        Route::put('/consent', [App\Http\Controllers\API\GdprController::class, 'updateConsent']);
+    });
+});
+
+
+// Invoice Routes
+Route::middleware('auth:sanctum')->prefix('invoices')->group(function () {
+    Route::post('/generate', [App\Http\Controllers\API\InvoiceController::class, 'generate']);
+    Route::get('/my-invoices', [App\Http\Controllers\API\InvoiceController::class, 'myInvoices']);
+    Route::get('/statistics', [App\Http\Controllers\API\InvoiceController::class, 'statistics']);
+    Route::get('/{id}', [App\Http\Controllers\API\InvoiceController::class, 'show']);
+    Route::post('/{id}/upload-proof', [App\Http\Controllers\API\InvoiceController::class, 'uploadPaymentProof'])->middleware('throttle:10,60');
+    Route::post('/{id}/verify', [App\Http\Controllers\API\InvoiceController::class, 'verifyPayment']);
+    Route::post('/{id}/cancel', [App\Http\Controllers\API\InvoiceController::class, 'cancel']);
+});
+
+// Admin Routes
+Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
+    // KYC Management
+    Route::get('/kyc/pending', [KYCController::class, 'pending']);
+    Route::post('/kyc/{userId}/verify', [KYCController::class, 'verify']);
+    
+    // Verifications management
+    Route::get('verifications', [VerificationController::class, 'adminIndex']);
+    Route::patch('verifications/{id}', [VerificationController::class, 'adminUpdate']);
+    
+    // Disputes management
+    Route::get('disputes', [DisputeController::class, 'adminIndex']);
+    Route::patch('disputes/{id}', [DisputeController::class, 'adminUpdate']);
+    
+    // Reviews management
+    Route::get('reviews/pending', [App\Http\Controllers\API\ReviewController::class, 'pending']);
+    Route::post('reviews/{review}/moderate', [App\Http\Controllers\API\ReviewController::class, 'moderate']);
+    
+    // Cookie statistics
+    Route::get('/cookies/statistics', [CookieConsentController::class, 'statistics']);
+});

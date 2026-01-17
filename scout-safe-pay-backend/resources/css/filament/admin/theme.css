@@ -1,0 +1,73 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+/* AutoScout24 Brand Colors */
+:root {
+    --autoscout-orange: #FF6C0C;
+    --autoscout-dark-orange: #E55F00;
+    --autoscout-green: #16A34A;
+    --autoscout-dark-green: #15803D;
+    --autoscout-gray: #2D3748;
+}
+
+/* Custom Branding */
+.fi-sidebar-header {
+    background: linear-gradient(135deg, var(--autoscout-orange) 0%, var(--autoscout-dark-orange) 100%);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+}
+
+/* Primary Buttons */
+.fi-btn-primary {
+    background-color: var(--autoscout-orange) !important;
+    border-color: var(--autoscout-orange) !important;
+}
+
+.fi-btn-primary:hover {
+    background-color: var(--autoscout-dark-orange) !important;
+    border-color: var(--autoscout-dark-orange) !important;
+}
+
+/* Success Buttons */
+.fi-btn-success {
+    background-color: var(--autoscout-green) !important;
+    border-color: var(--autoscout-green) !important;
+}
+
+.fi-btn-success:hover {
+    background-color: var(--autoscout-dark-green) !important;
+    border-color: var(--autoscout-dark-green) !important;
+}
+
+/* Links */
+a.fi-link {
+    color: var(--autoscout-orange);
+}
+
+a.fi-link:hover {
+    color: var(--autoscout-dark-orange);
+}
+
+/* Badges */
+.fi-badge-primary {
+    background-color: var(--autoscout-orange);
+    color: white;
+}
+
+/* Navigation Active Item */
+.fi-sidebar-item-active {
+    background-color: var(--autoscout-orange);
+    color: white;
+}
+
+/* Stats Widget */
+.fi-stats-overview-card {
+    border-left: 4px solid var(--autoscout-orange);
+}
+
+/* Dark Mode Adjustments */
+.dark .fi-sidebar-header {
+    background: linear-gradient(135deg, var(--autoscout-orange) 0%, var(--autoscout-dark-orange) 100%);
+}

@@ -1,0 +1,98 @@
+<?php
+
+namespace App\Filament\Resources\Vehicles\Tables;
+
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Table;
+
+class VehiclesTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('dealer.name')
+                    ->searchable(),
+                TextColumn::make('seller.name')
+                    ->searchable(),
+                TextColumn::make('make')
+                    ->searchable(),
+                TextColumn::make('model')
+                    ->searchable(),
+                TextColumn::make('year')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('vin')
+                    ->searchable(),
+                TextColumn::make('price')
+                    ->money()
+                    ->sortable(),
+                TextColumn::make('currency')
+                    ->searchable(),
+                TextColumn::make('mileage')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('fuel_type')
+                    ->searchable(),
+                TextColumn::make('transmission')
+                    ->searchable(),
+                TextColumn::make('color')
+                    ->searchable(),
+                TextColumn::make('doors')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('seats')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('body_type')
+                    ->searchable(),
+                TextColumn::make('engine_size')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('power_hp')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('location_city')
+                    ->searchable(),
+                TextColumn::make('location_country')
+                    ->searchable(),
+                TextColumn::make('status')
+                    ->searchable(),
+                TextColumn::make('autoscout_listing_id')
+                    ->searchable(),
+                ImageColumn::make('primary_image'),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                TrashedFilter::make(),
+            ])
+            ->recordActions([
+                EditAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
+                ]),
+            ]);
+    }
+}
