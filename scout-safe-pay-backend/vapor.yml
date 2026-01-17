@@ -1,0 +1,29 @@
+id: 1
+name: autoscout-safetrade
+environments:
+    production:
+        memory: 1024
+        cli-memory: 512
+        runtime: 'php-8.3:al2'
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev --classmap-authoritative'
+            - 'php artisan config:cache'
+            - 'php artisan route:cache'
+            - 'php artisan view:cache'
+        deploy:
+            - 'php artisan migrate --force'
+            - 'php artisan storage:link'
+        database: autoscout-db
+        cache: autoscout-cache
+        queue: autoscout-queue
+        
+    staging:
+        memory: 512
+        cli-memory: 512
+        runtime: 'php-8.3:al2'
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --classmap-authoritative'
+        deploy:
+            - 'php artisan migrate --force'
+        database: autoscout-db-staging
+        cache: autoscout-cache-staging
