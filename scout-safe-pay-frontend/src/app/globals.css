@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+/* AutoScout24 Official Design System */
+:root {
+  --as24-blue: #003281;
+  --as24-orange: #FFA500;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  color: rgb(17 24 39);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

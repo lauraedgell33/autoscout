@@ -1,0 +1,6 @@
+AutoScout24 Original Colors:
+Primary: #076FE6 (bright blue)
+Secondary: #F5F200 (yellow)
+Teal: #007d77
+Dark Blue: #003269
+Success: #0d670f (green)

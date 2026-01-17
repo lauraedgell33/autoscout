@@ -1,0 +1,65 @@
+/** AutoScout24 Official Design System Colors */
+
+:root {
+  /* Primary Colors - AutoScout24 Brand */
+  --as24-blue-primary: #003281;
+  --as24-blue-dark: #002060;
+  --as24-blue-light: #0047AB;
+  --as24-orange: #FFA500;
+  --as24-orange-dark: #FF8C00;
+  --as24-orange-light: #FFB733;
+  
+  /* Grays */
+  --as24-gray-50: #F9FAFB;
+  --as24-gray-100: #F3F4F6;
+  --as24-gray-200: #E5E7EB;
+  --as24-gray-300: #D1D5DB;
+  --as24-gray-600: #4B5563;
+  --as24-gray-700: #374151;
+  --as24-gray-900: #111827;
+  
+  /* Status Colors */
+  --as24-success: #10B981;
+  --as24-error: #EF4444;
+  --as24-warning: #F59E0B;
+  
+  /* Shadows */
+  --as24-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --as24-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --as24-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Tailwind Custom Colors */
+@layer utilities {
+  .bg-as24-blue {
+    background-color: #003281;
+  }
+  
+  .bg-as24-orange {
+    background-color: #FFA500;
+  }
+  
+  .text-as24-blue {
+    color: #003281;
+  }
+  
+  .text-as24-orange {
+    color: #FFA500;
+  }
+  
+  .border-as24-blue {
+    border-color: #003281;
+  }
+  
+  .border-as24-orange {
+    border-color: #FFA500;
+  }
+  
+  .hover-as24-blue:hover {
+    background-color: #002060;
+  }
+  
+  .hover-as24-orange:hover {
+    background-color: #FF8C00;
+  }
+}
