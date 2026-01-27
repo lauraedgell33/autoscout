@@ -20,17 +20,17 @@ sleep 2
 echo ""
 echo "🎨 Starting Frontend (Next.js)..."
 cd scout-safe-pay-frontend
-npm run dev > /tmp/frontend.log 2>&1 &
+PORT=3002 npm run dev > /tmp/frontend.log 2>&1 &
 FRONTEND_PID=$!
 echo "   Frontend PID: $FRONTEND_PID"
-echo "   Frontend URL: http://localhost:3001"
+echo "   Frontend URL: http://localhost:3002"
 cd ..
 
 echo ""
 echo "✅ All servers started!"
 echo ""
 echo "📋 Quick Links:"
-echo "   Frontend:    http://localhost:3001"
+echo "   Frontend:    http://localhost:3002"
 echo "   Backend API: http://localhost:8002/api"
 echo "   Admin Panel: http://localhost:8002/admin (admin@autoscout24.com / password)"
 echo ""

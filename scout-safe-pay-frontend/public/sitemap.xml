@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://yourdomain.com/en</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/de</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/es</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/it</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/ro</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/fr</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/en/marketplace</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/marketplace" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/marketplace" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/marketplace" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/marketplace" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/marketplace" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/de/marketplace</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/marketplace" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/marketplace" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/marketplace" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/marketplace" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/marketplace" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/es/marketplace</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/marketplace" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/marketplace" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/marketplace" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/marketplace" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/marketplace" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/it/marketplace</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/marketplace" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/marketplace" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/marketplace" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/marketplace" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/marketplace" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/ro/marketplace</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/marketplace" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/marketplace" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/marketplace" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/marketplace" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/marketplace" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/fr/marketplace</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/marketplace" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/marketplace" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/marketplace" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/marketplace" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/marketplace" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/en/how-it-works</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/how-it-works" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/de/how-it-works</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/how-it-works" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/es/how-it-works</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/how-it-works" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/it/how-it-works</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/how-it-works" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/ro/how-it-works</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/how-it-works" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/fr/how-it-works</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/how-it-works" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/en/benefits</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/benefits" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/benefits" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/benefits" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/benefits" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/benefits" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/de/benefits</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/benefits" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/benefits" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/benefits" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/benefits" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/benefits" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/es/benefits</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/benefits" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/benefits" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/benefits" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/benefits" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/benefits" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/it/benefits</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/benefits" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/benefits" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/benefits" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/benefits" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/benefits" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/ro/benefits</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/benefits" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/benefits" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/benefits" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/benefits" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/benefits" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/fr/benefits</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/benefits" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/benefits" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/benefits" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/benefits" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/benefits" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/en/contact</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/contact" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/contact" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/contact" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/contact" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/contact" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/de/contact</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/contact" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/contact" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/contact" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/contact" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/es/contact</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/contact" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/contact" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/contact" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/contact" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/it/contact</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/contact" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/contact" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/contact" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/contact" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/ro/contact</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/contact" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/contact" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/contact" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/contact" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/fr/contact</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/contact" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/contact" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/contact" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/contact" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/en/about</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/about" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/about" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/about" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/about" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/about" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/de/about</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/about" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/about" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/about" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/about" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/about" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/es/about</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/about" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/about" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/about" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/about" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/about" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/it/about</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/about" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/about" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/about" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/about" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/about" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/ro/about</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/about" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/about" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/about" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/about" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/about" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/fr/about</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/about" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/about" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/about" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/about" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/about" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/en/legal/privacy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/privacy" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/de/legal/privacy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/privacy" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/es/legal/privacy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/privacy" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/it/legal/privacy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/privacy" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/ro/legal/privacy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/privacy" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/fr/legal/privacy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/privacy" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/privacy" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/en/legal/terms</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/terms" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/de/legal/terms</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/terms" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/es/legal/terms</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/terms" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/it/legal/terms</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/terms" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/ro/legal/terms</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/terms" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/fr/legal/terms</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/terms" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/terms" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/en/legal/cookies</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/cookies" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/de/legal/cookies</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/cookies" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/es/legal/cookies</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/cookies" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/it/legal/cookies</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/cookies" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/ro/legal/cookies</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/cookies" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/fr/legal/cookies</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/cookies" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/cookies" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/en/legal/imprint</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/imprint" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/de/legal/imprint</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/imprint" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/es/legal/imprint</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/imprint" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/it/legal/imprint</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/imprint" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/ro/legal/imprint</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://yourdomain.com/fr/legal/imprint" />
+  </url>
+  <url>
+    <loc>https://yourdomain.com/fr/legal/imprint</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/en/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://yourdomain.com/de/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yourdomain.com/es/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://yourdomain.com/it/legal/imprint" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://yourdomain.com/ro/legal/imprint" />
+  </url>
+</urlset>

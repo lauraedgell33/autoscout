@@ -24,7 +24,7 @@ export const userService = {
    */
   async getProfile(): Promise<UserType> {
     const response = await apiClient.get<UserType>('/user/profile')
-    return response
+    return response.data
   },
 
   /**
@@ -32,7 +32,7 @@ export const userService = {
    */
   async updateProfile(data: UpdateProfileData): Promise<UserType> {
     const response = await apiClient.put<UserType>('/user/profile', data)
-    return response
+    return response.data
   },
 
   /**
@@ -40,7 +40,7 @@ export const userService = {
    */
   async updatePassword(data: UpdatePasswordData): Promise<{ message: string }> {
     const response = await apiClient.put<{ message: string }>('/user/password', data)
-    return response
+    return response.data
   },
 
   /**
@@ -50,6 +50,6 @@ export const userService = {
     const response = await apiClient.delete<{ message: string }>('/user/account', {
       data: { password }
     })
-    return response
+    return response.data
   },
 }

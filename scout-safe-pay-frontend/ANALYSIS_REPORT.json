@@ -1,0 +1,84 @@
+{
+  "stats": {
+    "total_translation_keys": 1293,
+    "de_untranslated": 38,
+    "es_untranslated": 35,
+    "it_untranslated": 47,
+    "ro_untranslated": 46,
+    "fr_untranslated": 55,
+    "files_analyzed": 85,
+    "pages_analyzed": 34,
+    "api_url": "http://localhost:8000/api"
+  },
+  "issues": {
+    "translations": [
+      {
+        "lang": "de",
+        "issue": "untranslated",
+        "count": 38
+      },
+      {
+        "lang": "es",
+        "issue": "untranslated",
+        "count": 35
+      },
+      {
+        "lang": "it",
+        "issue": "untranslated",
+        "count": 47
+      },
+      {
+        "lang": "ro",
+        "issue": "untranslated",
+        "count": 46
+      },
+      {
+        "lang": "fr",
+        "issue": "untranslated",
+        "count": 55
+      }
+    ],
+    "pages": [
+      {
+        "file": "(dashboard)/transactions/[id]/payment/page.tsx",
+        "issue": "possible hardcoded text",
+        "text": "Complete Payment"
+      },
+      {
+        "file": "dashboard/favorites/page.tsx",
+        "issue": "possible hardcoded text",
+        "text": "My Favorites"
+      },
+      {
+        "file": "dashboard/notifications/page.tsx",
+        "issue": "possible hardcoded text",
+        "text": "Notifications"
+      },
+      {
+        "file": "dashboard/disputes/page.tsx",
+        "issue": "possible hardcoded text",
+        "text": "My Disputes"
+      },
+      {
+        "file": "dashboard/vehicles/page.tsx",
+        "issue": "possible hardcoded text",
+        "text": "My Vehicles"
+      },
+      {
+        "file": "dashboard/purchases/page.tsx",
+        "issue": "possible hardcoded text",
+        "text": "My Purchases"
+      },
+      {
+        "file": "dashboard/profile/page.tsx",
+        "issue": "possible hardcoded text",
+        "text": "Profile Settings"
+      },
+      {
+        "file": "dashboard/vehicles/add/page.tsx",
+        "issue": "possible hardcoded text",
+        "text": "Add New Vehicle"
+      }
+    ]
+  }
+}

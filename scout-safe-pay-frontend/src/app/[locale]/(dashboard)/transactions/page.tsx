@@ -1,28 +1,31 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
 import { transactionService } from '@/lib/api/transactions'
-import { authService } from '@/lib/api/auth'
+import { useAuth } from '@/contexts/AuthContext'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 
 export default function TransactionsPage() {
   const router = useRouter()
   const t = useTranslations()
+  const { user, loading: authLoading } = useAuth()
   const [transactions, setTransactions] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
   useEffect(() => {
-    if (!authService.isAuthenticated()) {
+    if (!authLoading && !user) {
       router.push('/login')
       return
     }
-    loadTransactions()
-  }, [])
+    if (user) {
+      loadTransactions()
+    }
+  }, [user, authLoading])
 
   const loadTransactions = async () => {
     try {

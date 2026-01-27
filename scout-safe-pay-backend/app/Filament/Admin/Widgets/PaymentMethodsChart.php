@@ -7,7 +7,7 @@ use Filament\Widgets\ChartWidget;
 
 class PaymentMethodsChart extends ChartWidget
 {
-    protected ?string $heading = 'Payment Methods Distribution';
+    protected ?string $heading = 'Payment Types Distribution';
     
     protected static ?int $sort = 6;
 
@@ -18,13 +18,14 @@ class PaymentMethodsChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Payments',
+                    'label' => 'Payment Types',
                     'data' => $data['values'],
                     'backgroundColor' => [
-                        '#3B82F6', // Bank Transfer - Blue
-                        '#16A34A', // Credit Card - Green
-                        '#F59E0B', // PayPal - Amber
-                        '#8B5CF6', // Stripe - Purple
+                        '#3B82F6', // Deposit - Blue
+                        '#16A34A', // Release - Green
+                        '#F59E0B', // Refund - Amber
+                        '#EF4444', // Service Fee - Red
+                        '#8B5CF6', // Dealer Commission - Purple
                         '#6B7280', // Other - Gray
                     ],
                 ],
@@ -40,19 +41,20 @@ class PaymentMethodsChart extends ChartWidget
     
     protected function getPaymentMethodsData(): array
     {
-        $methodCounts = Payment::selectRaw('payment_method, count(*) as count, sum(amount) as total')
-            ->groupBy('payment_method')
+        $methodCounts = Payment::selectRaw('type, count(*) as count, sum(amount) as total')
+            ->groupBy('type')
             ->get();
         
         $labels = [];
         $values = [];
         
         foreach ($methodCounts as $method) {
-            $methodName = match($method->payment_method) {
-                'bank_transfer' => 'Bank Transfer',
-                'credit_card' => 'Credit Card',
-                'paypal' => 'PayPal',
-                'stripe' => 'Stripe',
+            $methodName = match($method->type) {
+                'deposit' => 'Deposit',
+                'release' => 'Release',
+                'refund' => 'Refund',
+                'service_fee' => 'Service Fee',
+                'dealer_commission' => 'Dealer Commission',
                 default => 'Other',
             };
             

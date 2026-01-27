@@ -28,226 +28,194 @@ export default async function TermsOfService() {
           {/* Introduction */}
           <div className="p-6 bg-blue-50 rounded-lg border-l-4 border-blue-900">
             <p className="text-gray-700 font-semibold">
-              Please read these Terms of Service carefully before using AutoScout24 SafeTrade. By accessing or using our platform, you agree to be bound by these terms.
+              {t('intro')}
             </p>
           </div>
 
           {/* 1. Acceptance of Terms */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">1. Acceptance of Terms</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section1_title')}</h2>
             <p className="text-gray-700 mb-4">
-              By accessing and using the AutoScout24 SafeTrade platform ("Service"), you accept and agree to be bound by the terms and provisions of this agreement.
+              {t('section1_para1')}
             </p>
             <p className="text-gray-700">
-              If you do not agree to these Terms of Service, you may not access or use the Service.
+              {t('section1_para2')}
             </p>
           </section>
 
           {/* 2. Definitions */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">2. Definitions</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section2_title')}</h2>
             <ul className="space-y-3 text-gray-700">
-              <li><strong>"Platform"</strong> - The AutoScout24 SafeTrade website and mobile applications</li>
-              <li><strong>"User"</strong> - Any individual or entity using the Service</li>
-              <li><strong>"Buyer"</strong> - A User purchasing a vehicle through the Platform</li>
-              <li><strong>"Seller"</strong> - A User listing and selling a vehicle through the Platform</li>
-              <li><strong>"Dealer"</strong> - A professional vehicle dealer registered on the Platform</li>
-              <li><strong>"Transaction"</strong> - The complete process of buying/selling a vehicle</li>
-              <li><strong>"Escrow Service"</strong> - The secure payment holding service provided by the Platform</li>
+              <li><strong>{t('section2_def1_label')}</strong> - {t('section2_def1_value')}</li>
+              <li><strong>{t('section2_def2_label')}</strong> - {t('section2_def2_value')}</li>
+              <li><strong>{t('section2_def3_label')}</strong> - {t('section2_def3_value')}</li>
+              <li><strong>{t('section2_def4_label')}</strong> - {t('section2_def4_value')}</li>
+              <li><strong>{t('section2_def5_label')}</strong> - {t('section2_def5_value')}</li>
+              <li><strong>{t('section2_def6_label')}</strong> - {t('section2_def6_value')}</li>
+              <li><strong>{t('section2_def7_label')}</strong> - {t('section2_def7_value')}</li>
             </ul>
           </section>
 
           {/* 3. User Registration */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">3. User Registration and Accounts</h2>
-            <p className="text-gray-700 mb-4">
-              <strong>3.1 Registration Requirements:</strong> To use certain features of the Service, you must register and create an account. You agree to:
-            </p>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section3_title')}</h2>
+            <p className="text-gray-700 mb-4"><strong>{t('section3_1_title_label')}</strong> {t('section3_1_title_value')}</p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-              <li>Provide accurate, current, and complete information</li>
-              <li>Maintain and update your information to keep it accurate</li>
-              <li>Maintain the security of your account credentials</li>
-              <li>Be at least 18 years old or the age of majority in your jurisdiction</li>
-              <li>Comply with all applicable laws and regulations</li>
+              <li>{t('section3_1_item1')}</li>
+              <li>{t('section3_1_item2')}</li>
+              <li>{t('section3_1_item3')}</li>
+              <li>{t('section3_1_item4')}</li>
+              <li>{t('section3_1_item5')}</li>
             </ul>
-            <p className="text-gray-700 mt-4">
-              <strong>3.2 Account Security:</strong> You are responsible for all activities that occur under your account. Notify us immediately of any unauthorized use.
-            </p>
+            <p className="text-gray-700 mt-4"><strong>{t('section3_2_title_label')}</strong> {t('section3_2_title_value')}</p>
           </section>
 
           {/* 4. Services Provided */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">4. Services Provided</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section4_title')}</h2>
             <ul className="space-y-3 text-gray-700">
-              <li><strong>Marketplace:</strong> Platform for Buyers and Sellers to connect and transact vehicle sales</li>
-              <li><strong>Escrow Service:</strong> Secure payment holding until transaction conditions are met</li>
-              <li><strong>Verification Services:</strong> Vehicle verification, VIN checks, and user identity verification</li>
-              <li><strong>Dispute Resolution:</strong> Mediation services for transaction disputes</li>
+              <li><strong>{t('section4_item1_label')}</strong> {t('section4_item1_value')}</li>
+              <li><strong>{t('section4_item2_label')}</strong> {t('section4_item2_value')}</li>
+              <li><strong>{t('section4_item3_label')}</strong> {t('section4_item3_value')}</li>
+              <li><strong>{t('section4_item4_label')}</strong> {t('section4_item4_value')}</li>
             </ul>
           </section>
 
           {/* 5. Payment Terms */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">5. Payment Terms</h2>
-            <p className="text-gray-700 mb-4">
-              <strong>5.1 Payment Methods:</strong> All payments must be made via bank transfer to our designated escrow account.
-            </p>
-            <p className="text-gray-700 mb-4">
-              <strong>5.2 Service Fees:</strong>
-            </p>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section5_title')}</h2>
+            <p className="text-gray-700 mb-4"><strong>{t('section5_1_title_label')}</strong> {t('section5_1_title_value')}</p>
+            <p className="text-gray-700 mb-4"><strong>{t('section5_2_title_label')}</strong></p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-              <li>Buyers: 2.5% transaction fee (minimum €50)</li>
-              <li>Sellers: 1.5% transaction fee (minimum €30)</li>
-              <li>All fees are clearly displayed before payment confirmation</li>
+              <li>{t('section5_2_item1')}</li>
+              <li>{t('section5_2_item2')}</li>
+              <li>{t('section5_2_item3')}</li>
             </ul>
-            <p className="text-gray-700 mt-4">
-              <strong>5.3 Escrow Process:</strong>
-            </p>
+            <p className="text-gray-700 mt-4"><strong>{t('section5_3_title_label')}</strong></p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-              <li>Buyer transfers funds to escrow account</li>
-              <li>Funds are held securely until vehicle inspection is completed</li>
-              <li>Upon approval, funds are released to Seller minus applicable fees</li>
-              <li>Escrow holding period: maximum 14 business days</li>
+              <li>{t('section5_3_item1')}</li>
+              <li>{t('section5_3_item2')}</li>
+              <li>{t('section5_3_item3')}</li>
+              <li>{t('section5_3_item4')}</li>
             </ul>
-            <p className="text-gray-700 mt-4">
-              <strong>5.4 Invoicing:</strong> All transactions include VAT-compliant invoices issued automatically.
-            </p>
+            <p className="text-gray-700 mt-4"><strong>{t('section5_4_title_label')}</strong> {t('section5_4_title_value')}</p>
           </section>
 
           {/* 6. Seller Obligations */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">6. Seller Obligations</h2>
-            <p className="text-gray-700 mb-4">As a Seller, you agree to:</p>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section6_title')}</h2>
+            <p className="text-gray-700 mb-4">{t('section6_intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-              <li>Provide accurate and truthful vehicle information</li>
-              <li>Disclose all known defects, damages, or issues</li>
-              <li>Provide clear title and ownership documentation</li>
-              <li>Allow vehicle inspection by Buyer or authorized inspector</li>
-              <li>Deliver the vehicle in the condition described</li>
-              <li>Comply with all applicable vehicle sales regulations</li>
-              <li>Respond to Buyer inquiries within 48 hours</li>
+              <li>{t('section6_item1')}</li>
+              <li>{t('section6_item2')}</li>
+              <li>{t('section6_item3')}</li>
+              <li>{t('section6_item4')}</li>
+              <li>{t('section6_item5')}</li>
+              <li>{t('section6_item6')}</li>
+              <li>{t('section6_item7')}</li>
             </ul>
           </section>
 
           {/* 7. Buyer Obligations */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">7. Buyer Obligations</h2>
-            <p className="text-gray-700 mb-4">As a Buyer, you agree to:</p>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section7_title')}</h2>
+            <p className="text-gray-700 mb-4">{t('section7_intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-              <li>Complete payment within the specified timeframe</li>
-              <li>Conduct vehicle inspection within 7 business days</li>
-              <li>Accept or reject the vehicle within inspection period</li>
-              <li>Arrange vehicle pickup within 14 days of acceptance</li>
-              <li>Complete all required registration documentation</li>
-              <li>Communicate any issues or concerns promptly</li>
+              <li>{t('section7_item1')}</li>
+              <li>{t('section7_item2')}</li>
+              <li>{t('section7_item3')}</li>
+              <li>{t('section7_item4')}</li>
+              <li>{t('section7_item5')}</li>
+              <li>{t('section7_item6')}</li>
             </ul>
           </section>
 
           {/* 8. Transaction Process */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">8. Transaction Process</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section8_title')}</h2>
             <ul className="space-y-3 text-gray-700">
-              <li><strong>Purchase Agreement:</strong> Binding purchase agreement upon payment initiation</li>
-              <li><strong>Inspection Period:</strong> 7 business days to inspect and confirm acceptance</li>
-              <li><strong>Acceptance:</strong> Buyer must formally accept or reject within inspection period</li>
-              <li><strong>Fund Release:</strong> Upon acceptance, funds released within 2 business days</li>
-              <li><strong>Rejection:</strong> If vehicle doesn't match description, full refund minus inspection costs</li>
+              <li><strong>{t('section8_item1_label')}</strong> {t('section8_item1_value')}</li>
+              <li><strong>{t('section8_item2_label')}</strong> {t('section8_item2_value')}</li>
+              <li><strong>{t('section8_item3_label')}</strong> {t('section8_item3_value')}</li>
+              <li><strong>{t('section8_item4_label')}</strong> {t('section8_item4_value')}</li>
+              <li><strong>{t('section8_item5_label')}</strong> {t('section8_item5_value')}</li>
             </ul>
           </section>
 
           {/* 9. Cancellation and Refunds */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">9. Cancellation and Refunds</h2>
-            <p className="text-gray-700 mb-4"><strong>Buyer Cancellation:</strong></p>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section9_title')}</h2>
+            <p className="text-gray-700 mb-4"><strong>{t('section9_buyer_title_label')}</strong></p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-              <li>Before payment: No penalty</li>
-              <li>After payment, before inspection: Service fee forfeited</li>
-              <li>After inspection begins: Subject to dispute resolution</li>
+              <li>{t('section9_buyer_item1')}</li>
+              <li>{t('section9_buyer_item2')}</li>
+              <li>{t('section9_buyer_item3')}</li>
             </ul>
-            <p className="text-gray-700 mt-4"><strong>Seller Cancellation:</strong></p>
+            <p className="text-gray-700 mt-4"><strong>{t('section9_seller_title_label')}</strong></p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-              <li>Before payment: No penalty</li>
-              <li>After payment: Full refund to Buyer + penalty fee to Seller</li>
-              <li>Repeated cancellations may result in account suspension</li>
+              <li>{t('section9_seller_item1')}</li>
+              <li>{t('section9_seller_item2')}</li>
+              <li>{t('section9_seller_item3')}</li>
             </ul>
           </section>
 
           {/* 10. Prohibited Activities */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">10. Prohibited Activities</h2>
-            <p className="text-gray-700 mb-4">Users are prohibited from:</p>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section10_title')}</h2>
+            <p className="text-gray-700 mb-4">{t('section10_intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-              <li>Listing stolen vehicles or vehicles without proper ownership</li>
-              <li>Providing false or misleading information</li>
-              <li>Circumventing the platform to avoid fees</li>
-              <li>Engaging in fraudulent activities or scams</li>
-              <li>Harassing or abusing other users</li>
-              <li>Using automated systems to scrape data</li>
-              <li>Violating any applicable laws or regulations</li>
+              <li>{t('section10_item1')}</li>
+              <li>{t('section10_item2')}</li>
+              <li>{t('section10_item3')}</li>
+              <li>{t('section10_item4')}</li>
+              <li>{t('section10_item5')}</li>
+              <li>{t('section10_item6')}</li>
+              <li>{t('section10_item7')}</li>
             </ul>
           </section>
 
           {/* 11. Liability */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">11. Liability and Disclaimers</h2>
-            <p className="text-gray-700 mb-4">
-              <strong>Platform Role:</strong> We are a marketplace facilitator and escrow service provider. We are not a party to transactions between Buyers and Sellers.
-            </p>
-            <p className="text-gray-700 mb-4">
-              <strong>Limitation of Liability:</strong> Our liability is limited to the service fees paid for the specific transaction, except where prohibited by law.
-            </p>
-            <p className="text-gray-700">
-              <strong>No Warranty:</strong> The Service is provided "AS IS" without warranties of any kind.
-            </p>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section11_title')}</h2>
+            <p className="text-gray-700 mb-4"><strong>{t('section11_platform_label')}</strong> {t('section11_platform_value')}</p>
+            <p className="text-gray-700 mb-4"><strong>{t('section11_limitation_label')}</strong> {t('section11_limitation_value')}</p>
+            <p className="text-gray-700"><strong>{t('section11_warranty_label')}</strong> {t('section11_warranty_value')}</p>
           </section>
 
           {/* 12. Governing Law */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">12. Governing Law</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section12_title')}</h2>
             <p className="text-gray-700 mb-4">
-              These Terms are governed by the laws of the European Union and Romania.
+              {t('section12_para1')}
             </p>
             <p className="text-gray-700">
-              Any disputes shall be subject to the exclusive jurisdiction of the courts in Bucharest, Romania.
+              {t('section12_para2')}
             </p>
           </section>
 
           {/* Contact */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">13. Contact Information</h2>
-            <p className="text-gray-700 mb-4">For questions about these Terms:</p>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section13_title')}</h2>
+            <p className="text-gray-700 mb-4">{t('section13_intro')}</p>
             <ul className="space-y-2 text-gray-700">
-              <li><strong>Email:</strong> legal@autoscout24-safetrade.com</li>
-              <li><strong>Phone:</strong> +40 21 XXX XXXX</li>
-              <li><strong>Address:</strong> [Company Registered Address]</li>
+              <li><strong>{t('section13_email_label')}</strong> {t('section13_email_value')}</li>
+              <li><strong>{t('section13_phone_label')}</strong> {t('section13_phone_value')}</li>
+              <li><strong>{t('section13_address_label')}</strong> {t('section13_address_value')}</li>
             </ul>
           </section>
 
           {/* Acceptance */}
           <div className="mt-12 p-6 bg-orange-50 rounded-lg border-l-4 border-orange-500">
             <p className="text-gray-700 font-semibold">
-              By using AutoScout24 SafeTrade, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
+              {t('acceptance')}
             </p>
           </div>
         </div>
       </div>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-blue-900 text-white mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex justify-between items-center">
-            <div className="text-sm text-blue-300">
-              © 2026 AutoScout24 SafeTrade. All rights reserved.
-            </div>
-            <div className="flex space-x-6 text-sm">
-              <a href="/legal/privacy" className="text-blue-300 hover:text-white">Privacy Policy</a>
-              <a href="/legal/cookies" className="text-blue-300 hover:text-white">Cookie Policy</a>
-              <a href="/legal/refund" className="text-blue-300 hover:text-white">Refund Policy</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </>
   )
 }

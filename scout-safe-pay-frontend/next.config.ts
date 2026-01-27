@@ -1,6 +1,13 @@
-import type { NextConfig } from "next";import createNextIntlPlugin from 'next-intl/plugin';
+import type { NextConfig } from "next";
+import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
+
+// Bundle analyzer (only in analyze mode)
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
@@ -19,8 +26,25 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**',
+        hostname: '*.cloudfront.net',
       },
+      {
+        protocol: 'https',
+        hostname: '*.vapor-farm-x1.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.vercel.app',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.autoscout24.com',
+      },
+      // Allow localhost only in development
+      ...(process.env.NODE_ENV !== 'production' ? [{
+        protocol: 'http' as const,
+        hostname: 'localhost',
+      }] : []),
     ],
   },
   
@@ -32,7 +56,7 @@ const nextConfig: NextConfig = {
   
   // Experimental features for better performance
   experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', 'date-fns'],
     scrollRestoration: true,
   },
   
@@ -81,7 +105,9 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com",
-              "connect-src 'self' http://localhost:8000 http://localhost:8002 https://*.vapor-farm-x1.com https://*.cloudfront.net",
+              process.env.NODE_ENV === 'production' 
+                ? "connect-src 'self' https://*.vapor-farm-x1.com https://*.cloudfront.net https://*.vercel.app"
+                : "connect-src 'self' http://localhost:8000 http://localhost:8002 https://*.vapor-farm-x1.com https://*.cloudfront.net",
               "frame-ancestors 'self'",
               "base-uri 'self'",
               "form-action 'self'",
@@ -125,4 +151,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+export default withBundleAnalyzer(withNextIntl(nextConfig));

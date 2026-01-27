@@ -1,6 +1,8 @@
 'use client'
 
-import Link from 'next/link'
+import Image from 'next/image'
+
+import { Link } from '@/i18n/routing'
 import { useParams, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useCurrency } from '@/contexts/CurrencyContext'
@@ -11,8 +13,7 @@ import vehicleService, { Vehicle } from '@/lib/api/vehicles'
 import { transactionService } from '@/lib/api/transactions'
 
 export default function VehicleDetailsPage() {
-  const t = useTranslations('vehicle')
-  const tCommon = useTranslations('common')
+  const t = useTranslations()
   const { formatPrice } = useCurrency()
   const params = useParams()
   const router = useRouter()
@@ -76,8 +77,8 @@ export default function VehicleDetailsPage() {
         <Navigation />
         <div className="min-h-[60vh] flex items-center justify-center">
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('vehicle.not_found')}</h2>
-            <p className="text-gray-600 mb-6">{t('vehicle.not_found_desc')}</p>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('not_found')}</h2>
+            <p className="text-gray-600 mb-6">{t('not_found_desc')}</p>
             <Link
               href="/marketplace"
               className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition"
@@ -85,7 +86,7 @@ export default function VehicleDetailsPage() {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
-              {t('vehicle.back_to_marketplace')}
+              {t('back_to_marketplace')}
             </Link>
           </div>
         </div>
@@ -291,31 +292,31 @@ export default function VehicleDetailsPage() {
                     <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-gray-700">{t('benefits.escrow')}</span>
+                    <span className="text-gray-700">{t('vehicle.benefits.escrow')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-gray-700">{t('benefits.verified')}</span>
+                    <span className="text-gray-700">{t('vehicle.benefits.verified')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-gray-700">{t('benefits.inspection')}</span>
+                    <span className="text-gray-700">{t('vehicle.benefits.inspection')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-gray-700">{t('benefits.guarantee')}</span>
+                    <span className="text-gray-700">{t('vehicle.benefits.guarantee')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-gray-700">{t('benefits.support')}</span>
+                    <span className="text-gray-700">{t('vehicle.benefits.support')}</span>
                   </li>
                 </ul>
               </div>

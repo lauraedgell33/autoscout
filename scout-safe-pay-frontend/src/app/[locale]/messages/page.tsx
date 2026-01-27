@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import messageService, { Conversation } from '@/lib/api/messages'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 
 export default function MessagesPage() {
   const t = useTranslations()
+  const tCommon = useTranslations('common')
   const [conversations, setConversations] = useState<Conversation[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -44,7 +45,7 @@ export default function MessagesPage() {
           {loading ? (
             <div className="text-center py-12">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
-              <p className="mt-4 text-gray-600">{t('common.loading')}</p>
+              <p className="mt-4 text-gray-600">{tCommon('loading')}</p>
             </div>
           ) : error ? (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">

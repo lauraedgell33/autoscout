@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/i18n/routing'
 import { authService } from '@/lib/api/auth'
 
 interface User {
@@ -40,20 +40,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter()
 
   useEffect(() => {
-    const loadUser = async () => {
+    // Disable auto-loading to prevent infinite loops
+    // User will need to login manually
+    setLoading(false)
+    
+    // Optional: Check localStorage for cached user
+    const cachedUser = localStorage.getItem('user')
+    if (cachedUser) {
       try {
-        // Fetch user from API - backend will use httpOnly cookie for auth
-        const userData = await authService.me()
-        setUser(userData)
-      } catch (error) {
-        // No valid session - user stays null
-        setUser(null)
-      } finally {
-        setLoading(false)
+        setUser(JSON.parse(cachedUser))
+      } catch (e) {
+        console.error('Failed to parse cached user')
       }
     }
-
-    loadUser()
   }, [])
 
   const login = async (email: string, password: string) => {

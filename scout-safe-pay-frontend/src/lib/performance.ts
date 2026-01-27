@@ -1,5 +1,6 @@
 // Performance optimization utilities
-import React, { lazy, Suspense, ComponentType } from 'react';
+import React, { Suspense, ComponentType, lazy } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * Dynamically import heavy components only when needed
@@ -96,5 +97,3 @@ export function throttle<T extends (...args: any[]) => any>(
   };
 }
 
-// Import statements (add at the top of file where needed)
-import { lazy, Suspense, useEffect, useState } from 'react';

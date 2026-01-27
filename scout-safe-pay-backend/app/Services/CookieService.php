@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\CookiePreference;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CookieService
 {
@@ -14,7 +15,14 @@ class CookieService
     public function getOrCreatePreference(Request $request): CookiePreference
     {
         $userId = Auth::id();
-        $sessionId = $request->session()->getId();
+        
+        // Use cookie ID instead of session ID for API routes
+        $sessionId = $request->cookie('cookie_consent_id');
+        
+        // Generate new ID if not present
+        if (!$sessionId) {
+            $sessionId = Str::uuid()->toString();
+        }
 
         $preference = CookiePreference::where(function($query) use ($userId, $sessionId) {
             if ($userId) {

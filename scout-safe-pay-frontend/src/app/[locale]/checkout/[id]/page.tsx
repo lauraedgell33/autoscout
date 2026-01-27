@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { useCurrency } from '@/contexts/CurrencyContext'
@@ -12,6 +12,7 @@ import { transactionService } from '@/lib/api/transactions'
 import { kycService } from '@/lib/api/kyc'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import { logger } from '@/utils/logger'
 
 export default function CheckoutPage() {
   const t = useTranslations('checkout')
@@ -130,23 +131,23 @@ export default function CheckoutPage() {
     setSubmitting(true)
     try {
       if (!isDealer && formData.idImage && formData.selfieImage) {
-        console.log('Submitting KYC documents...')
+        logger.info('Submitting KYC documents...')
         await kycService.submit({
           id_document_type: formData.idType as any,
           id_document_number: formData.idNumber,
           id_document_image: formData.idImage,
           selfie_image: formData.selfieImage,
         })
-        console.log('KYC submitted successfully')
+        logger.info('KYC submitted successfully')
       }
       
-      console.log('Creating transaction for vehicle:', vehicleId)
+      logger.info('Creating transaction for vehicle:', vehicleId)
       const response = await transactionService.create({
         vehicle_id: vehicleId,
         amount: vehicle.price.toString(),
         payment_method: 'bank_transfer'
       })
-      console.log('Transaction created:', response)
+      logger.info('Transaction created:', response)
       
       if (response.transaction && response.transaction.id) {
         router.push(`/transaction/${response.transaction.id}`)
@@ -165,7 +166,7 @@ export default function CheckoutPage() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
-        <p className="text-gray-600">{t('common.loading')}</p>
+        <p className="text-gray-600">{tCommon('loading')}</p>
       </div>
     </div>
   )
@@ -175,13 +176,13 @@ export default function CheckoutPage() {
     ? [
         { number: 1, title: t('checkout.buyer_info'), icon: '👤' },
         { number: 2, title: t('checkout.delivery_address'), icon: '🏠' },
-        { number: 3, title: t('common.confirm'), icon: '✓' },
+        { number: 3, title: tCommon('confirm'), icon: '✓' },
       ]
     : [
         { number: 1, title: t('checkout.buyer_info'), icon: '👤' },
         { number: 2, title: t('checkout.delivery_address'), icon: '🏠' },
         { number: 3, title: 'KYC', icon: '📸' },
-        { number: 4, title: t('common.confirm'), icon: '✓' },
+        { number: 4, title: tCommon('confirm'), icon: '✓' },
       ]
 
   const maxSteps = isDealer ? 3 : 4
@@ -191,7 +192,7 @@ export default function CheckoutPage() {
       <Navigation />
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4">
-          <Link href={`/vehicle/${vehicleId}`} className="text-blue-900 hover:underline mb-4 inline-block">← {t('common.back')}</Link>
+          <Link href={`/vehicle/${vehicleId}`} className="text-blue-900 hover:underline mb-4 inline-block">← {tCommon('back')}</Link>
           <h1 className="text-3xl font-bold text-blue-900 mb-2">{t('checkout.title')}</h1>
           <p className="text-gray-600 mb-8">{t('checkout.escrow_desc')}</p>
 
@@ -274,7 +275,7 @@ export default function CheckoutPage() {
 
               {((currentStep === 3 && isDealer) || (currentStep === 4 && !isDealer)) && (
                 <div className="space-y-4">
-                  <h2 className="text-xl font-bold mb-4">{t('common.confirm')}</h2>
+                  <h2 className="text-xl font-bold mb-4">{tCommon('confirm')}</h2>
                   <div className="bg-gray-50 p-4 rounded space-y-2">
                     <p><strong>{formData.fullName}</strong></p>
                     <p>{formData.email} • {formData.phone}</p>
@@ -288,9 +289,9 @@ export default function CheckoutPage() {
               )}
 
               <div className="flex justify-between mt-8 pt-6 border-t">
-                <button type="button" onClick={() => setCurrentStep(prev => Math.max(prev - 1, 1))} disabled={currentStep === 1} className="px-6 py-3 border rounded-lg disabled:opacity-50">← {t('common.back')}</button>
+                <button type="button" onClick={() => setCurrentStep(prev => Math.max(prev - 1, 1))} disabled={currentStep === 1} className="px-6 py-3 border rounded-lg disabled:opacity-50">← {tCommon('back')}</button>
                 {currentStep < maxSteps ? (
-                  <button type="button" onClick={handleNext} className="px-6 py-3 bg-orange-500 text-white rounded-lg">{t('common.next')} →</button>
+                  <button type="button" onClick={handleNext} className="px-6 py-3 bg-orange-500 text-white rounded-lg">{tCommon('next')} →</button>
                 ) : (
                   <button type="submit" disabled={submitting} className="px-6 py-3 bg-green-600 text-white rounded-lg">{submitting ? t('checkout.processing') : t('checkout.place_order')}</button>
                 )}

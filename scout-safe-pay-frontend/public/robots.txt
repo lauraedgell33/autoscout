@@ -1,45 +1,15 @@
-# Robots.txt for Scout Safe Pay Frontend
-# Allow all search engines to crawl
-
+# Robots.txt for AutoScout24 SafeTrade
 User-agent: *
 Allow: /
 
-# Disallow admin/dashboard pages from indexing
-Disallow: /*/dashboard/
-Disallow: /*/dashboard/*
-Disallow: /*/checkout/
-Disallow: /*/transaction/
-Disallow: /*/transactions/
-Disallow: /*/messages
+# Sitemap
+Sitemap: ${NEXT_PUBLIC_APP_URL:-https://yourdomain.com}/sitemap.xml
+
+# Disallow admin and API routes
 Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /dashboard/
 
-# Allow public pages
-Allow: /
-Allow: /*/marketplace
-Allow: /*/how-it-works
-Allow: /*/benefits
-Allow: /*/vehicle/
-Allow: /*/legal/
-
-# Sitemap location
-Sitemap: https://yourdomain.com/sitemap.xml
-
-# Crawl delay (optional - adjust as needed)
+# Crawl delay (optional, be nice to servers)
 Crawl-delay: 1
-
-# Specific bot instructions
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-# Block bad bots
-User-agent: MJ12bot
-Disallow: /
-
-User-agent: AhrefsBot
-Disallow: /
-
-User-agent: SemrushBot
-Crawl-delay: 5

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
 import { useCurrency } from '@/contexts/CurrencyContext'
 import { transactionService, Transaction } from '@/lib/api/transactions'
@@ -116,7 +116,7 @@ export default function TransactionPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">{t('common.loading')}</p>
+          <p className="text-gray-600">{tCommon('loading')}</p>
         </div>
       </div>
     )
@@ -126,8 +126,8 @@ export default function TransactionPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-600 mb-4">{error || t('common.error')}</p>
-          <Link href="/dashboard" className="text-blue-600 hover:underline">{t('common.back')}</Link>
+          <p className="text-red-600 mb-4">{error || tCommon('error')}</p>
+          <Link href="/dashboard" className="text-blue-600 hover:underline">{tCommon('back')}</Link>
         </div>
       </div>
     )
@@ -149,7 +149,7 @@ export default function TransactionPage() {
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-6xl mx-auto px-4">
           <div className="mb-6">
-            <Link href="/dashboard" className="text-blue-600 hover:underline">← {t('common.back')}</Link>
+            <Link href="/dashboard" className="text-blue-600 hover:underline">← {tCommon('back')}</Link>
           </div>
 
           {/* Header */}
@@ -266,7 +266,7 @@ export default function TransactionPage() {
                   />
                   <label htmlFor="payment-proof" className="cursor-pointer">
                     <div className="text-gray-600 mb-2">
-                      {uploadingProof ? t('common.loading') : t('transaction.upload_receipt')}
+                      {uploadingProof ? tCommon('loading') : t('transaction.upload_receipt')}
                     </div>
                     <div className="text-sm text-gray-500">{t('transaction.file_formats')}</div>
                   </label>
@@ -380,3 +380,4 @@ export default function TransactionPage() {
     </>
   )
 }
+// HMR Test - 02:30:37

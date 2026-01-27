@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { verificationService, KYCVerification } from '@/lib/api/verification'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/i18n/routing'
 
 export default function VerificationPage() {
   const router = useRouter()

@@ -28,160 +28,124 @@ export default async function RefundPolicy() {
           {/* Introduction */}
           <div className="p-6 bg-blue-50 rounded-lg border-l-4 border-blue-900">
             <p className="text-gray-700">
-              This Refund Policy explains the circumstances under which refunds are available for transactions on AutoScout24 SafeTrade, and the process for requesting a refund.
+              {t('intro')}
             </p>
           </div>
 
           {/* 1. Overview */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">1. Refund Overview</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section1_title')}</h2>
             <p className="text-gray-700 mb-4">
-              AutoScout24 SafeTrade operates an escrow service that protects both buyers and sellers. Refunds are available in specific circumstances as outlined in this policy.
+              {t('section1_para1')}
             </p>
             <p className="text-gray-700">
-              All refunds are subject to verification and must be requested within the specified timeframes.
+              {t('section1_para2')}
             </p>
           </section>
 
           {/* 2. Buyer Refund Rights */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">2. Buyer Refund Rights</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section2_title')}</h2>
             
             <div className="space-y-6">
               {/* Pre-Inspection */}
               <div className="p-4 bg-green-50 rounded-lg">
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">2.1 Pre-Inspection Cancellation</h3>
-                <p className="text-gray-700 mb-3">
-                  <strong>Timeframe:</strong> Before vehicle inspection begins
-                </p>
-                <p className="text-gray-700 mb-3">
-                  <strong>Refund Amount:</strong> Full payment minus service fees (2.5%)
-                </p>
-                <p className="text-gray-700 mb-3">
-                  <strong>Conditions:</strong>
-                </p>
+                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section2_1_title')}</h3>
+                <p className="text-gray-700 mb-3"><strong>{t('section2_1_timeframe_label')}</strong> {t('section2_1_timeframe_value')}</p>
+                <p className="text-gray-700 mb-3"><strong>{t('section2_1_refund_label')}</strong> {t('section2_1_refund_value')}</p>
+                <p className="text-gray-700 mb-3"><strong>{t('section2_1_conditions_label')}</strong></p>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
-                  <li>Buyer has not yet inspected the vehicle</li>
-                  <li>No formal inspection appointment has been scheduled</li>
-                  <li>Request must be submitted through the platform</li>
+                  <li>{t('section2_1_cond1')}</li>
+                  <li>{t('section2_1_cond2')}</li>
+                  <li>{t('section2_1_cond3')}</li>
                 </ul>
-                <p className="text-gray-700 mt-3">
-                  <strong>Processing Time:</strong> 5-7 business days
-                </p>
+                <p className="text-gray-700 mt-3"><strong>{t('section2_1_processing_label')}</strong> {t('section2_1_processing_value')}</p>
               </div>
 
               {/* Vehicle Misrepresentation */}
               <div className="p-4 bg-orange-50 rounded-lg">
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">2.2 Vehicle Misrepresentation</h3>
-                <p className="text-gray-700 mb-3">
-                  <strong>Timeframe:</strong> Within 7 business days of inspection
-                </p>
-                <p className="text-gray-700 mb-3">
-                  <strong>Refund Amount:</strong> Full payment (100%) including service fees
-                </p>
-                <p className="text-gray-700 mb-3">
-                  <strong>Eligible Reasons:</strong>
-                </p>
+                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section2_2_title')}</h3>
+                <p className="text-gray-700 mb-3"><strong>{t('section2_2_timeframe_label')}</strong> {t('section2_2_timeframe_value')}</p>
+                <p className="text-gray-700 mb-3"><strong>{t('section2_2_refund_label')}</strong> {t('section2_2_refund_value')}</p>
+                <p className="text-gray-700 mb-3"><strong>{t('section2_2_eligible_label')}</strong></p>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
-                  <li>Vehicle condition significantly different from listing</li>
-                  <li>Undisclosed major defects or damage</li>
-                  <li>Incorrect mileage or VIN information</li>
-                  <li>Misrepresented service history</li>
-                  <li>Safety issues not mentioned in listing</li>
+                  <li>{t('section2_2_reason1')}</li>
+                  <li>{t('section2_2_reason2')}</li>
+                  <li>{t('section2_2_reason3')}</li>
+                  <li>{t('section2_2_reason4')}</li>
+                  <li>{t('section2_2_reason5')}</li>
                 </ul>
-                <p className="text-gray-700 mt-3">
-                  <strong>Required Evidence:</strong>
-                </p>
+                <p className="text-gray-700 mt-3"><strong>{t('section2_2_evidence_label')}</strong></p>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
-                  <li>Detailed photos/videos of discrepancies</li>
-                  <li>Independent inspection report (if applicable)</li>
-                  <li>Original listing screenshots</li>
-                  <li>Communication records with seller</li>
+                  <li>{t('section2_2_evidence1')}</li>
+                  <li>{t('section2_2_evidence2')}</li>
+                  <li>{t('section2_2_evidence3')}</li>
+                  <li>{t('section2_2_evidence4')}</li>
                 </ul>
-                <p className="text-gray-700 mt-3">
-                  <strong>Processing Time:</strong> 7-10 business days (after investigation)
-                </p>
+                <p className="text-gray-700 mt-3"><strong>{t('section2_2_processing_label')}</strong> {t('section2_2_processing_value')}</p>
               </div>
 
               {/* Seller Cancellation */}
               <div className="p-4 bg-purple-50 rounded-lg">
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">2.3 Seller-Initiated Cancellation</h3>
-                <p className="text-gray-700 mb-3">
-                  <strong>Timeframe:</strong> Any time after payment
-                </p>
-                <p className="text-gray-700 mb-3">
-                  <strong>Refund Amount:</strong> Full payment (100%) + compensation (€100)
-                </p>
-                <p className="text-gray-700 mb-3">
-                  <strong>Automatic Processing:</strong> When seller cancels after payment received
-                </p>
-                <p className="text-gray-700 mt-3">
-                  <strong>Processing Time:</strong> 3-5 business days
-                </p>
+                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section2_3_title')}</h3>
+                <p className="text-gray-700 mb-3"><strong>{t('section2_3_timeframe_label')}</strong> {t('section2_3_timeframe_value')}</p>
+                <p className="text-gray-700 mb-3"><strong>{t('section2_3_refund_label')}</strong> {t('section2_3_refund_value')}</p>
+                <p className="text-gray-700 mb-3"><strong>{t('section2_3_auto_label')}</strong> {t('section2_3_auto_value')}</p>
+                <p className="text-gray-700 mt-3"><strong>{t('section2_3_processing_label')}</strong> {t('section2_3_processing_value')}</p>
               </div>
 
               {/* Failed Inspection */}
               <div className="p-4 bg-red-50 rounded-lg">
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">2.4 Failed Mechanical Inspection</h3>
-                <p className="text-gray-700 mb-3">
-                  <strong>Timeframe:</strong> Within inspection period (7 days)
-                </p>
-                <p className="text-gray-700 mb-3">
-                  <strong>Refund Amount:</strong> Full payment minus inspection costs (if applicable)
-                </p>
-                <p className="text-gray-700 mb-3">
-                  <strong>Conditions:</strong>
-                </p>
+                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section2_4_title')}</h3>
+                <p className="text-gray-700 mb-3"><strong>{t('section2_4_timeframe_label')}</strong> {t('section2_4_timeframe_value')}</p>
+                <p className="text-gray-700 mb-3"><strong>{t('section2_4_refund_label')}</strong> {t('section2_4_refund_value')}</p>
+                <p className="text-gray-700 mb-3"><strong>{t('section2_4_conditions_label')}</strong></p>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
-                  <li>Professional inspection identifies major safety issues</li>
-                  <li>Vehicle fails mandatory safety standards</li>
-                  <li>Cost of repairs exceeds 10% of purchase price</li>
+                  <li>{t('section2_4_cond1')}</li>
+                  <li>{t('section2_4_cond2')}</li>
+                  <li>{t('section2_4_cond3')}</li>
                 </ul>
-                <p className="text-gray-700 mt-3">
-                  <strong>Required:</strong> Official inspection report from certified mechanic
-                </p>
-                <p className="text-gray-700 mt-3">
-                  <strong>Processing Time:</strong> 7-10 business days
-                </p>
+                <p className="text-gray-700 mt-3"><strong>{t('section2_4_required_label')}</strong> {t('section2_4_required_value')}</p>
+                <p className="text-gray-700 mt-3"><strong>{t('section2_4_processing_label')}</strong> {t('section2_4_processing_value')}</p>
               </div>
             </div>
           </section>
 
           {/* 3. Non-Refundable Situations */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">3. Non-Refundable Situations</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section3_title')}</h2>
             <p className="text-gray-700 mb-4">
-              Refunds will NOT be granted in the following circumstances:
+              {t('section3_intro')}
             </p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-              <li><strong>Change of Mind:</strong> Buyer simply changes their mind after inspection acceptance</li>
-              <li><strong>Minor Cosmetic Issues:</strong> Small scratches, dents, or wear consistent with vehicle age</li>
-              <li><strong>Personal Preferences:</strong> Color, interior details, or subjective preferences</li>
-              <li><strong>Post-Acceptance Issues:</strong> Problems discovered after formal acceptance</li>
-              <li><strong>Buyer's Remorse:</strong> After completion of transaction and vehicle transfer</li>
-              <li><strong>Third-Party Financing:</strong> Issues related to buyer's financing arrangements</li>
-              <li><strong>Late Requests:</strong> Refund requests after the 7-day inspection period</li>
+              <li><strong>{t('section3_item1_label')}</strong> {t('section3_item1_value')}</li>
+              <li><strong>{t('section3_item2_label')}</strong> {t('section3_item2_value')}</li>
+              <li><strong>{t('section3_item3_label')}</strong> {t('section3_item3_value')}</li>
+              <li><strong>{t('section3_item4_label')}</strong> {t('section3_item4_value')}</li>
+              <li><strong>{t('section3_item5_label')}</strong> {t('section3_item5_value')}</li>
+              <li><strong>{t('section3_item6_label')}</strong> {t('section3_item6_value')}</li>
+              <li><strong>{t('section3_item7_label')}</strong> {t('section3_item7_value')}</li>
             </ul>
           </section>
 
           {/* 4. Service Fee Refunds */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">4. Service Fee Refunds</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section4_title')}</h2>
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">Buyer Service Fees (2.5%)</h3>
+                <h3 className="text-lg font-semibold text-blue-800">{t('section4_buyer_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4 mt-2">
-                  <li><strong>Refunded:</strong> Vehicle misrepresentation, seller cancellation, failed inspection</li>
-                  <li><strong>Not Refunded:</strong> Buyer cancellation, change of mind</li>
+                  <li><strong>{t('section4_buyer_refunded_label')}</strong> {t('section4_buyer_refunded_value')}</li>
+                  <li><strong>{t('section4_buyer_not_label')}</strong> {t('section4_buyer_not_value')}</li>
                 </ul>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">Seller Service Fees (1.5%)</h3>
+                <h3 className="text-lg font-semibold text-blue-800">{t('section4_seller_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4 mt-2">
-                  <li><strong>Refunded:</strong> Buyer cancellation before inspection</li>
-                  <li><strong>Not Refunded:</strong> Completed sales, seller cancellation (fees forfeited + penalty)</li>
+                  <li><strong>{t('section4_seller_refunded_label')}</strong> {t('section4_seller_refunded_value')}</li>
+                  <li><strong>{t('section4_seller_not_label')}</strong> {t('section4_seller_not_value')}</li>
                 </ul>
               </div>
             </div>
@@ -189,48 +153,48 @@ export default async function RefundPolicy() {
 
           {/* 5. Refund Process */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">5. How to Request a Refund</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section5_title')}</h2>
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">Step 1: Submit Request</h3>
+                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section5_step1_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
-                  <li>Log into your AutoScout24 SafeTrade account</li>
-                  <li>Navigate to the transaction in question</li>
-                  <li>Click "Request Refund" button</li>
-                  <li>Select refund reason from dropdown</li>
-                  <li>Provide detailed explanation</li>
+                  <li>{t('section5_step1_item1')}</li>
+                  <li>{t('section5_step1_item2')}</li>
+                  <li><strong>{t('section5_step1_item3_label')}</strong> {t('section5_step1_item3_value')}</li>
+                  <li>{t('section5_step1_item4')}</li>
+                  <li>{t('section5_step1_item5')}</li>
                 </ul>
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">Step 2: Submit Evidence</h3>
+                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section5_step2_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
-                  <li>Upload photos/videos showing issues</li>
-                  <li>Attach inspection reports (if applicable)</li>
-                  <li>Include communication records</li>
-                  <li>Provide any additional documentation</li>
+                  <li>{t('section5_step2_item1')}</li>
+                  <li>{t('section5_step2_item2')}</li>
+                  <li>{t('section5_step2_item3')}</li>
+                  <li>{t('section5_step2_item4')}</li>
                 </ul>
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">Step 3: Review Process</h3>
+                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section5_step3_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
-                  <li>Our team reviews your request within 48 hours</li>
-                  <li>We may contact you for additional information</li>
-                  <li>We may contact the seller for their response</li>
-                  <li>Independent verification may be conducted</li>
-                  <li>Decision communicated via email and platform notification</li>
+                  <li>{t('section5_step3_item1')}</li>
+                  <li>{t('section5_step3_item2')}</li>
+                  <li>{t('section5_step3_item3')}</li>
+                  <li>{t('section5_step3_item4')}</li>
+                  <li>{t('section5_step3_item5')}</li>
                 </ul>
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">Step 4: Refund Issuance</h3>
+                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section5_step4_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
-                  <li>Approved refunds processed within stated timeframes</li>
-                  <li>Funds returned to original bank account</li>
-                  <li>Confirmation email sent with transaction details</li>
-                  <li>Bank processing may take additional 3-5 business days</li>
+                  <li>{t('section5_step4_item1')}</li>
+                  <li>{t('section5_step4_item2')}</li>
+                  <li>{t('section5_step4_item3')}</li>
+                  <li>{t('section5_step4_item4')}</li>
                 </ul>
               </div>
             </div>
@@ -238,41 +202,41 @@ export default async function RefundPolicy() {
 
           {/* 6. Dispute Resolution */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">6. Dispute Resolution</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section6_title')}</h2>
             <p className="text-gray-700 mb-4">
-              If you disagree with our refund decision:
+              {t('section6_intro')}
             </p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-              <li><strong>Appeal Process:</strong> Submit an appeal within 7 days of decision with new evidence</li>
-              <li><strong>Mediation:</strong> Request independent mediation through our platform</li>
-              <li><strong>Arbitration:</strong> Final resolution through binding arbitration</li>
-              <li><strong>Legal Action:</strong> You retain the right to pursue legal remedies</li>
+              <li><strong>{t('section6_item1_label')}</strong> {t('section6_item1_value')}</li>
+              <li><strong>{t('section6_item2_label')}</strong> {t('section6_item2_value')}</li>
+              <li><strong>{t('section6_item3_label')}</strong> {t('section6_item3_value')}</li>
+              <li><strong>{t('section6_item4_label')}</strong> {t('section6_item4_value')}</li>
             </ul>
           </section>
 
           {/* 7. Special Circumstances */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">7. Special Circumstances</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section7_title')}</h2>
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">Fraudulent Listings</h3>
+                <h3 className="text-lg font-semibold text-blue-800">{t('section7_fraud_title')}</h3>
                 <p className="text-gray-700">
-                  If a listing is determined to be fraudulent, full refund including all fees will be issued immediately, and the seller's account will be permanently banned.
+                  {t('section7_fraud_content')}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">Stolen Vehicles</h3>
+                <h3 className="text-lg font-semibold text-blue-800">{t('section7_stolen_title')}</h3>
                 <p className="text-gray-700">
-                  If a vehicle is discovered to be stolen, transaction will be immediately canceled, full refund issued, and authorities notified.
+                  {t('section7_stolen_content')}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">Force Majeure</h3>
+                <h3 className="text-lg font-semibold text-blue-800">{t('section7_force_title')}</h3>
                 <p className="text-gray-700">
-                  In cases of natural disasters, war, or other unforeseeable circumstances preventing transaction completion, refunds will be issued on a case-by-case basis.
+                  {t('section7_force_content')}
                 </p>
               </div>
             </div>
@@ -280,41 +244,41 @@ export default async function RefundPolicy() {
 
           {/* 8. Refund Timeline Summary */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">8. Refund Timeline Summary</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section8_title')}</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">
                 <thead className="bg-blue-900 text-white">
                   <tr>
-                    <th className="px-4 py-3 text-left">Refund Type</th>
-                    <th className="px-4 py-3 text-left">Processing Time</th>
-                    <th className="px-4 py-3 text-left">Bank Clearance</th>
-                    <th className="px-4 py-3 text-left">Total Time</th>
+                    <th className="px-4 py-3 text-left">{t('table_header_type')}</th>
+                    <th className="px-4 py-3 text-left">{t('table_header_processing')}</th>
+                    <th className="px-4 py-3 text-left">{t('table_header_bank')}</th>
+                    <th className="px-4 py-3 text-left">{t('table_header_total')}</th>
                   </tr>
                 </thead>
                 <tbody className="text-gray-700">
                   <tr className="border-b bg-white">
-                    <td className="px-4 py-3">Seller Cancellation</td>
-                    <td className="px-4 py-3">3-5 days</td>
-                    <td className="px-4 py-3">3-5 days</td>
-                    <td className="px-4 py-3 font-semibold">6-10 days</td>
+                    <td className="px-4 py-3">{t('table_row1_type')}</td>
+                    <td className="px-4 py-3">{t('table_row1_processing')}</td>
+                    <td className="px-4 py-3">{t('table_row1_bank')}</td>
+                    <td className="px-4 py-3 font-semibold">{t('table_row1_total')}</td>
                   </tr>
                   <tr className="border-b bg-gray-50">
-                    <td className="px-4 py-3">Buyer Pre-Inspection</td>
-                    <td className="px-4 py-3">5-7 days</td>
-                    <td className="px-4 py-3">3-5 days</td>
-                    <td className="px-4 py-3 font-semibold">8-12 days</td>
+                    <td className="px-4 py-3">{t('table_row2_type')}</td>
+                    <td className="px-4 py-3">{t('table_row2_processing')}</td>
+                    <td className="px-4 py-3">{t('table_row2_bank')}</td>
+                    <td className="px-4 py-3 font-semibold">{t('table_row2_total')}</td>
                   </tr>
                   <tr className="border-b bg-white">
-                    <td className="px-4 py-3">Misrepresentation</td>
-                    <td className="px-4 py-3">7-10 days</td>
-                    <td className="px-4 py-3">3-5 days</td>
-                    <td className="px-4 py-3 font-semibold">10-15 days</td>
+                    <td className="px-4 py-3">{t('table_row3_type')}</td>
+                    <td className="px-4 py-3">{t('table_row3_processing')}</td>
+                    <td className="px-4 py-3">{t('table_row3_bank')}</td>
+                    <td className="px-4 py-3 font-semibold">{t('table_row3_total')}</td>
                   </tr>
                   <tr className="bg-gray-50">
-                    <td className="px-4 py-3">Failed Inspection</td>
-                    <td className="px-4 py-3">7-10 days</td>
-                    <td className="px-4 py-3">3-5 days</td>
-                    <td className="px-4 py-3 font-semibold">10-15 days</td>
+                    <td className="px-4 py-3">{t('table_row4_type')}</td>
+                    <td className="px-4 py-3">{t('table_row4_processing')}</td>
+                    <td className="px-4 py-3">{t('table_row4_bank')}</td>
+                    <td className="px-4 py-3 font-semibold">{t('table_row4_total')}</td>
                   </tr>
                 </tbody>
               </table>
@@ -323,45 +287,41 @@ export default async function RefundPolicy() {
 
           {/* Contact */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">9. Contact Us</h2>
+            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section9_title')}</h2>
             <p className="text-gray-700 mb-4">
-              For questions about refunds or to request assistance:
+              {t('section9_intro')}
             </p>
             <ul className="space-y-2 text-gray-700">
-              <li><strong>Email:</strong> refunds@autoscout24-safetrade.com</li>
-              <li><strong>Phone:</strong> +40 21 XXX XXXX (Mon-Fri, 9:00-18:00)</li>
-              <li><strong>Live Chat:</strong> Available through your account dashboard</li>
+              <li><strong>{t('section9_email_label')}</strong> {t('section9_email_value')}</li>
+              <li><strong>{t('section9_phone_label')}</strong> {t('section9_phone_value')}</li>
+              <li><strong>{t('section9_chat_label')}</strong> {t('section9_chat_value')}</li>
             </ul>
           </section>
 
           {/* Important Notice */}
           <div className="mt-8 p-6 bg-orange-50 rounded-lg border-l-4 border-orange-500">
             <p className="text-gray-700 font-semibold mb-2">
-              ⚠️ Important Notice
+              {t('notice_title')}
             </p>
             <p className="text-gray-700">
-              This Refund Policy is part of our Terms of Service. By using AutoScout24 SafeTrade, you agree to these refund terms. We reserve the right to update this policy at any time with notice to users.
+              {t('notice_content')}
             </p>
           </div>
-        </div>
-      </div>
 
-      {/* Footer */}
-      <footer className="bg-blue-900 text-white mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex justify-between items-center">
-            <div className="text-sm text-blue-300">
-              © 2026 AutoScout24 SafeTrade. All rights reserved.
-            </div>
-            <div className="flex space-x-6 text-sm">
-              <a href="/legal/terms" className="text-blue-300 hover:text-white">Terms of Service</a>
-              <a href="/legal/privacy" className="text-blue-300 hover:text-white">Privacy Policy</a>
-              <a href="/legal/cookies" className="text-blue-300 hover:text-white">Cookie Policy</a>
-            </div>
+          {/* Contact */}
+          <div className="mt-12 p-6 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+            <p className="text-gray-700 font-semibold mb-3">
+              {t('contact_title')}
+            </p>
+            <ul className="text-gray-700 space-y-1">
+              <li><strong>{t('contact_email_label')}</strong> {t('contact_email_value')}</li>
+              <li><strong>{t('contact_phone_label')}</strong> {t('contact_phone_value')}</li>
+            </ul>
           </div>
         </div>
-      </footer>
       </div>
+      </div>
+
       <Footer />
     </>
   )

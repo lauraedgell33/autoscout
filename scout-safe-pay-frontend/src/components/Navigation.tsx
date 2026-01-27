@@ -1,7 +1,6 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from '@/i18n/routing'
+import { Link, usePathname } from '@/i18n/routing'
 import { useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTranslations } from 'next-intl'
@@ -97,14 +96,14 @@ export default function Navigation() {
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-50"
                       onClick={() => setUserMenuOpen(false)}
                     >
-                      Dashboard
+                      {t('nav.dashboard')}
                     </Link>
                     <Link
                       href="/dashboard/profile"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-50"
                       onClick={() => setUserMenuOpen(false)}
                     >
-                      Profile Settings
+                      {t('nav.profile')}
                     </Link>
                     {user?.role === 'seller' && (
                       <Link
@@ -112,7 +111,7 @@ export default function Navigation() {
                         className="block px-4 py-2 text-gray-700 hover:bg-gray-50"
                         onClick={() => setUserMenuOpen(false)}
                       >
-                        My Vehicles
+                        {t('nav.my_vehicles')}
                       </Link>
                     )}
                     <hr className="my-2" />
@@ -120,7 +119,7 @@ export default function Navigation() {
                       onClick={handleLogout}
                       className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-50"
                     >
-                      Sign Out
+                      {t('nav.logout')}
                     </button>
                   </div>
                 )}
@@ -163,9 +162,9 @@ export default function Navigation() {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-gray-200">
           <div className="px-4 py-3 space-y-3">
-            <Link href="/marketplace" className="block text-gray-700 hover:text-blue-900 font-medium">Marketplace</Link>
-            <Link href="/how-it-works" className="block text-gray-700 hover:text-blue-900 font-medium">How It Works</Link>
-            <Link href="/benefits" className="block text-gray-700 hover:text-blue-900 font-medium">Benefits</Link>
+            <Link href="/marketplace" className="block text-gray-700 hover:text-blue-900 font-medium">{t('nav.marketplace')}</Link>
+            <Link href="/how-it-works" className="block text-gray-700 hover:text-blue-900 font-medium">{t('nav.how_it_works')}</Link>
+            <Link href="/benefits" className="block text-gray-700 hover:text-blue-900 font-medium">{t('nav.benefits')}</Link>
             
             {/* Mobile Language and Currency Switchers */}
             <div className="flex items-center gap-2 pt-2">
@@ -186,28 +185,28 @@ export default function Navigation() {
                   href={user?.role === 'seller' ? '/dashboard/seller' : '/dashboard/buyer'}
                   className="block text-gray-700 hover:text-blue-900 font-medium"
                 >
-                  Dashboard
+                  {t('nav.dashboard')}
                 </Link>
                 {user?.role === 'seller' && (
                   <Link href="/dashboard/vehicles" className="block text-gray-700 hover:text-blue-900 font-medium">
-                    My Vehicles
+                    {t('nav.my_vehicles')}
                   </Link>
                 )}
                 <Link href="/dashboard/profile" className="block text-gray-700 hover:text-blue-900 font-medium">
-                  Profile Settings
+                  {t('nav.profile')}
                 </Link>
                 <button
                   onClick={handleLogout}
                   className="block w-full text-left text-red-600 font-medium"
                 >
-                  Sign Out
+                  {t('nav.logout')}
                 </button>
               </>
             ) : (
               <>
-                <Link href="/login" className="block text-gray-700 hover:text-blue-900 font-medium">Sign In</Link>
+                <Link href="/login" className="block text-gray-700 hover:text-blue-900 font-medium">{t('nav.login')}</Link>
                 <Link href="/register" className="block bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold text-center">
-                  Get Started
+                  {t('nav.register')}
                 </Link>
               </>
             )}

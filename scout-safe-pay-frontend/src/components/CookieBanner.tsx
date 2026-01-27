@@ -23,6 +23,7 @@ interface CookieResponse {
 
 export default function CookieBanner() {
   const t = useTranslations();
+  const tCommon = useTranslations('common');
   const [showBanner, setShowBanner] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [preferences, setPreferences] = useState<CookiePreferences>({
@@ -348,7 +349,7 @@ export default function CookieBanner() {
                   {t('cookies.saving') || 'Saving...'}
                 </span>
               ) : (
-                t('common.save') || 'Save Preferences'
+                tCommon('save') || 'Save Preferences'
               )}
             </button>
           )}

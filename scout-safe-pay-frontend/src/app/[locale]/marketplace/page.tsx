@@ -1,6 +1,8 @@
 'use client'
 
-import Link from 'next/link'
+import Image from 'next/image'
+
+import { Link } from '@/i18n/routing'
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { useCurrency } from '@/contexts/CurrencyContext'
@@ -11,6 +13,8 @@ import Footer from '@/components/Footer'
 
 export default function MarketplacePage() {
   const t = useTranslations()
+  const tCommon = useTranslations('common')
+  const tVehicle = useTranslations('vehicle')
   const { formatPrice } = useCurrency()
   const [vehicles, setVehicles] = useState<Vehicle[]>([])
   const [loading, setLoading] = useState(true)
@@ -185,14 +189,14 @@ export default function MarketplacePage() {
                     <div className="grid grid-cols-2 gap-2">
                       <input
                         type="number"
-                        placeholder={t('common.from')}
+                        placeholder={tCommon('from')}
                         value={filters.price_min || ''}
                         onChange={(e) => handleFilterChange('price_min', e.target.value ? parseInt(e.target.value) : undefined)}
                         className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                       />
                       <input
                         type="number"
-                        placeholder={t('common.to')}
+                        placeholder={tCommon('to')}
                         value={filters.price_max || ''}
                         onChange={(e) => handleFilterChange('price_max', e.target.value ? parseInt(e.target.value) : undefined)}
                         className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
@@ -218,14 +222,14 @@ export default function MarketplacePage() {
             <div className="lg:col-span-3">
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
-                  {t('common.error')}
+                  {tCommon('error')}
                 </div>
               )}
 
               {loading ? (
                 <div className="text-center py-12">
                   <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
-                  <p className="mt-4 text-gray-600">{t('common.loading')}</p>
+                  <p className="mt-4 text-gray-600">{tCommon('loading')}</p>
                 </div>
               ) : vehicles.length === 0 ? (
                 <div className="text-center py-12 bg-gray-50 rounded-lg">
@@ -257,7 +261,7 @@ export default function MarketplacePage() {
                               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                               </svg>
-                              {t('vehicle.safetrade_protected')}
+                              {tVehicle('safetrade_protected')}
                             </span>
                           </div>
                         </div>
@@ -305,7 +309,7 @@ export default function MarketplacePage() {
                           onClick={() => handlePageChange(pagination.current_page - 1)}
                           className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
                         >
-                          {t('common.previous')}
+                          {tCommon('previous')}
                         </button>
                       )}
                       
@@ -333,7 +337,7 @@ export default function MarketplacePage() {
                           onClick={() => handlePageChange(pagination.current_page + 1)}
                           className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
                         >
-                          {t('common.next')}
+                          {tCommon('next')}
                         </button>
                       )}
                     </div>

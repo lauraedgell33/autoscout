@@ -1,0 +1,37 @@
+nav.dashboard|Dashboard
+marketplace.categories.atv|ATVs
+marketplace.categories.quad|Quads
+marketplace.status.label|Status
+vehicle.fuel_types.diesel|Diesel
+vehicle.fuel_types.hybrid|Hybrid
+vehicle.body_types.suv|SUV
+vehicle.body_types.van|Van
+vehicle.body_types.pickup|Pickup
+transaction.status|Status
+transaction.file_formats|PDF, PNG, JPG (max 10MB)
+legal.cookies.third_party_ga_label|Google Analytics:
+legal.cookies.third_party_fb_label|Facebook Pixel:
+legal.cookies.third_party_hotjar_label|Hotjar:
+legal.cookies.management_browser_chrome_label|Chrome:
+legal.cookies.management_browser_firefox_label|Firefox:
+legal.cookies.management_browser_safari_label|Safari:
+legal.cookies.management_browser_edge_label|Edge:
+legal.cookies.management_optout_ga_label|Google Analytics:
+legal.refund.section6_item2_label|Mediation:
+legal.purchase.signature_name|Name:
+legal.purchase.signature_ip|IP:
+legal.purchase.section12_1_label|12.1 Mediation:
+common.km|km
+currency.eur|Euro
+benefits.comp6|Support
+dashboard.title|Dashboard
+status.label|Status
+categories.atv|ATV
+categories.quad|Quad
+transactions.status|Status
+metadata.dashboard_title|Dashboard
+auth.login.password_placeholder|••••••••
+auth.login.support_24_7|24/7 Support
+auth.register.password_placeholder|••••••••
+auth.register.password_confirm_placeholder|••••••••
+auth.register.support_24_7|24/7 Support
