@@ -81,7 +81,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com",
-              "connect-src 'self' http://localhost:8000 http://localhost:8002",
+              "connect-src 'self' http://localhost:8000 http://localhost:8002 https://*.vapor-farm-x1.com https://*.cloudfront.net",
               "frame-ancestors 'self'",
               "base-uri 'self'",
               "form-action 'self'",

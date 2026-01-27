@@ -5,9 +5,19 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:3003', 'http://localhost:3004'],
+    'allowed_origins' => [
+        'http://localhost:3000', 
+        'http://localhost:3001', 
+        'http://localhost:3002', 
+        'http://localhost:3003', 
+        'http://localhost:3004',
+        env('FRONTEND_URL'),
+    ],
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => [
+        '/\.vercel\.app$/',
+        '/\.vapor-farm-.*\.com$/',
+    ],
 
     'allowed_headers' => ['*'],
 
