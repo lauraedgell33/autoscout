@@ -170,7 +170,6 @@ export default function DealersPageClient() {
               </Card>
             ))}
           </div>
-          )}
         ) : dealers.length === 0 ? (
         <div className="text-center py-16 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
           <div className="text-6xl mb-4">🏢</div>
@@ -309,6 +308,7 @@ export default function DealersPageClient() {
           )}
         </>
       )}
+      </div>
     </div>
   )
 }
