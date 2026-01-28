@@ -1,0 +1,47 @@
+name: Deploy Backend to Forge
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'scout-safe-pay-backend/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Laravel Forge
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.FORGE_SSH_KEY }}
+
+      - name: Add Forge to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 146.190.185.209 >> ~/.ssh/known_hosts
+
+      - name: Deploy to Forge
+        run: |
+          ssh forge@146.190.185.209 'bash adminautoscout.dev/.deployment'
+
+      - name: Verify Deployment
+        run: |
+          echo "Testing API endpoint..."
+          curl -f https://adminautoscout.dev/api/dealers || exit 1
+          echo "✅ Backend deployment successful!"
+
+      - name: Notify on Success
+        if: success()
+        run: echo "🎉 Backend deployed successfully to https://adminautoscout.dev"
+
+      - name: Notify on Failure
+        if: failure()
+        run: echo "❌ Backend deployment failed!"
