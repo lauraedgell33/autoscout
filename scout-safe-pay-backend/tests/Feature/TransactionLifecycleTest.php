@@ -35,7 +35,7 @@ class TransactionLifecycleTest extends TestCase
 
         // Create test vehicle
         $this->vehicle = Vehicle::factory()->create([
-            'user_id' => $this->seller->id,
+            'seller_id' => $this->seller->id,
             'status' => 'active',
             'price' => 25000,
         ]);

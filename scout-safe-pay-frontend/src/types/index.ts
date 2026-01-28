@@ -63,20 +63,70 @@ export interface Dealer {
   id: number
   name: string
   company_name: string
-  email: string
-  phone: string
+  vat_number: string | null
+  registration_number: string | null
   address: string
   city: string
   postal_code: string
   country: string
+  phone: string
+  email: string
   website: string | null
-  logo_url: string | null
-  description: string | null
-  rating: number | null
-  total_sales: number
+  type: 'individual' | 'company'
+  status: 'active' | 'inactive' | 'suspended' | 'pending'
+  max_active_listings: number | null
+  bank_account_holder: string | null
+  bank_iban: string | null
+  bank_swift: string | null
+  bank_name: string | null
   is_verified: boolean
+  verified_at: string | null
+  verified_by: number | null
+  business_license_url: string | null
+  tax_certificate_url: string | null
+  logo_url: string | null
+  autoscout_dealer_id: string | null
+  autoscout_settings: Record<string, any> | null
   created_at: string
   updated_at: string
+  deleted_at: string | null
+  // Relationships
+  users?: User[]
+  vehicles?: Vehicle[]
+  vehicles_count?: number
+  review_stats?: {
+    average_rating: number
+    total_reviews: number
+  }
+}
+
+// Review related types
+export interface Review {
+  id: number
+  transaction_id: number
+  reviewer_id: number
+  reviewee_id: number
+  vehicle_id: number | null
+  rating: number
+  comment: string | null
+  review_type: 'buyer' | 'seller' | 'vehicle'
+  status: 'pending' | 'approved' | 'rejected'
+  admin_note: string | null
+  metadata: Record<string, any> | null
+  created_at: string
+  updated_at: string
+  deleted_at: string | null
+  // Relationships
+  transaction?: Transaction
+  reviewer?: User
+  reviewee?: User
+  vehicle?: Vehicle
+}
+
+export interface ReviewStats {
+  average_rating: number
+  total_reviews: number
+  rating_breakdown: Record<string, number>
 }
 
 // Transaction related types

@@ -42,6 +42,11 @@ Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show']);
 Route::get('/vehicles-featured', [VehicleController::class, 'featured']);
 Route::get('/vehicles-statistics', [VehicleController::class, 'statistics']);
 
+// Public dealer routes
+Route::get('/dealers', [App\Http\Controllers\API\DealerController::class, 'index']);
+Route::get('/dealers/{dealer}', [App\Http\Controllers\API\DealerController::class, 'show']);
+Route::get('/dealers-statistics', [App\Http\Controllers\API\DealerController::class, 'statistics']);
+
 // Public review routes
 Route::get('/users/{user}/reviews', [App\Http\Controllers\API\ReviewController::class, 'getUserReviews']);
 Route::get('/vehicles/{vehicle}/reviews', [App\Http\Controllers\API\ReviewController::class, 'getVehicleReviews']);
@@ -60,6 +65,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
+    
+    // User Profile
+    Route::get('/user/profile', [AuthController::class, 'user']);
+    Route::put('/user/profile', [AuthController::class, 'updateProfile']);
+    Route::put('/user/password', [AuthController::class, 'updatePassword']);
+    Route::delete('/user/account', [AuthController::class, 'deleteAccount']);
+    
+    // Dashboard
+    Route::get('/dashboard', [AuthController::class, 'dashboard']);
     
     // KYC
     Route::post('/kyc/submit', [KYCController::class, 'submit'])->middleware('throttle:10,60');
@@ -174,6 +188,13 @@ Route::middleware('auth:sanctum')->prefix('invoices')->group(function () {
 
 // Admin Routes
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
+    // Dealer management
+    Route::get('/dealers', [App\Http\Controllers\API\DealerController::class, 'index']);
+    Route::post('/dealers', [App\Http\Controllers\API\DealerController::class, 'store']);
+    Route::get('/dealers/{dealer}', [App\Http\Controllers\API\DealerController::class, 'show']);
+    Route::put('/dealers/{dealer}', [App\Http\Controllers\API\DealerController::class, 'update']);
+    Route::delete('/dealers/{dealer}', [App\Http\Controllers\API\DealerController::class, 'destroy']);
+    
     // KYC Management
     Route::get('/kyc/pending', [KYCController::class, 'pending']);
     Route::post('/kyc/{userId}/verify', [KYCController::class, 'verify']);

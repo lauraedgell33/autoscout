@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Scout\Searchable;
 
 class Vehicle extends Model
 {
-    use SoftDeletes, Searchable;
+    use SoftDeletes, Searchable, HasFactory;
 
     protected $fillable = [
         'dealer_id',

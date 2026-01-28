@@ -48,6 +48,16 @@ export default function Navigation() {
               {t('nav.marketplace')}
             </Link>
             <Link 
+              href="/dealers" 
+              className={`font-medium ${
+                isActive('/dealers') 
+                  ? 'text-blue-900 font-bold border-b-2 border-blue-900' 
+                  : 'text-gray-700 hover:text-blue-900'
+              }`}
+            >
+              {t('nav.dealers')}
+            </Link>
+            <Link 
               href="/how-it-works" 
               className={`font-medium ${
                 isActive('/how-it-works') 
@@ -163,6 +173,7 @@ export default function Navigation() {
         <div className="md:hidden border-t border-gray-200">
           <div className="px-4 py-3 space-y-3">
             <Link href="/marketplace" className="block text-gray-700 hover:text-blue-900 font-medium">{t('nav.marketplace')}</Link>
+            <Link href="/dealers" className="block text-gray-700 hover:text-blue-900 font-medium">{t('nav.dealers')}</Link>
             <Link href="/how-it-works" className="block text-gray-700 hover:text-blue-900 font-medium">{t('nav.how_it_works')}</Link>
             <Link href="/benefits" className="block text-gray-700 hover:text-blue-900 font-medium">{t('nav.benefits')}</Link>
             

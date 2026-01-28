@@ -11,6 +11,13 @@ class VehicleStatsOverview extends StatsOverviewWidget
 {
     protected function getStats(): array
     {
+        $totalValue = Vehicle::where('status', 'active')->sum('price');
+        
+        // Format currency manually if intl extension is not available
+        $formattedValue = extension_loaded('intl') 
+            ? Number::currency($totalValue, 'EUR')
+            : '€' . number_format($totalValue, 2, ',', '.');
+
         return [
             Stat::make('Total Vehicule', Vehicle::count())
                 ->description('Toate vehiculele din sistem')
@@ -29,10 +36,7 @@ class VehicleStatsOverview extends StatsOverviewWidget
                 ->descriptionIcon('heroicon-o-shopping-cart')
                 ->color('info'),
             
-            Stat::make('Valoare Stoc', Number::currency(
-                Vehicle::where('status', 'active')->sum('price'),
-                'EUR'
-            ))
+            Stat::make('Valoare Stoc', $formattedValue)
                 ->description('Valoare totală vehicule active')
                 ->descriptionIcon('heroicon-o-currency-euro')
                 ->color('warning'),
