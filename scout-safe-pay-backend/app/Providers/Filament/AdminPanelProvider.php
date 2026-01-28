@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->authGuard('web')
             ->brandName('AutoScout24 SafeTrade')
             ->brandLogo(asset('images/logo.svg'))
             ->brandLogoHeight('2.5rem')

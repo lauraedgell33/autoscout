@@ -127,6 +127,7 @@ class User extends Authenticatable
      */
     public function canAccessPanel(\Filament\Panel $panel): bool
     {
-        return in_array($this->user_type, ['super_admin', 'admin']);
+        // Allow super_admin and admin users to access admin panel
+        return in_array($this->user_type, ['super_admin', 'admin']) && $this->email_verified_at !== null;
     }
 }
