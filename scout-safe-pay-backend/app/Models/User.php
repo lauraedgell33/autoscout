@@ -121,4 +121,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Dispute::class, 'raised_by_user_id');
     }
+
+    /**
+     * Determine if the user can access the Filament admin panel.
+     */
+    public function canAccessPanel(\Filament\Panel $panel): bool
+    {
+        return in_array($this->user_type, ['super_admin', 'admin']);
+    }
 }
