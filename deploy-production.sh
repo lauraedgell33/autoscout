@@ -14,6 +14,10 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
+# Ensure correct Git repository on Forge
+echo -e "\n${BLUE}🔧 Ensuring correct Git repository (lauraedgell33/autoscout)...${NC}"
+ssh forge@146.190.185.209 'cd adminautoscout.dev/releases/000000 && git remote set-url origin https://github.com/lauraedgell33/autoscout.git'
+
 # Backend Deployment (Laravel Forge)
 echo -e "\n${BLUE}📦 Deploying Backend to Forge...${NC}"
 ssh forge@146.190.185.209 'bash adminautoscout.dev/.deployment' || {
