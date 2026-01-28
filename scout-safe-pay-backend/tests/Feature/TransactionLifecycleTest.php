@@ -41,12 +41,23 @@ class TransactionLifecycleTest extends TestCase
         ]);
     }
 
+    public function test_transaction_model_has_factory()
+    {
+        // Verify that Transaction factory exists and can create records
+        $transaction = Transaction::factory()->create();
+        
+        $this->assertNotNull($transaction->id);
+        $this->assertNotNull($transaction->escrow_account_iban);
+        $this->assertEquals('EUR', $transaction->currency);
+    }
+
     public function test_buyer_can_create_transaction()
     {
         $response = $this->actingAs($this->buyer, 'sanctum')
             ->postJson('/api/transactions', [
                 'vehicle_id' => $this->vehicle->id,
                 'payment_method' => 'bank_transfer',
+                'escrow_account_iban' => 'DE89370400440532013000',
                 'buyer_info' => [
                     'address' => '123 Test St',
                     'city' => 'Berlin',
