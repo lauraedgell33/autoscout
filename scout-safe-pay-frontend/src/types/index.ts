@@ -72,7 +72,7 @@ export interface Dealer {
   phone: string
   email: string
   website: string | null
-  type: 'individual' | 'company'
+  type: 'individual' | 'company' | 'manufacturer'
   status: 'active' | 'inactive' | 'suspended' | 'pending'
   max_active_listings: number | null
   bank_account_holder: string | null
