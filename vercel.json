@@ -4,5 +4,5 @@
   "installCommand": "cd scout-safe-pay-frontend && npm install",
   "framework": "nextjs",
   "nodeVersion": "20.x",
-  "outputDirectory": "scout-safe-pay-frontend/.next"
+  "outputDirectory": "./scout-safe-pay-frontend/.next/standalone"
 }
