@@ -212,9 +212,9 @@ export default function DisputeDetailsPage() {
                   multiple
                   accept="image/*,.pdf"
                   onChange={handleFileChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
-                {attachments.length > 0 && (
+                {(attachments || []).length > 0 && (
                   <div className="mt-2 space-y-1">
                     {attachments.map((file, index) => (
                       <p key={index} className="text-sm text-green-600">

@@ -95,7 +95,7 @@ export default function DealersPageClient() {
             {/* Quick Stats */}
             <div className="grid grid-cols-3 gap-4 mt-8">
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
-                <div className="text-3xl font-bold">{dealers.length}+</div>
+                <div className="text-3xl font-bold">{(dealers || []).length}+</div>
                 <div className="text-sm text-blue-100">{t('verifiedDealers')}</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
@@ -171,15 +171,15 @@ export default function DealersPageClient() {
         {!loading && (
           <div className="mb-8 flex justify-between items-center">
             <div className="text-lg font-semibold text-gray-900">
-              {dealers.length > 0 ? (
+              {(dealers || []).length > 0 ? (
                 <>
-                  <span className="text-blue-600">{dealers.length}</span> {t('dealersFound')}
+                  <span className="text-blue-600">{(dealers || []).length}</span> {t('dealersFound')}
                 </>
               ) : (
                 <span>{t('noDealersFound')}</span>
               )}
             </div>
-            {dealers.length > 0 && (
+            {(dealers || []).length > 0 && (
               <div className="text-sm text-gray-600">
                 {t('page')} {currentPage} {t('of')} {totalPages}
               </div>

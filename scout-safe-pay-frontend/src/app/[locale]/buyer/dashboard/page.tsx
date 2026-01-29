@@ -187,7 +187,7 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
           </div>
         ) : (
           <div className="space-y-4">
-            {recentTransactions.map((transaction) => (
+            {(recentTransactions || []).map((transaction) => (
               <div
                 key={transaction.id}
                 className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"

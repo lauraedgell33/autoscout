@@ -237,7 +237,7 @@ export default function MarketplacePage() {
               ) : (
                 <>
                   <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {vehicles.map((vehicle) => (
+                    {(vehicles || []).map((vehicle) => (
                       <Link
                         key={vehicle.id}
                         href={`/vehicle/${vehicle.id}`}

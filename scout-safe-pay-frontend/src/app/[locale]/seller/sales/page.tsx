@@ -105,7 +105,7 @@ export default function SellerSalesPage({ params }: { params: { locale: string }
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-gray-900 divide-y">
-                {filteredSales.map((sale) => (
+                {(filteredSales || []).map((sale) => (
                   <tr key={sale.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
                     <td className="px-6 py-4 text-sm">#{sale.id.slice(0, 8)}</td>
                     <td className="px-6 py-4">

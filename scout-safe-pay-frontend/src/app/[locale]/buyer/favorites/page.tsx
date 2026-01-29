@@ -41,7 +41,7 @@ export default function BuyerFavoritesPage({ params }: { params: { locale: strin
     try {
       const response = await favoritesService.list();
       setFavorites(response.data || []);
-      toast.success(`Loaded ${response.data.length} favorites`);
+      toast.success(`Loaded ${(response.data || []).length} favorites`);
     } catch (error: any) {
       console.error('Error fetching favorites:', error);
       toast.error(error.response?.data?.message || 'Failed to load favorites');

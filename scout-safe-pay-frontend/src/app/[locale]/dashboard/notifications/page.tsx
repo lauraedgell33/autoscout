@@ -67,7 +67,7 @@ export default function NotificationsPage() {
     }
   }
 
-  const unreadCount = notifications.filter(n => !n.read_at).length
+  const unreadCount = (notifications || []).filter(n => !n.read_at).length
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">

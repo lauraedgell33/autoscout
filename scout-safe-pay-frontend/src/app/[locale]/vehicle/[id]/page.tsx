@@ -133,7 +133,7 @@ export default function VehicleDetailsPage() {
               </div>
               
               {/* Thumbnail Gallery */}
-              {images.length > 1 && (
+              {(images || []).length > 1 && (
                 <div className="grid grid-cols-6 gap-2 p-4 bg-gray-50">
                   {images.map((image, index) => (
                     <button

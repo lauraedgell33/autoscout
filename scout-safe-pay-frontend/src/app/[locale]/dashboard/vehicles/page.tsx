@@ -75,7 +75,7 @@ export default function MyVehiclesPage() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-3xl font-bold text-blue-900">My Vehicles</h1>
-              <p className="text-gray-600 mt-1">{vehicles.length} vehicles listed</p>
+              <p className="text-gray-600 mt-1">{(vehicles || []).length} vehicles listed</p>
             </div>
             <div className="flex items-center gap-4">
               <div className="flex gap-2">

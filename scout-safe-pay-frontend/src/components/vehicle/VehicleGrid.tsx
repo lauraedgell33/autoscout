@@ -44,7 +44,7 @@ export const VehicleGrid: React.FC = () => {
       whileInView="visible"
       viewport={{ once: true }}
     >
-      {vehicles.map((vehicle) => (
+      {(vehicles || []).map((vehicle) => (
         <motion.div
           key={vehicle.id}
           variants={staggerItem}

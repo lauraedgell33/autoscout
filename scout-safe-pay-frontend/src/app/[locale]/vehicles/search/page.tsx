@@ -171,11 +171,11 @@ export default function VehicleSearchPage({ params }: { params: { locale: string
       </Card>
 
       {/* Results */}
-      {vehicles.length > 0 && (
+      {(vehicles || []).length > 0 && (
         <div>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-              {vehicles.length} vehicles found
+              {(vehicles || []).length} vehicles found
             </h2>
             <select className="px-4 py-2 border rounded-lg">
               <option>Sort by: Relevance</option>
