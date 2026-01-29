@@ -1,0 +1,71 @@
+======================================
+  COMPLETE SYSTEM TEST
+======================================
+
+Testing Backend API...
+---
+[0;32m✓[0m API Health (HTTP 200)
+[0;32m✓[0m API Settings (HTTP 200)
+[0;32m✓[0m API Frontend Settings (HTTP 200)
+[0;32m✓[0m API Contact Settings (HTTP 200)
+[0;32m✓[0m API Available Locales (HTTP 200)
+[0;32m✓[0m API Legal Documents (HTTP 200)
+[0;32m✓[0m API Terms (HTTP 200)
+[0;32m✓[0m API Privacy (HTTP 200)
+[0;32m✓[0m API Cookies (HTTP 200)
+
+Testing Frontend Pages...
+---
+[0;32m✓[0m Homepage EN (HTTP 200)
+[0;32m✓[0m Homepage RO (HTTP 200)
+[0;32m✓[0m Homepage DE (HTTP 200)
+[0;32m✓[0m Homepage FR (HTTP 200)
+[0;32m✓[0m Homepage ES (HTTP 200)
+[0;31m✗[0m Login [en] (Expected HTTP 200, got 404)
+[0;31m✗[0m Register [en] (Expected HTTP 200, got 404)
+[0;31m✗[0m Forgot Password [en] (Expected HTTP 200, got 404)
+[0;31m✗[0m Reset Password [en] (Expected HTTP 200, got 404)
+[0;31m✗[0m Login [ro] (Expected HTTP 200, got 404)
+[0;31m✗[0m Register [ro] (Expected HTTP 200, got 404)
+[0;31m✗[0m Forgot Password [ro] (Expected HTTP 200, got 404)
+[0;31m✗[0m Reset Password [ro] (Expected HTTP 200, got 404)
+[0;31m✗[0m Login [de] (Expected HTTP 200, got 404)
+[0;31m✗[0m Register [de] (Expected HTTP 200, got 404)
+[0;31m✗[0m Forgot Password [de] (Expected HTTP 200, got 404)
+[0;31m✗[0m Reset Password [de] (Expected HTTP 200, got 404)
+[0;31m✗[0m Login [fr] (Expected HTTP 200, got 404)
+[0;31m✗[0m Register [fr] (Expected HTTP 200, got 404)
+[0;31m✗[0m Forgot Password [fr] (Expected HTTP 200, got 404)
+[0;31m✗[0m Reset Password [fr] (Expected HTTP 200, got 404)
+[0;31m✗[0m Login [es] (Expected HTTP 200, got 404)
+[0;31m✗[0m Register [es] (Expected HTTP 200, got 404)
+[0;31m✗[0m Forgot Password [es] (Expected HTTP 200, got 404)
+[0;31m✗[0m Reset Password [es] (Expected HTTP 200, got 404)
+[0;32m✓[0m Buyer Dashboard EN (HTTP 200)
+[0;32m✓[0m Seller Dashboard EN (HTTP 200)
+[0;32m✓[0m Dealer Dashboard EN (HTTP 200)
+[0;31m✗[0m Buyer Profile EN (Expected HTTP 200, got 404)
+[0;31m✗[0m Buyer Settings EN (Expected HTTP 200, got 404)
+[0;31m✗[0m Buyer Notifications EN (Expected HTTP 200, got 404)
+[0;31m✗[0m Seller Profile EN (Expected HTTP 200, got 404)
+[0;31m✗[0m Seller Settings EN (Expected HTTP 200, got 404)
+[0;31m✗[0m Seller Analytics EN (Expected HTTP 200, got 404)
+[0;31m✗[0m Dealer Profile EN (Expected HTTP 200, got 404)
+[0;31m✗[0m Dealer Settings EN (Expected HTTP 200, got 404)
+[0;31m✗[0m Support Help EN (Expected HTTP 200, got 404)
+[0;31m✗[0m Support Tickets EN (Expected HTTP 200, got 404)
+[0;31m✗[0m Add Vehicle EN (Expected HTTP 200, got 404)
+[0;32m✓[0m Vehicles Search EN (HTTP 200)
+[0;32m✓[0m Terms EN (HTTP 200)
+[0;32m✓[0m Privacy EN (HTTP 200)
+[0;32m✓[0m Cookies EN (HTTP 200)
+[0;32m✓[0m Contact EN (HTTP 200)
+
+======================================
+  TEST SUMMARY
+======================================
+Total Tests:  53
+[0;32mPassed:       22[0m
+[0;31mFailed:       31[0m
+
+Pass Rate: [1;33m41%[0m
