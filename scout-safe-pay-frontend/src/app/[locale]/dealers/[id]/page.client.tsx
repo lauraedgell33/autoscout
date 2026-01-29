@@ -470,7 +470,13 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                           <a href={dealer.website} target="_blank" rel="noopener noreferrer" className="block md:col-span-2">
                             <Button variant="outline" className="w-full h-14 border-2 border-blue-300 hover:bg-blue-50">
                               <Globe className="w-5 h-5 mr-2" />
-                              {dealer.website.replace(/^https?:\/\//, '')}
+                              {(() => {
+                                try {
+                                  return new URL(dealer.website).host;
+                                } catch {
+                                  return dealer.website;
+                                }
+                              })()}
                             </Button>
                           </a>
                         )}

@@ -1,0 +1,45 @@
+
+> scout-safe-pay-frontend@0.1.0 build
+> next build
+
+⚠ `eslint` configuration in next.config.ts is no longer supported. See more info here: https://nextjs.org/docs/app/api-reference/cli/next#next-lint-options
+⚠ Invalid next.config.ts options detected: 
+⚠     Unrecognized key(s) in object: 'eslint'
+⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /workspaces/autoscout/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /workspaces/autoscout/scout-safe-pay-frontend/package-lock.json
+
+▲ Next.js 16.1.1 (Turbopack)
+- Environments: .env.local
+- Experiments (use with caution):
+  · optimizePackageImports
+  ✓ scrollRestoration
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./scout-safe-pay-frontend/src/app/[locale]/dealers/[id]/page.client.tsx:674:6
+Parsing ecmascript source code failed
+[0m [90m 672 |[39m         [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m 673 |[39m       [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+[31m[1m>[22m[39m[90m 674 |[39m     [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m     |[39m      [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 675 |[39m   )
+ [90m 676 |[39m }
+ [90m 677 |[39m[0m
+
+Unterminated regexp literal
+
+Import trace:
+  Server Component:
+    ./scout-safe-pay-frontend/src/app/[locale]/dealers/[id]/page.client.tsx
+    ./scout-safe-pay-frontend/src/app/[locale]/dealers/[id]/page.tsx
+
+
+    at <unknown> (./scout-safe-pay-frontend/src/app/[locale]/dealers/[id]/page.client.tsx:674:6)
