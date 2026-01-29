@@ -26,6 +26,7 @@ export default function Footer() {
               <Link href="/marketplace" className="block text-blue-200 hover:text-white">{t('footer.marketplace')}</Link>
               <Link href="/how-it-works" className="block text-blue-200 hover:text-white">{t('footer.how_it_works')}</Link>
               <Link href="/benefits" className="block text-blue-200 hover:text-white">{t('footer.benefits')}</Link>
+              <Link href="/dealers" className="block text-blue-200 hover:text-white">{t('footer.dealers')}</Link>
             </div>
           </div>
 

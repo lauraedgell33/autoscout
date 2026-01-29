@@ -68,6 +68,16 @@ export default function Navigation() {
             >
               {t('nav.benefits')}
             </Link>
+            <Link 
+              href="/dealers" 
+              className={`font-medium ${
+                isActive('/dealers') 
+                  ? 'text-blue-900 font-bold border-b-2 border-blue-900' 
+                  : 'text-gray-700 hover:text-blue-900'
+              }`}
+            >
+              {t('nav.dealers')}
+            </Link>
 
             {/* Language and Currency Switchers */}
             <div className="flex items-center gap-2 ml-2">
@@ -166,6 +176,7 @@ export default function Navigation() {
             <Link href="/marketplace" className="block text-gray-700 hover:text-blue-900 font-medium">Marketplace</Link>
             <Link href="/how-it-works" className="block text-gray-700 hover:text-blue-900 font-medium">How It Works</Link>
             <Link href="/benefits" className="block text-gray-700 hover:text-blue-900 font-medium">Benefits</Link>
+            <Link href="/dealers" className="block text-gray-700 hover:text-blue-900 font-medium">Dealers</Link>
             
             {/* Mobile Language and Currency Switchers */}
             <div className="flex items-center gap-2 pt-2">
