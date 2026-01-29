@@ -1,8 +1,11 @@
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
+import { useParams } from 'next/navigation'
 
 export default function Footer() {
   const t = useTranslations()
+  const params = useParams()
+  const locale = params.locale as string || 'en'
   
   return (
     <footer className="bg-blue-900 text-white py-12">
@@ -23,28 +26,28 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold mb-4">{t('footer.quick_links')}</h3>
             <div className="space-y-2 text-sm">
-              <Link href="/marketplace" className="block text-blue-200 hover:text-white">{t('footer.marketplace')}</Link>
-              <Link href="/how-it-works" className="block text-blue-200 hover:text-white">{t('footer.how_it_works')}</Link>
-              <Link href="/benefits" className="block text-blue-200 hover:text-white">{t('footer.benefits')}</Link>
-              <Link href="/dealers" className="block text-blue-200 hover:text-white">{t('footer.dealers')}</Link>
+              <Link href={`/${locale}/marketplace`} className="block text-blue-200 hover:text-white">{t('footer.marketplace')}</Link>
+              <Link href={`/${locale}/how-it-works`} className="block text-blue-200 hover:text-white">{t('footer.how_it_works')}</Link>
+              <Link href={`/${locale}/benefits`} className="block text-blue-200 hover:text-white">{t('footer.benefits')}</Link>
+              <Link href={`/${locale}/dealers`} className="block text-blue-200 hover:text-white">{t('footer.dealers')}</Link>
             </div>
           </div>
 
           <div>
             <h3 className="font-semibold mb-4">{t('footer.company')}</h3>
             <div className="space-y-2 text-sm">
-              <Link href="/contact" className="block text-blue-200 hover:text-white">{t('footer.contact')}</Link>
-              <Link href="/about" className="block text-blue-200 hover:text-white">{t('footer.about')}</Link>
-              <Link href="/careers" className="block text-blue-200 hover:text-white">{t('footer.careers')}</Link>
+              <Link href={`/${locale}/contact`} className="block text-blue-200 hover:text-white">{t('footer.contact')}</Link>
+              <Link href={`/${locale}/about`} className="block text-blue-200 hover:text-white">{t('footer.about')}</Link>
+              <Link href={`/${locale}/careers`} className="block text-blue-200 hover:text-white">{t('footer.careers')}</Link>
             </div>
           </div>
 
           <div>
             <h3 className="font-semibold mb-4">{t('footer.legal')}</h3>
             <div className="space-y-2 text-sm">
-              <Link href="/privacy" className="block text-blue-200 hover:text-white">{t('footer.privacy')}</Link>
-              <Link href="/terms" className="block text-blue-200 hover:text-white">{t('footer.terms')}</Link>
-              <Link href="/imprint" className="block text-blue-200 hover:text-white">{t('footer.imprint')}</Link>
+              <Link href={`/${locale}/legal/privacy`} className="block text-blue-200 hover:text-white">{t('footer.privacy')}</Link>
+              <Link href={`/${locale}/legal/terms`} className="block text-blue-200 hover:text-white">{t('footer.terms')}</Link>
+              <Link href={`/${locale}/imprint`} className="block text-blue-200 hover:text-white">{t('footer.imprint')}</Link>
             </div>
           </div>
         </div>
