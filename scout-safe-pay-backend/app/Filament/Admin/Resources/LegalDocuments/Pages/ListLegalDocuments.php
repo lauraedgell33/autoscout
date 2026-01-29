@@ -4,7 +4,7 @@ namespace App\Filament\Admin\Resources\LegalDocuments\Pages;
 
 use App\Filament\Admin\Resources\LegalDocuments\LegalDocumentResource;
 use Filament\Actions;
-use Filament\Resources\Components\Tab;
+use Filament\Resources\Pages\ListRecords\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 

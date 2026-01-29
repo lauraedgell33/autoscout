@@ -5,7 +5,7 @@ namespace App\Filament\Admin\Resources\Reviews\Pages;
 use App\Filament\Admin\Resources\Reviews\ReviewResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Resources\Components\Tab;
+use Filament\Resources\Pages\ListRecords\Tab;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListReviews extends ListRecords

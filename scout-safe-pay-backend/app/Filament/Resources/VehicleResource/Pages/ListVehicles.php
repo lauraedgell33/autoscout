@@ -5,7 +5,7 @@ namespace App\Filament\Resources\VehicleResource\Pages;
 use App\Filament\Resources\VehicleResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Resources\Components\Tab;
+use Filament\Resources\Pages\ListRecords\Tab;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListVehicles extends ListRecords

@@ -5,7 +5,7 @@ namespace App\Filament\Admin\Resources\BankAccounts\Pages;
 use App\Filament\Admin\Resources\BankAccounts\BankAccountResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Resources\Components\Tab;
+use Filament\Resources\Pages\ListRecords\Tab;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListBankAccounts extends ListRecords
