@@ -34,13 +34,13 @@ export default function VehiclesPage() {
               {vehicles.map((vehicle) => (
                 <Card key={vehicle.id}>
                   <CardHeader>
-                    <CardTitle className="text-xl">{vehicle.name || vehicle.title || `${vehicle.make} ${vehicle.model}`}</CardTitle>
+                    <CardTitle className="text-xl">{`${vehicle.make} ${vehicle.model}`}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       <img 
-                        src={vehicle.image || vehicle.primary_image} 
-                        alt={vehicle.name}
+                        src={vehicle.primary_image || '/placeholder-car.jpg'} 
+                        alt={`${vehicle.make} ${vehicle.model}`}
                         className="w-full h-48 object-cover rounded"
                       />
                       <div>

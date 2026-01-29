@@ -90,7 +90,7 @@ export default function PaymentFailedPage({ params }: { params: { locale: string
 
             <div className="text-center pt-4">
               <Button
-                variant="link"
+                variant="ghost"
                 onClick={() => router.push(`/${params.locale}`)}
                 className="text-gray-600"
               >

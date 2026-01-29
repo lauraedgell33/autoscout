@@ -23,16 +23,16 @@ export const favoritesService = {
     page?: number;
     per_page?: number;
   }): Promise<FavoritesListResponse> {
-    const response = await apiClient.get('/favorites', { params });
-    return response.data;
+    const response = await apiClient.get<FavoritesListResponse>('/favorites', { params });
+    return response as FavoritesListResponse;
   },
 
   /**
    * Add a vehicle to favorites
    */
   async add(vehicleId: number): Promise<Favorite> {
-    const response = await apiClient.post(`/favorites`, { vehicle_id: vehicleId });
-    return response.data;
+    const response = await apiClient.post<Favorite>(`/favorites`, { vehicle_id: vehicleId });
+    return response as Favorite;
   },
 
   /**
@@ -47,8 +47,8 @@ export const favoritesService = {
    */
   async isFavorite(vehicleId: number): Promise<boolean> {
     try {
-      const response = await apiClient.get(`/favorites/${vehicleId}/check`);
-      return response.data.is_favorite;
+      const response = await apiClient.get<{ is_favorite: boolean }>(`/favorites/${vehicleId}/check`);
+      return (response as { is_favorite: boolean }).is_favorite;
     } catch (error) {
       return false;
     }
@@ -58,7 +58,7 @@ export const favoritesService = {
    * Toggle favorite status
    */
   async toggle(vehicleId: number): Promise<{ is_favorite: boolean }> {
-    const response = await apiClient.post(`/favorites/${vehicleId}/toggle`);
-    return response.data;
+    const response = await apiClient.post<{ is_favorite: boolean }>(`/favorites/${vehicleId}/toggle`);
+    return response as { is_favorite: boolean };
   }
 };
