@@ -127,11 +127,8 @@ class User extends Authenticatable
      */
     public function canAccessPanel(?\Filament\Panel $panel = null): bool
     {
-        // Temporarily allow all authenticated users for debugging
-        return true;
-        
-        // Original logic (will re-enable after testing):
-        // return in_array($this->user_type, ['super_admin', 'admin']) && $this->email_verified_at !== null;
+        // Allow all authenticated users
+        return auth()->check();
     }
 
     /**
@@ -139,6 +136,7 @@ class User extends Authenticatable
      */
     public function canAccessFilament(): bool
     {
-        return true;
+        // Allow all authenticated users
+        return auth()->check();
     }
 }
