@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
+import ReviewSubmissionForm from '@/components/ReviewSubmissionForm'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Avatar } from '@/components/ui/avatar'
 import { getDealer, type DealerResponse } from '@/lib/api/dealers'
@@ -252,7 +253,12 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
             <CardHeader>
               <CardTitle>{t('customerReviews')}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-6">
+              {/* Review Submission Form */}
+              <ReviewSubmissionForm dealerId={dealerId} onSuccess={() => {
+                // Optionally refresh reviews here
+              }} />
+
               {reviews.length > 0 ? (
                 <div className="space-y-4">
                   {reviews.map((review) => (

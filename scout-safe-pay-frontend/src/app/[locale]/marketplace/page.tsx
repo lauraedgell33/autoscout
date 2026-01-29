@@ -1,11 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-
 import { Link } from '@/i18n/routing'
+import { useRouter } from '@/i18n/routing'
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { useCurrency } from '@/contexts/CurrencyContext'
+import { Star, MapPin, ExternalLink } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import vehicleService, { Vehicle, VehicleFilters } from '@/lib/api/vehicles'
 import { getCategoryLabel } from '@/lib/utils/categoryHelpers'
 
@@ -13,6 +15,7 @@ export default function MarketplacePage() {
   const t = useTranslations()
   const tCommon = useTranslations('common')
   const tVehicle = useTranslations('vehicle')
+  const router = useRouter()
   const { formatPrice } = useCurrency()
   const [vehicles, setVehicles] = useState<Vehicle[]>([])
   const [loading, setLoading] = useState(true)
@@ -283,7 +286,57 @@ export default function MarketplacePage() {
                             <div className="capitalize">{vehicle.transmission}</div>
                           </div>
 
-                          <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                          {/* Dealer Information */}
+                          {vehicle.dealer && (
+                            <div className="mt-4 pt-4 border-t border-gray-100">
+                              <div className="flex items-center justify-between mb-2">
+                                <div className="flex items-center gap-2 flex-1 min-w-0">
+                                  {vehicle.dealer.logo_url && (
+                                    <img
+                                      src={vehicle.dealer.logo_url}
+                                      alt={vehicle.dealer.company_name}
+                                      className="w-6 h-6 rounded object-cover flex-shrink-0"
+                                    />
+                                  )}
+                                  <div className="min-w-0">
+                                    <p className="text-xs font-semibold text-gray-900 truncate">
+                                      {vehicle.dealer.company_name}
+                                    </p>
+                                    {vehicle.dealer.review_stats && (
+                                      <div className="flex items-center gap-1">
+                                        {Array.from({ length: 5 }, (_, i) => (
+                                          <Star
+                                            key={i}
+                                            className={`w-3 h-3 ${
+                                              i < Math.floor(vehicle.dealer.review_stats?.average_rating || 0)
+                                                ? 'text-yellow-400 fill-current'
+                                                : 'text-gray-300'
+                                            }`}
+                                          />
+                                        ))}
+                                        <span className="text-xs text-gray-600">
+                                          {vehicle.dealer.review_stats.average_rating?.toFixed(1)}
+                                        </span>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                                <button
+                                  onClick={(e) => {
+                                    e.preventDefault()
+                                    e.stopPropagation()
+                                    router.push(`/dealers/${vehicle.dealer.id}`)
+                                  }}
+                                  className="ml-2 text-orange-500 hover:text-orange-600 text-xs font-semibold whitespace-nowrap flex items-center gap-1"
+                                >
+                                  <ExternalLink className="w-3 h-3" />
+                                  Profile
+                                </button>
+                              </div>
+                            </div>
+                          )}
+
+                          <div className="mt-3 flex items-center justify-between">
                             <span className="text-sm text-gray-600">{vehicle.location_city}</span>
                             <span className="text-orange-500 font-semibold text-sm flex items-center gap-1">
                               {t('marketplace.view_details')}
