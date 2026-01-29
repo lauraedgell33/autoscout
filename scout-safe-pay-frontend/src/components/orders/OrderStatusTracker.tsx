@@ -2,17 +2,35 @@
 
 import React from 'react';
 
+interface OrderStatusTrackerProps {
+  currentStatus?: string;
+  createdAt?: string;
+  contractGeneratedAt?: string;
+  contractSignedAt?: string;
+  paymentConfirmedAt?: string;
+  readyForDeliveryAt?: string;
+  deliveredAt?: string;
+}
+
 interface OrderStatus {
   step: string;
   status: 'completed' | 'active' | 'pending';
 }
 
-export default function OrderStatusTracker() {
+export default function OrderStatusTracker({
+  currentStatus = 'pending',
+  createdAt,
+  contractGeneratedAt,
+  contractSignedAt,
+  paymentConfirmedAt,
+  readyForDeliveryAt,
+  deliveredAt,
+}: OrderStatusTrackerProps) {
   const steps: OrderStatus[] = [
     { step: 'Order Placed', status: 'completed' },
-    { step: 'Payment Confirmed', status: 'active' },
-    { step: 'Contract Signed', status: 'pending' },
-    { step: 'Delivery', status: 'pending' },
+    { step: 'Payment Confirmed', status: currentStatus === 'payment_confirmed' ? 'completed' : 'active' },
+    { step: 'Contract Signed', status: contractSignedAt ? 'completed' : 'pending' },
+    { step: 'Delivery', status: deliveredAt ? 'completed' : 'pending' },
   ];
 
   return (

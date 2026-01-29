@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   
+  // Turbopack configuration
+  turbopack: {
+    root: __dirname,
+  },
+  
   // Disable TypeScript checking errors in production builds
   typescript: {
     ignoreBuildErrors: true,

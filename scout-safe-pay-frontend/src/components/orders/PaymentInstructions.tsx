@@ -1,8 +1,17 @@
 'use client';
 
 import React from 'react';
+import type { Transaction } from '@/types';
 
-export default function PaymentInstructions() {
+interface PaymentInstructionsProps {
+  transaction?: any;
+  onPaymentProofUpload?: () => Promise<void>;
+}
+
+export default function PaymentInstructions({
+  transaction,
+  onPaymentProofUpload,
+}: PaymentInstructionsProps) {
   return (
     <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
       <h3 className="font-bold text-lg mb-4">Payment Instructions</h3>

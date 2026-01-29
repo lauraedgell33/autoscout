@@ -2,7 +2,19 @@
 
 import React, { useState } from 'react';
 
-export default function UploadSignedContract() {
+interface UploadSignedContractProps {
+  transactionId?: string;
+  contractUrl?: string;
+  onUploadSuccess?: () => void;
+  onError?: (error: any) => void;
+}
+
+export default function UploadSignedContract({
+  transactionId,
+  contractUrl,
+  onUploadSuccess,
+  onError,
+}: UploadSignedContractProps) {
   const [file, setFile] = useState<File | null>(null);
 
   return (
