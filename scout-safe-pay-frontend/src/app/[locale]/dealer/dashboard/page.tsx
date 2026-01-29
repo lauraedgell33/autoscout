@@ -1,0 +1,121 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Link } from '@/i18n/routing';
+import { Package, TrendingUp, DollarSign, Users, Plus } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+
+export default function DealerDashboardPage({ params }: { params: { locale: string } }) {
+  const [stats, setStats] = useState({
+    total_inventory: 0,
+    active_listings: 0,
+    sold_this_month: 0,
+    revenue_this_month: '0',
+    team_members: 0,
+    pending_sales: 0,
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dealer/stats`, {
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      const data = await response.json();
+      setStats(data);
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <div className="flex items-center justify-center min-h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    </div>;
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto p-6 space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold">Dealer Dashboard</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">Manage your inventory and team</p>
+        </div>
+        <Link href={`/${params.locale}/seller/vehicles/new`}>
+          <Button><Plus className="h-4 w-4 mr-2" />Add Vehicle</Button>
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Card className="p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Total Inventory</p>
+              <p className="text-2xl font-bold mt-1">{stats.total_inventory}</p>
+            </div>
+            <Package className="h-10 w-10 text-blue-600" />
+          </div>
+        </Card>
+        <Card className="p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Sold This Month</p>
+              <p className="text-2xl font-bold mt-1">{stats.sold_this_month}</p>
+            </div>
+            <TrendingUp className="h-10 w-10 text-green-600" />
+          </div>
+        </Card>
+        <Card className="p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Revenue (Month)</p>
+              <p className="text-2xl font-bold mt-1">€{parseFloat(stats.revenue_this_month).toLocaleString()}</p>
+            </div>
+            <DollarSign className="h-10 w-10 text-purple-600" />
+          </div>
+        </Card>
+        <Card className="p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Team Members</p>
+              <p className="text-2xl font-bold mt-1">{stats.team_members}</p>
+            </div>
+            <Users className="h-10 w-10 text-orange-600" />
+          </div>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Link href={`/${params.locale}/dealer/inventory`}>
+          <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <Package className="h-8 w-8 text-blue-600 mb-3" />
+            <h3 className="font-semibold mb-2">Inventory Management</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Manage your vehicle stock</p>
+          </Card>
+        </Link>
+        <Link href={`/${params.locale}/dealer/analytics`}>
+          <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <TrendingUp className="h-8 w-8 text-purple-600 mb-3" />
+            <h3 className="font-semibold mb-2">Analytics</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">View detailed reports</p>
+          </Card>
+        </Link>
+        <Link href={`/${params.locale}/dealer/team`}>
+          <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <Users className="h-8 w-8 text-green-600 mb-3" />
+            <h3 className="font-semibold mb-2">Team Management</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Manage team access</p>
+          </Card>
+        </Link>
+      </div>
+    </div>
+  );
+}
