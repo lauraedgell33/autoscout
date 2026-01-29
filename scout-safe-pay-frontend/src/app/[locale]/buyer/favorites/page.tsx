@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { Heart, X, Eye, Package } from 'lucide-react';
+import { favoritesService } from '@/lib/api/favorites';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import toast from 'react-hot-toast';
 
 interface FavoriteVehicle {
   id: number;
@@ -37,33 +39,25 @@ export default function BuyerFavoritesPage({ params }: { params: { locale: strin
 
   const fetchFavorites = async () => {
     try {
-      const token = localStorage.getItem('auth_token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/favorites`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      setFavorites(data.data || []);
-    } catch (error) {
+      const response = await favoritesService.list();
+      setFavorites(response.data || []);
+      toast.success(`Loaded ${response.data.length} favorites`);
+    } catch (error: any) {
       console.error('Error fetching favorites:', error);
+      toast.error(error.response?.data?.message || 'Failed to load favorites');
     } finally {
       setLoading(false);
     }
   };
 
-  const removeFavorite = async (favoriteId: number) => {
+  const removeFavorite = async (vehicleId: number, favoriteId: number) => {
     try {
-      const token = localStorage.getItem('auth_token');
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/favorites/${favoriteId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      await favoritesService.remove(vehicleId);
       setFavorites(favorites.filter(f => f.id !== favoriteId));
-    } catch (error) {
+      toast.success('Removed from favorites');
+    } catch (error: any) {
       console.error('Error removing favorite:', error);
+      toast.error(error.response?.data?.message || 'Failed to remove favorite');
     }
   };
 
@@ -127,7 +121,7 @@ export default function BuyerFavoritesPage({ params }: { params: { locale: strin
                   )}
                 </div>
                 <button
-                  onClick={() => removeFavorite(favorite.id)}
+                  onClick={() => removeFavorite(favorite.vehicle_id, favorite.id)}
                   className="absolute top-2 right-2 p-2 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                 >
                   <X className="h-5 w-5 text-red-600" />
