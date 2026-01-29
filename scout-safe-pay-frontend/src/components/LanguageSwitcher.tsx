@@ -4,7 +4,7 @@ import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/routing';
 import { useState, useTransition } from 'react';
 
-type Locale = 'en' | 'de' | 'es' | 'it' | 'ro' | 'fr';
+type Locale = 'en' | 'de' | 'ro';
 
 interface LocaleOption {
   code: Locale;
@@ -16,10 +16,7 @@ interface LocaleOption {
 const locales: LocaleOption[] = [
   { code: 'en', name: 'English', nativeName: 'English', flag: '🇬🇧' },
   { code: 'de', name: 'German', nativeName: 'Deutsch', flag: '🇩🇪' },
-  { code: 'es', name: 'Spanish', nativeName: 'Español', flag: '🇪🇸' },
-  { code: 'it', name: 'Italian', nativeName: 'Italiano', flag: '🇮🇹' },
   { code: 'ro', name: 'Romanian', nativeName: 'Română', flag: '🇷🇴' },
-  { code: 'fr', name: 'French', nativeName: 'Français', flag: '🇫🇷' },
 ];
 
 export default function LanguageSwitcher() {
