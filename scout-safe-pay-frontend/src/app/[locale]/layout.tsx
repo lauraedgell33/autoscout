@@ -4,6 +4,8 @@ import {getMessages, getTranslations} from 'next-intl/server';
 import {routing} from '@/i18n/routing';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { CurrencyProvider } from '@/contexts/CurrencyContext';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 import CookieBanner from '@/components/CookieBanner';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -136,7 +138,11 @@ export default async function LocaleLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <CurrencyProvider>
             <AuthProvider>
-              {children}
+              <Navigation />
+              <main className="min-h-screen">
+                {children}
+              </main>
+              <Footer />
               <CookieBanner />
             </AuthProvider>
           </CurrencyProvider>
