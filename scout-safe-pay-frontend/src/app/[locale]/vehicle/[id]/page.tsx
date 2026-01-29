@@ -89,9 +89,11 @@ export default function VehicleDetailsPage() {
     )
   }
 
+  const placeholderImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23e5e7eb' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ENo Image Available%3C/text%3E%3C/svg%3E"
+  
   const images = vehicle.images && vehicle.images.length > 0
     ? vehicle.images
-    : [vehicle.primary_image || 'https://via.placeholder.com/800x600?text=No+Image']
+    : [vehicle.primary_image || placeholderImage]
 
   return (
     <div className="min-h-screen bg-white">
@@ -270,6 +272,87 @@ export default function VehicleDetailsPage() {
               <button className="w-full border-2 border-orange-500 text-orange-500 py-3 rounded-lg font-semibold hover:bg-orange-50 transition mb-6">
                 {t('vehicle.contact_seller')}
               </button>
+
+              {/* Dealer Information */}
+              {vehicle.dealer && (
+                <div className="bg-blue-50 rounded-lg p-4 mb-6 border border-blue-200">
+                  <h3 className="font-bold text-blue-900 mb-3 text-center">Seller Information</h3>
+                  
+                  <div className="flex items-center gap-3 mb-3">
+                    {vehicle.dealer.logo_url ? (
+                      <img
+                        src={vehicle.dealer.logo_url}
+                        alt={vehicle.dealer.company_name}
+                        className="w-12 h-12 rounded-lg object-cover"
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                      />
+                    ) : (
+                      <div className="w-12 h-12 bg-blue-200 rounded-lg flex items-center justify-center text-blue-900 font-bold">
+                        {vehicle.dealer.company_name?.charAt(0) || 'D'}
+                      </div>
+                    )}
+                    <div className="flex-1">
+                      <p className="font-bold text-blue-900">{vehicle.dealer.company_name}</p>
+                      {vehicle.dealer.verification_status && (
+                        <p className="text-xs text-green-600 font-semibold">✓ Verified Dealer</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Ratings */}
+                  {vehicle.dealer.review_stats && (
+                    <div className="bg-white rounded p-2 mb-3">
+                      <div className="flex items-center gap-2 justify-between mb-1">
+                        <span className="text-xs text-gray-600">Rating</span>
+                        <span className="font-bold text-orange-500">{(vehicle.dealer.review_stats.average_rating || 0).toFixed(1)}/5</span>
+                      </div>
+                      <div className="flex gap-1">
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <svg
+                            key={i}
+                            className={`w-3 h-3 ${
+                              i < Math.floor(vehicle.dealer.review_stats?.average_rating || 0)
+                                ? 'text-yellow-400'
+                                : 'text-gray-300'
+                            }`}
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        ))}
+                      </div>
+                      <p className="text-xs text-gray-600 mt-1">
+                        {vehicle.dealer.review_stats.total_reviews || 0} {vehicle.dealer.review_stats.total_reviews === 1 ? 'review' : 'reviews'}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Dealer Details */}
+                  <div className="space-y-2 text-xs mb-3">
+                    {vehicle.dealer.vehicles_count && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-600">Active Listings</span>
+                        <span className="font-bold text-blue-900">{vehicle.dealer.vehicles_count}</span>
+                      </div>
+                    )}
+                    {vehicle.dealer.phone && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-600">📞</span>
+                        <span className="font-semibold text-blue-900">{vehicle.dealer.phone}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* View Profile Button */}
+                  <Link
+                    href={`/dealers/${vehicle.dealer.id}`}
+                    className="w-full block text-center bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition text-sm"
+                  >
+                    View Full Profile
+                  </Link>
+                </div>
+              )}
 
               {/* SafeTrade Benefits */}
               <div className="border-t border-gray-200 pt-6">

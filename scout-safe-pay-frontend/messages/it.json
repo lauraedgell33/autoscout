@@ -213,6 +213,7 @@
     "next": "Prossimo",
     "backToDealers": "Torniamo ai rivenditori",
     "dealerNotFound": "Rivenditore non trovato",
+    "dealerNotFoundDescription": "Il rivenditore che stai cercando non esiste o è stato rimosso dalla nostra piattaforma.",
     "error": "Errore",
     "errorFetchingDealers": "Impossibile caricare i rivenditori. Per favore riprova.",
     "errorFetchingDealer": "Impossibile caricare i dettagli del rivenditore. Per favore riprova.",

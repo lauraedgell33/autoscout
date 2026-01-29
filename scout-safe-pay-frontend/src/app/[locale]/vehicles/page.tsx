@@ -1,8 +1,9 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/routing';
-import { useVehicles } from '@/lib/hooks/api';
+import { vehicleService, Vehicle } from '@/lib/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Star, ExternalLink, MapPin } from 'lucide-react';
@@ -11,7 +12,25 @@ import Link from 'next/link';
 export default function VehiclesPage() {
   const t = useTranslations();
   const router = useRouter();
-  const { data: vehicles, isLoading } = useVehicles();
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchVehicles = async () => {
+      try {
+        setIsLoading(true);
+        const data = await vehicleService.getVehicles({ status: 'active' });
+        setVehicles(data.data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load vehicles');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchVehicles();
+  }, []);
 
   return (
     <>      <div className="min-h-screen bg-gray-50">
@@ -29,24 +48,28 @@ export default function VehiclesPage() {
             <div className="flex justify-center py-12">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
             </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <p className="text-lg text-red-600">{error}</p>
+            </div>
           ) : vehicles && vehicles.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {vehicles.map((vehicle) => (
                 <Card key={vehicle.id}>
                   <CardHeader>
-                    <CardTitle className="text-xl">{vehicle.name || vehicle.title || `${vehicle.make} ${vehicle.model}`}</CardTitle>
+                    <CardTitle className="text-xl">{`${vehicle.make} ${vehicle.model}`}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       <img 
-                        src={vehicle.image || vehicle.primary_image} 
-                        alt={vehicle.name}
+                        src={vehicle.primary_image || '/placeholder-vehicle.jpg'} 
+                        alt={`${vehicle.make} ${vehicle.model}`}
                         className="w-full h-48 object-cover rounded"
                       />
                       <div>
                         <p className="text-gray-600">Category: {vehicle.category}</p>
                         <p className="text-gray-600">Year: {vehicle.year}</p>
-                        <p className="text-gray-600">Mileage: {vehicle.mileage} km</p>
+                        <p className="text-gray-600">Mileage: {vehicle.mileage ? `${vehicle.mileage.toLocaleString()} km` : 'N/A'}</p>
                       </div>
                       
                       {/* Dealer Information */}
@@ -103,7 +126,7 @@ export default function VehiclesPage() {
                       
                       <div className="flex justify-between items-center pt-4 border-t">
                         <span className="text-2xl font-bold text-blue-600">
-                          €{vehicle.price.toLocaleString()}
+                          {vehicle.currency} {parseFloat(String(vehicle.price)).toLocaleString()}
                         </span>
                         <Link href={`/vehicle/${vehicle.id}`}>
                           <Button>View Details</Button>

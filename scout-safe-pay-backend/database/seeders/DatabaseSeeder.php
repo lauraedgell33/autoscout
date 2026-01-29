@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
 
         // Call other seeders
         $this->call([
+            DealerSeeder::class,
             VehicleSeeder::class,
             LegalDocumentSeeder::class,
         ]);
@@ -42,5 +43,6 @@ class DatabaseSeeder extends Seeder
         $this->command->info('👤 Buyer: buyer@test.com / password');
         $this->command->info('👤 Seller: seller@test.com / password');
         $this->command->info('👤 Admin: admin@test.com / password');
+        $this->command->info('🏢 5 Dealers created with active listings');
     }
 }

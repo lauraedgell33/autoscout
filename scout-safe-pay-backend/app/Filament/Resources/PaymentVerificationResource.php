@@ -6,7 +6,7 @@ use App\Filament\Resources\PaymentVerificationResource\Pages;
 use App\Models\Transaction;
 use App\Notifications\PaymentReceivedNotification;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -30,7 +30,7 @@ class PaymentVerificationResource extends Resource
             ->orderBy('created_at', 'desc');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
         return $form
             ->schema([

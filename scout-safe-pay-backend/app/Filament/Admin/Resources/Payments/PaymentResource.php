@@ -8,10 +8,8 @@ use App\Filament\Admin\Resources\Payments\Pages\ListPayments;
 use App\Filament\Admin\Resources\Payments\Schemas\PaymentForm;
 use App\Filament\Admin\Resources\Payments\Tables\PaymentsTable;
 use App\Models\Payment;
-use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -20,13 +18,15 @@ class PaymentResource extends Resource
 {
     protected static ?string $model = Payment::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCreditCard;
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-credit-card';
+    
+    protected static ?string $navigationLabel = 'Payments';
     
     protected static ?string $recordTitleAttribute = 'payment_reference';
     
     public static function getNavigationGroup(): ?string
     {
-        return 'Transactions';
+        return 'Financial';
     }
     
     public static function getNavigationSort(): ?int

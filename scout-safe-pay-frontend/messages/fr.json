@@ -211,6 +211,7 @@
     "next": "Suivant",
     "backToDealers": "Retour aux revendeurs",
     "dealerNotFound": "Revendeur introuvable",
+    "dealerNotFoundDescription": "Le revendeur que vous recherchez n'existe pas ou a été retiré de notre plateforme.",
     "error": "Erreur",
     "errorFetchingDealers": "Échec du chargement des revendeurs. Veuillez réessayer.",
     "errorFetchingDealer": "Échec du chargement des détails du concessionnaire. Veuillez réessayer.",

@@ -6,7 +6,8 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { CurrencyProvider } from '@/contexts/CurrencyContext';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import CookieBanner from '@/components/CookieBanner';
+import { CookieBanner } from '@/components/cookies/CookieBanner';
+import { ToastContainer } from '@/components/common/ToastContainer';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '../globals.css';
@@ -144,6 +145,7 @@ export default async function LocaleLayout({
               </main>
               <Footer />
               <CookieBanner />
+              <ToastContainer />
             </AuthProvider>
           </CurrencyProvider>
         </NextIntlClientProvider>

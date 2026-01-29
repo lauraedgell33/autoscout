@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\KYCVerificationResource\Pages;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -28,7 +28,7 @@ class KYCVerificationResource extends Resource
             ->orderBy('kyc_submitted_at', 'desc');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
         return $form
             ->schema([

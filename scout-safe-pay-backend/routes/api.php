@@ -16,7 +16,14 @@ use App\Http\Controllers\API\InvoiceController;
 use App\Http\Controllers\API\LocaleController;
 use App\Http\Controllers\Api\CookieConsentController;
 use App\Http\Controllers\API\OrderController;
+use App\Http\Controllers\API\SettingsController;
 use Illuminate\Support\Facades\Route;
+
+// Public Settings API
+Route::prefix('settings')->group(function () {
+    Route::get('/public', [SettingsController::class, 'public']);
+    Route::get('/group/{group}', [SettingsController::class, 'group']);
+});
 
 // Locale routes (public)
 Route::prefix('locale')->group(function () {

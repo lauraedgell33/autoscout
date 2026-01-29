@@ -9,7 +9,6 @@ use Filament\Actions\CreateAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Support\Icons\Heroicon;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ListUsers extends ListRecords

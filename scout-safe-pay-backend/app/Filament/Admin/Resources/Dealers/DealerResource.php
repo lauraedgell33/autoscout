@@ -8,10 +8,8 @@ use App\Filament\Admin\Resources\Dealers\Pages\ListDealers;
 use App\Filament\Admin\Resources\Dealers\Schemas\DealerForm;
 use App\Filament\Admin\Resources\Dealers\Tables\DealersTable;
 use App\Models\Dealer;
-use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -20,18 +18,20 @@ class DealerResource extends Resource
 {
     protected static ?string $model = Dealer::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-storefront';
+    
+    protected static ?string $navigationLabel = 'Dealers';
     
     protected static ?string $recordTitleAttribute = 'name';
     
     public static function getNavigationGroup(): ?string
     {
-        return 'Management';
+        return 'Users & Dealers';
     }
     
     public static function getNavigationSort(): ?int
     {
-        return 1;
+        return 2;
     }
     
     public static function getGloballySearchableAttributes(): array

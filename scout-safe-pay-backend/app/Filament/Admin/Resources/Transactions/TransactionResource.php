@@ -9,10 +9,8 @@ use App\Filament\Admin\Resources\Transactions\Pages\ListTransactions;
 use App\Filament\Admin\Resources\Transactions\Schemas\TransactionForm;
 use App\Filament\Admin\Resources\Transactions\Tables\TransactionsTable;
 use App\Models\Transaction;
-use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -21,13 +19,15 @@ class TransactionResource extends Resource
 {
     protected static ?string $model = Transaction::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-arrow-path';
+    
+    protected static ?string $navigationLabel = 'Transactions';
     
     protected static ?string $recordTitleAttribute = 'transaction_id';
     
     public static function getNavigationGroup(): ?string
     {
-        return 'Transactions';
+        return 'Financial';
     }
     
     public static function getNavigationSort(): ?int

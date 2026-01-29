@@ -211,6 +211,7 @@
     "next": "Volgende",
     "backToDealers": "Terug naar Dealers",
     "dealerNotFound": "Dealer niet gevonden",
+    "dealerNotFoundDescription": "De dealer die u zoekt bestaat niet of is verwijderd van ons platform.",
     "error": "Fout",
     "errorFetchingDealers": "Kan dealers niet laden. Probeer het opnieuw.",
     "errorFetchingDealer": "Kan dealergegevens niet laden. Probeer het opnieuw.",

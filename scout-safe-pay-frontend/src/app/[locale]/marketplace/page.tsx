@@ -244,17 +244,12 @@ export default function MarketplacePage() {
                         className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition"
                       >
                         <div className="relative h-48 bg-gray-200">
-                          {vehicle.primary_image ? (
-                            <img
-                              src={vehicle.primary_image}
-                              alt={`${vehicle.make} ${vehicle.model}`}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-gray-400">
-                              {t('marketplace.no_image')}
-                            </div>
-                          )}
+                          <img
+                            src={vehicle.primary_image || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23e5e7eb' width='600' height='400'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ENo Image%3C/text%3E%3C/svg%3E"}
+                            alt={`${vehicle.make} ${vehicle.model}`}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            onError={(e) => { (e.target as HTMLImageElement).src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23e5e7eb' width='600' height='400'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ENo Image%3C/text%3E%3C/svg%3E" }}
+                          />
                           <div className="absolute top-3 right-3">
                             <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
                               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

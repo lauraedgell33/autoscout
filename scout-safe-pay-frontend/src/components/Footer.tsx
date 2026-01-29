@@ -34,17 +34,17 @@ export default function Footer() {
             <h3 className="font-semibold mb-4">{t('footer.company')}</h3>
             <div className="space-y-2 text-sm">
               <Link href="/contact" className="block text-blue-200 hover:text-white">{t('footer.contact')}</Link>
-              <a href="#" className="block text-blue-200 hover:text-white">{t('footer.about')}</a>
-              <a href="#" className="block text-blue-200 hover:text-white">{t('footer.careers')}</a>
+              <Link href="/about" className="block text-blue-200 hover:text-white">{t('footer.about')}</Link>
+              <Link href="/careers" className="block text-blue-200 hover:text-white">{t('footer.careers')}</Link>
             </div>
           </div>
 
           <div>
             <h3 className="font-semibold mb-4">{t('footer.legal')}</h3>
             <div className="space-y-2 text-sm">
-              <a href="#" className="block text-blue-200 hover:text-white">{t('footer.privacy')}</a>
-              <a href="#" className="block text-blue-200 hover:text-white">{t('footer.terms')}</a>
-              <a href="#" className="block text-blue-200 hover:text-white">{t('footer.imprint')}</a>
+              <Link href="/privacy" className="block text-blue-200 hover:text-white">{t('footer.privacy')}</Link>
+              <Link href="/terms" className="block text-blue-200 hover:text-white">{t('footer.terms')}</Link>
+              <Link href="/imprint" className="block text-blue-200 hover:text-white">{t('footer.imprint')}</Link>
             </div>
           </div>
         </div>

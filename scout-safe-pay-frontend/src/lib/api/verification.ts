@@ -103,8 +103,8 @@ export const verificationService = {
   },
 
   async getMyDisputes(): Promise<Dispute[]> {
-    const response = await apiClient.get('/disputes/my')
-    return response.data.data
+    const response = await apiClient.get('/my-disputes')
+    return response.data.data || response.data
   },
 
   async getDisputeById(id: string): Promise<Dispute> {
@@ -130,4 +130,44 @@ export const verificationService = {
       },
     })
   },
+
+  // General verifications
+  async list(filters?: { status?: string }): Promise<any[]> {
+    const response = await apiClient.get('/verifications', { params: filters })
+    return response.data.verifications || response.data
+  },
+
+  async get(id: number): Promise<any> {
+    const response = await apiClient.get(`/verifications/${id}`)
+    return response.data.verification || response.data
+  },
+
+  async create(data: any): Promise<any> {
+    const response = await apiClient.post('/verifications', data)
+    return response.data.verification || response.data
+  },
+
+  async checkVin(vin: string, vehicleId?: number): Promise<any> {
+    const response = await apiClient.post('/verifications/vin-check', { vin, vehicle_id: vehicleId })
+    return response.data
+  },
+
+  async getMyVerifications(): Promise<any[]> {
+    const response = await apiClient.get('/my-verifications')
+    return response.data.verifications || response.data
+  },
+
+  // Admin methods
+  async adminIndex(filters?: { status?: string }): Promise<any[]> {
+    const response = await apiClient.get('/admin/verifications', { params: filters })
+    return response.data.verifications || response.data
+  },
+
+  async adminUpdate(id: number, data: { status?: string; notes?: string }): Promise<any> {
+    const response = await apiClient.patch(`/admin/verifications/${id}`, data)
+    return response.data.verification || response.data
+  },
 }
+
+export default verificationService
+

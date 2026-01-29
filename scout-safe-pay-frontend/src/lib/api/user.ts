@@ -18,12 +18,32 @@ export interface UpdatePasswordData {
   password_confirmation: string
 }
 
+export interface DashboardStats {
+  total_transactions?: number
+  pending_transactions?: number
+  completed_transactions?: number
+  total_vehicles?: number
+  active_vehicles?: number
+  total_spent?: string
+  total_earned?: string
+  recent_transactions?: any[]
+  recent_notifications?: any[]
+}
+
 export const userService = {
   /**
    * Get current user profile
    */
   async getProfile(): Promise<UserType> {
     const response = await apiClient.get<UserType>('/user/profile')
+    return response.data
+  },
+
+  /**
+   * Get dashboard statistics
+   */
+  async getDashboard(): Promise<DashboardStats> {
+    const response = await apiClient.get<DashboardStats>('/dashboard')
     return response.data
   },
 
@@ -53,3 +73,6 @@ export const userService = {
     return response.data
   },
 }
+
+export default userService
+

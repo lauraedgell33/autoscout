@@ -10,10 +10,8 @@ use App\Filament\Admin\Resources\Vehicles\Schemas\VehicleForm;
 use App\Filament\Admin\Resources\Vehicles\Schemas\VehicleInfolist;
 use App\Filament\Admin\Resources\Vehicles\Tables\VehiclesTable;
 use App\Models\Vehicle;
-use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -22,7 +20,11 @@ class VehicleResource extends Resource
 {
     protected static ?string $model = Vehicle::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-truck';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-truck';
+
+    protected static ?string $navigationLabel = 'Vehicles';
+    
+    
 
     protected static ?string $recordTitleAttribute = 'make';
 

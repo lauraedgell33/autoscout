@@ -143,17 +143,12 @@ export default function MyVehiclesPage() {
                 >
                   {/* Vehicle Image */}
                   <div className="relative h-48 bg-gray-200">
-                    {vehicle.primary_image ? (
-                      <img
-                        src={vehicle.primary_image}
-                        alt={`${vehicle.make} ${vehicle.model}`}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400">
-                        No Image
-                      </div>
-                    )}
+                    <img
+                      src={vehicle.primary_image || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23e5e7eb' width='600' height='400'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ENo Image%3C/text%3E%3C/svg%3E"}
+                      alt={`${vehicle.make} ${vehicle.model}`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => { (e.target as HTMLImageElement).src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23e5e7eb' width='600' height='400'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ENo Image%3C/text%3E%3C/svg%3E" }}
+                    />
                     <div className="absolute top-3 right-3">
                       <span className={`${getStatusBadge(vehicle.status)} px-3 py-1 rounded-full text-xs font-semibold capitalize`}>
                         {vehicle.status}

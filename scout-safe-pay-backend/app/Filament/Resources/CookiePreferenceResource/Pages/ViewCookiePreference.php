@@ -6,7 +6,7 @@ use App\Filament\Resources\CookiePreferenceResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Infolists;
-use Filament\Infolists\Infolist;
+use Filament\Schemas\Schema;
 
 class ViewCookiePreference extends ViewRecord
 {
@@ -33,7 +33,7 @@ class ViewCookiePreference extends ViewRecord
         ];
     }
     
-    public function infolist(Infolist $infolist): Infolist
+    public function infolist(Schema $schema): Schema
     {
         return $infolist
             ->schema([

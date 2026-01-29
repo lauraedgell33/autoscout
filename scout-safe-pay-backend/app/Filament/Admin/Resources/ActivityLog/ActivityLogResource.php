@@ -5,7 +5,6 @@ namespace App\Filament\Admin\Resources\ActivityLog;
 use App\Filament\Admin\Resources\ActivityLog\Pages\ListActivityLogs;
 use App\Filament\Admin\Resources\ActivityLog\Pages\ViewActivityLog;
 use Filament\Resources\Resource;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -17,7 +16,7 @@ class ActivityLogResource extends Resource
 {
     protected static ?string $model = Activity::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
     
     protected static ?string $navigationLabel = 'Activity Log';
     
@@ -30,7 +29,7 @@ class ActivityLogResource extends Resource
     
     public static function getNavigationSort(): ?int
     {
-        return 99;
+        return 98;
     }
 
     public static function table(Table $table): Table

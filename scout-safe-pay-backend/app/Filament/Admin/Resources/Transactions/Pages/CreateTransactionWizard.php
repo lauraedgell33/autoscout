@@ -11,7 +11,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\Wizard\Step;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Filament\Support\Exceptions\Halt;
@@ -34,7 +34,7 @@ class CreateTransactionWizard extends Page
         $this->form->fill();
     }
     
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
         return $form
             ->schema([

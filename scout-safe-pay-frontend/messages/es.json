@@ -213,6 +213,7 @@
     "next": "Próximo",
     "backToDealers": "Volver a Distribuidores",
     "dealerNotFound": "Distribuidor no encontrado",
+    "dealerNotFoundDescription": "El distribuidor que busca no existe o ha sido eliminado de nuestra plataforma.",
     "error": "Error",
     "errorFetchingDealers": "No se pudieron cargar los distribuidores. Por favor inténtalo de nuevo.",
     "errorFetchingDealer": "No se pudieron cargar los detalles del distribuidor. Por favor inténtalo de nuevo.",
