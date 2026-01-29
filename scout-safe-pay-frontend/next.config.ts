@@ -22,11 +22,6 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   
-  // Disable ESLint checking errors in production builds
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  
   // Performance optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',

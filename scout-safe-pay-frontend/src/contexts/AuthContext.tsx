@@ -43,9 +43,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const authStore = useAuthStore()
 
   useEffect(() => {
-    // Check authentication on mount
-    authStore.checkAuth()
-  }, [authStore])
+    // Check authentication on mount (client-side only)
+    if (typeof window !== 'undefined') {
+      authStore.checkAuth()
+    }
+  }, [])
 
   const login = async (email: string, password: string) => {
     try {

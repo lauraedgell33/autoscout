@@ -10,9 +10,11 @@ interface ProtectedRouteProps {
 
 export default function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
+    setIsMounted(true);
     const token = localStorage.getItem('auth_token');
     if (!token) {
       router.push('/login');
@@ -21,7 +23,7 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
     }
   }, [router]);
 
-  if (!isAuthenticated) {
+  if (!isMounted || !isAuthenticated) {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
 
