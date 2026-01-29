@@ -1483,5 +1483,6 @@
       "email": "E-Mail",
       "address": "Adresse"
     }
-  }
+  },
+  "login_required": "Bitte melden Sie sich an, um fortzufahren"
 }

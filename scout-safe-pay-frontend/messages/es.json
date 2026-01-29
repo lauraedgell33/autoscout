@@ -1484,5 +1484,6 @@
       "email": "Correo electrónico",
       "address": "DIRECCIÓN"
     }
-  }
+  },
+  "login_required": "Por favor inicia sesión para continuar"
 }

@@ -1484,5 +1484,6 @@
       "email": "Email",
       "address": "Address"
     }
-  }
+  },
+  "login_required": "Please log in to continue"
 }
