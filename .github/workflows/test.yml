@@ -72,7 +72,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd scout-safe-pay-frontend
-          npm ci
+          npm install
 
       - name: Build Frontend
         run: |
