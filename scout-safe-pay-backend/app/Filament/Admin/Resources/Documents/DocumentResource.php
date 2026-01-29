@@ -8,12 +8,13 @@ use App\Filament\Admin\Resources\Documents\Pages\ListDocuments;
 use App\Filament\Admin\Resources\Documents\Pages\ViewDocument;
 use App\Models\Document;
 use Filament\Forms;
-use Filament\Schemas\Schema;
+use Filament\Schemas\Schema as FilamentSchema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Schema;
 
 class DocumentResource extends Resource
 {
@@ -37,6 +38,11 @@ class DocumentResource extends Resource
     
     public static function getNavigationBadge(): ?string
     {
+        // Check if expires_at column exists in documents table
+        if (!Schema::hasColumn('documents', 'expires_at')) {
+            return null;
+        }
+        
         $count = static::getModel()::whereNotNull('expires_at')
             ->whereDate('expires_at', '<', now()->addDays(30))
             ->count();
@@ -45,13 +51,18 @@ class DocumentResource extends Resource
     
     public static function getNavigationBadgeColor(): ?string
     {
+        // Check if expires_at column exists in documents table
+        if (!Schema::hasColumn('documents', 'expires_at')) {
+            return null;
+        }
+        
         $count = static::getModel()::whereNotNull('expires_at')
             ->whereDate('expires_at', '<', now()->addDays(7))
             ->count();
         return $count > 0 ? 'danger' : 'warning';
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(FilamentSchema $form): FilamentSchema
     {
         return $form
             ->schema([
