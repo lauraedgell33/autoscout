@@ -1502,7 +1502,10 @@
       "last_updated": "Ultima actualizare",
       "phone": "Telefon",
       "email": "Email",
-      "address": "Adresă"
+      "address": "Adresă",
+      "liability": "Răspundere pentru conținut",
+      "liability_text": "Conținutul paginilor noastre a fost creat cu cea mai mare grijă. Cu toate acestea, nu putem garanta acuratețea, completitudinea sau actualitatea conținutului. Conform prevederilor legale, suntem responsabili pentru propriul nostru conținut de pe aceste pagini web. În acest context, vă rugăm să rețineți că nu suntem obligați să monitorizăm informațiile transmise sau stocate de terți sau să investigăm circumstanțe care indică activități ilegale.",
+      "all_rights_reserved": "Toate drepturile rezervate."
     }
   },
   "login_required": "Vă rugăm să vă conectați pentru a continua"

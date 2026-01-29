@@ -1489,7 +1489,10 @@
       "last_updated": "Zuletzt aktualisiert",
       "phone": "Telefon",
       "email": "E-Mail",
-      "address": "Adresse"
+      "address": "Adresse",
+      "liability": "Haftung für Inhalte",
+      "liability_text": "Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.",
+      "all_rights_reserved": "Alle Rechte vorbehalten."
     }
   },
   "login_required": "Bitte melden Sie sich an, um fortzufahren"
