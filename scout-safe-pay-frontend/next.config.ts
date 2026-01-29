@@ -116,7 +116,7 @@ const nextConfig: NextConfig = {
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com",
               process.env.NODE_ENV === 'production' 
-                ? "connect-src 'self' https://*.vapor-farm-x1.com https://*.cloudfront.net https://*.vercel.app"
+                ? "connect-src 'self' https://*.vapor-farm-x1.com https://*.cloudfront.net https://*.vercel.app https://adminautoscout.dev https://www.autoscout24safetrade.com"
                 : "connect-src 'self' http://localhost:8000 http://localhost:8002 https://*.vapor-farm-x1.com https://*.cloudfront.net",
               "frame-ancestors 'self'",
               "base-uri 'self'",
