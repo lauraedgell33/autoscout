@@ -8,11 +8,12 @@ use App\Filament\Admin\Resources\Reviews\Pages\ListReviews;
 use App\Filament\Admin\Resources\Reviews\Pages\ViewReview;
 use App\Models\Review;
 use Filament\Forms;
-use Filament\Schemas\Schema;
+use Filament\Schemas\Schema as FilamentSchema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ReviewResource extends Resource
@@ -46,7 +47,7 @@ class ReviewResource extends Resource
         return $count > 10 ? 'danger' : ($count > 0 ? 'warning' : null);
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(FilamentSchema $form): FilamentSchema
     {
         return $form
             ->schema([

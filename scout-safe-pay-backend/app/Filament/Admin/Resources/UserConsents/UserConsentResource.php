@@ -8,11 +8,12 @@ use App\Filament\Admin\Resources\UserConsents\Pages\ListUserConsents;
 use App\Filament\Admin\Resources\UserConsents\Pages\ViewUserConsent;
 use App\Models\UserConsent;
 use Filament\Forms;
-use Filament\Schemas\Schema;
+use Filament\Schemas\Schema as FilamentSchema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserConsentResource extends Resource
@@ -37,8 +38,12 @@ class UserConsentResource extends Resource
     
     public static function getNavigationBadge(): ?string
     {
-        $count = static::getModel()::whereNotNull('withdrawn_at')->count();
-        return $count ?: null;
+        if (Schema::hasColumn('user_consents', 'withdrawn_at')) {
+            return static::getModel()::whereNotNull('withdrawn_at')->count() ?: null;
+        } elseif (Schema::hasColumn('user_consents', 'revoked_at')) {
+            return static::getModel()::whereNotNull('revoked_at')->count() ?: null;
+        }
+        return null;
     }
     
     public static function getNavigationBadgeColor(): ?string
@@ -46,7 +51,7 @@ class UserConsentResource extends Resource
         return 'danger';
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(FilamentSchema $form): FilamentSchema
     {
         return $form
             ->schema([

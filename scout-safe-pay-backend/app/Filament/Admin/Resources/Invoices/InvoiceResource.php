@@ -8,11 +8,12 @@ use App\Filament\Admin\Resources\Invoices\Pages\ListInvoices;
 use App\Filament\Admin\Resources\Invoices\Pages\ViewInvoice;
 use App\Models\Invoice;
 use Filament\Forms;
-use Filament\Schemas\Schema;
+use Filament\Schemas\Schema as FilamentSchema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InvoiceResource extends Resource
@@ -46,7 +47,7 @@ class InvoiceResource extends Resource
         return $count > 10 ? 'warning' : ($count > 0 ? 'info' : null);
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(FilamentSchema $form): FilamentSchema
     {
         return $form
             ->schema([

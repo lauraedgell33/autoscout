@@ -8,11 +8,12 @@ use App\Filament\Admin\Resources\Messages\Pages\ListMessages;
 use App\Filament\Admin\Resources\Messages\Pages\ViewMessage;
 use App\Models\Message;
 use Filament\Forms;
-use Filament\Schemas\Schema;
+use Filament\Schemas\Schema as FilamentSchema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class MessageResource extends Resource
@@ -48,7 +49,7 @@ class MessageResource extends Resource
         return $count > 20 ? 'danger' : ($count > 0 ? 'warning' : null);
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(FilamentSchema $form): FilamentSchema
     {
         return $form
             ->schema([
