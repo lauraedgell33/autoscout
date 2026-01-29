@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 class CategoryController extends Controller
 {
     /**
-     * Get all vehicle categories
+     * Get all vehicle categories with descriptions
      *
      * @return JsonResponse
      */
