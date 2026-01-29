@@ -5,8 +5,10 @@ import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { Package, CreditCard, Heart, Clock, TrendingUp, AlertCircle } from 'lucide-react';
 import { transactionService, Transaction } from '@/lib/api/transactions';
+import { useAuth } from '@/contexts/AuthContext';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import toast from 'react-hot-toast';
 
 interface DashboardStats {
   total_purchases: number;
@@ -18,6 +20,7 @@ interface DashboardStats {
 
 export default function BuyerDashboardPage({ params }: { params: { locale: string } }) {
   const t = useTranslations();
+  const { user } = useAuth();
   const [stats, setStats] = useState<DashboardStats>({
     total_purchases: 0,
     pending_transactions: 0,
@@ -34,7 +37,7 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
 
   const fetchDashboardData = async () => {
     try {
-      // Fetch transactions
+      // Fetch transactions using the centralized API client
       const transactionsResponse = await transactionService.list({ per_page: 5 });
       setRecentTransactions(transactionsResponse.data);
 
@@ -58,8 +61,11 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
         favorites_count: 0, // Will be fetched from favorites API
         total_spent: total.toString()
       });
-    } catch (error) {
+      
+      toast.success('Dashboard loaded successfully!');
+    } catch (error: any) {
       console.error('Error fetching dashboard data:', error);
+      toast.error(error.response?.data?.message || 'Failed to load dashboard data');
     } finally {
       setLoading(false);
     }
@@ -93,10 +99,10 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Buyer Dashboard
+            {user?.name ? `Welcome back, ${user.name}!` : 'Buyer Dashboard'}
           </h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">
-            Welcome back! Here's your purchase activity overview
+            Here's your purchase activity overview
           </p>
         </div>
         <Link href={`/${params.locale}/marketplace`}>
