@@ -4,6 +4,7 @@
     "marketplace": "Piață",
     "how_it_works": "Cum Funcționează",
     "benefits": "Beneficii",
+    "dealers": "Dealeri",
     "login": "Autentificare",
     "register": "Începe",
     "dashboard": "Tablou de Bord",
@@ -188,6 +189,8 @@
   "dealers": {
     "title": "Distribuitori Autorizați",
     "description": "Răsfoiți rețeaua noastră de distribuitori de vehicule verificați și de încredere din întreaga Europa",
+    "dealers": "Dealeri",
+    "found": "găsiți",
     "dealerProfile": "Profilul Distribuitorului",
     "dealerProfileDescription": "Vizualizați informații distribuitor și recenziile clienților",
     "searchPlaceholder": "Căutați distribuitori după nume, companie sau oraș...",
