@@ -24,7 +24,7 @@ export const useVehicles = (filters?: { minPrice?: number; maxPrice?: number; br
     queryKey: ['vehicles', filters],
     queryFn: async () => {
       // Use real API instead of mock data
-      const response = await vehicleService.list(filters);
+      const response = await vehicleService.getVehicles(filters);
       return response.data || [];
     },
   });
