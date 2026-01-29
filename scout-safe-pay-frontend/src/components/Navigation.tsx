@@ -1,17 +1,19 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from '@/i18n/routing';
-import { useTranslations } from 'next-intl';
+import React, { useState, useEffect } from 'react';
+import { Link, useRouter, usePathname } from '@/i18n/routing';
+import { useTranslations, useLocale } from 'next-intl';
 import { Menu, X, Globe, DollarSign } from 'lucide-react';
 
 export default function Navigation() {
   const t = useTranslations();
   const router = useRouter();
+  const locale = useLocale();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState('EUR');
 
   const languages = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -25,19 +27,21 @@ export default function Navigation() {
     { code: 'GBP', symbol: '£', name: 'British Pound' },
   ];
 
-  const [selectedLanguage, setSelectedLanguage] = useState('en');
-  const [selectedCurrency, setSelectedCurrency] = useState('EUR');
+  // Load currency from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('selectedCurrency');
+    if (saved) setSelectedCurrency(saved);
+  }, []);
 
   const handleLanguageChange = (code: string) => {
-    setSelectedLanguage(code);
     setShowLanguageDropdown(false);
-    // Switch language - implementation depends on i18n setup
+    // Navigate to the same page but with different locale
+    router.push(pathname, { locale: code });
   };
 
   const handleCurrencyChange = (code: string) => {
     setSelectedCurrency(code);
     setShowCurrencyDropdown(false);
-    // Store in localStorage
     localStorage.setItem('selectedCurrency', code);
   };
 
@@ -88,7 +92,7 @@ export default function Navigation() {
                 className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
               >
                 <Globe size={18} />
-                <span className="text-sm font-medium">{selectedLanguage.toUpperCase()}</span>
+                <span className="text-sm font-medium">{locale.toUpperCase()}</span>
               </button>
               {showLanguageDropdown && (
                 <div className="absolute top-full right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 w-40 z-50">
@@ -97,7 +101,7 @@ export default function Navigation() {
                       key={lang.code}
                       onClick={() => handleLanguageChange(lang.code)}
                       className={`w-full text-left px-4 py-2 hover:bg-blue-50 transition-colors flex items-center gap-2 ${
-                        selectedLanguage === lang.code ? 'bg-blue-100 text-blue-600' : 'text-gray-700'
+                        locale === lang.code ? 'bg-blue-100 text-blue-600' : 'text-gray-700'
                       }`}
                     >
                       <span>{lang.flag}</span>
@@ -199,9 +203,12 @@ export default function Navigation() {
                   {languages.map((lang) => (
                     <button
                       key={lang.code}
-                      onClick={() => handleLanguageChange(lang.code)}
+                      onClick={() => {
+                        handleLanguageChange(lang.code);
+                        setIsOpen(false);
+                      }}
                       className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                        selectedLanguage === lang.code
+                        locale === lang.code
                           ? 'bg-blue-600 text-white'
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       }`}

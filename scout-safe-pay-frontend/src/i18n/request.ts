@@ -4,21 +4,15 @@ import {getRequestConfig} from 'next-intl/server';
 // Import all messages statically
 import en from '../../messages/en.json';
 import de from '../../messages/de.json';
-import es from '../../messages/es.json';
-import it from '../../messages/it.json';
 import ro from '../../messages/ro.json';
-import fr from '../../messages/fr.json';
 
 // Can be imported from a shared config
-const locales = ['en', 'de', 'es', 'it', 'ro', 'fr'];
+const locales = ['en', 'de', 'ro'];
 
 const messages: Record<string, any> = {
   en,
   de,
-  es,
-  it,
-  ro,
-  fr
+  ro
 };
 
 export default getRequestConfig(async ({requestLocale}) => {
