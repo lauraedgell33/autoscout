@@ -34,13 +34,25 @@ jobs:
       - name: Setup Test Database
         run: |
           cd scout-safe-pay-backend
-          cp .env.example .env.testing
-          php artisan key:generate --env=testing
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+
+      - name: Run Migrations
+        run: |
+          cd scout-safe-pay-backend
+          php artisan migrate --force
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
 
       - name: Run Tests
         run: |
           cd scout-safe-pay-backend
-          php artisan test --exclude-group=requires-factory --env=testing 2>&1 | tail -50 || true
+          php artisan test
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ":memory:"
 
   frontend-build:
     name: Frontend Build (Next.js)

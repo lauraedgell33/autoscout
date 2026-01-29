@@ -161,12 +161,12 @@ class TransactionLifecycleTest extends TestCase
         ]);
 
         $response = $this->actingAs($this->seller, 'sanctum')
-            ->postJson("/api/transactions/{$transaction->id}/cancel");
-
-        $response->assertStatus(422)
-            ->assertJson([
-                'message' => 'Cannot cancel transaction after payment verification',
+            ->postJson("/api/transactions/{$transaction->id}/cancel", [
+                'reason' => 'Testing cancellation'
             ]);
+
+        $response->assertStatus(422);
+        $this->assertEquals('payment_verified', $transaction->fresh()->status);
     }
 
     public function test_funds_released_after_vehicle_delivery()
@@ -177,7 +177,7 @@ class TransactionLifecycleTest extends TestCase
             'buyer_id' => $this->buyer->id,
             'seller_id' => $this->seller->id,
             'vehicle_id' => $this->vehicle->id,
-            'status' => 'vehicle_delivered',
+            'status' => 'ownership_transferred',
         ]);
 
         $response = $this->actingAs($admin, 'sanctum')

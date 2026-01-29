@@ -78,11 +78,11 @@ class GdprController extends Controller
         
         // Check for active transactions
         $activeTransactions = $user->buyerTransactions()
-            ->whereIn('status', ['pending', 'payment_uploaded', 'payment_verified', 'vehicle_delivered'])
+            ->whereIn('status', ['pending', 'payment_submitted', 'payment_verified', 'ownership_transferred'])
             ->count();
             
         $activeTransactions += $user->sellerTransactions()
-            ->whereIn('status', ['pending', 'payment_uploaded', 'payment_verified', 'vehicle_delivered'])
+            ->whereIn('status', ['pending', 'payment_submitted', 'payment_verified', 'ownership_transferred'])
             ->count();
             
         if ($activeTransactions > 0) {
