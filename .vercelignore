@@ -1,0 +1,12 @@
+# Ignore all files except the ones we need
+.git
+.github
+node_modules
+.env.local
+.env.*.local
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Keep only scout-safe-pay-frontend
+!scout-safe-pay-frontend

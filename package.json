@@ -1,4 +1,10 @@
 {
+  "private": true,
+  "scripts": {
+    "build": "cd scout-safe-pay-frontend && npm install && npm run build",
+    "dev": "cd scout-safe-pay-frontend && npm run dev",
+    "start": "cd scout-safe-pay-frontend && npm run start"
+  },
   "devDependencies": {
     "@playwright/test": "^1.57.0",
     "@testing-library/jest-dom": "^6.9.1",
