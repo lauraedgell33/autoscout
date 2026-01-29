@@ -18,21 +18,9 @@ class SettingsResource extends Resource
 {
     protected static ?string $model = Settings::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $navigationLabel = 'Settings';
-    
-    protected static ?string $recordTitleAttribute = 'label';
-    
-    public static function getNavigationGroup(): ?string
-    {
-        return 'System';
-    }
-    
-    public static function getNavigationSort(): ?int
-    {
-        return 99;
-    }
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {

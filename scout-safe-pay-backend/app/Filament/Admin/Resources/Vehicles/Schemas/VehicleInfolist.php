@@ -3,9 +3,9 @@
 namespace App\Filament\Admin\Resources\Vehicles\Schemas;
 
 use App\Models\Vehicle;
+use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\Group;
 use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -15,7 +15,7 @@ class VehicleInfolist
     {
         return $schema
             ->components([
-                Section::make('Informații generale')->schema([
+                Grid::make(3)->schema([
                     TextEntry::make('make')
                         ->label('Marcă')
                         ->size('lg')
@@ -30,9 +30,9 @@ class VehicleInfolist
                         ->label('An fabricație')
                         ->badge()
                         ->color('info'),
-                ])->columns(3),
+                ]),
                 
-                Section::make('Status & Categorie')->schema([
+                Grid::make(3)->schema([
                     TextEntry::make('category')
                         ->label('Categorie')
                         ->badge()
@@ -77,9 +77,9 @@ class VehicleInfolist
                         ->label('VIN')
                         ->placeholder('Nespecificat')
                         ->copyable(),
-                ])->columns(3),
+                ]),
 
-                Section::make('Preț & Locație')->schema([
+                Grid::make(3)->schema([
                     TextEntry::make('price')
                         ->label('Preț')
                         ->money(fn ($record) => $record->currency ?? 'EUR')
@@ -95,9 +95,9 @@ class VehicleInfolist
                     TextEntry::make('location_country')
                         ->label('Țară')
                         ->placeholder('Nespecificat'),
-                ])->columns(3),
+                ]),
 
-                Section::make('Caracteristici tehnice')->schema([
+                Grid::make(3)->schema([
                     TextEntry::make('fuel_type')
                         ->label('Combustibil')
                         ->badge()
@@ -144,9 +144,9 @@ class VehicleInfolist
                             default => $state ?? 'Nespecificat',
                         })
                         ->placeholder('Nespecificat'),
-                ])->columns(3),
+                ]),
 
-                Section::make('Performanță')->schema([
+                Grid::make(3)->schema([
                     TextEntry::make('mileage')
                         ->label('Kilometraj')
                         ->numeric()
@@ -164,9 +164,9 @@ class VehicleInfolist
                         ->numeric()
                         ->suffix(' CP')
                         ->placeholder('Nespecificat'),
-                ])->columns(3),
+                ]),
 
-                Section::make('Detalii')->schema([
+                Grid::make(3)->schema([
                     TextEntry::make('color')
                         ->label('Culoare')
                         ->placeholder('Nespecificat'),
@@ -180,29 +180,26 @@ class VehicleInfolist
                         ->label('Număr locuri')
                         ->numeric()
                         ->placeholder('Nespecificat'),
-                ])->columns(3),
+                ]),
 
-                Section::make('Descriere')->schema([
-                    TextEntry::make('description')
-                        ->label('Descriere')
-                        ->placeholder('Fără descriere')
-                        ->html(),
-                ])->collapsed(),
+                TextEntry::make('description')
+                    ->label('Descriere')
+                    ->placeholder('Fără descriere')
+                    ->columnSpanFull()
+                    ->html(),
 
-                Section::make('Imagini')->schema([
-                    ImageEntry::make('primary_image')
-                        ->label('Imagine principală')
-                        ->defaultImageUrl(url('/images/placeholder-vehicle.png'))
-                        ->size(300),
+                ImageEntry::make('primary_image')
+                    ->label('Imagine principală')
+                    ->defaultImageUrl(url('/images/placeholder-vehicle.png'))
+                    ->size(300),
 
-                    ImageEntry::make('images')
-                        ->label('Galerie imagini')
-                        ->columnSpanFull()
-                        ->limit(10)
-                        ->size(150),
-                ])->collapsed(),
+                ImageEntry::make('images')
+                    ->label('Galerie imagini')
+                    ->columnSpanFull()
+                    ->limit(10)
+                    ->size(150),
 
-                Section::make('Proprietar')->schema([
+                Grid::make(2)->schema([
                     TextEntry::make('dealer.name')
                         ->label('Dealer')
                         ->placeholder('Fără dealer')
@@ -211,9 +208,9 @@ class VehicleInfolist
                     TextEntry::make('seller.name')
                         ->label('Vânzător')
                         ->icon('heroicon-o-user'),
-                ])->columns(2),
+                ]),
 
-                Section::make('Audit')->schema([
+                Grid::make(3)->schema([
                     TextEntry::make('created_at')
                         ->label('Creat la')
                         ->dateTime('d/m/Y H:i')
@@ -230,7 +227,7 @@ class VehicleInfolist
                         ->icon('heroicon-o-trash')
                         ->visible(fn (Vehicle $record): bool => $record->trashed())
                         ->color('danger'),
-                ])->columns(3)->collapsed(),
+                ]),
             ]);
     }
 }

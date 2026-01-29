@@ -20,13 +20,11 @@ class PaymentResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-credit-card';
     
-    protected static ?string $navigationLabel = 'Payments';
-    
     protected static ?string $recordTitleAttribute = 'payment_reference';
     
     public static function getNavigationGroup(): ?string
     {
-        return 'Financial';
+        return 'Transactions';
     }
     
     public static function getNavigationSort(): ?int

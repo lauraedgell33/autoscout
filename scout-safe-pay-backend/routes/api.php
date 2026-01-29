@@ -19,10 +19,17 @@ use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\SettingsController;
 use Illuminate\Support\Facades\Route;
 
-// Public Settings API
-Route::prefix('settings')->group(function () {
-    Route::get('/public', [SettingsController::class, 'public']);
-    Route::get('/group/{group}', [SettingsController::class, 'group']);
+// Health check endpoint
+Route::get('/health', function () {
+    return response()->json(['status' => 'ok', 'timestamp' => now()]);
+});
+
+// Public settings endpoints
+Route::get('/settings', [SettingsController::class, 'index']);
+Route::prefix('frontend')->group(function () {
+    Route::get('/settings', [SettingsController::class, 'frontendSettings']);
+    Route::get('/contact-settings', [SettingsController::class, 'contactSettings']);
+    Route::get('/locales', [LocaleController::class, 'getAvailableLocales']);
 });
 
 // Locale routes (public)
@@ -41,8 +48,12 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/webhooks/autoscout24', [AutoScout24WebhookController::class, 'handleWebhook']);
 
 // Public legal documents
+Route::get('/legal-documents', [LegalController::class, 'getAllDocuments']);
 Route::get('/legal/documents', [LegalController::class, 'getAllDocuments']);
 Route::get('/legal/documents/{type}', [LegalController::class, 'getDocument']);
+Route::get('/legal/terms', [LegalController::class, 'getTerms']);
+Route::get('/legal/privacy', [LegalController::class, 'getPrivacy']);
+Route::get('/legal/cookies', [LegalController::class, 'getCookies']);
 
 // Public vehicle routes (browsing)
 Route::get('/vehicles', [VehicleController::class, 'index']);

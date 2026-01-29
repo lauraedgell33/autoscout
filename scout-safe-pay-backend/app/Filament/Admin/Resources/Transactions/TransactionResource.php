@@ -19,15 +19,13 @@ class TransactionResource extends Resource
 {
     protected static ?string $model = Transaction::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-arrow-path';
-    
-    protected static ?string $navigationLabel = 'Transactions';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
     
     protected static ?string $recordTitleAttribute = 'transaction_id';
     
     public static function getNavigationGroup(): ?string
     {
-        return 'Financial';
+        return 'Transactions';
     }
     
     public static function getNavigationSort(): ?int

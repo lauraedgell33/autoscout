@@ -18,20 +18,18 @@ class DealerResource extends Resource
 {
     protected static ?string $model = Dealer::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-storefront';
-    
-    protected static ?string $navigationLabel = 'Dealers';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
     
     protected static ?string $recordTitleAttribute = 'name';
     
     public static function getNavigationGroup(): ?string
     {
-        return 'Users & Dealers';
+        return 'Management';
     }
     
     public static function getNavigationSort(): ?int
     {
-        return 2;
+        return 1;
     }
     
     public static function getGloballySearchableAttributes(): array

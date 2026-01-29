@@ -17,20 +17,18 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
-    
-    protected static ?string $navigationLabel = 'Users';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user';
     
     protected static ?string $recordTitleAttribute = 'name';
     
     public static function getNavigationGroup(): ?string
     {
-        return 'Users & Dealers';
+        return 'Management';
     }
     
     public static function getNavigationSort(): ?int
     {
-        return 1;
+        return 2;
     }
     
     public static function getGloballySearchableAttributes(): array

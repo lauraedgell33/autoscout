@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { orderService } from '@/lib/api';
-import { useToast } from '@/lib/hooks/useNotifications';
 import PaymentInstructions from '@/components/orders/PaymentInstructions';
 import UploadSignedContract from '@/components/orders/UploadSignedContract';
 import OrderStatusTracker from '@/components/orders/OrderStatusTracker';
@@ -51,7 +49,6 @@ interface Transaction {
 export default function OrderPage() {
   const params = useParams();
   const orderId = params.id as string;
-  const toast = useToast();
 
   const [transaction, setTransaction] = useState<Transaction | null>(null);
   const [loading, setLoading] = useState(true);
@@ -66,12 +63,20 @@ export default function OrderPage() {
   const fetchTransaction = async () => {
     setLoading(true);
     try {
-      const data = await orderService.getOrder(orderId);
-      setTransaction(data);
+      const response = await fetch(`/api/transactions/${orderId}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch transaction');
+      }
+
+      const data = await response.json();
+      setTransaction(data.data);
     } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : 'Failed to load order';
-      setError(errorMsg);
-      toast.error(errorMsg);
+      setError(err instanceof Error ? err.message : 'Failed to load order');
     } finally {
       setLoading(false);
     }

@@ -134,4 +134,29 @@ class LegalController extends Controller
             'missing_consents' => $missingConsents
         ]);
     }
+
+    /**
+     * Get Terms of Service document
+     */
+    public function getTerms(Request $request): JsonResponse
+    {
+        return $this->getDocument($request, LegalDocument::TYPE_TERMS_OF_SERVICE);
+    }
+
+    /**
+     * Get Privacy Policy document
+     */
+    public function getPrivacy(Request $request): JsonResponse
+    {
+        return $this->getDocument($request, LegalDocument::TYPE_PRIVACY_POLICY);
+    }
+
+    /**
+     * Get Cookie Policy document
+     */
+    public function getCookies(Request $request): JsonResponse
+    {
+        return $this->getDocument($request, LegalDocument::TYPE_COOKIE_POLICY);
+    }
 }
+

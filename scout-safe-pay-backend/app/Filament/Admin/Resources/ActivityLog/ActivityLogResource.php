@@ -29,7 +29,7 @@ class ActivityLogResource extends Resource
     
     public static function getNavigationSort(): ?int
     {
-        return 98;
+        return 99;
     }
 
     public static function table(Table $table): Table
