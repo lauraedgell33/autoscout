@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { LoginFormData } from '@/lib/schemas';
+import { vehicleService } from '@/lib/api/vehicles';
 
 export const useLogin = () => {
   return useMutation({
@@ -22,61 +23,9 @@ export const useVehicles = (filters?: { minPrice?: number; maxPrice?: number; br
   return useQuery({
     queryKey: ['vehicles', filters],
     queryFn: async () => {
-      // Mock vehicles data
-      return [
-        {
-          id: '1',
-          title: 'Tesla Model 3',
-          name: 'Tesla Model 3',
-          price: 45000,
-          image: '/vehicles/tesla.jpg',
-          images: ['/vehicles/tesla.jpg'],
-          category: 'Electric',
-          mileage: 12000,
-          year: 2023,
-          transmission: 'Automatic',
-          fuelType: 'Electric',
-        },
-        {
-          id: '2',
-          title: 'BMW 3 Series',
-          name: 'BMW 3 Series',
-          price: 52000,
-          image: '/vehicles/bmw.jpg',
-          images: ['/vehicles/bmw.jpg'],
-          category: 'Sedan',
-          mileage: 25000,
-          year: 2022,
-          transmission: 'Automatic',
-          fuelType: 'Diesel',
-        },
-        {
-          id: '3',
-          title: 'Mercedes C-Class',
-          name: 'Mercedes C-Class',
-          price: 58000,
-          image: '/vehicles/mercedes.jpg',
-          images: ['/vehicles/mercedes.jpg'],
-          category: 'Sedan',
-          mileage: 18000,
-          year: 2023,
-          transmission: 'Automatic',
-          fuelType: 'Petrol',
-        },
-        {
-          id: '4',
-          title: 'Audi A4',
-          name: 'Audi A4',
-          price: 48000,
-          image: '/vehicles/audi.jpg',
-          images: ['/vehicles/audi.jpg'],
-          category: 'Sedan',
-          mileage: 35000,
-          year: 2021,
-          transmission: 'Manual',
-          fuelType: 'Diesel',
-        },
-      ];
+      // Use real API instead of mock data
+      const response = await vehicleService.list(filters);
+      return response.data || [];
     },
   });
 };

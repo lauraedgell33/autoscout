@@ -42,20 +42,20 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
       setRecentTransactions(transactionsResponse.data);
 
       // Calculate stats
-      const pending = transactionsResponse.data.filter(t => 
+      const pending = (transactionsResponse.data || []).filter(t => 
         ['pending_payment', 'payment_received', 'inspection_scheduled'].includes(t.status)
       ).length;
       
-      const completed = transactionsResponse.data.filter(t => 
+      const completed = (transactionsResponse.data || []).filter(t => 
         ['funds_released'].includes(t.status)
       ).length;
 
-      const total = parseFloat(transactionsResponse.data.reduce((sum, t) => 
+      const total = parseFloat((transactionsResponse.data || []).reduce((sum, t) => 
         sum + parseFloat(t.amount), 0
       ).toFixed(2));
 
       setStats({
-        total_purchases: transactionsResponse.data.length,
+        total_purchases: (transactionsResponse.data || []).length,
         pending_transactions: pending,
         completed_transactions: completed,
         favorites_count: 0, // Will be fetched from favorites API
@@ -172,7 +172,7 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
           </Link>
         </div>
 
-        {recentTransactions.length === 0 ? (
+        {recentTransactions && recentTransactions.length === 0 ? (
           <div className="text-center py-12">
             <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">

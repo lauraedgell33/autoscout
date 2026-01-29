@@ -78,7 +78,7 @@ export default function BuyerFavoritesPage({ params }: { params: { locale: strin
             My Favorites
           </h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">
-            {favorites.length} saved {favorites.length === 1 ? 'vehicle' : 'vehicles'}
+            {(favorites || []).length} saved {(favorites || []).length === 1 ? 'vehicle' : 'vehicles'}
           </p>
         </div>
         <Link href={`/${params.locale}/marketplace`}>
@@ -87,7 +87,7 @@ export default function BuyerFavoritesPage({ params }: { params: { locale: strin
       </div>
 
       {/* Favorites Grid */}
-      {favorites.length === 0 ? (
+      {!favorites || favorites.length === 0 ? (
         <Card className="p-12">
           <div className="text-center">
             <Heart className="h-16 w-16 text-gray-400 mx-auto mb-4" />
