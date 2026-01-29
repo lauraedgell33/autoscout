@@ -8,12 +8,13 @@ use App\Filament\Admin\Resources\LegalDocuments\Pages\ListLegalDocuments;
 use App\Filament\Admin\Resources\LegalDocuments\Pages\ViewLegalDocument;
 use App\Models\LegalDocument;
 use Filament\Forms;
-use Filament\Schemas\Schema;
+use Filament\Schemas\Schema as FilamentSchema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Schema;
 
 class LegalDocumentResource extends Resource
 {
@@ -37,6 +38,11 @@ class LegalDocumentResource extends Resource
     
     public static function getNavigationBadge(): ?string
     {
+        // Check if status column exists in legal_documents table
+        if (!Schema::hasColumn('legal_documents', 'status')) {
+            return null;
+        }
+        
         $count = static::getModel()::where('status', 'draft')->count();
         return $count ?: null;
     }
@@ -46,7 +52,7 @@ class LegalDocumentResource extends Resource
         return 'warning';
     }
 
-    public static function form(Schema $schema): Schema
+    public static function form(FilamentSchema $form): FilamentSchema
     {
         return $form
             ->schema([
