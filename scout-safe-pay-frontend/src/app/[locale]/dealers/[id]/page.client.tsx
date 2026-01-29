@@ -673,9 +673,8 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                   )}
                 </div>
               </div>
-            </TabsContent>
-          </Tabs>
-        </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   )
