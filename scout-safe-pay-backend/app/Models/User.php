@@ -125,12 +125,20 @@ class User extends Authenticatable
     /**
      * Determine if the user can access the Filament admin panel.
      */
-    public function canAccessPanel(\Filament\Panel $panel): bool
+    public function canAccessPanel(?\Filament\Panel $panel = null): bool
     {
         // Temporarily allow all authenticated users for debugging
         return true;
         
         // Original logic (will re-enable after testing):
         // return in_array($this->user_type, ['super_admin', 'admin']) && $this->email_verified_at !== null;
+    }
+
+    /**
+     * Determine if the user can access Filament.
+     */
+    public function canAccessFilament(): bool
+    {
+        return true;
     }
 }

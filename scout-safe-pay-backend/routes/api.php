@@ -15,6 +15,7 @@ use App\Http\Controllers\API\ContractController;
 use App\Http\Controllers\API\InvoiceController;
 use App\Http\Controllers\API\LocaleController;
 use App\Http\Controllers\Api\CookieConsentController;
+use App\Http\Controllers\API\OrderController;
 use Illuminate\Support\Facades\Route;
 
 // Locale routes (public)
@@ -171,6 +172,36 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/cancel-deletion', [App\Http\Controllers\API\GdprController::class, 'cancelDeletion']);
         Route::get('/privacy-settings', [App\Http\Controllers\API\GdprController::class, 'getPrivacySettings']);
         Route::put('/consent', [App\Http\Controllers\API\GdprController::class, 'updateConsent']);
+    });
+    
+    // Bank Transfer Payment System (New Order Flow)
+    Route::prefix('orders')->group(function () {
+        // 1. Create initial order (buyer)
+        Route::post('/', [OrderController::class, 'createOrder'])->name('api.orders.create');
+        
+        // 2. Generate contract (dealer)
+        Route::post('/{transaction}/generate-contract', [OrderController::class, 'generateContract'])->name('api.orders.generate-contract');
+        
+        // 3. Upload signed contract (buyer)
+        Route::post('/{transaction}/upload-signed-contract', [OrderController::class, 'uploadSignedContract'])->name('api.orders.upload-contract');
+        
+        // 4. Get payment instructions (buyer - after contract upload)
+        Route::get('/{transaction}/payment-instructions', [OrderController::class, 'getPaymentInstructions'])->name('api.orders.payment-instructions');
+        
+        // 5. Confirm payment received (admin/dealer - manual)
+        Route::post('/{transaction}/confirm-payment', [OrderController::class, 'confirmPayment'])->name('api.orders.confirm-payment');
+        
+        // 6. Mark vehicle ready for delivery (dealer)
+        Route::post('/{transaction}/ready-for-delivery', [OrderController::class, 'markReadyForDelivery'])->name('api.orders.ready-delivery');
+        
+        // 7. Mark vehicle as delivered (dealer/buyer)
+        Route::post('/{transaction}/delivered', [OrderController::class, 'markAsDelivered'])->name('api.orders.delivered');
+        
+        // 8. Complete order (automatic after delivery confirmation)
+        Route::post('/{transaction}/complete', [OrderController::class, 'completeOrder'])->name('api.orders.complete');
+        
+        // 9. Cancel order (buyer/dealer - before payment confirmed)
+        Route::post('/{transaction}/cancel', [OrderController::class, 'cancelOrder'])->name('api.orders.cancel');
     });
 });
 
