@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
+import { useAuthStore } from '@/store/auth-store';
 
 /**
  * Client API optimizat cu retry logic și timeout
@@ -8,7 +9,7 @@ class OptimizedAPIClient {
   private requestQueue: Map<string, Promise<any>>;
 
   constructor() {
-    const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+    const baseURL = process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api';
     
     this.client = axios.create({
       baseURL,
@@ -22,11 +23,28 @@ class OptimizedAPIClient {
 
     this.requestQueue = new Map();
 
+    // Request interceptor to add auth token
+    this.client.interceptors.request.use(
+      (config) => {
+        const token = useAuthStore.getState().token;
+        if (token && config.headers) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => Promise.reject(error)
+    );
+
     // Response interceptor cu retry logic
     this.client.interceptors.response.use(
       (response) => response,
       async (error: AxiosError) => {
         const config = error.config as AxiosRequestConfig & { _retry?: number };
+        
+        // Handle 401 Unauthorized - logout user
+        if (error.response?.status === 401) {
+          useAuthStore.getState().logout();
+        }
         
         // Retry logic pentru network errors
         if (!config._retry && error.code === 'ECONNABORTED') {

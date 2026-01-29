@@ -1,16 +1,19 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { createContext, useContext, ReactNode, useEffect } from 'react'
 import { useRouter } from '@/i18n/routing'
-import { authService } from '@/lib/api/auth'
+import { useAuthStore } from '@/store/auth-store'
+import toast from 'react-hot-toast'
 
 interface User {
   id: number
   name: string
   email: string
-  role: 'buyer' | 'seller' | 'admin'
+  role: 'buyer' | 'seller' | 'dealer' | 'admin'
   phone?: string
   email_verified_at?: string
+  user_type?: 'buyer' | 'seller' | 'dealer' | 'admin'
+  country?: string
 }
 
 interface AuthContextType {
@@ -28,56 +31,49 @@ interface RegisterData {
   password: string
   password_confirmation: string
   phone?: string
-  role: 'buyer' | 'seller'
-  user_type?: 'buyer' | 'seller'
+  role?: 'buyer' | 'seller' | 'dealer'
+  user_type?: 'buyer' | 'seller' | 'dealer'
+  country?: string
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
   const router = useRouter()
+  const authStore = useAuthStore()
 
   useEffect(() => {
-    // Disable auto-loading to prevent infinite loops
-    // User will need to login manually
-    setLoading(false)
-    
-    // Optional: Check localStorage for cached user
-    const cachedUser = localStorage.getItem('user')
-    if (cachedUser) {
-      try {
-        setUser(JSON.parse(cachedUser))
-      } catch (e) {
-        console.error('Failed to parse cached user')
-      }
-    }
-  }, [])
+    // Check authentication on mount
+    authStore.checkAuth()
+  }, [authStore])
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await authService.login({ email, password })
+      await authStore.login(email, password)
       
-      const { user: newUser } = response
+      const { user } = authStore
       
-      // Map user_type to role for frontend compatibility
-      const mappedUser = {
-        ...newUser,
-        role: newUser.user_type || newUser.role
+      if (!user) {
+        throw new Error('Login failed - no user returned')
       }
+
+      toast.success('Successfully logged in!')
       
-      setUser(mappedUser)
-      
-      if (mappedUser.role === 'admin') {
+      // Redirect based on user role
+      const role = user.user_type || user.role
+      if (role === 'admin') {
         window.location.href = '/admin'
-      } else if (mappedUser.role === 'seller') {
+      } else if (role === 'seller') {
         router.push('/dashboard/seller')
+      } else if (role === 'dealer') {
+        router.push('/dashboard/dealer')
       } else {
         router.push('/dashboard/buyer')
       }
     } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Login failed')
+      const message = error.response?.data?.message || error.message || 'Login failed'
+      toast.error(message)
+      throw new Error(message)
     }
   }
 
@@ -85,48 +81,53 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const registerData = {
         ...data,
-        user_type: data.role
-      }
-      const response = await authService.register(registerData)
-      
-      const { user: newUser } = response
-      
-      // Map user_type to role for frontend compatibility
-      const mappedUser = {
-        ...newUser,
-        role: newUser.user_type || newUser.role
+        user_type: data.role || data.user_type || 'buyer'
       }
       
-      setUser(mappedUser)
+      await authStore.register(registerData)
       
-      if (mappedUser.role === 'seller') {
+      const { user } = authStore
+      
+      if (!user) {
+        throw new Error('Registration failed - no user returned')
+      }
+
+      toast.success('Successfully registered!')
+      
+      // Redirect based on user role
+      const role = user.user_type || user.role
+      if (role === 'seller') {
         router.push('/dashboard/seller')
+      } else if (role === 'dealer') {
+        router.push('/dashboard/dealer')
       } else {
         router.push('/dashboard/buyer')
       }
     } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Registration failed')
+      const message = error.response?.data?.message || error.message || 'Registration failed'
+      toast.error(message)
+      throw new Error(message)
     }
   }
 
   const logout = async () => {
     try {
-      await authService.logout()
+      await authStore.logout()
+      toast.success('Successfully logged out')
+      router.push('/')
     } catch (error) {
-      // Silent fail - clear state anyway
+      // Silent fail - store already cleared
+      router.push('/')
     }
-    
-    setUser(null)
-    router.push('/')
   }
 
   const value = {
-    user,
-    loading,
+    user: authStore.user as User | null,
+    loading: authStore.isLoading,
     login,
     register,
     logout,
-    isAuthenticated: !!user,
+    isAuthenticated: authStore.isAuthenticated,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

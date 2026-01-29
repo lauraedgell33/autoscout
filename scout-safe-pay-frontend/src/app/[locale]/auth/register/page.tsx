@@ -1,17 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function RegisterPage({ params }: { params: { locale: string } }) {
-  const router = useRouter();
+  const { register, loading: authLoading } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     password_confirmation: '',
-    role: 'buyer',
+    role: 'buyer' as 'buyer' | 'seller' | 'dealer',
+    phone: '',
+    country: '',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -28,38 +30,10 @@ export default function RegisterPage({ params }: { params: { locale: string } })
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Store token
-        localStorage.setItem('auth_token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        
-        // Redirect based on user role
-        const role = data.user.role;
-        if (role === 'buyer') {
-          router.push(`/${params.locale}/buyer/dashboard`);
-        } else if (role === 'seller') {
-          router.push(`/${params.locale}/seller/dashboard`);
-        } else if (role === 'dealer') {
-          router.push(`/${params.locale}/dealer/dashboard`);
-        } else {
-          router.push(`/${params.locale}/`);
-        }
-      } else {
-        setError(data.message || 'Registration failed. Please try again.');
-      }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-      console.error('Registration error:', err);
+      await register(formData);
+      // Redirect is handled by AuthContext
+    } catch (err: any) {
+      setError(err.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }

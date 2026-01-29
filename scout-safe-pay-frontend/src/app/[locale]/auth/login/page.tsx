@@ -1,11 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function LoginPage({ params }: { params: { locale: string } }) {
-  const router = useRouter();
+  const { login, loading: authLoading } = useAuth();
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get('returnUrl');
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -17,38 +21,13 @@ export default function LoginPage({ params }: { params: { locale: string } }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Store token
-        localStorage.setItem('auth_token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        
-        // Redirect based on user role
-        const role = data.user.role;
-        if (role === 'buyer') {
-          router.push(`/${params.locale}/buyer/dashboard`);
-        } else if (role === 'seller') {
-          router.push(`/${params.locale}/seller/dashboard`);
-        } else if (role === 'dealer') {
-          router.push(`/${params.locale}/dealer/dashboard`);
-        } else {
-          router.push(`/${params.locale}/`);
-        }
-      } else {
-        setError(data.message || 'Login failed. Please check your credentials.');
+      await login(email, password);
+      // Redirect is handled by AuthContext
+      if (returnUrl) {
+        window.location.href = returnUrl;
       }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-      console.error('Login error:', err);
+    } catch (err: any) {
+      setError(err.message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }

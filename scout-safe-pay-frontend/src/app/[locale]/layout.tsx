@@ -4,6 +4,7 @@ import {getMessages, getTranslations} from 'next-intl/server';
 import {routing} from '@/i18n/routing';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { CurrencyProvider } from '@/contexts/CurrencyContext';
+import { ToastProvider } from '@/components/providers/toast-provider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import CookieBanner from '@/components/CookieBanner';
@@ -138,6 +139,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <CurrencyProvider>
             <AuthProvider>
+              <ToastProvider />
               <Navigation />
               <main className="min-h-screen">
                 {children}
