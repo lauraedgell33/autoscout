@@ -138,7 +138,7 @@ export default function SellerBankAccountsPage() {
         </Card>
       )}
 
-      {accounts.length === 0 ? (
+      {!accounts || accounts.length === 0 ? (
         <Card className="p-12">
           <div className="text-center">
             <h3 className="text-lg font-medium mb-2">No bank accounts added</h3>

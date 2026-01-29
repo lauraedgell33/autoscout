@@ -59,7 +59,7 @@ export default function DealerInventoryPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold">Inventory Management</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">{filteredVehicles.length} vehicles in stock</p>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">{(filteredVehicles || []).length} vehicles in stock</p>
         </div>
       </div>
 
@@ -81,7 +81,7 @@ export default function DealerInventoryPage() {
       </Card>
 
       <Card className="overflow-hidden">
-        {filteredVehicles.length === 0 ? (
+        {!filteredVehicles || filteredVehicles.length === 0 ? (
           <div className="text-center py-12">
             <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium mb-2">No vehicles in inventory</h3>

@@ -85,7 +85,7 @@ export default function DealerTeamPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold">Team Management</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">{members.length} team members</p>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">{(members || []).length} team members</p>
         </div>
         <Button onClick={() => setShowInviteForm(!showInviteForm)}>
           <UserPlus className="h-4 w-4 mr-2" />Invite Member
@@ -117,7 +117,7 @@ export default function DealerTeamPage() {
       )}
 
       <Card className="overflow-hidden">
-        {members.length === 0 ? (
+        {!members || members.length === 0 ? (
           <div className="text-center py-12">
             <Users className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium mb-2">No team members yet</h3>

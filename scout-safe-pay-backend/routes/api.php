@@ -17,6 +17,7 @@ use App\Http\Controllers\API\LocaleController;
 use App\Http\Controllers\Api\CookieConsentController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\SettingsController;
+use App\Http\Controllers\Api\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 // Health check endpoint
@@ -60,6 +61,10 @@ Route::get('/vehicles', [VehicleController::class, 'index']);
 Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show']);
 Route::get('/vehicles-featured', [VehicleController::class, 'featured']);
 Route::get('/vehicles-statistics', [VehicleController::class, 'statistics']);
+
+// Public category routes
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/{slug}', [CategoryController::class, 'show']);
 
 // Public dealer routes
 Route::get('/dealers', [App\Http\Controllers\API\DealerController::class, 'index']);

@@ -59,14 +59,14 @@ export default function SellerVehiclesPage({ params }: { params: { locale: strin
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">My Vehicles</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">{vehicles.length} total listings</p>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">{(vehicles || []).length} total listings</p>
         </div>
         <Link href={`/${params.locale}/seller/vehicles/new`}>
           <Button><Plus className="h-4 w-4 mr-2" />Add Vehicle</Button>
         </Link>
       </div>
 
-      {vehicles.length === 0 ? (
+      {!vehicles || vehicles.length === 0 ? (
         <Card className="p-12">
           <div className="text-center">
             <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
