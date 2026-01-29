@@ -23,11 +23,14 @@ export const VehicleGrid: React.FC = () => {
   const handleAddToCart = (vehicle: any) => {
     addItem({
       id: vehicle.id,
-      name: vehicle.name,
+      vehicleId: vehicle.id,
+      vehicleName: vehicle.name,
       price: vehicle.price,
       quantity: 1,
+      image: vehicle.images?.[0],
+      addedAt: Date.now(),
     });
-    addToast({ message: `${vehicle.name} added to cart!`, type: 'success' });
+    addToast(`${vehicle.name} added to cart!`, 'success');
   };
 
   if (isLoading) return <div className="text-center py-8">Loading vehicles...</div>;

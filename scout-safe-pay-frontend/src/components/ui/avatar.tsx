@@ -1,39 +1,22 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import React from 'react';
 
 interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
-  src?: string
-  alt?: string
-  fallback?: string
+  src?: string;
+  alt?: string;
+  fallback?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
-const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
-  ({ className, src, alt, fallback, ...props }, ref) => {
-    const [imageError, setImageError] = React.useState(false)
+export const Avatar = ({ className = '', ...props }: AvatarProps) => (
+  <div className={`w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center ${className}`} {...props} />
+);
 
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          "relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-teal-100 text-teal-700 font-semibold text-sm",
-          className
-        )}
-        {...props}
-      >
-        {src && !imageError ? (
-          <img
-            src={src}
-            alt={alt || "avatar"}
-            className="h-full w-full rounded-full object-cover"
-            onError={() => setImageError(true)}
-          />
-        ) : (
-          <span>{fallback || "U"}</span>
-        )}
-      </div>
-    )
-  }
-)
-Avatar.displayName = "Avatar"
+export const AvatarImage = ({ src, alt, className = '' }: { src?: string; alt?: string; className?: string }) => (
+  <img src={src} alt={alt} className={`w-full h-full rounded-full object-cover ${className}`} />
+);
 
-export { Avatar }
+export const AvatarFallback = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
+  <div className={`w-full h-full rounded-full bg-gray-300 flex items-center justify-center text-sm font-medium ${className}`}>
+    {children}
+  </div>
+);

@@ -28,10 +28,10 @@ export const LoginForm: React.FC = () => {
       const response = await login.mutateAsync(data);
       setUser(response.user);
       localStorage.setItem('authToken', response.token);
-      addToast({ message: 'Login successful!', type: 'success' });
+      addToast('Login successful!', 'success');
       // Router will handle redirect
     } catch (error) {
-      addToast({ message: 'Login failed. Please try again.', type: 'error' });
+      addToast('Login failed. Please try again.', 'error');
     }
   };
 

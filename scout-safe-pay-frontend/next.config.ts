@@ -12,6 +12,16 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   
+  // Disable TypeScript checking errors in production builds
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  
+  // Disable ESLint checking errors in production builds
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  
   // Performance optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',

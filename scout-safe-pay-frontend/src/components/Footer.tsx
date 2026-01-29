@@ -1,59 +1,44 @@
-'use client'
+'use client';
 
-import { Link } from '@/i18n/routing'
-import { useTranslations } from 'next-intl'
+import React from 'react';
+import Link from 'next/link';
 
 export default function Footer() {
-  const t = useTranslations()
-  
   return (
-    <footer className="bg-blue-900 text-white py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-gray-900 text-white mt-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center mb-4">
-              <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
-                <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <span className="ml-2 text-lg font-bold">AutoScout24</span>
-            </div>
-            <p className="text-sm text-blue-200">{t('footer.about_text')}</p>
+            <h3 className="text-lg font-bold mb-4">AutoScout24</h3>
+            <p className="text-gray-400">Safe and secure vehicle marketplace</p>
           </div>
-
           <div>
-            <h3 className="font-semibold mb-4">{t('footer.quick_links')}</h3>
-            <div className="space-y-2 text-sm">
-              <Link href="/marketplace" className="block text-blue-200 hover:text-white">{t('footer.marketplace')}</Link>
-              <Link href="/how-it-works" className="block text-blue-200 hover:text-white">{t('footer.how_it_works')}</Link>
-              <Link href="/benefits" className="block text-blue-200 hover:text-white">{t('footer.benefits')}</Link>
-            </div>
+            <h4 className="text-lg font-bold mb-4">Links</h4>
+            <ul className="space-y-2 text-gray-400">
+              <li><Link href="/about" className="hover:text-white">About</Link></li>
+              <li><Link href="/privacy" className="hover:text-white">Privacy</Link></li>
+              <li><Link href="/terms" className="hover:text-white">Terms</Link></li>
+            </ul>
           </div>
-
           <div>
-            <h3 className="font-semibold mb-4">{t('footer.company')}</h3>
-            <div className="space-y-2 text-sm">
-              <Link href="/contact" className="block text-blue-200 hover:text-white">{t('footer.contact')}</Link>
-              <Link href="/about" className="block text-blue-200 hover:text-white">{t('footer.about')}</Link>
-              <Link href="/careers" className="block text-blue-200 hover:text-white">{t('footer.careers')}</Link>
-            </div>
+            <h4 className="text-lg font-bold mb-4">Support</h4>
+            <ul className="space-y-2 text-gray-400">
+              <li><Link href="/contact" className="hover:text-white">Contact</Link></li>
+              <li><Link href="/faq" className="hover:text-white">FAQ</Link></li>
+            </ul>
           </div>
-
           <div>
-            <h3 className="font-semibold mb-4">{t('footer.legal')}</h3>
-            <div className="space-y-2 text-sm">
-              <Link href="/legal/privacy" className="block text-blue-200 hover:text-white">{t('footer.privacy')}</Link>
-              <Link href="/legal/terms" className="block text-blue-200 hover:text-white">{t('footer.terms')}</Link>
-              <Link href="/legal/imprint" className="block text-blue-200 hover:text-white">{t('footer.imprint')}</Link>
-            </div>
+            <h4 className="text-lg font-bold mb-4">Legal</h4>
+            <ul className="space-y-2 text-gray-400">
+              <li><Link href="/legal" className="hover:text-white">Legal</Link></li>
+              <li><Link href="/cookies" className="hover:text-white">Cookies</Link></li>
+            </ul>
           </div>
         </div>
-
-        <div className="border-t border-blue-700 mt-8 pt-8 text-center text-sm text-blue-200">
-          <p>&copy; 2026 AutoScout24 SafeTrade. {t('footer.rights_reserved')}</p>
+        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <p>&copy; 2024 AutoScout24. All rights reserved.</p>
         </div>
       </div>
     </footer>
-  )
+  );
 }

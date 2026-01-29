@@ -1,34 +1,28 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import React from 'react';
 
-export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "secondary" | "destructive" | "outline" | "success"
-  size?: "sm" | "md"
+interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: 'default' | 'secondary' | 'destructive' | 'success' | 'warning' | 'info';
 }
 
-const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
-  ({ className, variant = "default", size = "sm", ...props }, ref) => {
+export const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
+  ({ className = '', variant = 'default', ...props }, ref) => {
+    const variantClasses = {
+      default: 'bg-blue-100 text-blue-800',
+      secondary: 'bg-gray-100 text-gray-800',
+      destructive: 'bg-red-100 text-red-800',
+      success: 'bg-green-100 text-green-800',
+      warning: 'bg-yellow-100 text-yellow-800',
+      info: 'bg-cyan-100 text-cyan-800',
+    };
+
     return (
       <div
         ref={ref}
-        className={cn(
-          "inline-flex items-center rounded-full font-medium transition-colors",
-          {
-            "bg-teal-100 text-teal-800": variant === "default",
-            "bg-gray-100 text-gray-800": variant === "secondary",
-            "bg-red-100 text-red-800": variant === "destructive",
-            "border border-teal-200 text-teal-800": variant === "outline",
-            "bg-green-100 text-green-800": variant === "success",
-            "px-2 py-0.5 text-xs": size === "sm",
-            "px-2.5 py-1 text-sm": size === "md",
-          },
-          className
-        )}
+        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${variantClasses[variant]} ${className}`}
         {...props}
       />
-    )
+    );
   }
-)
-Badge.displayName = "Badge"
+);
 
-export { Badge }
+Badge.displayName = 'Badge';

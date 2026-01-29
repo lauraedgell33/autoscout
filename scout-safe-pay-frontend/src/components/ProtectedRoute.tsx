@@ -1,53 +1,29 @@
-'use client'
+'use client';
 
-import { useEffect } from 'react'
-import { useRouter } from '@/i18n/routing'
-import { useAuth } from '@/contexts/AuthContext'
+import React, { useEffect, useState } from 'react';
+import { useRouter } from '@/i18n/routing';
 
 interface ProtectedRouteProps {
-  children: React.ReactNode
-  allowedRoles?: ('buyer' | 'seller' | 'admin')[]
+  children: React.ReactNode;
+  allowedRoles?: ('buyer' | 'seller' | 'admin' | 'dealer')[];
 }
 
 export default function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
-  const { user, isAuthenticated, loading } = useAuth()
-  const router = useRouter()
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    if (!loading) {
-      if (!isAuthenticated) {
-        router.push('/login')
-      } else if (allowedRoles && user && !allowedRoles.includes(user.role)) {
-        // Redirect to appropriate dashboard if wrong role
-        if (user.role === 'seller') {
-          router.push('/dashboard/seller')
-        } else if (user.role === 'buyer') {
-          router.push('/dashboard/buyer')
-        } else {
-          router.push('/')
-        }
-      }
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      router.push('/login');
+    } else {
+      setIsAuthenticated(true);
     }
-  }, [isAuthenticated, loading, user, allowedRoles, router])
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    )
-  }
+  }, [router]);
 
   if (!isAuthenticated) {
-    return null
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
 
-  if (allowedRoles && user && !allowedRoles.includes(user.role)) {
-    return null
-  }
-
-  return <>{children}</>
+  return <>{children}</>;
 }
