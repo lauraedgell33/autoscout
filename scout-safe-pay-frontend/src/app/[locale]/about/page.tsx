@@ -3,8 +3,6 @@
 import Image from 'next/image'
 
 import { useTranslations } from 'next-intl'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import { Users, TrendingUp, Globe, Award } from 'lucide-react'
 
 export default function AboutPage() {
@@ -18,9 +16,7 @@ export default function AboutPage() {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navigation />
-      
+    <div className="min-h-screen flex flex-col">      
       <main className="flex-grow">
         <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -79,9 +75,6 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </main>    </div>
   )
 }

@@ -6,8 +6,6 @@ import { Link } from '@/i18n/routing'
 import { useParams, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useCurrency } from '@/contexts/CurrencyContext'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import { useState, useEffect } from 'react'
 import vehicleService, { Vehicle } from '@/lib/api/vehicles'
 import { transactionService } from '@/lib/api/transactions'
@@ -73,9 +71,7 @@ export default function VehicleDetailsPage() {
 
   if (error || !vehicle) {
     return (
-      <div className="min-h-screen bg-white">
-        <Navigation />
-        <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="min-h-screen bg-white">        <div className="min-h-[60vh] flex items-center justify-center">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('not_found')}</h2>
             <p className="text-gray-600 mb-6">{t('not_found_desc')}</p>
@@ -89,9 +85,7 @@ export default function VehicleDetailsPage() {
               {t('back_to_marketplace')}
             </Link>
           </div>
-        </div>
-        <Footer />
-      </div>
+        </div>      </div>
     )
   }
 
@@ -101,8 +95,6 @@ export default function VehicleDetailsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
-
       {/* Breadcrumb */}
       <div className="bg-gray-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -337,9 +329,6 @@ export default function VehicleDetailsPage() {
             </div>
           </div>
         </div>
-      </div>
-
-      <Footer />
-    </div>
+      </div>    </div>
   )
 }

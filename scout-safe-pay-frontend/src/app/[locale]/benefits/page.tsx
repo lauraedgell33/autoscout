@@ -2,16 +2,12 @@
 
 import { Link } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 
 export default function BenefitsPage() {
   const t = useTranslations()
   
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
-
       {/* Hero */}
       <section className="bg-gradient-to-br from-blue-50 to-orange-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,9 +119,6 @@ export default function BenefitsPage() {
             </Link>
           </div>
         </div>
-      </section>
-
-      <Footer />
-    </div>
+      </section>    </div>
   )
 }

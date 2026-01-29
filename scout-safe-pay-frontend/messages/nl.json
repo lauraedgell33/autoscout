@@ -228,7 +228,9 @@
     "totalReviews": "Totaal beoordelingen",
     "averageRating": "Gemiddelde beoordeling",
     "memberSince": "Lid sinds",
-    "ratingBreakdown": "Beoordelingsverdeling"
+    "ratingBreakdown": "Beoordelingsverdeling",
+    "dealers": "dealers",
+    "found": "gevonden"
   },
   "checkout": {
     "title": "Veilig afrekenen",

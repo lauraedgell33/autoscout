@@ -1,8 +1,6 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import { Mail, Phone, MapPin, Send } from 'lucide-react'
 import { useState } from 'react'
 
@@ -23,9 +21,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navigation />
-      
+    <div className="min-h-screen flex flex-col">      
       <main className="flex-grow bg-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -108,9 +104,6 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </main>    </div>
   )
 }

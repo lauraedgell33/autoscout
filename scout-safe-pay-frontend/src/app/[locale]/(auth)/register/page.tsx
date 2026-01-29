@@ -1,8 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
@@ -58,8 +56,6 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
-
       <section className="py-16 bg-gradient-to-br from-blue-50 to-orange-50">
         <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
@@ -207,9 +203,6 @@ export default function RegisterPage() {
             </div>
           </div>
         </div>
-      </section>
-
-      <Footer />
-    </div>
+      </section>    </div>
   )
 }

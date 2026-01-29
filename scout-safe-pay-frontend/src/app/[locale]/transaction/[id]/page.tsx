@@ -9,8 +9,6 @@ import { transactionService, Transaction } from '@/lib/api/transactions'
 import { contractService } from '@/lib/api/contracts'
 import { invoiceService } from '@/lib/api/invoices'
 import { getCategoryLabel } from '@/lib/utils/categoryHelpers'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 
 export default function TransactionPage() {
   const t = useTranslations('transaction')
@@ -144,9 +142,7 @@ export default function TransactionPage() {
   const vehicle = transaction.vehicle
 
   return (
-    <>
-      <Navigation />
-      <div className="min-h-screen bg-gray-50 py-8">
+    <>      <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-6xl mx-auto px-4">
           <div className="mb-6">
             <Link href="/dashboard" className="text-blue-600 hover:underline">← {tCommon('back')}</Link>
@@ -375,9 +371,7 @@ export default function TransactionPage() {
           </div>
         </div>
       </div>
-      </div>
-      <Footer />
-    </>
+      </div>    </>
   )
 }
 // HMR Test - 02:30:37

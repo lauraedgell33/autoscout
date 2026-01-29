@@ -188,6 +188,8 @@
   "dealers": {
     "title": "Autorisierte Händler",
     "description": "Durchsuchen Sie unser Netzwerk von verifizierten und vertrauenswürdigen Fahrzeughändlern in ganz Europa",
+    "dealers": "Händler",
+    "found": "gefunden",
     "dealerProfile": "Händlerprofil",
     "dealerProfileDescription": "Siehe Händlerinformationen und Kundenbewertungen",
     "searchPlaceholder": "Suchen Sie Händler nach Name, Unternehmen oder Stadt...",

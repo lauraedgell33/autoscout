@@ -189,6 +189,8 @@
   "dealers": {
     "title": "Authorized Dealers",
     "description": "Browse our network of verified and trusted vehicle dealers across Europe",
+    "dealers": "dealers",
+    "found": "found",
     "dealerProfile": "Dealer Profile",
     "dealerProfileDescription": "View dealer information and customer reviews",
     "searchPlaceholder": "Search dealers by name, company, or city...",

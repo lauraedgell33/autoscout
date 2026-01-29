@@ -2,16 +2,12 @@
 
 import { Link } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 
 export default function NotFound() {
   const t = useTranslations('notFound')
 
   return (
-    <>
-      <Navigation />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 flex items-center justify-center px-4 py-16">
+    <>      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 flex items-center justify-center px-4 py-16">
         <div className="max-w-2xl w-full text-center">
           {/* 404 Illustration */}
           <div className="mb-8">
@@ -90,8 +86,6 @@ export default function NotFound() {
             </a>
           </div>
         </div>
-      </div>
-      <Footer />
-    </>
+      </div>    </>
   )
 }

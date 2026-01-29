@@ -10,8 +10,6 @@ import { useAuth } from '@/contexts/AuthContext'
 import { vehicleService } from '@/lib/api/vehicles'
 import { transactionService } from '@/lib/api/transactions'
 import { kycService } from '@/lib/api/kyc'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import { logger } from '@/utils/logger'
 
 export default function CheckoutPage() {
@@ -188,9 +186,7 @@ export default function CheckoutPage() {
   const maxSteps = isDealer ? 3 : 4
 
   return (
-    <>
-      <Navigation />
-      <div className="min-h-screen bg-gray-50 py-8">
+    <>      <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4">
           <Link href={`/vehicle/${vehicleId}`} className="text-blue-900 hover:underline mb-4 inline-block">← {tCommon('back')}</Link>
           <h1 className="text-3xl font-bold text-blue-900 mb-2">{t('checkout.title')}</h1>
@@ -324,8 +320,6 @@ export default function CheckoutPage() {
           </div>
         </div>
       </div>
-      </div>
-      <Footer />
-    </>
+      </div>    </>
   )
 }

@@ -8,8 +8,6 @@ import { useTranslations } from 'next-intl'
 import { useCurrency } from '@/contexts/CurrencyContext'
 import vehicleService, { Vehicle, VehicleFilters } from '@/lib/api/vehicles'
 import { getCategoryLabel } from '@/lib/utils/categoryHelpers'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 
 export default function MarketplacePage() {
   const t = useTranslations()
@@ -77,9 +75,7 @@ export default function MarketplacePage() {
   }
 
   return (
-    <>
-      <Navigation />
-      
+    <>      
       <div className="min-h-screen bg-white">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-blue-50 to-orange-50 py-16">
@@ -348,9 +344,6 @@ export default function MarketplacePage() {
           </div>
         </div>
       </section>
-      </div>
-
-      <Footer />
-    </>
+      </div>    </>
   )
 }

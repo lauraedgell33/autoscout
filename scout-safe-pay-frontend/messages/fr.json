@@ -228,7 +228,9 @@
     "totalReviews": "Total des avis",
     "averageRating": "Note moyenne",
     "memberSince": "Membre depuis",
-    "ratingBreakdown": "Répartition des notes"
+    "ratingBreakdown": "Répartition des notes",
+    "dealers": "revendeurs",
+    "found": "trouvés"
   },
   "checkout": {
     "title": "Paiement sécurisé",

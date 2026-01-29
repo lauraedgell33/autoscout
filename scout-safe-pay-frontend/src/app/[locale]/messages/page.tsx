@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
 import messageService, { Conversation } from '@/lib/api/messages'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 
 export default function MessagesPage() {
   const t = useTranslations()
@@ -32,9 +30,7 @@ export default function MessagesPage() {
   }, [])
 
   return (
-    <>
-      <Navigation />
-      
+    <>      
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
@@ -88,9 +84,6 @@ export default function MessagesPage() {
             </div>
           )}
         </div>
-      </div>
-
-      <Footer />
-    </>
+      </div>    </>
   )
 }

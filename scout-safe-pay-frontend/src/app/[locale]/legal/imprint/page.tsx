@@ -1,17 +1,13 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import { Building2, Mail, Phone } from 'lucide-react'
 
 export default function ImprintPage() {
   const t = useTranslations()
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navigation />
-      
+    <div className="min-h-screen flex flex-col">      
       <main className="flex-grow bg-gray-50 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
@@ -77,9 +73,6 @@ export default function ImprintPage() {
             </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </main>    </div>
   )
 }

@@ -3,8 +3,6 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Bell, Trash2, Check, Clock, AlertCircle } from 'lucide-react';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
 import { PageContainer, SectionLayout, EmptyState, TwoColumnLayout } from '@/components/layout/LayoutComponents';
 import { Button } from '@/components/ui/button';
 import DashboardLayout from '@/components/DashboardLayout';
@@ -105,9 +103,7 @@ export default function NotificationsPage() {
   };
 
   return (
-    <>
-      <Navigation />
-      <div className="min-h-screen bg-gray-50">
+    <>      <div className="min-h-screen bg-gray-50">
         <PageContainer className="py-12">
           <div className="mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-2">
@@ -239,8 +235,6 @@ export default function NotificationsPage() {
             </div>
           </div>
         </PageContainer>
-      </div>
-      <Footer />
-    </>
+      </div>    </>
   );
 }

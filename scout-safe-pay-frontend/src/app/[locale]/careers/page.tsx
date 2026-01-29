@@ -1,8 +1,6 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import { Briefcase, MapPin, Clock, Users } from 'lucide-react'
 
 export default function CareersPage() {
@@ -18,9 +16,7 @@ export default function CareersPage() {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navigation />
-      
+    <div className="min-h-screen flex flex-col">      
       <main className="flex-grow">
         <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -78,9 +74,6 @@ export default function CareersPage() {
             </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </main>    </div>
   )
 }

@@ -6,8 +6,6 @@ import { Shield, CheckCircle, Truck, Award, ArrowRight } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useCurrency } from '@/contexts/CurrencyContext'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import { vehicleService } from '@/lib/api/vehicles'
 import type { Vehicle, VehicleStatistics } from '@/lib/api/vehicles'
 
@@ -48,9 +46,7 @@ export default function HomePageClient() {
   }, [])
 
   return (
-    <>
-      <Navigation />
-      <div className="min-h-screen bg-white">
+    <>      <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="bg-gradient-to-br from-blue-50 to-orange-50 py-20">
         <div className="max-w-7xl mx-auto px-4">
@@ -264,8 +260,6 @@ export default function HomePageClient() {
           </div>
         </div>
       </section>
-      </div>
-      <Footer />
-    </>
+      </div>    </>
   )
 }

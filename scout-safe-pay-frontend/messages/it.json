@@ -189,6 +189,8 @@
   "dealers": {
     "title": "Rivenditori Autorizzati",
     "description": "Sfoglia la nostra rete di concessionari di veicoli verificati e affidabili in tutta Europa",
+    "dealers": "rivenditori",
+    "found": "trovati",
     "dealerProfile": "Profilo del rivenditore",
     "dealerProfileDescription": "Visualizza le informazioni sul rivenditore e le recensioni dei clienti",
     "searchPlaceholder": "Cerca rivenditori per nome, azienda o città...",

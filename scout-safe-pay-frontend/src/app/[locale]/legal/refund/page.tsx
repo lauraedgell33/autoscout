@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('legal.refund')
@@ -17,9 +15,7 @@ export default async function RefundPolicy() {
   const tCommon = await getTranslations('common')
   
   return (
-    <>
-      <Navigation />
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-orange-50">
+    <>      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-orange-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <h1 className="text-4xl font-bold text-blue-900 mb-4">{t('title')}</h1>
           <p className="text-gray-600 mb-8">{t('last_updated')}: January 15, 2026</p>
@@ -320,9 +316,6 @@ export default async function RefundPolicy() {
           </div>
         </div>
       </div>
-      </div>
-
-      <Footer />
-    </>
+      </div>    </>
   )
 }
