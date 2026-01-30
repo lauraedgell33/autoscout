@@ -17,8 +17,12 @@ import { useDashboardStats } from '@/lib/hooks/api';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem } from '@/lib/animations/variants';
 
-export const DashboardCharts: React.FC = () => {
-  const { data: stats, isLoading } = useDashboardStats();
+interface DashboardChartsProps {
+  userType: 'buyer' | 'seller' | 'dealer';
+}
+
+export const DashboardCharts: React.FC<DashboardChartsProps> = ({ userType }) => {
+  const { data: stats, isLoading } = useDashboardStats(userType);
 
   if (isLoading) return <div>Loading charts...</div>;
   if (!stats) return <div>No data available</div>;

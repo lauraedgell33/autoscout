@@ -27,12 +27,17 @@ export const LoginForm: React.FC = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await login.mutateAsync(data);
-      setUser(response.user);
+      // Map role to user_type if user_type is not provided
+      const user = {
+        ...response.user,
+        user_type: response.user.user_type || response.user.role,
+      };
+      setUser(user);
       setToken(response.token);
-      addToast('Login successful!', 'success');
+      addToast('Login successful!');
       // Router will handle redirect
     } catch (error) {
-      addToast('Login failed. Please try again.', 'error');
+      addToast('Login failed. Please try again.');
     }
   };
 
