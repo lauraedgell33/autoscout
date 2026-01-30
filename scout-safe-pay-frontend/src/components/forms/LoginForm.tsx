@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema, type LoginFormData } from '@/lib/schemas';
 import { useLogin } from '@/lib/hooks/api';
-import { useUserStore } from '@/lib/stores/userStore';
+import { useAuthStore } from '@/store/auth-store';
 import { useUIStore } from '@/lib/stores/uiStore';
 import { motion } from 'framer-motion';
 import { fadeInUp } from '@/lib/animations/variants';
@@ -20,14 +20,15 @@ export const LoginForm: React.FC = () => {
   });
 
   const login = useLogin();
-  const setUser = useUserStore((state) => state.setUser);
+  const setUser = useAuthStore((state) => state.setUser);
+  const setToken = useAuthStore((state) => state.setToken);
   const addToast = useUIStore((state) => state.addToast);
 
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await login.mutateAsync(data);
       setUser(response.user);
-      localStorage.setItem('authToken', response.token);
+      setToken(response.token);
       addToast('Login successful!', 'success');
       // Router will handle redirect
     } catch (error) {
