@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { BarChart, TrendingUp, DollarSign, Package, Download } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { apiClient } from '@/lib/api-client';
 
 export default function DealerAnalyticsPage() {
   const [analytics, setAnalytics] = useState({
@@ -21,11 +22,8 @@ export default function DealerAnalyticsPage() {
 
   const fetchAnalytics = async () => {
     try {
-      const token = localStorage.getItem('auth_token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dealer/analytics?period=${period}`, {
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      const data = await response.json();
+      // Use apiClient instead of direct fetch
+      const data = await apiClient.get(`/dealer/analytics?period=${period}`);
       setAnalytics(data);
     } catch (error) {
       console.error('Error fetching analytics:', error);

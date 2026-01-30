@@ -27,44 +27,56 @@ export const DashboardCharts: React.FC<DashboardChartsProps> = ({ userType }) =>
   if (isLoading) return <div>Loading charts...</div>;
   if (!stats) return <div>No data available</div>;
 
+  // Safely access chart data with null checks
+  const revenueChartData = stats.revenueChart ?? [];
+  const topVehiclesData = stats.topVehicles ?? [];
+  const totalSales = stats.totalSales ?? 0;
+  const totalOrders = stats.totalOrders ?? 0;
+  const totalCustomers = stats.totalCustomers ?? 0;
+  const conversionRate = stats.conversionRate ?? 0;
+
   return (
     <motion.div className="space-y-8" variants={staggerContainer} initial="hidden" animate="visible">
       {/* Revenue Chart */}
-      <motion.div variants={staggerItem} className="bg-white p-6 rounded-lg shadow">
-        <h3 className="text-lg font-semibold mb-4">Revenue Trend</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={stats.revenueChart}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="amount" stroke="#3b82f6" name="Revenue (€)" />
-          </LineChart>
-        </ResponsiveContainer>
-      </motion.div>
+      {revenueChartData.length > 0 && (
+        <motion.div variants={staggerItem} className="bg-white p-6 rounded-lg shadow">
+          <h3 className="text-lg font-semibold mb-4">Revenue Trend</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={revenueChartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="amount" stroke="#3b82f6" name="Revenue (€)" />
+            </LineChart>
+          </ResponsiveContainer>
+        </motion.div>
+      )}
 
       {/* Top Vehicles Chart */}
-      <motion.div variants={staggerItem} className="bg-white p-6 rounded-lg shadow">
-        <h3 className="text-lg font-semibold mb-4">Top Selling Vehicles</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={stats.topVehicles}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="sales" fill="#10b981" name="Sales" />
-          </BarChart>
-        </ResponsiveContainer>
-      </motion.div>
+      {topVehiclesData.length > 0 && (
+        <motion.div variants={staggerItem} className="bg-white p-6 rounded-lg shadow">
+          <h3 className="text-lg font-semibold mb-4">Top Selling Vehicles</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={topVehiclesData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="sales" fill="#10b981" name="Sales" />
+            </BarChart>
+          </ResponsiveContainer>
+        </motion.div>
+      )}
 
       {/* Stats Grid */}
       <motion.div variants={staggerItem} className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard label="Total Sales" value={`€${stats.totalSales.toLocaleString()}`} />
-        <StatCard label="Total Orders" value={stats.totalOrders} />
-        <StatCard label="Total Customers" value={stats.totalCustomers} />
-        <StatCard label="Conversion Rate" value={`${stats.conversionRate.toFixed(2)}%`} />
+        <StatCard label="Total Sales" value={`€${totalSales.toLocaleString()}`} />
+        <StatCard label="Total Orders" value={totalOrders} />
+        <StatCard label="Total Customers" value={totalCustomers} />
+        <StatCard label="Conversion Rate" value={`${conversionRate.toFixed(2)}%`} />
       </motion.div>
     </motion.div>
   );

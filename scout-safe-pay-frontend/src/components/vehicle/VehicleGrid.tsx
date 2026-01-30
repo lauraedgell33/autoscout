@@ -51,9 +51,9 @@ export const VehicleGrid: React.FC = () => {
         >
           {/* Image */}
           <div className="relative h-48 bg-gray-200 overflow-hidden">
-            {(vehicle.primary_image || vehicle.images?.[0]) && (
+            {(vehicle.primary_image || (vehicle.images ?? [])[0]) && (
               <img
-                src={vehicle.primary_image || vehicle.images[0]}
+                src={vehicle.primary_image || (vehicle.images ?? [])[0]}
                 alt={`${vehicle.make} ${vehicle.model}`}
                 className="w-full h-full object-cover"
               />
