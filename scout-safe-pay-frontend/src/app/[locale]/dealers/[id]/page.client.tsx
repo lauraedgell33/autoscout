@@ -285,7 +285,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                       </Select>
 
                       <div className="text-sm text-gray-600 font-medium">
-                        {filteredVehicles.length} {t('vehiclesAvailable')}
+                        {(filteredVehicles || []).length} {t('vehiclesAvailable')}
                       </div>
                     </div>
 
@@ -338,9 +338,9 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                                 img.parentElement!.classList.add('bg-gray-100')
                               }}
                             />
-                            {vehicle.images.length > 1 && (
+                            {(vehicle.images || []).length > 1 && (
                               <Badge className="absolute top-2 left-2 bg-black/70 text-white">
-                                +{vehicle.images.length - 1} {t('photos')}
+                                +{(vehicle.images || []).length - 1} {t('photos')}
                               </Badge>
                             )}
                           </>
