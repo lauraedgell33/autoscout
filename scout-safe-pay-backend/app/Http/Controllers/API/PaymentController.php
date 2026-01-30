@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use App\Models\Transaction;
+use App\Services\EmailNotificationService;
+use App\Services\InvoiceGenerator;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -145,11 +147,16 @@ class PaymentController extends Controller
                 'payment_verified_by' => $request->user()->id,
                 'payment_verified_at' => now(),
             ]);
-        }
 
-        return response()->json([
-            'message' => 'Payment verification updated',
-            'payment' => $payment,
-        ]);
-    }
-}
+            // Generate invoice PDF and attach to payment
+            try {
+                $invoicePath = InvoiceGenerator::generate($payment);
+                $payment->update(['invoice_path' => $invoicePath]);
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('Invoice generation in payment verification failed', [
+                    'payment_id' => $payment->id,
+                    'error' => $e->getMessage(),
+                ]);
+                // Continue even if invoice generation fails
+            }
+

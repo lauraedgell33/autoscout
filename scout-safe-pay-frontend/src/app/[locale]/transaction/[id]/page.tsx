@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Link } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
@@ -9,6 +9,7 @@ import { transactionService, Transaction } from '@/lib/api/transactions'
 import { contractService } from '@/lib/api/contracts'
 import { invoiceService } from '@/lib/api/invoices'
 import { getCategoryLabel } from '@/lib/utils/categoryHelpers'
+import { useRealtimeEvent } from '@/lib/realtime-client'
 
 export default function TransactionPage() {
   const t = useTranslations('transaction')
@@ -23,11 +24,7 @@ export default function TransactionPage() {
   const [generatingContract, setGeneratingContract] = useState(false)
   const [generatingInvoice, setGeneratingInvoice] = useState(false)
 
-  useEffect(() => {
-    loadTransaction()
-  }, [params.id])
-
-  const loadTransaction = async () => {
+  const loadTransaction = useCallback(async () => {
     try {
       setLoading(true)
       const data = await transactionService.get(params.id as string)
@@ -37,7 +34,25 @@ export default function TransactionPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [params.id])
+
+  useEffect(() => {
+    loadTransaction()
+  }, [loadTransaction])
+
+  useRealtimeEvent('transaction.updated', (payload: any) => {
+    const incomingId = payload?.id || payload?.transaction_id || payload?.transaction?.id
+    if (incomingId && String(incomingId) === String(params.id)) {
+      loadTransaction()
+    }
+  })
+
+  useRealtimeEvent('transaction.status_changed', (payload: any) => {
+    const incomingId = payload?.id || payload?.transaction_id || payload?.transaction?.id
+    if (incomingId && String(incomingId) === String(params.id)) {
+      loadTransaction()
+    }
+  })
 
   const handleUploadPaymentProof = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || !e.target.files[0]) return

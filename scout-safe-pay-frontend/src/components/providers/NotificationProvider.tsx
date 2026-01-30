@@ -1,9 +1,11 @@
 // In-app notification system with toast, banner, and center
 'use client';
 
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react';
+import realtimeClient from '@/lib/realtime-client';
+import { useAuthStore } from '@/store/auth-store';
 
 export type NotificationType = 'success' | 'error' | 'warning' | 'info';
 
@@ -60,6 +62,43 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   const clearNotifications = useCallback(() => {
     setNotifications([]);
   }, []);
+
+  useEffect(() => {
+    const token = useAuthStore.getState().token;
+    const unsubscribers: Array<() => void> = [];
+
+    if (token) {
+      realtimeClient.connect(token).catch(() => {
+        // Connection errors are handled internally
+      });
+
+      const handleRealtimeNotification = (data: any) => {
+        const message = data?.message || data?.data?.message;
+        if (!message) return;
+
+        const type = (data?.type || data?.data?.type || 'info') as NotificationType;
+        const safeType: NotificationType = ['success', 'error', 'warning', 'info'].includes(type)
+          ? type
+          : 'info';
+
+        addNotification({
+          type: safeType,
+          title: data?.title || data?.data?.title,
+          message,
+          duration: 6000,
+        });
+      };
+
+      unsubscribers.push(realtimeClient.on('notification', handleRealtimeNotification));
+      unsubscribers.push(realtimeClient.on('notification.created', handleRealtimeNotification));
+      unsubscribers.push(realtimeClient.on('notification.new', handleRealtimeNotification));
+    }
+
+    return () => {
+      unsubscribers.forEach((unsubscribe) => unsubscribe());
+      realtimeClient.disconnect();
+    };
+  }, [addNotification]);
 
   return (
     <NotificationContext.Provider

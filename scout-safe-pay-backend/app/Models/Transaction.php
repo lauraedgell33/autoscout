@@ -9,12 +9,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 
 class Transaction extends Model
 {
-    use SoftDeletes, LogsActivity, HasFactory;
+    use SoftDeletes, LogsActivity, HasFactory, Searchable;
 
     protected $fillable = [
         'transaction_code',
@@ -132,5 +133,37 @@ class Transaction extends Model
             ->dontSubmitEmptyLogs()
             ->setDescriptionForEvent(fn(string $eventName) => "Transaction {$eventName}")
             ->useLogName('transaction');
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'transaction_code' => $this->transaction_code,
+            'amount' => (float) $this->amount,
+            'currency' => $this->currency,
+            'status' => $this->status,
+            'buyer_id' => $this->buyer_id,
+            'seller_id' => $this->seller_id,
+            'vehicle_id' => $this->vehicle_id,
+            'payment_reference' => $this->payment_reference,
+            'verification_notes' => $this->verification_notes,
+            'notes' => $this->notes,
+            'created_at' => $this->created_at?->timestamp,
+            'updated_at' => $this->updated_at?->timestamp,
+        ];
+    }
+
+    /**
+     * Determine if the model should be searchable.
+     */
+    public function shouldBeSearchable(): bool
+    {
+        return !$this->trashed();
     }
 }

@@ -1,23 +1,20 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { ArrowLeft, Upload, Download, Clock, CheckCircle, AlertCircle, MessageCircle } from 'lucide-react';
 import { transactionService, Transaction } from '@/lib/api/transactions';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useRealtimeEvent } from '@/lib/realtime-client';
 
 export default function TransactionDetailsPage({ params }: { params: { locale: string; id: string } }) {
   const [transaction, setTransaction] = useState<Transaction | null>(null);
   const [loading, setLoading] = useState(true);
   const [uploadingReceipt, setUploadingReceipt] = useState(false);
 
-  useEffect(() => {
-    fetchTransaction();
-  }, [params.id]);
-
-  const fetchTransaction = async () => {
+  const fetchTransaction = useCallback(async () => {
     try {
       const data = await transactionService.get(params.id);
       setTransaction(data);
@@ -26,7 +23,25 @@ export default function TransactionDetailsPage({ params }: { params: { locale: s
     } finally {
       setLoading(false);
     }
-  };
+  }, [params.id]);
+
+  useEffect(() => {
+    fetchTransaction();
+  }, [fetchTransaction]);
+
+  useRealtimeEvent('transaction.updated', (payload: any) => {
+    const incomingId = payload?.id || payload?.transaction_id || payload?.transaction?.id;
+    if (incomingId && incomingId === params.id) {
+      fetchTransaction();
+    }
+  });
+
+  useRealtimeEvent('transaction.status_changed', (payload: any) => {
+    const incomingId = payload?.id || payload?.transaction_id || payload?.transaction?.id;
+    if (incomingId && incomingId === params.id) {
+      fetchTransaction();
+    }
+  });
 
   const handleReceiptUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || !transaction) return;

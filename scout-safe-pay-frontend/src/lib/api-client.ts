@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { useAuthStore } from '@/store/auth-store';
+import { APIErrorHandler, ErrorRecovery } from '@/lib/error-handler';
 
 /**
  * Client API optimizat cu retry logic și timeout
@@ -7,6 +8,7 @@ import { useAuthStore } from '@/store/auth-store';
 class OptimizedAPIClient {
   private client: AxiosInstance;
   private requestQueue: Map<string, Promise<any>>;
+  private maxRetries = 3;
 
   constructor() {
     const baseURL = process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api';
@@ -23,13 +25,27 @@ class OptimizedAPIClient {
 
     this.requestQueue = new Map();
 
-    // Request interceptor to add auth token
+    // Request interceptor to add auth token and logging
     this.client.interceptors.request.use(
       (config) => {
         const token = useAuthStore.getState().token;
         if (token && config.headers) {
           config.headers.Authorization = `Bearer ${token}`;
         }
+
+        const requestId = `req_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+        (config as AxiosRequestConfig & { _requestId?: string })._requestId = requestId;
+
+        if (process.env.NEXT_PUBLIC_API_DEBUG === 'true') {
+          console.log('[API Request]', {
+            id: requestId,
+            method: config.method?.toUpperCase(),
+            url: config.url,
+            params: config.params,
+            data: config.data,
+          });
+        }
+
         return config;
       },
       (error) => Promise.reject(error)
@@ -37,28 +53,67 @@ class OptimizedAPIClient {
 
     // Response interceptor cu retry logic
     this.client.interceptors.response.use(
-      (response) => response,
+      (response) => {
+        if (process.env.NEXT_PUBLIC_API_DEBUG === 'true') {
+          console.log('[API Response]', {
+            id: (response.config as AxiosRequestConfig & { _requestId?: string })._requestId,
+            status: response.status,
+            url: response.config.url,
+          });
+        }
+        return response;
+      },
       async (error: AxiosError) => {
-        const config = error.config as AxiosRequestConfig & { _retry?: number };
+        const config = error.config as AxiosRequestConfig & { _retry?: number; _requestId?: string };
+        const status = error.response?.status;
+        const retryCount = config._retry || 0;
+        const isRetryable = APIErrorHandler.isRetryable(error);
         
         // Handle 401 Unauthorized - logout user
-        if (error.response?.status === 401) {
-          useAuthStore.getState().logout();
+        if (status === 401) {
+          ErrorRecovery.handleAuthError();
         }
         
-        // Retry logic pentru network errors
-        if (!config._retry && error.code === 'ECONNABORTED') {
-          config._retry = (config._retry || 0) + 1;
-          
-          if (config._retry < 3) {
-            // Exponential backoff
-            await new Promise(resolve => 
-              setTimeout(resolve, Math.pow(2, config._retry!) * 1000)
-            );
-            return this.client(config);
+        // Retry logic for network errors and retryable status codes
+        if (isRetryable && retryCount < this.maxRetries) {
+          config._retry = retryCount + 1;
+
+          if (!error.response) {
+            const shouldRetry = await ErrorRecovery.handleNetworkError();
+            if (!shouldRetry) {
+              return Promise.reject(error);
+            }
           }
+
+          let delay = ErrorRecovery.calculateBackoffDelay(retryCount);
+
+          if (status === 429) {
+            const retryAfter = error.response?.headers?.['retry-after'];
+            const retryAfterMs = retryAfter ? Number(retryAfter) * 1000 : null;
+            if (retryAfterMs && !Number.isNaN(retryAfterMs)) {
+              delay = Math.max(delay, retryAfterMs);
+            }
+          }
+
+          if (process.env.NEXT_PUBLIC_API_DEBUG === 'true') {
+            console.warn('[API Retry]', {
+              id: config._requestId,
+              attempt: config._retry,
+              delay,
+              status,
+              url: config.url,
+            });
+          }
+
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return this.client(config);
         }
 
+        const errorReport = APIErrorHandler.createErrorReport(error, {
+          requestId: config._requestId,
+        });
+
+        console.error('[API Error]', errorReport);
         return Promise.reject(error);
       }
     );

@@ -1,11 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Bell, Trash2, Check, Clock, AlertCircle } from 'lucide-react';
-import { PageContainer, SectionLayout, EmptyState, TwoColumnLayout } from '@/components/layout/LayoutComponents';
+import { PageContainer, EmptyState } from '@/components/layout/LayoutComponents';
 import { Button } from '@/components/ui/button';
-import DashboardLayout from '@/components/DashboardLayout';
+import { notificationService, type Notification as ApiNotification } from '@/lib/api/notifications';
+import { useNotification } from '@/components/providers/NotificationProvider';
+import { useRealtimeEvent } from '@/lib/realtime-client';
+import { getPermissionState, registerServiceWorker, requestPushPermission, type PushPermissionState } from '@/lib/push-notifications';
+import { pushService } from '@/lib/api/push';
 
 interface Notification {
   id: string;
@@ -16,65 +20,160 @@ interface Notification {
   read: boolean;
 }
 
-const mockNotifications: Notification[] = [
-  {
-    id: '1',
-    title: 'Payment Received',
-    message: 'Your payment of €5,500 has been received for vehicle BMW 320i',
-    type: 'success',
-    timestamp: new Date(Date.now() - 3600000),
-    read: false,
-  },
-  {
-    id: '2',
-    title: 'Vehicle Verification',
-    message: 'Your vehicle has been verified and is now live on the platform',
-    type: 'info',
-    timestamp: new Date(Date.now() - 86400000),
-    read: false,
-  },
-  {
-    id: '3',
-    title: 'New Offer',
-    message: 'You have received a new offer for your Mercedes C-Class',
-    type: 'info',
-    timestamp: new Date(Date.now() - 172800000),
-    read: true,
-  },
-  {
-    id: '4',
-    title: 'Order Delivered',
-    message: 'Your vehicle BMW 320i has been delivered to the buyer',
-    type: 'success',
-    timestamp: new Date(Date.now() - 259200000),
-    read: true,
-  },
-];
-
 export default function NotificationsPage() {
   const t = useTranslations();
-  const [notifications, setNotifications] = useState<Notification[]>(mockNotifications);
+  const { error: showError, success } = useNotification();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'unread' | 'success' | 'alert'>('all');
+  const [pushPermission, setPushPermission] = useState<PushPermissionState>('unsupported');
+  const [pushLoading, setPushLoading] = useState(false);
 
-  const filteredNotifications = notifications.filter(notif => {
-    if (filter === 'unread') return !notif.read;
-    if (filter === 'success') return notif.type === 'success';
-    if (filter === 'alert') return notif.type === 'alert';
-    return true;
-  });
+  function mapNotification(notification: ApiNotification): Notification {
+    const type = (notification.data?.type || notification.type || 'info') as Notification['type'];
+    const normalizedType = ['success', 'alert', 'warning', 'info'].includes(type) ? type : 'info';
 
-  const markAsRead = (id: string) => {
-    setNotifications(notifs =>
-      notifs.map(n => (n.id === id ? { ...n, read: true } : n))
-    );
+    return {
+      id: notification.id,
+      title: notification.data?.message?.slice(0, 50) || 'Notification',
+      message: notification.data?.message || 'You have a new notification',
+      type: normalizedType as Notification['type'],
+      timestamp: new Date(notification.created_at),
+      read: Boolean(notification.read_at),
+    };
+  }
+
+  useEffect(() => {
+    const loadNotifications = async () => {
+      try {
+        setLoading(true);
+        const response = await notificationService.getAll(1, filter === 'unread');
+        setNotifications(response.notifications.map(mapNotification));
+      } catch (err) {
+        showError('Failed to load notifications', { title: 'Error' });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadNotifications();
+  }, [filter, showError]);
+
+  useEffect(() => {
+    setPushPermission(getPermissionState());
+    registerServiceWorker().catch(() => {
+      // ignore registration errors
+    });
+  }, []);
+
+  const handleRealtimeNotification = (payload: ApiNotification | any) => {
+    const incoming = mapNotification(payload as ApiNotification);
+    setNotifications((prev) => {
+      if (prev.some((item) => item.id === incoming.id)) {
+        return prev;
+      }
+      return [incoming, ...prev];
+    });
   };
 
-  const deleteNotification = (id: string) => {
-    setNotifications(notifs => notifs.filter(n => n.id !== id));
+  useRealtimeEvent('notification', handleRealtimeNotification);
+  useRealtimeEvent('notification.created', handleRealtimeNotification);
+  useRealtimeEvent('notification.new', handleRealtimeNotification);
+
+  const filteredNotifications = useMemo(() => {
+    return notifications.filter(notif => {
+      if (filter === 'unread') return !notif.read;
+      if (filter === 'success') return notif.type === 'success';
+      if (filter === 'alert') return notif.type === 'alert';
+      return true;
+    });
+  }, [notifications, filter]);
+
+  const markAsRead = async (id: string) => {
+    try {
+      await notificationService.markAsRead(id);
+      setNotifications(notifs =>
+        notifs.map(n => (n.id === id ? { ...n, read: true } : n))
+      );
+    } catch (err) {
+      showError('Failed to mark notification as read', { title: 'Error' });
+    }
   };
 
-  const markAllAsRead = () => {
-    setNotifications(notifs => notifs.map(n => ({ ...n, read: true })));
+  const deleteNotification = async (id: string) => {
+    try {
+      await notificationService.delete(id);
+      setNotifications(notifs => notifs.filter(n => n.id !== id));
+      success('Notification deleted');
+    } catch (err) {
+      showError('Failed to delete notification', { title: 'Error' });
+    }
+  };
+
+  const markAllAsRead = async () => {
+    try {
+      await notificationService.markAllAsRead();
+      setNotifications(notifs => notifs.map(n => ({ ...n, read: true })));
+      success('All notifications marked as read');
+    } catch (err) {
+      showError('Failed to mark all as read', { title: 'Error' });
+    }
+  };
+
+  const handleEnablePush = async () => {
+    try {
+      setPushLoading(true);
+      const permission = await requestPushPermission();
+      setPushPermission(permission);
+
+      if (permission === 'granted') {
+        const registration = await registerServiceWorker();
+
+        if (registration) {
+          // Get the push subscription from the service worker
+          const subscription = await registration.pushManager.getSubscription();
+
+          if (subscription) {
+            // Subscribe device on the backend
+            const { browserName, deviceName } = pushService.getDeviceInfo();
+            await pushService.subscribe(
+              subscription.toJSON() as any,
+              deviceName,
+              browserName
+            );
+            success('Push notifications enabled and device subscribed');
+          } else {
+            // If no subscription yet, try to subscribe now
+            const vapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+            if (vapidKey) {
+              const newSubscription = await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: vapidKey,
+              });
+
+              const { browserName, deviceName } = pushService.getDeviceInfo();
+              await pushService.subscribe(
+                newSubscription.toJSON() as any,
+                deviceName,
+                browserName
+              );
+              success('Push notifications enabled and device subscribed');
+            } else {
+              success('Push notifications enabled (VAPID key not configured)');
+            }
+          }
+        } else {
+          success('Push notifications permission granted (Service Worker registration failed)');
+        }
+      } else if (permission === 'denied') {
+        showError('Push notifications blocked in browser settings', { title: 'Permission Denied' });
+      }
+    } catch (err) {
+      console.error('Push notification setup error:', err);
+      showError('Failed to enable push notifications', { title: 'Error' });
+    } finally {
+      setPushLoading(false);
+    }
   };
 
   const getIcon = (type: string) => {
@@ -162,6 +261,31 @@ export default function NotificationsPage() {
                   </button>
                 </div>
 
+                <div className="mt-6 space-y-3">
+                  <p className="text-xs text-gray-500">
+                    Push notifications: {pushPermission === 'granted'
+                      ? 'Enabled'
+                      : pushPermission === 'denied'
+                      ? 'Blocked'
+                      : pushPermission === 'default'
+                      ? 'Not enabled'
+                      : 'Unsupported'}
+                  </p>
+                  <Button
+                    onClick={handleEnablePush}
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                    disabled={pushLoading || pushPermission === 'granted' || pushPermission === 'unsupported'}
+                  >
+                    {pushLoading
+                      ? 'Enabling...'
+                      : pushPermission === 'granted'
+                      ? 'Push Enabled'
+                      : 'Enable Push Notifications'}
+                  </Button>
+                </div>
+
                 {notifications.some(n => !n.read) && (
                   <Button
                     onClick={markAllAsRead}
@@ -177,7 +301,13 @@ export default function NotificationsPage() {
 
             {/* Notifications List */}
             <div className="lg:col-span-3">
-              {filteredNotifications.length === 0 ? (
+              {loading ? (
+                <div className="space-y-4">
+                  {[...Array(4)].map((_, index) => (
+                    <div key={index} className="bg-white rounded-lg shadow h-24 animate-pulse" />
+                  ))}
+                </div>
+              ) : filteredNotifications.length === 0 ? (
                 <EmptyState
                   icon={<Bell />}
                   title={t('no_notifications') || 'No notifications'}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Services\EmailNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -111,6 +112,9 @@ class KYCController extends Controller
             // Send approval notification
             $user->notify(new \App\Notifications\KYCApprovedNotification());
 
+            // Send approval email
+            EmailNotificationService::sendKYCResult($user, 'verified');
+
             $message = 'KYC approved successfully';
         } else {
             $rejectionReason = $validated['notes'] ?? 'Documents did not meet verification requirements';
@@ -127,6 +131,9 @@ class KYCController extends Controller
 
             // Send rejection notification
             $user->notify(new \App\Notifications\KYCRejectedNotification($rejectionReason));
+
+            // Send rejection email
+            EmailNotificationService::sendKYCResult($user, 'rejected', $rejectionReason);
 
             $message = 'KYC rejected. User can resubmit.';
         }

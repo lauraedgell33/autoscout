@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
 import messageService, { Conversation } from '@/lib/api/messages'
+import { useRealtimeEvent } from '@/lib/realtime-client'
 
 export default function MessagesPage() {
   const t = useTranslations()
@@ -12,22 +13,30 @@ export default function MessagesPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    const fetchConversations = async () => {
-      try {
-        setLoading(true)
-        const data = await messageService.getConversations()
-        setConversations(data)
-      } catch (err: any) {
-        console.error('Failed to fetch conversations:', err)
-        setError(err.response?.data?.message || 'Failed to load conversations')
-      } finally {
-        setLoading(false)
-      }
+  const fetchConversations = useCallback(async () => {
+    try {
+      setLoading(true)
+      const data = await messageService.getConversations()
+      setConversations(data)
+    } catch (err: any) {
+      console.error('Failed to fetch conversations:', err)
+      setError(err.response?.data?.message || 'Failed to load conversations')
+    } finally {
+      setLoading(false)
     }
-
-    fetchConversations()
   }, [])
+
+  useEffect(() => {
+    fetchConversations()
+  }, [fetchConversations])
+
+  useRealtimeEvent('message.created', () => {
+    fetchConversations()
+  })
+
+  useRealtimeEvent('message.new', () => {
+    fetchConversations()
+  })
 
   return (
     <>      

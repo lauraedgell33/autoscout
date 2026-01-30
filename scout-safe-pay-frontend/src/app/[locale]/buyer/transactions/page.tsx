@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { Search, Filter, Download, Eye, Package } from 'lucide-react';
 import { transactionService, Transaction } from '@/lib/api/transactions';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useRealtimeEvent } from '@/lib/realtime-client';
 import { Input } from '@/components/ui/input';
 
 export default function BuyerTransactionsPage({ params }: { params: { locale: string } }) {
@@ -18,11 +19,7 @@ export default function BuyerTransactionsPage({ params }: { params: { locale: st
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  useEffect(() => {
-    fetchTransactions();
-  }, [statusFilter, currentPage]);
-
-  const fetchTransactions = async () => {
+  const fetchTransactions = useCallback(async () => {
     try {
       setLoading(true);
       const filters: any = { page: currentPage, per_page: 10 };
@@ -38,7 +35,19 @@ export default function BuyerTransactionsPage({ params }: { params: { locale: st
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, statusFilter]);
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [fetchTransactions]);
+
+  useRealtimeEvent('transaction.updated', () => {
+    fetchTransactions();
+  });
+
+  useRealtimeEvent('transaction.status_changed', () => {
+    fetchTransactions();
+  });
 
   const filteredTransactions = transactions.filter(transaction =>
     searchQuery === '' ||

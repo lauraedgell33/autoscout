@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Message extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Searchable;
 
     protected $fillable = [
         'transaction_id',
@@ -59,6 +60,31 @@ class Message extends Model
     }
 
     /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'message' => $this->message,
+            'transaction_id' => $this->transaction_id,
+            'sender_id' => $this->sender_id,
+            'receiver_id' => $this->receiver_id,
+            'is_system_message' => $this->is_system_message,
+            'created_at' => $this->created_at?->timestamp,
+        ];
+    }
+
+    /**
+     * Determine if the model should be searchable.
+     */
+    public function shouldBeSearchable(): bool
+    {
+        return !$this->trashed();
+    }
+}    /**
      * Check if message belongs to user
      */
     public function belongsToUser(int $userId): bool

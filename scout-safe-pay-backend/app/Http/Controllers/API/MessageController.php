@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use App\Models\Transaction;
+use App\Services\EmailNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -204,6 +205,10 @@ class MessageController extends Controller
             'attachments' => $request->attachments,
             'is_system_message' => false,
         ]);
+
+        // Send email notification to receiver
+        $receiver = $message->receiver;
+        EmailNotificationService::sendNewMessageNotification($receiver, $message);
 
         // Load relationships
         $message->load(['sender:id,name,email', 'receiver:id,name,email']);

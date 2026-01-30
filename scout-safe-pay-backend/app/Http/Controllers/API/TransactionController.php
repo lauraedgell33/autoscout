@@ -8,6 +8,10 @@ use App\Models\Vehicle;
 use App\Models\BankAccount;
 use App\Models\User;
 use App\Models\Invoice;
+use App\Services\EmailNotificationService;
+use App\Services\PushNotificationService;
+use App\Services\ContractGenerator;
+use App\Services\InvoiceGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -201,6 +205,23 @@ class TransactionController extends Controller
                 ]);
             }
 
+            // Send notifications to buyer
+            EmailNotificationService::sendTransactionUpdate(
+                $transaction->buyer,
+                $transaction,
+                'payment_verified',
+                'Your payment has been verified and approved'
+            );
+
+            PushNotificationService::sendTransactionUpdate(
+                $transaction->buyer,
+                'payment_verified',
+                [
+                    'id' => $transaction->id,
+                    'reference_number' => $transaction->reference_number,
+                ]
+            );
+
             $message = 'Payment verified successfully';
         } else {
             $transaction->update([
@@ -211,6 +232,23 @@ class TransactionController extends Controller
                 'payment_proof_url' => null,
                 'payment_proof_uploaded_at' => null,
             ]);
+
+            // Notify buyer of failed verification
+            EmailNotificationService::sendTransactionUpdate(
+                $transaction->buyer,
+                $transaction,
+                'payment_failed',
+                $validated['notes'] ?? 'Payment verification was not successful. Please resubmit.'
+            );
+
+            PushNotificationService::sendTransactionUpdate(
+                $transaction->buyer,
+                'payment_failed',
+                [
+                    'id' => $transaction->id,
+                    'reference_number' => $transaction->reference_number,
+                ]
+            );
 
             $message = 'Payment verification rejected. Buyer will be notified.';
         }
@@ -253,6 +291,45 @@ class TransactionController extends Controller
 
         // Update vehicle
         $transaction->vehicle->update(['status' => 'sold']);
+
+        // Generate contract PDF and attach to transaction
+        try {
+            $contractPath = ContractGenerator::generate($transaction);
+            $transaction->update(['contract_path' => $contractPath]);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Contract generation in releaseFunds failed', [
+                'transaction_id' => $transaction->id,
+                'error' => $e->getMessage(),
+            ]);
+            // Continue even if contract generation fails
+        }
+
+        // Send notifications
+        EmailNotificationService::sendTransactionUpdate(
+            $transaction->seller,
+            $transaction,
+            'funds_released',
+            'Funds have been released to your account'
+        );
+
+        EmailNotificationService::sendTransactionUpdate(
+            $transaction->buyer,
+            $transaction,
+            'funds_released',
+            'Funds have been released to the seller. Prepare for vehicle delivery.'
+        );
+
+        PushNotificationService::sendTransactionUpdate(
+            $transaction->seller,
+            'funds_released',
+            ['id' => $transaction->id, 'reference_number' => $transaction->reference_number]
+        );
+
+        PushNotificationService::sendTransactionUpdate(
+            $transaction->buyer,
+            'funds_released',
+            ['id' => $transaction->id, 'reference_number' => $transaction->reference_number]
+        );
 
         return response()->json([
             'message' => 'Funds released successfully',

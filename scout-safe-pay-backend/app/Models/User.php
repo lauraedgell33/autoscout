@@ -124,6 +124,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Dispute::class, 'raised_by_user_id');
     }
 
+    public function pushSubscriptions(): HasMany
+    {
+        return $this->hasMany(PushSubscription::class);
+    }
+
     /**
      * Determine if the user can access the Filament admin panel.
      */

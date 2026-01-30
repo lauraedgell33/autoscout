@@ -18,6 +18,9 @@ use App\Http\Controllers\Api\CookieConsentController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\SettingsController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\API\PushSubscriptionController;
+use App\Http\Controllers\API\SearchController;
+use App\Http\Controllers\API\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 // Health check endpoint
@@ -65,6 +68,18 @@ Route::get('/vehicles-statistics', [VehicleController::class, 'statistics']);
 // Public category routes
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/categories/{slug}', [CategoryController::class, 'show']);
+
+// Search routes (public)
+Route::prefix('search')->group(function () {
+    Route::get('/vehicles', [SearchController::class, 'searchVehicles']);
+    Route::get('/filters', [SearchController::class, 'getFilters']);
+});
+
+// Protected search routes
+Route::middleware('auth:sanctum')->prefix('search')->group(function () {
+    Route::get('/transactions', [SearchController::class, 'searchTransactions']);
+    Route::get('/messages', [SearchController::class, 'searchMessages']);
+});
 
 // Public dealer routes
 Route::get('/dealers', [App\Http\Controllers\API\DealerController::class, 'index']);
@@ -188,6 +203,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('notifications/{id}', [NotificationController::class, 'delete']);
     Route::delete('notifications', [NotificationController::class, 'deleteAll']);
     
+    // Push Notifications - PWA Device Subscriptions
+    Route::post('push-subscriptions/subscribe', [PushSubscriptionController::class, 'subscribe']);
+    Route::post('push-subscriptions/unsubscribe', [PushSubscriptionController::class, 'unsubscribe']);
+    Route::get('push-subscriptions', [PushSubscriptionController::class, 'list']);
+    Route::delete('push-subscriptions/{id}', [PushSubscriptionController::class, 'destroy']);
+    
     // GDPR - Privacy & Data Rights
     Route::prefix('gdpr')->group(function () {
         Route::get('/export', [App\Http\Controllers\API\GdprController::class, 'exportData']);
@@ -242,6 +263,20 @@ Route::middleware('auth:sanctum')->prefix('invoices')->group(function () {
 
 // Admin Routes
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
+    // Dashboard & Analytics
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/overall', [DashboardController::class, 'getOverallStats']);
+        Route::get('/transactions', [DashboardController::class, 'getTransactionAnalytics']);
+        Route::get('/revenue', [DashboardController::class, 'getRevenueAnalytics']);
+        Route::get('/users', [DashboardController::class, 'getUserAnalytics']);
+        Route::get('/vehicles', [DashboardController::class, 'getVehicleAnalytics']);
+        Route::get('/compliance', [DashboardController::class, 'getComplianceAnalytics']);
+        Route::get('/engagement', [DashboardController::class, 'getEngagementAnalytics']);
+        Route::get('/payments', [DashboardController::class, 'getPaymentAnalytics']);
+        Route::get('/comprehensive', [DashboardController::class, 'getComprehensiveReport']);
+        Route::post('/export', [DashboardController::class, 'exportReport']);
+    });
+
     // Dealer management
     Route::get('/dealers', [App\Http\Controllers\API\DealerController::class, 'index']);
     Route::post('/dealers', [App\Http\Controllers\API\DealerController::class, 'store']);
