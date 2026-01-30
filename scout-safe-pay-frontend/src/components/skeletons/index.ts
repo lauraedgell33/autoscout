@@ -6,3 +6,4 @@
 export { VehicleCardSkeleton } from './VehicleCardSkeleton';
 export { VehicleListSkeleton } from './VehicleListSkeleton';
 export { DashboardSkeleton } from './DashboardSkeleton';
+export { DashboardStatsSkeleton } from './DashboardStatsSkeleton';

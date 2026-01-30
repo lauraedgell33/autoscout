@@ -165,15 +165,19 @@ export default function EnhancedVehicleCard({
                 w-10 h-10 p-0 rounded-full
                 bg-white/90 hover:bg-white shadow-lg
                 ${isSaved ? 'text-red-600' : 'text-gray-700'}
+                group/heart
               `}
               onClick={handleSave}
+              aria-label={isSaved ? 'Remove from favorites' : 'Add to favorites'}
+              aria-pressed={isSaved}
             >
-              <Heart className={`h-5 w-5 ${isSaved ? 'fill-current' : ''}`} />
+              <Heart className={`h-5 w-5 transition-all duration-300 ${isSaved ? 'fill-current scale-110' : 'group-hover/heart:text-red-500 group-hover/heart:scale-110'}`} />
             </Button>
             <Button
               variant="ghost"
               className="w-10 h-10 p-0 rounded-full bg-white/90 hover:bg-white shadow-lg text-gray-700"
               onClick={handleShare}
+              aria-label="Share vehicle"
             >
               <Share2 className="h-5 w-5" />
             </Button>

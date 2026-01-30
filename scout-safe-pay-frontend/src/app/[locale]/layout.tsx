@@ -5,6 +5,7 @@ import {routing} from '@/i18n/routing';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { CurrencyProvider } from '@/contexts/CurrencyContext';
 import { ToastProvider } from '@/components/providers/toast-provider';
+import { ErrorBoundary } from '@/components/ui/error-boundary';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import CookieBanner from '@/components/CookieBanner';
@@ -137,20 +138,22 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={inter.variable}>
       <body className="font-sans antialiased">
-        <SkipLink />
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <CurrencyProvider>
-            <AuthProvider>
-              <ToastProvider />
-              <Navigation />
-              <main id="main-content" className="min-h-screen focus:outline-none" tabIndex={-1}>
-                {children}
-              </main>
-              <Footer />
-              <CookieBanner />
-            </AuthProvider>
-          </CurrencyProvider>
-        </NextIntlClientProvider>
+        <ErrorBoundary>
+          <SkipLink />
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <CurrencyProvider>
+              <AuthProvider>
+                <ToastProvider />
+                <Navigation />
+                <main id="main-content" className="min-h-screen focus:outline-none" tabIndex={-1}>
+                  {children}
+                </main>
+                <Footer />
+                <CookieBanner />
+              </AuthProvider>
+            </CurrencyProvider>
+          </NextIntlClientProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );
