@@ -11,7 +11,7 @@ export const contractService = {
       responseType: 'blob'
     })
     
-    const url = window.URL.createObjectURL(new Blob([response as Blob]))
+    const url = window.URL.createObjectURL(response as Blob)
     const link = document.createElement('a')
     link.href = url
     link.setAttribute('download', `contract_${transactionId}.pdf`)

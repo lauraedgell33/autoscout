@@ -99,8 +99,8 @@ export const messageService = {
    * Send a message
    */
   async sendMessage(transactionId: number, data: SendMessageData): Promise<Message> {
-    const response = await apiClient.post<{ data: Message }>(`/transactions/${transactionId}/messages`, data)
-    return response.data
+    const response = await apiClient.post<Message>(`/transactions/${transactionId}/messages`, data)
+    return response
   },
 
   /**
