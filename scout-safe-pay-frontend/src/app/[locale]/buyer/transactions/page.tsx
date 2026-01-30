@@ -28,10 +28,12 @@ export default function BuyerTransactionsPage({ params }: { params: { locale: st
       }
       
       const response = await transactionService.list(filters);
-      setTransactions(response.data);
-      setTotalPages(response.meta.last_page);
+      setTransactions((response.data ?? response) || []);
+      setTotalPages(response.meta?.last_page ?? 1);
     } catch (error) {
       console.error('Error fetching transactions:', error);
+      // Set empty array on error to prevent crashes
+      setTransactions([]);
     } finally {
       setLoading(false);
     }
@@ -49,11 +51,11 @@ export default function BuyerTransactionsPage({ params }: { params: { locale: st
     fetchTransactions();
   });
 
-  const filteredTransactions = transactions.filter(transaction =>
+  const filteredTransactions = (transactions ?? []).filter(transaction =>
     searchQuery === '' ||
-    transaction.vehicle?.make.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    transaction.vehicle?.model.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    transaction.id.toLowerCase().includes(searchQuery.toLowerCase())
+    transaction.vehicle?.make?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    transaction.vehicle?.model?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    transaction.id?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const getStatusColor = (status: string) => {
