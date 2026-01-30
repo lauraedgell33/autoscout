@@ -23,6 +23,9 @@ class OptimizeResponse
         $response->headers->set('X-XSS-Protection', '1; mode=block');
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
         
+        // Enable compression headers (server will handle actual compression)
+        $response->headers->set('Vary', 'Accept-Encoding');
+        
         // Add cache control for API responses
         if ($request->is('api/*')) {
             if ($request->method() === 'GET') {

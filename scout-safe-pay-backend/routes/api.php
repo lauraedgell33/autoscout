@@ -45,9 +45,9 @@ Route::prefix('locale')->group(function () {
     Route::get('/translations/{file}', [LocaleController::class, 'getTranslations']);
 });
 
-// Public routes
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+// Public routes - with rate limiting
+Route::middleware('rate.limit.ip:5,1')->post('/register', [AuthController::class, 'register']);
+Route::middleware('rate.limit.ip:5,1')->post('/login', [AuthController::class, 'login']);
 
 // Error logging routes (FREE Sentry alternative)
 Route::post('/errors', [ErrorLogController::class, 'log']);
@@ -74,8 +74,8 @@ Route::get('/vehicles-statistics', [VehicleController::class, 'statistics']);
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/categories/{slug}', [CategoryController::class, 'show']);
 
-// Search routes (public)
-Route::prefix('search')->group(function () {
+// Search routes (public) - with rate limiting
+Route::middleware('rate.limit.ip:30,1')->prefix('search')->group(function () {
     Route::get('/vehicles', [SearchController::class, 'searchVehicles']);
     Route::get('/filters', [SearchController::class, 'getFilters']);
 });
