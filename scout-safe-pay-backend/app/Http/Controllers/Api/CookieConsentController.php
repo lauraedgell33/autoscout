@@ -92,7 +92,9 @@ class CookieConsentController extends Controller
                 '/',
                 null,
                 true,  // secure
-                true   // httpOnly
+                true,  // httpOnly
+                false, // raw
+                'lax'  // sameSite
             );
         } catch (\Exception $e) {
             return response()->json([
@@ -130,7 +132,9 @@ class CookieConsentController extends Controller
                 '/',
                 null,
                 true,  // secure
-                true   // httpOnly
+                true,  // httpOnly
+                false, // raw
+                'lax'  // sameSite
             );
         } catch (\Exception $e) {
             return response()->json([
@@ -168,7 +172,9 @@ class CookieConsentController extends Controller
                 '/',
                 null,
                 true,  // secure
-                true   // httpOnly
+                true,  // httpOnly
+                false, // raw
+                'lax'  // sameSite
             );
         } catch (\Exception $e) {
             return response()->json([
