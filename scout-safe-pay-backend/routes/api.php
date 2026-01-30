@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\API\PushSubscriptionController;
 use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\DashboardController;
+use App\Http\Controllers\API\ErrorLogController;
 use Illuminate\Support\Facades\Route;
 
 // Health check endpoint
@@ -47,6 +48,10 @@ Route::prefix('locale')->group(function () {
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+// Error logging routes (FREE Sentry alternative)
+Route::post('/errors', [ErrorLogController::class, 'log']);
+Route::post('/security/violations', [ErrorLogController::class, 'logViolation']);
 
 // AutoScout24 Webhooks (no auth - signature verified internally)
 Route::post('/webhooks/autoscout24', [AutoScout24WebhookController::class, 'handleWebhook']);
@@ -302,4 +307,9 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(functi
     
     // Cookie statistics
     Route::get('/cookies/statistics', [CookieConsentController::class, 'statistics']);
+    
+    // Error Logs (FREE Sentry alternative)
+    Route::get('/errors', [ErrorLogController::class, 'index']);
+    Route::get('/errors/statistics', [ErrorLogController::class, 'statistics']);
+    Route::get('/errors/{index}', [ErrorLogController::class, 'show']);
 });
