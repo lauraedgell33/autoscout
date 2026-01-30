@@ -6,12 +6,16 @@ import { useRouter } from '@/i18n/routing'
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { useCurrency } from '@/contexts/CurrencyContext'
-import { Star, MapPin, ExternalLink, ShoppingCart } from 'lucide-react'
+import { Star, MapPin, ExternalLink, ShoppingCart, Search, SlidersHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import vehicleService, { Vehicle, VehicleFilters } from '@/lib/api/vehicles'
 import { getCategoryLabel } from '@/lib/utils/categoryHelpers'
 import { VehicleCardSkeleton } from '@/components/common/SkeletonCard'
 import { EmptyState } from '@/components/common/EmptyState'
+import AdvancedFilters from '@/components/filters/AdvancedFilters'
+import EnhancedVehicleCard from '@/components/vehicle/EnhancedVehicleCard'
 
 export default function MarketplacePage() {
   const t = useTranslations()
@@ -23,6 +27,7 @@ export default function MarketplacePage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false)
   const [filters, setFilters] = useState<VehicleFilters>({
     sort_by: 'created_at',
     sort_order: 'desc',
@@ -81,22 +86,26 @@ export default function MarketplacePage() {
 
   return (
     <>      
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-blue-50 to-orange-50 py-16">
+        <section className="bg-gradient-to-br from-blue-50 to-orange-50 py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8">
-              <h1 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
+            <div className="text-center mb-6 sm:mb-8">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 mb-3 sm:mb-4">
                 {t('marketplace.title')}
               </h1>
-              <p className="text-xl text-gray-600">
+              <p className="text-base sm:text-lg md:text-xl text-gray-600">
                 {t('marketplace.subtitle')}
               </p>
+              <div className="mt-4 flex flex-wrap justify-center gap-2">
+                <Badge className="bg-green-500 hover:bg-green-600">{pagination.total} Vehicles Available</Badge>
+                <Badge className="bg-blue-500 hover:bg-blue-600">SafeTrade Protected</Badge>
+              </div>
             </div>
 
             {/* Search Bar */}
             <form onSubmit={handleSearch} className="max-w-3xl mx-auto">
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   id="marketplace-search"
                   name="search"
@@ -104,31 +113,60 @@ export default function MarketplacePage() {
                   placeholder={t('marketplace.search_placeholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 px-6 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-lg"
+                  className="flex-1 px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-base sm:text-lg"
                   autoComplete="off"
                 />
-                <button
+                <Button
                   type="submit"
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition flex items-center gap-2"
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-3 sm:py-4 font-semibold text-base sm:text-lg w-full sm:w-auto"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
+                  <Search className="w-5 h-5 mr-2" />
                   {t('marketplace.search_button')}
-                </button>
+                </Button>
               </div>
             </form>
+
+            {/* Advanced Filters Toggle */}
+            <div className="mt-4 text-center">
+              <Button
+                onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+                variant="outline"
+                className="bg-white"
+              >
+                <SlidersHorizontal className="w-4 h-4 mr-2" />
+                {showAdvancedFilters ? 'Hide Advanced Filters' : 'Show Advanced Filters'}
+              </Button>
+            </div>
           </div>
         </section>
 
       {/* Filters & Results */}
-      <section className="py-12">
+      <section className="py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-4 gap-8">
+          {/* Advanced Filters */}
+          {showAdvancedFilters && (
+            <Card className="mb-6 p-4 sm:p-6">
+              <AdvancedFilters
+                onApply={(appliedFilters) => {
+                  setFilters({ ...filters, ...appliedFilters, page: 1 })
+                  setShowAdvancedFilters(false)
+                }}
+                onReset={() => {
+                  setFilters({ sort_by: 'created_at', sort_order: 'desc', per_page: 12 })
+                  setSearchQuery('')
+                }}
+              />
+            </Card>
+          )}
+
+          <div className="grid lg:grid-cols-4 gap-6 sm:gap-8">
             {/* Sidebar Filters */}
             <div className="lg:col-span-1">
-              <div className="bg-white border border-gray-200 rounded-lg p-6">
-                <h3 className="text-lg font-bold text-blue-900 mb-4">{t('filters.title')}</h3>
+              <Card className="p-4 sm:p-6 sticky top-20">
+                <h3 className="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
+                  <SlidersHorizontal className="w-5 h-5 text-orange-500" />
+                  {t('filters.title')}
+                </h3>
                 
                 <div className="space-y-4">
                   {/* Sort */}
@@ -215,17 +253,18 @@ export default function MarketplacePage() {
                   </div>
 
                   {/* Reset Filters */}
-                  <button
+                  <Button
                     onClick={() => {
                       setFilters({ sort_by: 'created_at', sort_order: 'desc', per_page: 12 })
                       setSearchQuery('')
                     }}
-                    className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition"
+                    variant="outline"
+                    className="w-full"
                   >
                     {t('filters.clear_all')}
-                  </button>
+                  </Button>
                 </div>
-              </div>
+              </Card>
             </div>
 
             {/* Vehicle Grid */}
@@ -255,112 +294,15 @@ export default function MarketplacePage() {
                 />
               ) : (
                 <>
-                  <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
                     {(vehicles || []).map((vehicle) => (
-                      <Link
+                      <EnhancedVehicleCard
                         key={vehicle.id}
-                        href={`/vehicle/${vehicle.id}`}
-                        className="group bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-scale-in"
-                      >
-                        <div className="relative h-48 bg-gray-200">
-                          <img
-                            src={vehicle.primary_image || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23e5e7eb' width='600' height='400'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ENo Image%3C/text%3E%3C/svg%3E"}
-                            alt={`${vehicle.make} ${vehicle.model}`}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            onError={(e) => { (e.target as HTMLImageElement).src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23e5e7eb' width='600' height='400'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ENo Image%3C/text%3E%3C/svg%3E" }}
-                          />
-                          <div className="absolute top-3 right-3">
-                            <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
-                              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                              </svg>
-                              {tVehicle('safetrade_protected')}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="p-5">
-                          <div className="flex items-center justify-between mb-2">
-                            <h3 className="font-bold text-lg text-blue-900">
-                              {vehicle.make} {vehicle.model}
-                            </h3>
-                            <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">
-                              {getCategoryLabel(vehicle.category).icon} {getCategoryLabel(vehicle.category).label}
-                            </span>
-                          </div>
-
-                          <div className="text-2xl font-bold text-orange-500 mb-3">
-                            {formatPrice(Number(vehicle.price))}
-                          </div>
-
-                          <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
-                            <div>{vehicle.year}</div>
-                            <div>{vehicleService.formatMileage(vehicle.mileage)}</div>
-                            <div className="capitalize">{vehicle.fuel_type}</div>
-                            <div className="capitalize">{vehicle.transmission}</div>
-                          </div>
-
-                          {/* Dealer Information */}
-                          {vehicle.dealer && (
-                            <div className="mt-4 pt-4 border-t border-gray-100">
-                              <div className="flex items-center justify-between mb-2">
-                                <div className="flex items-center gap-2 flex-1 min-w-0">
-                                  {vehicle.dealer.logo_url && (
-                                    <img
-                                      src={vehicle.dealer.logo_url}
-                                      alt={vehicle.dealer.company_name}
-                                      className="w-6 h-6 rounded object-cover flex-shrink-0"
-                                    />
-                                  )}
-                                  <div className="min-w-0">
-                                    <p className="text-xs font-semibold text-gray-900 truncate">
-                                      {vehicle.dealer.company_name}
-                                    </p>
-                                    {vehicle.dealer.review_stats && (
-                                      <div className="flex items-center gap-1">
-                                        {Array.from({ length: 5 }, (_, i) => (
-                                          <Star
-                                            key={i}
-                                            className={`w-3 h-3 ${
-                                              i < Math.floor(vehicle.dealer.review_stats?.average_rating || 0)
-                                                ? 'text-yellow-400 fill-current'
-                                                : 'text-gray-300'
-                                            }`}
-                                          />
-                                        ))}
-                                        <span className="text-xs text-gray-600">
-                                          {vehicle.dealer.review_stats.average_rating?.toFixed(1)}
-                                        </span>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-                                <button
-                                  onClick={(e) => {
-                                    e.preventDefault()
-                                    e.stopPropagation()
-                                    router.push(`/dealers/${vehicle.dealer.id}`)
-                                  }}
-                                  className="ml-2 text-orange-500 hover:text-orange-600 text-xs font-semibold whitespace-nowrap flex items-center gap-1"
-                                >
-                                  <ExternalLink className="w-3 h-3" />
-                                  Profile
-                                </button>
-                              </div>
-                            </div>
-                          )}
-
-                          <div className="mt-3 flex items-center justify-between">
-                            <span className="text-sm text-gray-600">{vehicle.location_city}</span>
-                            <span className="text-orange-500 font-semibold text-sm flex items-center gap-1">
-                              {t('marketplace.view_details')}
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </Link>
+                        vehicle={vehicle}
+                        onFavoriteClick={() => {
+                          // TODO: Implement favorite functionality
+                        }}
+                      />
                     ))}
                   </div>
 
