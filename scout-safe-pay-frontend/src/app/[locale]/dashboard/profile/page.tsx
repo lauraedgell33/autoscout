@@ -92,8 +92,10 @@ export default function ProfilePage() {
             <form onSubmit={handleProfileSubmit}>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                  <label htmlFor="profile-name" className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                   <input
+                    id="profile-name"
+                    name="name"
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -103,8 +105,10 @@ export default function ProfilePage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                  <label htmlFor="profile-email" className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                   <input
+                    id="profile-email"
+                    name="email"
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
@@ -114,12 +118,15 @@ export default function ProfilePage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                  <label htmlFor="profile-phone" className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                   <input
+                    id="profile-phone"
+                    name="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({...formData, phone: e.target.value})}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    autoComplete="tel"
                   />
                 </div>
 

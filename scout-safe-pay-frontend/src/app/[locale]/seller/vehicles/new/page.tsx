@@ -101,12 +101,12 @@ export default function AddVehiclePage({ params }: { params: { locale: string } 
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Make *</label>
-              <Input name="make" value={formData.make} onChange={handleChange} required placeholder="e.g., BMW" />
+              <label htmlFor="make" className="block text-sm font-medium mb-1">Make *</label>
+              <Input id="make" name="make" value={formData.make} onChange={handleChange} required placeholder="e.g., BMW" autoComplete="off" />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Model *</label>
-              <Input name="model" value={formData.model} onChange={handleChange} required placeholder="e.g., 3 Series" />
+              <label htmlFor="model" className="block text-sm font-medium mb-1">Model *</label>
+              <Input id="model" name="model" value={formData.model} onChange={handleChange} required placeholder="e.g., 3 Series" autoComplete="off" />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Year *</label>

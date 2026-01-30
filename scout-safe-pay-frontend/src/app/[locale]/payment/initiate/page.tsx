@@ -75,8 +75,8 @@ export default function PaymentInitiatePage() {
           <Card className="p-6">
             <h3 className="font-semibold text-lg mb-4">Select Payment Method</h3>
             <div className="space-y-3">
-              <label className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${paymentMethod === 'bank_transfer' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-300'}`}>
-                <input type="radio" name="payment" value="bank_transfer" checked={paymentMethod === 'bank_transfer'} onChange={(e) => setPaymentMethod(e.target.value)} className="mr-4" />
+              <label htmlFor="payment-bank-transfer" className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${paymentMethod === 'bank_transfer' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-300'}`}>
+                <input id="payment-bank-transfer" type="radio" name="payment" value="bank_transfer" checked={paymentMethod === 'bank_transfer'} onChange={(e) => setPaymentMethod(e.target.value)} className="mr-4" />
                 <Building2 className="h-6 w-6 mr-3 text-blue-600" />
                 <div className="flex-1">
                   <div className="font-medium">Bank Transfer</div>
@@ -84,8 +84,8 @@ export default function PaymentInitiatePage() {
                 </div>
               </label>
               
-              <label className="flex items-center p-4 border-2 border-gray-300 rounded-lg opacity-50 cursor-not-allowed">
-                <input type="radio" disabled className="mr-4" />
+              <label htmlFor="payment-card" className="flex items-center p-4 border-2 border-gray-300 rounded-lg opacity-50 cursor-not-allowed">
+                <input id="payment-card" type="radio" name="payment" value="card" disabled className="mr-4" />
                 <CreditCard className="h-6 w-6 mr-3 text-gray-400" />
                 <div className="flex-1">
                   <div className="font-medium">Credit/Debit Card</div>

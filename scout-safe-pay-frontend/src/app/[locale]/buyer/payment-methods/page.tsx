@@ -121,29 +121,29 @@ export default function BuyerPaymentMethodsPage({ params }: { params: { locale: 
           </h3>
           <form className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label htmlFor="card-number" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Card Number
               </label>
-              <Input type="text" placeholder="1234 5678 9012 3456" maxLength={19} />
+              <Input id="card-number" name="cardNumber" type="text" placeholder="1234 5678 9012 3456" maxLength={19} autoComplete="cc-number" />
             </div>
             <div className="grid grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="expiry-month" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Expiry Month
                 </label>
-                <Input type="text" placeholder="MM" maxLength={2} />
+                <Input id="expiry-month" name="expiryMonth" type="text" placeholder="MM" maxLength={2} autoComplete="cc-exp-month" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="expiry-year" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Expiry Year
                 </label>
-                <Input type="text" placeholder="YY" maxLength={2} />
+                <Input id="expiry-year" name="expiryYear" type="text" placeholder="YY" maxLength={2} autoComplete="cc-exp-year" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="cvv" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   CVV
                 </label>
-                <Input type="text" placeholder="123" maxLength={4} />
+                <Input id="cvv" name="cvv" type="text" placeholder="123" maxLength={4} autoComplete="cc-csc" />
               </div>
             </div>
             <div className="flex justify-end space-x-2">

@@ -115,8 +115,10 @@ export default function AddVehiclePage() {
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Make *</label>
+                    <label htmlFor="vehicle-make" className="block text-sm font-medium text-gray-700 mb-2">Make *</label>
                     <input
+                      id="vehicle-make"
+                      name="make"
                       type="text"
                       name="make"
                       value={formData.make}
@@ -126,8 +128,10 @@ export default function AddVehiclePage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Model *</label>
+                    <label htmlFor="vehicle-model" className="block text-sm font-medium text-gray-700 mb-2">Model *</label>
                     <input
+                      id="vehicle-model"
+                      name="model"
                       type="text"
                       name="model"
                       value={formData.model}
@@ -140,8 +144,10 @@ export default function AddVehiclePage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Year *</label>
+                    <label htmlFor="vehicle-year" className="block text-sm font-medium text-gray-700 mb-2">Year *</label>
                     <input
+                      id="vehicle-year"
+                      name="year"
                       type="number"
                       name="year"
                       value={formData.year}
@@ -153,8 +159,10 @@ export default function AddVehiclePage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Price (€) *</label>
+                    <label htmlFor="vehicle-price" className="block text-sm font-medium text-gray-700 mb-2">Price (€) *</label>
                     <input
+                      id="vehicle-price"
+                      name="price"
                       type="number"
                       name="price"
                       value={formData.price}

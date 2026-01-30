@@ -97,8 +97,8 @@ export default function DealerTeamPage() {
           <h3 className="text-lg font-semibold mb-4">Invite Team Member</h3>
           <form onSubmit={inviteMember} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Email *</label>
-              <Input type="email" required value={inviteData.email} onChange={(e) => setInviteData({...inviteData, email: e.target.value})} placeholder="member@example.com" />
+              <label htmlFor="team-email" className="block text-sm font-medium mb-1">Email *</label>
+              <Input id="team-email" name="email" type="email" required value={inviteData.email} onChange={(e) => setInviteData({...inviteData, email: e.target.value})} placeholder="member@example.com" autoComplete="email" />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Role *</label>

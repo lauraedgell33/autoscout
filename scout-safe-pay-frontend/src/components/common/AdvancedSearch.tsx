@@ -53,6 +53,8 @@ export function AdvancedSearch({
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             placeholder={placeholder}
+            name="search"
+            autoComplete="off"
             className={`
               w-full pl-12 pr-12 py-4
               bg-white border-2 rounded-xl

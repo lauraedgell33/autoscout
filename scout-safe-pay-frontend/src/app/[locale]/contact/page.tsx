@@ -80,7 +80,7 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="contact-name" className="block text-sm font-medium text-gray-700 mb-2">{t('pages.contact.full_name')} *</label>
-                      <input id="contact-name" name="name" type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                      <input id="contact-name" name="name" type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" autoComplete="name" />
                     </div>
                     <div>
                       <label htmlFor="contact-email" className="block text-sm font-medium text-gray-700 mb-2">{t('pages.contact.email_address')} *</label>
