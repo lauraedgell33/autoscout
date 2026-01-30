@@ -5,6 +5,7 @@
 
 // Core UI Components
 export { Button } from './button';
+export { AsyncButton } from './async-button';
 export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './card';
 export { Input } from './input';
 export { Label } from './label';
@@ -21,6 +22,8 @@ export { ErrorBoundary, withErrorBoundary } from './error-boundary';
 
 // Form Components
 export { FormInput } from './form-input';
+export { FormError } from './form-error';
+export { FormSuccess } from './form-success';
 
 // Feedback Components
 export { EnhancedToastContainer } from './toast-enhanced';
