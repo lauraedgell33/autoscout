@@ -28,12 +28,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const baseClasses = 'inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none';
 
     const variantClasses = {
-      primary: 'bg-primary-900 text-white hover:bg-primary-950 focus-visible:ring-primary-500 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all',
-      secondary: 'bg-accent-500 text-white hover:bg-accent-600 focus-visible:ring-accent-400 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all',
-      outline: 'border-2 border-primary-900 text-primary-900 hover:bg-primary-900 hover:text-white focus-visible:ring-primary-500 hover:-translate-y-0.5 active:translate-y-0 transition-all',
-      ghost: 'text-gray-700 hover:bg-gray-100 focus-visible:ring-gray-400 hover:scale-105 active:scale-100 transition-all',
-      danger: 'bg-error-500 text-white hover:bg-error-600 focus-visible:ring-error-400 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all',
-      success: 'bg-success-500 text-white hover:bg-success-600 focus-visible:ring-success-400 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all',
+      primary: 'bg-primary-900 text-white hover:bg-primary-950 focus-visible:ring-primary-500 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0',
+      secondary: 'bg-accent-500 text-white hover:bg-accent-600 focus-visible:ring-accent-400 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0',
+      outline: 'border-2 border-primary-900 text-primary-900 hover:bg-primary-900 hover:text-white focus-visible:ring-primary-500 hover:-translate-y-0.5 active:translate-y-0',
+      ghost: 'text-gray-700 hover:bg-gray-100 focus-visible:ring-gray-400 hover:scale-105 active:scale-100',
+      danger: 'bg-error-500 text-white hover:bg-error-600 focus-visible:ring-error-400 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0',
+      success: 'bg-success-500 text-white hover:bg-success-600 focus-visible:ring-success-400 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0',
     };
 
     const sizeClasses = {

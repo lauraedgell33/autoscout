@@ -18,16 +18,16 @@ export function CardSkeleton({ className }: CardSkeletonProps) {
       aria-label="Loading card"
     >
       {/* Image placeholder */}
-      <div className="bg-gray-200 h-48 w-full shimmer" />
+      <div className="bg-gray-200 h-48 w-full animate-shimmer" />
       
       {/* Content placeholder */}
       <div className="p-4 space-y-3">
-        <div className="h-4 bg-gray-200 rounded w-3/4 shimmer" />
-        <div className="h-4 bg-gray-200 rounded w-1/2 shimmer" />
-        <div className="h-3 bg-gray-200 rounded w-5/6 shimmer" />
+        <div className="h-4 bg-gray-200 rounded w-3/4 animate-shimmer" />
+        <div className="h-4 bg-gray-200 rounded w-1/2 animate-shimmer" />
+        <div className="h-3 bg-gray-200 rounded w-5/6 animate-shimmer" />
         <div className="flex justify-between items-center mt-4">
-          <div className="h-6 bg-gray-200 rounded w-20 shimmer" />
-          <div className="h-8 bg-gray-200 rounded w-24 shimmer" />
+          <div className="h-6 bg-gray-200 rounded w-20 animate-shimmer" />
+          <div className="h-8 bg-gray-200 rounded w-24 animate-shimmer" />
         </div>
       </div>
       <span className="sr-only">Loading...</span>

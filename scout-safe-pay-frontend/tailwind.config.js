@@ -92,7 +92,9 @@ module.exports = {
           900: '#1e3a8a',
           950: '#172554',
         },
-        // Legacy support
+        // Legacy support - Deprecated: Use primary-* and accent-* classes instead
+        // Kept for backward compatibility with existing components
+        // TODO: Migrate all usages to new color system
         'as24-blue': {
           DEFAULT: '#003281',
           dark: '#002060',
@@ -166,6 +168,15 @@ module.exports = {
           '0%': { backgroundPosition: '-1000px 0' },
           '100%': { backgroundPosition: '1000px 0' },
         },
+      },
+      animationDelay: {
+        '200': '200ms',
+        '400': '400ms',
+        '600': '600ms',
+        '800': '800ms',
+        '1000': '1000ms',
+        '2000': '2000ms',
+        '4000': '4000ms',
       },
     },
   },
