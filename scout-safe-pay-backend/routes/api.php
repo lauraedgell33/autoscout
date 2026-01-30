@@ -22,6 +22,7 @@ use App\Http\Controllers\API\PushSubscriptionController;
 use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\ErrorLogController;
+use App\Http\Controllers\API\FavoritesController;
 use Illuminate\Support\Facades\Route;
 
 // Health check endpoint
@@ -129,6 +130,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/vehicles/{vehicle}', [VehicleController::class, 'destroy']);
     Route::post('/vehicles/{vehicle}/images', [VehicleController::class, 'uploadImages'])->middleware('throttle:10,60');
     Route::get('/my-vehicles', [VehicleController::class, 'myVehicles']);
+    
+    // Favorites
+    Route::get('/favorites', [FavoritesController::class, 'index']);
+    Route::post('/favorites', [FavoritesController::class, 'store']);
+    Route::delete('/favorites/{vehicle_id}', [FavoritesController::class, 'destroy']);
+    Route::get('/favorites/check/{vehicle_id}', [FavoritesController::class, 'check']);
     
     // Transactions (Bank Transfer Escrow Flow)
     Route::get('transactions', [TransactionController::class, 'index']);

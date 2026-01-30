@@ -129,6 +129,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(PushSubscription::class);
     }
 
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
     /**
      * Determine if the user can access the Filament admin panel.
      */
