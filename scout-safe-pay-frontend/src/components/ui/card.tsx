@@ -17,18 +17,18 @@ export const Card = ({
   ...props 
 }: CardProps) => {
   const hoverClasses = hoverable || interactive 
-    ? 'transition-all duration-200 hover:shadow-lg hover:-translate-y-1' 
+    ? 'transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.01]' 
     : '';
   
   const interactiveClasses = interactive 
-    ? 'cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2' 
+    ? 'cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2' 
     : '';
 
   const Component = interactive || onClick ? 'button' : 'div';
 
   return (
     <Component 
-      className={`rounded-lg border border-[var(--color-gray-200)] bg-white shadow-sm ${hoverClasses} ${interactiveClasses} ${className}`}
+      className={`rounded-lg border border-gray-200 bg-white shadow-sm ${hoverClasses} ${interactiveClasses} ${className}`}
       onClick={onClick}
       role={interactive ? 'button' : undefined}
       tabIndex={interactive ? 0 : undefined}
@@ -46,7 +46,7 @@ export const CardHeader = ({
   children: React.ReactNode; 
   className?: string;
 }) => (
-  <div className={`border-b border-[var(--color-gray-200)] px-6 py-4 ${className}`}>
+  <div className={`border-b border-gray-200 px-6 py-4 ${className}`}>
     {children}
   </div>
 );
@@ -58,7 +58,7 @@ export const CardTitle = ({
   children: React.ReactNode; 
   className?: string;
 }) => (
-  <h3 className={`text-xl font-bold text-[var(--color-gray-900)] ${className}`}>
+  <h3 className={`text-xl font-bold text-gray-900 ${className}`}>
     {children}
   </h3>
 );
@@ -70,7 +70,7 @@ export const CardDescription = ({
   children: React.ReactNode; 
   className?: string;
 }) => (
-  <p className={`text-sm text-[var(--color-gray-600)] mt-1 ${className}`}>
+  <p className={`text-sm text-gray-600 mt-1 ${className}`}>
     {children}
   </p>
 );
@@ -94,7 +94,7 @@ export const CardFooter = ({
   children: React.ReactNode; 
   className?: string;
 }) => (
-  <div className={`border-t border-[var(--color-gray-200)] px-6 py-4 bg-[var(--color-gray-50)] rounded-b-lg ${className}`}>
+  <div className={`border-t border-gray-200 px-6 py-4 bg-gray-50 rounded-b-lg ${className}`}>
     {children}
   </div>
 );
