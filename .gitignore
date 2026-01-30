@@ -40,3 +40,5 @@ scout-safe-pay-backend/bootstrap/cache/*
 # Temp files
 /tmp/
 *.tmp
+.vercel
+.env*.local

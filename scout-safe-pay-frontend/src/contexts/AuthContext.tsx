@@ -31,8 +31,7 @@ interface RegisterData {
   password: string
   password_confirmation: string
   phone?: string
-  role?: 'buyer' | 'seller' | 'dealer'
-  user_type?: 'buyer' | 'seller' | 'dealer'
+  user_type: 'buyer' | 'seller' | 'dealer'
   country?: string
 }
 
@@ -81,12 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = async (data: RegisterData) => {
     try {
-      const registerData = {
-        ...data,
-        user_type: data.role || data.user_type || 'buyer'
-      }
-      
-      await authStore.register(registerData)
+      await authStore.register(data)
       
       const { user } = authStore
       
