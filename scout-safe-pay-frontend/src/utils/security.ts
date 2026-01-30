@@ -243,10 +243,21 @@ export function reportCspViolation(violation: SecurityPolicyViolationEvent): voi
     timestamp: new Date().toISOString()
   }
   
-  // Send to logging service
+  // Send to backend security logging (FREE alternative)
   if (process.env.NODE_ENV === 'production') {
-    // TODO: Send to error tracking service
-    console.error('CSP Violation:', report)
+    // Log CSP violations to backend for security monitoring
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/security/violations`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(report),
+    }).catch((error) => {
+      // Silent fail - don't break app if security logging fails
+      console.error('Failed to log CSP violation:', error);
+    });
+  } else {
+    console.error('CSP Violation:', report);
   }
 }
 

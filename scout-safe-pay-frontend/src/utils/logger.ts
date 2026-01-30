@@ -70,10 +70,32 @@ class Logger {
   error(message: string, error?: any, ...args: any[]): void {
     this.formatMessage('error', message, error, ...args)
     
-    // In production, send to error tracking service
+    // In production, send to backend error logging (FREE alternative to Sentry)
     if (process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_ENABLE_ERROR_TRACKING === 'true') {
-      // TODO: Integrate with Sentry or similar
-      // Sentry.captureException(error, { extra: { message, ...args } })
+      // Send error to backend for centralized logging (FREE)
+      if (typeof window !== 'undefined') {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/errors`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message,
+            error: error ? {
+              message: error.message,
+              stack: error.stack,
+              name: error.name,
+            } : null,
+            metadata: args,
+            url: window.location.href,
+            userAgent: navigator.userAgent,
+            timestamp: new Date().toISOString(),
+          }),
+        }).catch((fetchError) => {
+          // Silent fail - don't break app if error logging fails
+          console.error('Failed to log error to backend:', fetchError);
+        });
+      }
     }
   }
 }
