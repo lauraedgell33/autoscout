@@ -159,9 +159,15 @@ class CookieConsentTest extends TestCase
 
         $this->assertNotNull($cookieValue, 'Cookie consent ID should be set');
 
-        // Second request with cookie - should return same preferences
-        $response2 = $this->withCookie('cookie_consent_id', $cookieValue)
-            ->getJson('/api/cookies/preferences');
+        // Second request with cookie - try using server variables
+        $response2 = $this->call(
+            'GET',
+            '/api/cookies/preferences',
+            [],
+            ['cookie_consent_id' => $cookieValue], // cookies parameter
+            [],
+            $this->transformHeadersToServerVars([])
+        );
 
         $response2->assertStatus(200)
             ->assertJson([
