@@ -252,14 +252,38 @@ body {
 /* Input & Form Enhancements */
 /* ============================================ */
 
+/* Enhanced focus visibility */
+*:focus-visible {
+  outline: none;
+  ring: 2px;
+  ring-color: #0ea5e9;
+  ring-offset: 2px;
+}
+
+/* Skip to content link */
+.skip-to-content {
+  position: absolute;
+  top: -10rem;
+  left: 0;
+  background-color: #003281;
+  color: white;
+  padding: 1rem;
+  z-index: 50;
+  transition: all 0.2s ease-in-out;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
 input:focus,
 textarea:focus,
 select:focus {
   outline: none;
   ring: 2px;
-  ring-color: #003281;
+  ring-color: #0ea5e9;
   ring-offset: 2px;
-  border-color: #003281;
+  border-color: #0ea5e9;
   transition: all 0.2s ease-in-out;
 }
 
