@@ -15,12 +15,10 @@ return [
     |
     */
 
-    'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
-        '%s,%s',
-        'localhost,localhost:3000,localhost:3001,localhost:3002,127.0.0.1,127.0.0.1:8000,::1,autoscout24safetrade.com,www.autoscout24safetrade.com',
-        Sanctum::currentApplicationUrlWithPort(),
-        // Sanctum::currentRequestHost(),
-    ))),
+    'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', 
+        'localhost,localhost:3000,localhost:3001,localhost:3002,127.0.0.1,127.0.0.1:8000,::1,autoscout24safetrade.com,www.autoscout24safetrade.com,' . 
+        Sanctum::currentApplicationUrlWithPort()
+    )),
 
     /*
     |--------------------------------------------------------------------------
