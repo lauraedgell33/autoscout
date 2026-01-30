@@ -161,3 +161,9 @@ class PaymentController extends Controller
             }
         }
 
+        return response()->json([
+            'message' => 'Payment verification updated',
+            'payment' => $payment->fresh(),
+        ]);
+    }
+}
