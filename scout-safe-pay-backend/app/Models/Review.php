@@ -21,11 +21,29 @@ class Review extends Model
         'status',
         'admin_note',
         'metadata',
+        'verified',
+        'verified_at',
+        'verification_method',
+        'moderation_status',
+        'moderation_notes',
+        'moderated_by',
+        'moderated_at',
+        'flagged',
+        'flag_count',
+        'helpful_count',
+        'not_helpful_count',
     ];
 
     protected $casts = [
         'metadata' => 'array',
         'rating' => 'integer',
+        'verified' => 'boolean',
+        'verified_at' => 'datetime',
+        'moderated_at' => 'datetime',
+        'flagged' => 'boolean',
+        'flag_count' => 'integer',
+        'helpful_count' => 'integer',
+        'not_helpful_count' => 'integer',
     ];
 
     public function transaction(): BelongsTo
@@ -48,12 +66,51 @@ class Review extends Model
         return $this->belongsTo(Vehicle::class);
     }
 
+    public function flags()
+    {
+        return $this->hasMany(ReviewFlag::class);
+    }
+
+    public function helpfulVotes()
+    {
+        return $this->hasMany(ReviewHelpfulVote::class);
+    }
+
+    public function moderator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'moderated_by');
+    }
+
+    /**
+     * Scope to get verified reviews
+     */
+    public function scopeVerified($query)
+    {
+        return $query->where('verified', true);
+    }
+
     /**
      * Scope to get approved reviews
      */
     public function scopeApproved($query)
     {
-        return $query->where('status', 'approved');
+        return $query->where('moderation_status', 'approved');
+    }
+
+    /**
+     * Scope to get pending reviews
+     */
+    public function scopePending($query)
+    {
+        return $query->where('moderation_status', 'pending');
+    }
+
+    /**
+     * Scope to get flagged reviews
+     */
+    public function scopeFlagged($query)
+    {
+        return $query->where('flagged', true);
     }
 
     /**

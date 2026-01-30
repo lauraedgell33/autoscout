@@ -23,6 +23,7 @@ use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\ErrorLogController;
 use App\Http\Controllers\API\FavoritesController;
+use App\Http\Controllers\API\Admin\ReviewModerationController;
 use Illuminate\Support\Facades\Route;
 
 // Health check endpoint
@@ -93,6 +94,7 @@ Route::get('/dealers/{dealer}', [App\Http\Controllers\API\DealerController::clas
 Route::get('/dealers-statistics', [App\Http\Controllers\API\DealerController::class, 'statistics']);
 
 // Public review routes
+Route::get('/reviews', [App\Http\Controllers\API\ReviewController::class, 'index']);
 Route::get('/users/{user}/reviews', [App\Http\Controllers\API\ReviewController::class, 'getUserReviews']);
 Route::get('/vehicles/{vehicle}/reviews', [App\Http\Controllers\API\ReviewController::class, 'getVehicleReviews']);
 
@@ -206,6 +208,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('reviews/{review}', [App\Http\Controllers\API\ReviewController::class, 'update']);
     Route::delete('reviews/{review}', [App\Http\Controllers\API\ReviewController::class, 'destroy']);
     Route::get('my-reviews', [App\Http\Controllers\API\ReviewController::class, 'myReviews']);
+    Route::post('reviews/{review}/flag', [App\Http\Controllers\API\ReviewController::class, 'flag']);
+    Route::post('reviews/{review}/vote', [App\Http\Controllers\API\ReviewController::class, 'vote']);
     
     // Notifications
     Route::get('notifications', [NotificationController::class, 'index']);
@@ -311,6 +315,15 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(functi
     // Reviews management
     Route::get('reviews/pending', [App\Http\Controllers\API\ReviewController::class, 'pending']);
     Route::post('reviews/{review}/moderate', [App\Http\Controllers\API\ReviewController::class, 'moderate']);
+    
+    // Review moderation (new enhanced endpoints)
+    Route::prefix('reviews')->group(function () {
+        Route::get('/pending', [ReviewModerationController::class, 'pending']);
+        Route::get('/flagged', [ReviewModerationController::class, 'flagged']);
+        Route::post('/{review}/verify', [ReviewModerationController::class, 'verify']);
+        Route::post('/{review}/reject', [ReviewModerationController::class, 'reject']);
+        Route::get('/statistics', [ReviewModerationController::class, 'statistics']);
+    });
     
     // Cookie statistics
     Route::get('/cookies/statistics', [CookieConsentController::class, 'statistics']);
