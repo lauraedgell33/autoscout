@@ -31,6 +31,10 @@ interface RecentSale {
   created_at: string;
 }
 
+interface SalesResponse {
+  data?: RecentSale[];
+}
+
 export default function SellerDashboardPage({ params }: { params: { locale: string } }) {
   const t = useTranslations();
   const [stats, setStats] = useState<SellerStats>({
@@ -55,8 +59,8 @@ export default function SellerDashboardPage({ params }: { params: { locale: stri
       setStats(statsData);
 
       // Fetch recent sales using apiClient
-      const salesData = await apiClient.get('/seller/sales?per_page=5') as any;
-      setRecentSales((salesData.data ?? salesData) || []);
+      const salesData = await apiClient.get('/seller/sales?per_page=5') as SalesResponse;
+      setRecentSales(salesData.data ?? []);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
       // Set empty arrays on error to prevent crashes
