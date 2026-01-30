@@ -173,54 +173,101 @@ export default function Navigation() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-200">
-          <div className="px-4 py-3 space-y-3">
-            <Link href="/marketplace" className="block text-gray-700 hover:text-blue-900 font-medium">Marketplace</Link>
-            <Link href="/how-it-works" className="block text-gray-700 hover:text-blue-900 font-medium">How It Works</Link>
-            <Link href="/benefits" className="block text-gray-700 hover:text-blue-900 font-medium">Benefits</Link>
-            <Link href="/dealers" className="block text-gray-700 hover:text-blue-900 font-medium">Dealers</Link>
+        <div className="md:hidden border-t border-gray-200 animate-slide-in-left">
+          <div className="px-4 py-3 space-y-1 bg-gradient-to-b from-white to-gray-50">
+            <Link 
+              href="/marketplace" 
+              className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-200"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              🏪 Marketplace
+            </Link>
+            <Link 
+              href="/how-it-works" 
+              className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-400"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              ℹ️ How It Works
+            </Link>
+            <Link 
+              href="/benefits" 
+              className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-600"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              ⭐ Benefits
+            </Link>
+            <Link 
+              href="/dealers" 
+              className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-800"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              🏢 Dealers
+            </Link>
             
             {/* Mobile Language and Currency Switchers */}
-            <div className="flex items-center gap-2 pt-2">
+            <div className="flex items-center gap-2 pt-2 px-4 animate-fade-in animation-delay-1000">
               <CurrencySwitcher />
               <LanguageSwitcher />
             </div>
             
             {isAuthenticated ? (
               <>
-                <hr />
-                <div className="flex items-center gap-2 text-blue-900 font-bold">
-                  <div className="w-8 h-8 bg-blue-900 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                <hr className="my-3" />
+                <div className="flex items-center gap-3 text-blue-900 font-bold px-4 py-2 animate-fade-in animation-delay-200">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-900 to-blue-700 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md">
                     {user?.name?.charAt(0).toUpperCase()}
                   </div>
-                  <span>{user?.name}</span>
+                  <div>
+                    <p className="font-bold">{user?.name}</p>
+                    <p className="text-xs text-gray-600 capitalize">{user?.role}</p>
+                  </div>
                 </div>
                 <Link
                   href={user?.role === 'seller' ? '/dashboard/seller' : '/dashboard/buyer'}
-                  className="block text-gray-700 hover:text-blue-900 font-medium"
+                  className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-400"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
-                  Dashboard
+                  📊 Dashboard
                 </Link>
                 {user?.role === 'seller' && (
-                  <Link href="/dashboard/vehicles" className="block text-gray-700 hover:text-blue-900 font-medium">
-                    My Vehicles
+                  <Link 
+                    href="/dashboard/vehicles" 
+                    className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-600"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    🚗 My Vehicles
                   </Link>
                 )}
-                <Link href="/dashboard/profile" className="block text-gray-700 hover:text-blue-900 font-medium">
-                  Profile Settings
+                <Link 
+                  href="/dashboard/profile" 
+                  className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-800"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  ⚙️ Profile Settings
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="block w-full text-left text-red-600 font-medium"
+                  className="block w-full text-left text-red-600 hover:bg-red-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-1000"
                 >
-                  Sign Out
+                  🚪 Sign Out
                 </button>
               </>
             ) : (
               <>
-                <Link href="/login" className="block text-gray-700 hover:text-blue-900 font-medium">Sign In</Link>
-                <Link href="/register" className="block bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold text-center">
-                  Get Started
+                <hr className="my-3" />
+                <Link 
+                  href="/login" 
+                  className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-200"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  🔑 Sign In
+                </Link>
+                <Link 
+                  href="/register" 
+                  className="block bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white px-6 py-3 rounded-lg font-semibold text-center shadow-lg transition-all duration-300 hover:scale-[1.02] animate-fade-in animation-delay-400"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  🚀 Get Started
                 </Link>
               </>
             )}

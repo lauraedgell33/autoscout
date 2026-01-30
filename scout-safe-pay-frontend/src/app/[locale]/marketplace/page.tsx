@@ -6,10 +6,12 @@ import { useRouter } from '@/i18n/routing'
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { useCurrency } from '@/contexts/CurrencyContext'
-import { Star, MapPin, ExternalLink } from 'lucide-react'
+import { Star, MapPin, ExternalLink, ShoppingCart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import vehicleService, { Vehicle, VehicleFilters } from '@/lib/api/vehicles'
 import { getCategoryLabel } from '@/lib/utils/categoryHelpers'
+import { VehicleCardSkeleton } from '@/components/common/SkeletonCard'
+import { EmptyState } from '@/components/common/EmptyState'
 
 export default function MarketplacePage() {
   const t = useTranslations()
@@ -226,14 +228,22 @@ export default function MarketplacePage() {
               )}
 
               {loading ? (
-                <div className="text-center py-12">
-                  <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
-                  <p className="mt-4 text-gray-600">{tCommon('loading')}</p>
+                <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <VehicleCardSkeleton key={i} />
+                  ))}
                 </div>
               ) : vehicles.length === 0 ? (
-                <div className="text-center py-12 bg-gray-50 rounded-lg">
-                  <p className="text-xl text-gray-600">{t('marketplace.no_results')}</p>
-                </div>
+                <EmptyState
+                  icon={ShoppingCart}
+                  title={t('marketplace.no_results')}
+                  description="Try adjusting your filters or search query to find more vehicles."
+                  actionLabel="Clear Filters"
+                  actionOnClick={() => {
+                    setFilters({ sort_by: 'created_at', sort_order: 'desc', per_page: 12 })
+                    setSearchQuery('')
+                  }}
+                />
               ) : (
                 <>
                   <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -241,7 +251,7 @@ export default function MarketplacePage() {
                       <Link
                         key={vehicle.id}
                         href={`/vehicle/${vehicle.id}`}
-                        className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition"
+                        className="group bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-scale-in"
                       >
                         <div className="relative h-48 bg-gray-200">
                           <img

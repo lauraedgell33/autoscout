@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl'
 import { useCurrency } from '@/contexts/CurrencyContext'
 import { vehicleService } from '@/lib/api/vehicles'
 import type { Vehicle, VehicleStatistics } from '@/lib/api/vehicles'
+import { AnimatedCounter } from '@/components/common/AnimatedCounter'
 
 export default function HomePageClient() {
   const t = useTranslations()
@@ -67,20 +68,30 @@ export default function HomePageClient() {
               </p>
 
               <div className="grid grid-cols-3 gap-4 mb-8">
-                <div>
+                <div className="text-center">
                   <div className="text-3xl font-bold text-orange-500">
-                    {loading ? '...' : `${stats?.active || 0}+`}
+                    {loading ? (
+                      <div className="animate-pulse">...</div>
+                    ) : (
+                      <AnimatedCounter end={stats?.active || 0} suffix="+" />
+                    )}
                   </div>
                   <div className="text-sm text-gray-600">{t('home.hero.stats.active')}</div>
                 </div>
-                <div>
+                <div className="text-center">
                   <div className="text-3xl font-bold text-orange-500">
-                    {loading ? '...' : `${stats?.total || 0}+`}
+                    {loading ? (
+                      <div className="animate-pulse">...</div>
+                    ) : (
+                      <AnimatedCounter end={stats?.total || 0} suffix="+" />
+                    )}
                   </div>
                   <div className="text-sm text-gray-600">{t('home.hero.stats.customers')}</div>
                 </div>
-                <div>
-                  <div className="text-3xl font-bold text-orange-500">€2M+</div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-orange-500">
+                    <AnimatedCounter end={2} prefix="€" suffix="M+" />
+                  </div>
                   <div className="text-sm text-gray-600">{t('home.hero.stats.secured')}</div>
                 </div>
               </div>
