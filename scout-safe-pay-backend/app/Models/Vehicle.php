@@ -35,6 +35,8 @@ class Vehicle extends Model
         'power_hp',
         'location_city',
         'location_country',
+        'latitude',
+        'longitude',
         'status',
         'autoscout_listing_id',
         'autoscout_data',
@@ -44,6 +46,8 @@ class Vehicle extends Model
 
     protected $casts = [
         'price' => 'decimal:2',
+        'latitude' => 'decimal:8',
+        'longitude' => 'decimal:8',
         'autoscout_data' => 'array',
         'images' => 'array',
     ];
