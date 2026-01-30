@@ -1,15 +1,23 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-
-import { Link } from '@/i18n/routing'
-import { useParams, useRouter } from 'next/navigation'
-import { useTranslations } from 'next-intl'
-import { useCurrency } from '@/contexts/CurrencyContext'
-import { useState, useEffect } from 'react'
-import vehicleService, { Vehicle } from '@/lib/api/vehicles'
-import { transactionService } from '@/lib/api/transactions'
-import VehicleMap from '@/components/map/VehicleMap'
+import Image from 'next/image';
+import { Link } from '@/i18n/routing';
+import { useParams, useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useCurrency } from '@/contexts/CurrencyContext';
+import { useState, useEffect } from 'react';
+import vehicleService, { Vehicle } from '@/lib/api/vehicles';
+import { transactionService } from '@/lib/api/transactions';
+import VehicleMap from '@/components/map/VehicleMap';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import VehicleBadge, { StatusBadge, ConditionBadge } from '@/components/vehicle/VehicleBadges';
+import { 
+  ShoppingCart, Shield, CheckCircle, MapPin, Calendar, 
+  Gauge, Fuel, Settings, Phone, Mail, Star, ChevronLeft, ChevronRight,
+  Heart, Share2, Eye, Award
+} from 'lucide-react';
 
 export default function VehicleDetailsPage() {
   const t = useTranslations()
@@ -116,32 +124,63 @@ export default function VehicleDetailsPage() {
           {/* Left Column - Images & Details */}
           <div className="lg:col-span-2">
             {/* Image Gallery */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
-              <div className="relative h-96 bg-gray-200">
+            <Card className="overflow-hidden mb-6">
+              <div className="relative h-96 bg-gray-100">
                 <img
                   src={images[selectedImage]}
                   alt={`${vehicle.make} ${vehicle.model}`}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute top-4 left-4">
-                  <span className="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
+                  <Badge className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 flex items-center gap-2">
+                    <Shield className="w-4 h-4" />
                     {t('vehicle.safetrade_protected')}
-                  </span>
+                  </Badge>
+                </div>
+                
+                {/* Image Navigation */}
+                {(images || []).length > 1 && (
+                  <>
+                    <button
+                      onClick={() => setSelectedImage((prev) => (prev === 0 ? images.length - 1 : prev - 1))}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition"
+                    >
+                      <ChevronLeft className="w-6 h-6 text-gray-900" />
+                    </button>
+                    <button
+                      onClick={() => setSelectedImage((prev) => (prev === images.length - 1 ? 0 : prev + 1))}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition"
+                    >
+                      <ChevronRight className="w-6 h-6 text-gray-900" />
+                    </button>
+                    
+                    {/* Image Counter */}
+                    <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
+                      {selectedImage + 1} / {images.length}
+                    </div>
+                  </>
+                )}
+                
+                {/* Action Icons */}
+                <div className="absolute top-4 right-4 flex gap-2">
+                  <button className="bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition">
+                    <Heart className="w-5 h-5 text-gray-900" />
+                  </button>
+                  <button className="bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition">
+                    <Share2 className="w-5 h-5 text-gray-900" />
+                  </button>
                 </div>
               </div>
               
               {/* Thumbnail Gallery */}
               {(images || []).length > 1 && (
-                <div className="grid grid-cols-6 gap-2 p-4 bg-gray-50">
+                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 p-4 bg-gray-50">
                   {images.map((image, index) => (
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
                       className={`relative h-16 rounded-lg overflow-hidden border-2 transition ${
-                        selectedImage === index ? 'border-orange-500' : 'border-transparent hover:border-gray-300'
+                        selectedImage === index ? 'border-orange-500 ring-2 ring-orange-500/30' : 'border-gray-200 hover:border-gray-400'
                       }`}
                     >
                       <img src={image} alt={`View ${index + 1}`} className="w-full h-full object-cover" />
@@ -149,78 +188,91 @@ export default function VehicleDetailsPage() {
                   ))}
                 </div>
               )}
-            </div>
+            </Card>
 
             {/* Vehicle Title & Stats */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-              <h1 className="text-3xl font-bold text-blue-900 mb-4">
-                {vehicle.make} {vehicle.model}
-              </h1>
+            <Card className="p-6 mb-6">
+              <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
+                <div>
+                  <h1 className="text-2xl sm:text-3xl font-bold text-blue-900 mb-2">
+                    {vehicle.make} {vehicle.model}
+                  </h1>
+                  <div className="flex flex-wrap gap-2">
+                    <StatusBadge status={vehicle.status} />
+                    <ConditionBadge condition={vehicle.condition} />
+                  </div>
+                </div>
+                
+                {/* Mobile Price */}
+                <div className="lg:hidden">
+                  <p className="text-sm text-gray-600 mb-1">{t('fields.price')}</p>
+                  <p className="text-2xl font-bold text-orange-500">
+                    {formatPrice(Number(vehicle.price))}
+                  </p>
+                </div>
+              </div>
               
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                <div className="flex items-center gap-3 p-3 bg-gradient-to-br from-orange-50 to-orange-100/50 rounded-lg">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-xs text-gray-600">{t('fields.year')}</p>
-                    <p className="font-bold text-blue-900">{vehicle.year}</p>
+                    <p className="font-bold text-blue-900 truncate">{vehicle.year}</p>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
+                <div className="flex items-center gap-3 p-3 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Gauge className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-xs text-gray-600">{t('fields.mileage')}</p>
-                    <p className="font-bold text-blue-900">{vehicleService.formatMileage(vehicle.mileage)}</p>
+                    <p className="font-bold text-blue-900 truncate">{vehicleService.formatMileage(vehicle.mileage)}</p>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                    </svg>
+                <div className="flex items-center gap-3 p-3 bg-gradient-to-br from-green-50 to-green-100/50 rounded-lg">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Fuel className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-xs text-gray-600">{t('fields.fuel_type')}</p>
-                    <p className="font-bold text-blue-900 capitalize">{vehicle.fuel_type}</p>
+                    <p className="font-bold text-blue-900 capitalize truncate">{vehicle.fuel_type}</p>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+                <div className="flex items-center gap-3 p-3 bg-gradient-to-br from-purple-50 to-purple-100/50 rounded-lg">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Settings className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-xs text-gray-600">{t('fields.transmission')}</p>
-                    <p className="font-bold text-blue-900 capitalize">{vehicle.transmission}</p>
+                    <p className="font-bold text-blue-900 capitalize truncate">{vehicle.transmission}</p>
                   </div>
                 </div>
               </div>
-            </div>
+            </Card>
 
             {/* Description */}
             {vehicle.description && (
-              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-                <h2 className="text-xl font-bold text-blue-900 mb-4">{t('vehicle.description')}</h2>
+              <Card className="p-6 mb-6">
+                <h2 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
+                  <Eye className="w-5 h-5 text-orange-500" />
+                  {t('vehicle.description')}
+                </h2>
                 <p className="text-gray-600 leading-relaxed whitespace-pre-line">{vehicle.description}</p>
-              </div>
+              </Card>
             )}
 
             {/* Location Map (FREE Leaflet) */}
             {vehicle.latitude && vehicle.longitude && (
-              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-                <h2 className="text-xl font-bold text-blue-900 mb-4">{t('vehicle.location') || 'Location'}</h2>
+              <Card className="p-6 mb-6">
+                <h2 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-orange-500" />
+                  {t('vehicle.location') || 'Location'}
+                </h2>
                 <VehicleMap
                   latitude={vehicle.latitude}
                   longitude={vehicle.longitude}
@@ -229,20 +281,20 @@ export default function VehicleDetailsPage() {
                   height="400px"
                   zoom={13}
                 />
-                <div className="mt-4 flex items-center gap-2 text-sm text-gray-600">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
+                <div className="mt-4 flex items-center gap-2 text-sm text-gray-600 p-3 bg-gray-50 rounded-lg">
+                  <MapPin className="w-5 h-5 text-orange-500 flex-shrink-0" />
                   <span>{vehicle.location_city}, {vehicle.location_country}</span>
                 </div>
-              </div>
+              </Card>
             )}
 
             {/* Technical Specifications */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-bold text-blue-900 mb-4">{t('vehicle.overview')}</h2>
-              <div className="grid grid-cols-2 gap-4">
+            <Card className="p-6">
+              <h2 className="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
+                <Settings className="w-5 h-5 text-orange-500" />
+                {t('vehicle.overview')}
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {[
                   { label: t('fields.make'), value: vehicle.make },
                   { label: t('fields.model'), value: vehicle.model },
@@ -253,26 +305,27 @@ export default function VehicleDetailsPage() {
                   { label: t('fields.body_type'), value: vehicle.body_type ? vehicleService.getBodyTypeLabel(vehicle.body_type) : null },
                   { label: t('fields.engine_size'), value: vehicle.engine_size ? `${vehicle.engine_size} cc` : null },
                 ].filter(spec => spec.value).map((spec, idx) => (
-                  <div key={idx} className="flex justify-between border-b border-gray-200 pb-2">
-                    <span className="text-gray-600">{spec.label}</span>
-                    <span className="font-medium text-blue-900">{spec.value}</span>
+                  <div key={idx} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                    <span className="text-gray-600 text-sm">{spec.label}</span>
+                    <span className="font-semibold text-blue-900">{spec.value}</span>
                   </div>
                 ))}
               </div>
-            </div>
+            </Card>
           </div>
 
           {/* Right Column - Price & Action */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-20">
-              <div className="text-center mb-6">
+            <Card className="p-4 sm:p-6 sticky top-20">
+              {/* Desktop Price */}
+              <div className="text-center mb-6 hidden lg:block">
                 <p className="text-sm text-gray-600 mb-2">{t('fields.price')}</p>
-                <p className="text-4xl font-bold text-orange-500">
+                <p className="text-3xl sm:text-4xl font-bold text-orange-500">
                   {formatPrice(Number(vehicle.price))}
                 </p>
               </div>
 
-              <button 
+              <Button 
                 onClick={handleBuyNow}
                 disabled={buyingNow}
                 className="w-full bg-orange-500 hover:bg-orange-600 text-white py-4 rounded-lg font-semibold transition mb-3 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -284,85 +337,98 @@ export default function VehicleDetailsPage() {
                   </>
                 ) : (
                   <>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
+                    <ShoppingCart className="w-5 h-5" />
                     {t('vehicle.buy_now')}
                   </>
                 )}
-              </button>
+              </Button>
 
-              <button className="w-full border-2 border-orange-500 text-orange-500 py-3 rounded-lg font-semibold hover:bg-orange-50 transition mb-6">
+              <Button 
+                variant="outline" 
+                className="w-full border-2 border-orange-500 text-orange-500 py-3 rounded-lg font-semibold hover:bg-orange-50 transition mb-6"
+              >
+                <Phone className="w-4 h-4 mr-2" />
                 {t('vehicle.contact_seller')}
-              </button>
+              </Button>
 
               {/* Dealer Information */}
               {vehicle.dealer && (
-                <div className="bg-blue-50 rounded-lg p-4 mb-6 border border-blue-200">
-                  <h3 className="font-bold text-blue-900 mb-3 text-center">Seller Information</h3>
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg p-4 mb-6 border-2 border-blue-200">
+                  <h3 className="font-bold text-blue-900 mb-3 text-center flex items-center justify-center gap-2">
+                    <Award className="w-5 h-5" />
+                    Seller Information
+                  </h3>
                   
                   <div className="flex items-center gap-3 mb-3">
                     {vehicle.dealer.logo_url ? (
                       <img
                         src={vehicle.dealer.logo_url}
                         alt={vehicle.dealer.company_name}
-                        className="w-12 h-12 rounded-lg object-cover"
+                        className="w-12 h-12 rounded-lg object-cover ring-2 ring-blue-200"
                         onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                       />
                     ) : (
-                      <div className="w-12 h-12 bg-blue-200 rounded-lg flex items-center justify-center text-blue-900 font-bold">
+                      <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
                         {vehicle.dealer.company_name?.charAt(0) || 'D'}
                       </div>
                     )}
-                    <div className="flex-1">
-                      <p className="font-bold text-blue-900">{vehicle.dealer.company_name}</p>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-blue-900 truncate">{vehicle.dealer.company_name}</p>
                       {vehicle.dealer.verification_status && (
-                        <p className="text-xs text-green-600 font-semibold">✓ Verified Dealer</p>
+                        <Badge className="bg-green-500 hover:bg-green-600 text-white text-xs mt-1">
+                          <CheckCircle className="w-3 h-3 mr-1" />
+                          Verified Dealer
+                        </Badge>
                       )}
                     </div>
                   </div>
 
                   {/* Ratings */}
                   {vehicle.dealer.review_stats && (
-                    <div className="bg-white rounded p-2 mb-3">
-                      <div className="flex items-center gap-2 justify-between mb-1">
-                        <span className="text-xs text-gray-600">Rating</span>
-                        <span className="font-bold text-orange-500">{(vehicle.dealer.review_stats.average_rating || 0).toFixed(1)}/5</span>
+                    <div className="bg-white rounded-lg p-3 mb-3 shadow-sm">
+                      <div className="flex items-center gap-2 justify-between mb-2">
+                        <span className="text-xs text-gray-600 font-medium">Rating</span>
+                        <div className="flex items-center gap-1">
+                          <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                          <span className="font-bold text-blue-900">{(vehicle.dealer.review_stats.average_rating || 0).toFixed(1)}</span>
+                          <span className="text-gray-500">/5</span>
+                        </div>
                       </div>
-                      <div className="flex gap-1">
+                      <div className="flex gap-1 mb-2">
                         {Array.from({ length: 5 }, (_, i) => (
-                          <svg
+                          <Star
                             key={i}
-                            className={`w-3 h-3 ${
+                            className={`w-4 h-4 ${
                               i < Math.floor(vehicle.dealer.review_stats?.average_rating || 0)
-                                ? 'text-yellow-400'
-                                : 'text-gray-300'
+                                ? 'text-yellow-400 fill-yellow-400'
+                                : 'text-gray-300 fill-gray-300'
                             }`}
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
+                          />
                         ))}
                       </div>
-                      <p className="text-xs text-gray-600 mt-1">
-                        {vehicle.dealer.review_stats.total_reviews || 0} {vehicle.dealer.review_stats.total_reviews === 1 ? 'review' : 'reviews'}
+                      <p className="text-xs text-gray-600">
+                        Based on {vehicle.dealer.review_stats.total_reviews || 0} {vehicle.dealer.review_stats.total_reviews === 1 ? 'review' : 'reviews'}
                       </p>
                     </div>
                   )}
 
                   {/* Dealer Details */}
-                  <div className="space-y-2 text-xs mb-3">
+                  <div className="space-y-2 text-sm mb-4">
                     {vehicle.dealer.vehicles_count && (
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-600">Active Listings</span>
-                        <span className="font-bold text-blue-900">{vehicle.dealer.vehicles_count}</span>
+                      <div className="flex items-center justify-between p-2 bg-white rounded-lg">
+                        <span className="text-gray-600 flex items-center gap-2">
+                          <Eye className="w-4 h-4 text-blue-500" />
+                          Active Listings
+                        </span>
+                        <Badge className="bg-blue-500 hover:bg-blue-600 text-white">
+                          {vehicle.dealer.vehicles_count}
+                        </Badge>
                       </div>
                     )}
                     {vehicle.dealer.phone && (
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-600">📞</span>
-                        <span className="font-semibold text-blue-900">{vehicle.dealer.phone}</span>
+                      <div className="flex items-center gap-2 p-2 bg-white rounded-lg">
+                        <Phone className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                        <span className="font-semibold text-blue-900 truncate">{vehicle.dealer.phone}</span>
                       </div>
                     )}
                   </div>
@@ -370,50 +436,38 @@ export default function VehicleDetailsPage() {
                   {/* View Profile Button */}
                   <Link
                     href={`/dealers/${vehicle.dealer.id}`}
-                    className="w-full block text-center bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition text-sm"
+                    className="w-full block text-center bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition text-sm shadow-md hover:shadow-lg transform hover:scale-105"
                   >
-                    View Full Profile
+                    View Full Profile →
                   </Link>
                 </div>
               )}
 
               {/* SafeTrade Benefits */}
-              <div className="border-t border-gray-200 pt-6">
+              <div className="border-t-2 border-gray-200 pt-6">
                 <h3 className="font-bold text-blue-900 mb-4 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
+                  <Shield className="w-5 h-5 text-green-500" />
                   {t('vehicle.safetrade_protection')}
                 </h3>
                 <ul className="space-y-3 text-sm">
-                  <li className="flex items-start gap-2">
-                    <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+                  <li className="flex items-start gap-2 p-2 bg-green-50 rounded-lg">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
                     <span className="text-gray-700">{t('vehicle.benefits.escrow')}</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+                  <li className="flex items-start gap-2 p-2 bg-green-50 rounded-lg">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
                     <span className="text-gray-700">{t('vehicle.benefits.verified')}</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+                  <li className="flex items-start gap-2 p-2 bg-green-50 rounded-lg">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
                     <span className="text-gray-700">{t('vehicle.benefits.inspection')}</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+                  <li className="flex items-start gap-2 p-2 bg-green-50 rounded-lg">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
                     <span className="text-gray-700">{t('vehicle.benefits.guarantee')}</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+                  <li className="flex items-start gap-2 p-2 bg-green-50 rounded-lg">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
                     <span className="text-gray-700">{t('vehicle.benefits.support')}</span>
                   </li>
                 </ul>
@@ -421,18 +475,18 @@ export default function VehicleDetailsPage() {
 
               {/* Location */}
               {vehicle.location_city && (
-                <div className="border-t border-gray-200 mt-6 pt-6">
-                  <h3 className="font-bold text-blue-900 mb-3">{t('fields.location')}</h3>
-                  <div className="flex items-center gap-2 text-gray-700">
-                    <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+                <div className="border-t-2 border-gray-200 mt-6 pt-6">
+                  <h3 className="font-bold text-blue-900 mb-3 flex items-center gap-2">
+                    <MapPin className="w-5 h-5 text-orange-500" />
+                    {t('fields.location')}
+                  </h3>
+                  <div className="flex items-center gap-2 text-gray-700 p-3 bg-gray-50 rounded-lg">
+                    <MapPin className="w-5 h-5 text-orange-500 flex-shrink-0" />
                     <span>{vehicle.location_city}, {vehicle.location_country}</span>
                   </div>
                 </div>
               )}
-            </div>
+            </Card>
           </div>
         </div>
       </div>    </div>
