@@ -84,7 +84,8 @@ class Message extends Model
     {
         return !$this->trashed();
     }
-}    /**
+
+    /**
      * Check if message belongs to user
      */
     public function belongsToUser(int $userId): bool

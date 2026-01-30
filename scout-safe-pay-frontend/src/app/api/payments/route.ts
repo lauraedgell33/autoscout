@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      transactionId: response.data.transactionId,
+      transactionId: (response as any).data?.transactionId,
       status: 'bank_transfer_pending',
       amount,
       currency,
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         error: APIErrorHandler.getUserMessage(error),
-        code: parsed.code,
+        statusCode: parsed.statusCode,
       },
       { status: 500 }
     );
@@ -99,14 +99,14 @@ export async function GET(request: NextRequest) {
     );
 
     // Extract bank details (seller's bank account)
-    const bankDetails = response.data.sellerBankAccount || null;
+    const bankDetails = (response as any).data?.sellerBankAccount || null;
 
     return NextResponse.json({
       transactionId,
       bankDetails,
-      status: response.data.status,
-      amount: response.data.amount,
-      currency: response.data.currency || 'EUR',
+      status: (response as any).data?.status,
+      amount: (response as any).data?.amount,
+      currency: (response as any).data?.currency || 'EUR',
       reference: `${transactionId}-${new Date().getTime()}`,
       message: 'Please transfer the amount to the provided bank account. Use the reference above.',
     });
@@ -116,7 +116,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(
       {
         error: APIErrorHandler.getUserMessage(error),
-        code: parsed.code,
+        statusCode: parsed.statusCode,
       },
       { status: 500 }
     );
@@ -163,7 +163,7 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json(
       {
         error: APIErrorHandler.getUserMessage(error),
-        code: parsed.code,
+        statusCode: parsed.statusCode,
       },
       { status: 500 }
     );

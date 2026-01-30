@@ -174,7 +174,8 @@ class PushNotificationService
             default => 'Transaction ' . ucfirst($status),
         };
 
-        $body = "{$statusText}: {$transactionData['reference_number'] ?? 'Unknown'}";
+        $referenceNumber = $transactionData['reference_number'] ?? 'Unknown';
+        $body = "{$statusText}: {$referenceNumber}";
 
         return self::sendToUser($user, $title, $body, [
             'tag' => 'transaction_' . $transactionData['id'],
@@ -201,7 +202,8 @@ class PushNotificationService
             default => 'Payment Update',
         };
 
-        $body = "{$title}: {$paymentData['reference_number'] ?? 'Unknown'}";
+        $referenceNumber = $paymentData['reference_number'] ?? 'Unknown';
+        $body = "{$title}: {$referenceNumber}";
 
         return self::sendToUser($user, $title, $body, [
             'tag' => 'payment_' . $paymentData['id'],
@@ -221,7 +223,8 @@ class PushNotificationService
         array $messageData
     ): array {
         $sender = $messageData['sender_name'] ?? 'Someone';
-        $body = "{$sender}: {$messageData['preview'] ?? 'New message'}";
+        $preview = $messageData['preview'] ?? 'New message';
+        $body = "{$sender}: {$preview}";
 
         return self::sendToUser($user, 'New Message', $body, [
             'tag' => 'message_' . $messageData['transaction_id'],

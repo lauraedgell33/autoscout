@@ -271,7 +271,7 @@ export const realtimeClient = new RealtimeClient();
  * React hook for real-time events
  */
 export function useRealtimeEvent(event: string, callback: EventCallback) {
-  const unsubscribeRef = useRef<() => void>();
+  const unsubscribeRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     unsubscribeRef.current = realtimeClient.on(event, callback);
@@ -287,7 +287,7 @@ export function useRealtimeEvent(event: string, callback: EventCallback) {
  */
 export function useRealtimeConnection() {
   const [status, setStatus] = useState<'connected' | 'disconnected' | 'error'>('disconnected');
-  const unsubscribeRef = useRef<() => void>();
+  const unsubscribeRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     unsubscribeRef.current = realtimeClient.onConnectionChange(setStatus);

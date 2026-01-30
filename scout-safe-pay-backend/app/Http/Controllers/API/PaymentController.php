@@ -159,4 +159,5 @@ class PaymentController extends Controller
                 ]);
                 // Continue even if invoice generation fails
             }
+        }
 

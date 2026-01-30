@@ -83,7 +83,7 @@ export const PaymentHistory: React.FC<PaymentHistoryProps> = ({
           : `/api/payments/history?limit=${limit}`;
 
         const response = await apiClient.get(endpoint);
-        setPayments(response.data.payments || []);
+        setPayments((response as any).data?.payments || []);
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to load payments';
         setError(message);
@@ -128,7 +128,7 @@ export const PaymentHistory: React.FC<PaymentHistoryProps> = ({
       });
 
       // Create download link
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const url = window.URL.createObjectURL(new Blob([(response as any).data]));
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute('download', `receipt-${paymentId}.pdf`);

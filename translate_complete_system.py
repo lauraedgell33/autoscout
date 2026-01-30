@@ -5,7 +5,14 @@ Complete Professional Translation System for AutoScout24
 Translates EN → ES, IT, FR, NL with automotive terminology preservation
 """
 
-from deep_translator import GoogleTranslator
+try:
+    from deep_translator import GoogleTranslator  # type: ignore
+except ImportError:
+    print("Installing deep_translator...")
+    import subprocess
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "deep_translator"])
+    from deep_translator import GoogleTranslator  # type: ignore
+
 import json
 import time
 import sys

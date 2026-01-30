@@ -166,7 +166,6 @@ export function NotificationCenter({
                   <CheckCircle
                     size={16}
                     className="text-green-500"
-                    title="Read"
                   />
                 </div>
               )}

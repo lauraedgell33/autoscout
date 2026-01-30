@@ -171,7 +171,7 @@ export function AdvancedFilters({
                             handleRangeChange(
                               filter.id,
                               parseInt(e.target.value) || filter.minValue || 0,
-                              selectedFilters[filter.id]?.max ?? filter.maxValue || 100
+                              (selectedFilters[filter.id]?.max ?? filter.maxValue) || 100
                             )
                           }
                           className="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-as24-blue"
@@ -185,7 +185,7 @@ export function AdvancedFilters({
                           onChange={(e) =>
                             handleRangeChange(
                               filter.id,
-                              selectedFilters[filter.id]?.min ?? filter.minValue || 0,
+                              (selectedFilters[filter.id]?.min ?? filter.minValue) || 0,
                               parseInt(e.target.value) || filter.maxValue || 100
                             )
                           }
