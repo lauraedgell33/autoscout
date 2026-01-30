@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Package, TrendingUp, DollarSign, Eye, Plus, BarChart } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { apiClient } from '@/lib/api-client';
 
 interface SellerStats {
   total_listings: number;
@@ -30,6 +31,10 @@ interface RecentSale {
   created_at: string;
 }
 
+interface SalesResponse {
+  data?: RecentSale[];
+}
+
 export default function SellerDashboardPage({ params }: { params: { locale: string } }) {
   const t = useTranslations();
   const [stats, setStats] = useState<SellerStats>({
@@ -49,23 +54,17 @@ export default function SellerDashboardPage({ params }: { params: { locale: stri
 
   const fetchDashboardData = async () => {
     try {
-      const token = localStorage.getItem('auth_token');
-      
-      // Fetch seller stats
-      const statsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seller/stats`, {
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      const statsData = await statsResponse.json();
+      // Fetch seller stats using apiClient
+      const statsData = await apiClient.get('/seller/stats') as SellerStats;
       setStats(statsData);
 
-      // Fetch recent sales
-      const salesResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seller/sales?per_page=5`, {
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      const salesData = await salesResponse.json();
-      setRecentSales(salesData.data || []);
+      // Fetch recent sales using apiClient
+      const salesData = await apiClient.get('/seller/sales?per_page=5') as SalesResponse;
+      setRecentSales(salesData.data ?? []);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
+      // Set empty arrays on error to prevent crashes
+      setRecentSales([]);
     } finally {
       setLoading(false);
     }

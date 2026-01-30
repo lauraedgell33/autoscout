@@ -7,7 +7,8 @@ import { useFilterStore } from '@/lib/stores/filterStore';
 import { useCartStore } from '@/lib/stores/cartStore';
 import { useUIStore } from '@/lib/stores/uiStore';
 import { staggerContainer, staggerItem, hoverScale } from '@/lib/animations/variants';
-import { Heart, MessageCircle } from 'lucide-react';
+import { Heart, MessageCircle, Car } from 'lucide-react';
+import { EmptyState } from '@/components/ui/empty-state';
 
 export const VehicleGrid: React.FC = () => {
   const filters = useFilterStore((state) => state.filters);
@@ -32,7 +33,19 @@ export const VehicleGrid: React.FC = () => {
   };
 
   if (isLoading) return <div className="text-center py-8">Loading vehicles...</div>;
-  if (!vehicles?.length) return <div className="text-center py-8">No vehicles found</div>;
+  if ((vehicles ?? []).length === 0) {
+    return (
+      <EmptyState
+        icon={Car}
+        title="No vehicles found"
+        description="Try adjusting your filters or check back later for new listings."
+        actionLabel="Clear Filters"
+        actionOnClick={() => {
+          // Clear filters logic would go here
+        }}
+      />
+    );
+  }
 
   return (
     <motion.div
@@ -51,9 +64,9 @@ export const VehicleGrid: React.FC = () => {
         >
           {/* Image */}
           <div className="relative h-48 bg-gray-200 overflow-hidden">
-            {(vehicle.primary_image || vehicle.images?.[0]) && (
+            {(vehicle.primary_image || (vehicle.images ?? [])[0]) && (
               <img
-                src={vehicle.primary_image || vehicle.images[0]}
+                src={vehicle.primary_image || (vehicle.images ?? [])[0]}
                 alt={`${vehicle.make} ${vehicle.model}`}
                 className="w-full h-full object-cover"
               />

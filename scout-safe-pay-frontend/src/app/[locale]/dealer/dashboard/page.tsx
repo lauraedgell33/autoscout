@@ -5,6 +5,7 @@ import { Link } from '@/i18n/routing';
 import { Package, TrendingUp, DollarSign, Users, Plus } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { apiClient } from '@/lib/api-client';
 
 export default function DealerDashboardPage({ params }: { params: { locale: string } }) {
   const [stats, setStats] = useState({
@@ -23,11 +24,8 @@ export default function DealerDashboardPage({ params }: { params: { locale: stri
 
   const fetchDashboardData = async () => {
     try {
-      const token = localStorage.getItem('auth_token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dealer/stats`, {
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      const data = await response.json();
+      // Use apiClient instead of direct fetch
+      const data = await apiClient.get('/dealer/stats') as typeof stats;
       setStats(data);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
