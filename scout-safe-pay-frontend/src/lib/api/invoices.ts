@@ -3,15 +3,15 @@ import apiClient from './client'
 export const invoiceService = {
   async generate(transactionId: number) {
     const response = await apiClient.post(`/transactions/${transactionId}/invoice/generate`)
-    return response.data
+    return response
   },
 
   async download(transactionId: number) {
-    const response = await apiClient.get(`/transactions/${transactionId}/invoice/download`, {
+    const response = await apiClient.get<Blob>(`/transactions/${transactionId}/invoice/download`, {
       responseType: 'blob'
     })
     
-    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const url = window.URL.createObjectURL(new Blob([response as Blob]))
     const link = document.createElement('a')
     link.href = url
     link.setAttribute('download', `invoice_${transactionId}.pdf`)
@@ -28,6 +28,6 @@ export const invoiceService = {
 
   async list() {
     const response = await apiClient.get('/invoices')
-    return response.data
+    return response
   }
 }

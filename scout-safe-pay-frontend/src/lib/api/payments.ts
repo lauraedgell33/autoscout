@@ -3,14 +3,14 @@ import apiClient from './client'
 export const paymentService = {
   async list() {
     const response = await apiClient.get('/payments')
-    return response.data
+    return response
   },
 
   async initiate(transactionId: number) {
     const response = await apiClient.post('/payments/initiate', {
       transaction_id: transactionId,
     })
-    return response.data
+    return response
   },
 
   async uploadProof(paymentId: number, file: File) {
@@ -23,12 +23,12 @@ export const paymentService = {
         'Content-Type': 'multipart/form-data',
       },
     })
-    return response.data
+    return response
   },
 
   async getById(id: number) {
-    const response = await apiClient.get(`/payments/${id}`)
-    return response.data.payment
+    const response = await apiClient.get<{ payment: unknown }>(`/payments/${id}`)
+    return response.payment
   },
 
   async verify(id: number, status: 'verified' | 'rejected', notes?: string, rejectionReason?: string) {
@@ -37,6 +37,6 @@ export const paymentService = {
       admin_notes: notes,
       rejection_reason: rejectionReason,
     })
-    return response.data
+    return response
   },
 }

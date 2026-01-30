@@ -63,8 +63,8 @@ export interface DisputeSubmission {
 export const verificationService = {
   // KYC Verification
   async getKYCStatus(): Promise<KYCVerification | null> {
-    const response = await apiClient.get('/kyc/status')
-    return response.data.data
+    const response = await apiClient.get<{ data: KYCVerification | null }>('/kyc/status')
+    return response.data
   },
 
   async submitKYC(data: KYCSubmission): Promise<KYCVerification> {
@@ -77,39 +77,39 @@ export const verificationService = {
     }
     formData.append('selfie', data.selfie)
 
-    const response = await apiClient.post('/kyc/submit', formData, {
+    const response = await apiClient.post<{ data: KYCVerification }>('/kyc/submit', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
-    return response.data.data
+    return response.data
   },
 
   // VIN Check
   async checkVIN(vehicleId: string): Promise<VINCheckResult> {
-    const response = await apiClient.post(`/vehicles/${vehicleId}/verify-vin`)
-    return response.data.data
+    const response = await apiClient.post<{ data: VINCheckResult }>(`/vehicles/${vehicleId}/verify-vin`)
+    return response.data
   },
 
   async getVINCheckStatus(vehicleId: string): Promise<VINCheckResult | null> {
-    const response = await apiClient.get(`/vehicles/${vehicleId}/vin-status`)
-    return response.data.data
+    const response = await apiClient.get<{ data: VINCheckResult | null }>(`/vehicles/${vehicleId}/vin-status`)
+    return response.data
   },
 
   // Disputes
   async createDispute(data: DisputeSubmission): Promise<Dispute> {
-    const response = await apiClient.post('/disputes', data)
-    return response.data.data
+    const response = await apiClient.post<{ data: Dispute }>('/disputes', data)
+    return response.data
   },
 
   async getMyDisputes(): Promise<Dispute[]> {
-    const response = await apiClient.get('/disputes/my')
-    return response.data.data
+    const response = await apiClient.get<{ data: Dispute[] }>('/disputes/my')
+    return response.data
   },
 
   async getDisputeById(id: string): Promise<Dispute> {
-    const response = await apiClient.get(`/disputes/${id}`)
-    return response.data.data
+    const response = await apiClient.get<{ data: Dispute }>(`/disputes/${id}`)
+    return response.data
   },
 
   async addDisputeMessage(

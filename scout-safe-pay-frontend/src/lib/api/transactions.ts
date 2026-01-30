@@ -54,8 +54,8 @@ export interface CreateTransactionData {
 
 export const transactionService = {
   async create(data: CreateTransactionData): Promise<{ transaction: Transaction; bank_details: BankTransferDetails }> {
-    const response = await apiClient.post('/transactions', data)
-    return response.data
+    const response = await apiClient.post<{ transaction: Transaction; bank_details: BankTransferDetails }>('/transactions', data)
+    return response
   },
 
   async list(filters?: {
@@ -64,57 +64,57 @@ export const transactionService = {
     page?: number
     per_page?: number
   }): Promise<{ data: Transaction[]; meta: PaginationMeta }> {
-    const response = await apiClient.get('/transactions', { params: filters })
-    return response.data
+    const response = await apiClient.get<{ data: Transaction[]; meta: PaginationMeta }>('/transactions', { params: filters })
+    return response
   },
 
   async get(id: string): Promise<Transaction> {
-    const response = await apiClient.get(`/transactions/${id}`)
-    return response.data
+    const response = await apiClient.get<Transaction>(`/transactions/${id}`)
+    return response
   },
 
   async uploadReceipt(id: string, receipt: File): Promise<Transaction> {
     const formData = new FormData()
     formData.append('receipt', receipt)
-    const response = await apiClient.post(`/transactions/${id}/upload-receipt`, formData, {
+    const response = await apiClient.post<Transaction>(`/transactions/${id}/upload-receipt`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
-    return response.data
+    return response
   },
 
   async confirmPayment(id: string, notes?: string): Promise<Transaction> {
-    const response = await apiClient.post(`/transactions/${id}/confirm-payment`, { confirmation_notes: notes })
-    return response.data
+    const response = await apiClient.post<Transaction>(`/transactions/${id}/confirm-payment`, { confirmation_notes: notes })
+    return response
   },
 
   async scheduleInspection(id: string, inspection_date: string, notes?: string): Promise<Transaction> {
-    const response = await apiClient.post(`/transactions/${id}/schedule-inspection`, { inspection_date, inspection_notes: notes })
-    return response.data
+    const response = await apiClient.post<Transaction>(`/transactions/${id}/schedule-inspection`, { inspection_date, inspection_notes: notes })
+    return response
   },
 
   async completeInspection(id: string, result: 'approved' | 'rejected', notes?: string): Promise<Transaction> {
-    const response = await apiClient.post(`/transactions/${id}/complete-inspection`, { inspection_result: result, inspection_notes: notes })
-    return response.data
+    const response = await apiClient.post<Transaction>(`/transactions/${id}/complete-inspection`, { inspection_result: result, inspection_notes: notes })
+    return response
   },
 
   async releaseFunds(id: string): Promise<Transaction> {
-    const response = await apiClient.post(`/transactions/${id}/release-funds`)
-    return response.data
+    const response = await apiClient.post<Transaction>(`/transactions/${id}/release-funds`)
+    return response
   },
 
   async raiseDispute(id: string, reason: string): Promise<Transaction> {
-    const response = await apiClient.post(`/transactions/${id}/raise-dispute`, { dispute_reason: reason })
-    return response.data
+    const response = await apiClient.post<Transaction>(`/transactions/${id}/raise-dispute`, { dispute_reason: reason })
+    return response
   },
 
   async refund(id: string, reason?: string): Promise<Transaction> {
-    const response = await apiClient.post(`/transactions/${id}/refund`, { reason })
-    return response.data
+    const response = await apiClient.post<Transaction>(`/transactions/${id}/refund`, { reason })
+    return response
   },
 
   async cancel(id: string, reason?: string): Promise<Transaction> {
-    const response = await apiClient.post(`/transactions/${id}/cancel`, { reason })
-    return response.data
+    const response = await apiClient.post<Transaction>(`/transactions/${id}/cancel`, { reason })
+    return response
   },
 
   async statistics(): Promise<{
@@ -125,8 +125,15 @@ export const transactionService = {
     disputed: number
     total_value: string
   }> {
-    const response = await apiClient.get('/transactions/statistics')
-    return response.data
+    const response = await apiClient.get<{
+      total: number
+      pending_payment: number
+      payment_received: number
+      completed: number
+      disputed: number
+      total_value: string
+    }>('/transactions/statistics')
+    return response
   },
 
   formatStatus(status: Transaction['status']): { label: string; color: string } {

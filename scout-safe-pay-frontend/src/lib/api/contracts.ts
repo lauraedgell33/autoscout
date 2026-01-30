@@ -3,15 +3,15 @@ import apiClient from './client'
 export const contractService = {
   async generate(transactionId: number) {
     const response = await apiClient.post(`/transactions/${transactionId}/contract/generate`)
-    return response.data
+    return response
   },
 
   async download(transactionId: number) {
-    const response = await apiClient.get(`/transactions/${transactionId}/contract/download`, {
+    const response = await apiClient.get<Blob>(`/transactions/${transactionId}/contract/download`, {
       responseType: 'blob'
     })
     
-    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const url = window.URL.createObjectURL(new Blob([response as Blob]))
     const link = document.createElement('a')
     link.href = url
     link.setAttribute('download', `contract_${transactionId}.pdf`)

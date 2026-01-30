@@ -22,13 +22,13 @@ export interface AuthResponse {
 
 export const authService = {
   async register(data: RegisterData): Promise<AuthResponse> {
-    const response = await apiClient.post('/register', data)
-    return response.data
+    const response = await apiClient.post<AuthResponse>('/register', data)
+    return response
   },
 
   async login(data: LoginData): Promise<AuthResponse> {
-    const response = await apiClient.post('/login', data)
-    return response.data
+    const response = await apiClient.post<AuthResponse>('/login', data)
+    return response
   },
 
   async logout(): Promise<void> {
@@ -36,12 +36,12 @@ export const authService = {
   },
 
   async me() {
-    const response = await apiClient.get('/user')
-    return response.data.user || response.data
+    const response = await apiClient.get<{ user?: any }>('/user')
+    return response.user || response
   },
 
   async getUser() {
-    const response = await apiClient.get('/user')
-    return response.data.user || response.data
+    const response = await apiClient.get<{ user?: any }>('/user')
+    return response.user || response
   },
 }
