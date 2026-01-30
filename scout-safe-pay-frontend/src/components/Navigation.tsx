@@ -2,11 +2,13 @@
 
 import Link from 'next/link'
 import { usePathname } from '@/i18n/routing'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTranslations } from 'next-intl'
 import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
+import { MobileNav, MobileNavLink, MobileNavSection, MobileNavDivider } from './mobile/MobileNav'
+import { ChevronDown, User, Settings, LogOut, LayoutDashboard, Car } from 'lucide-react'
 
 export default function Navigation() {
   const t = useTranslations()
@@ -14,6 +16,7 @@ export default function Navigation() {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const pathname = usePathname()
   const { user, isAuthenticated, logout } = useAuth()
+  const userMenuRef = useRef<HTMLDivElement>(null)
 
   const isActive = (path: string) => pathname === path
 
@@ -22,61 +25,97 @@ export default function Navigation() {
     setUserMenuOpen(false)
   }
 
+  // Close user menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setUserMenuOpen(false)
+      }
+    }
+
+    if (userMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [userMenuOpen])
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false)
+  }, [pathname])
+
   return (
-    <nav className="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <nav 
+      className="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 shadow-sm"
+      role="navigation"
+      aria-label="Main navigation"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
+          {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center group">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-900 to-blue-700 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <Link 
+              href="/" 
+              className="flex items-center group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-lg"
+              aria-label="AutoScout24 Home"
+            >
+              <div className="w-10 h-10 bg-gradient-to-br from-[var(--color-primary)] to-blue-700 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-6 h-6 text-[var(--color-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
-              <span className="ml-3 text-xl font-bold bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent">
+              <span className="ml-3 text-xl font-bold bg-gradient-to-r from-[var(--color-primary)] to-blue-700 bg-clip-text text-transparent">
                 AutoScout24
               </span>
             </Link>
           </div>
           
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
             <Link 
               href="/marketplace" 
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                 isActive('/marketplace') 
-                  ? 'text-blue-900 font-bold bg-blue-50' 
-                  : 'text-gray-700 hover:text-blue-900 hover:bg-gray-50'
+                  ? 'text-[var(--color-primary)] font-bold bg-blue-50' 
+                  : 'text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-50'
               }`}
+              aria-current={isActive('/marketplace') ? 'page' : undefined}
             >
               {t('nav.marketplace')}
             </Link>
             <Link 
               href="/how-it-works" 
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                 isActive('/how-it-works') 
-                  ? 'text-blue-900 font-bold bg-blue-50' 
-                  : 'text-gray-700 hover:text-blue-900 hover:bg-gray-50'
+                  ? 'text-[var(--color-primary)] font-bold bg-blue-50' 
+                  : 'text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-50'
               }`}
+              aria-current={isActive('/how-it-works') ? 'page' : undefined}
             >
               {t('nav.how_it_works')}
             </Link>
             <Link 
               href="/benefits" 
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                 isActive('/benefits') 
-                  ? 'text-blue-900 font-bold bg-blue-50' 
-                  : 'text-gray-700 hover:text-blue-900 hover:bg-gray-50'
+                  ? 'text-[var(--color-primary)] font-bold bg-blue-50' 
+                  : 'text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-50'
               }`}
+              aria-current={isActive('/benefits') ? 'page' : undefined}
             >
               {t('nav.benefits')}
             </Link>
             <Link 
               href="/dealers" 
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                 isActive('/dealers') 
-                  ? 'text-blue-900 font-bold bg-blue-50' 
-                  : 'text-gray-700 hover:text-blue-900 hover:bg-gray-50'
+                  ? 'text-[var(--color-primary)] font-bold bg-blue-50' 
+                  : 'text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-50'
               }`}
+              aria-current={isActive('/dealers') ? 'page' : undefined}
             >
               {t('nav.dealers')}
             </Link>
@@ -88,51 +127,68 @@ export default function Navigation() {
             </div>
             
             {isAuthenticated ? (
-              <div className="relative">
+              <div className="relative" ref={userMenuRef}>
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-2 text-gray-700 hover:text-blue-900 font-medium"
+                  className="flex items-center gap-2 text-gray-700 hover:text-[var(--color-primary)] font-medium min-h-[44px] px-3 rounded-lg hover:bg-gray-50 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+                  aria-expanded={userMenuOpen}
+                  aria-haspopup="true"
+                  aria-label={`User menu for ${user?.name}`}
                 >
-                  <div className="w-8 h-8 bg-blue-900 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                  <div className="w-8 h-8 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white text-sm font-bold">
                     {user?.name?.charAt(0).toUpperCase()}
                   </div>
-                  <span>{user?.name}</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                  <span className="hidden lg:inline">{user?.name}</span>
+                  <ChevronDown size={16} className={`transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
                 </button>
 
                 {userMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2">
+                  <div 
+                    className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-[var(--z-dropdown)]"
+                    role="menu"
+                    aria-orientation="vertical"
+                  >
+                    <div className="px-4 py-3 border-b border-gray-100">
+                      <p className="text-sm font-semibold text-gray-900">{user?.name}</p>
+                      <p className="text-xs text-gray-500 capitalize">{user?.role}</p>
+                    </div>
                     <Link
                       href={user?.role === 'seller' ? '/dashboard/seller' : '/dashboard/buyer'}
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50"
+                      className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-gray-50"
                       onClick={() => setUserMenuOpen(false)}
+                      role="menuitem"
                     >
-                      Dashboard
+                      <LayoutDashboard size={18} aria-hidden="true" />
+                      <span>Dashboard</span>
                     </Link>
                     <Link
                       href="/dashboard/profile"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-50"
+                      className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-gray-50"
                       onClick={() => setUserMenuOpen(false)}
+                      role="menuitem"
                     >
-                      Profile Settings
+                      <Settings size={18} aria-hidden="true" />
+                      <span>Profile Settings</span>
                     </Link>
                     {user?.role === 'seller' && (
                       <Link
                         href="/dashboard/vehicles"
-                        className="block px-4 py-2 text-gray-700 hover:bg-gray-50"
+                        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-gray-50"
                         onClick={() => setUserMenuOpen(false)}
+                        role="menuitem"
                       >
-                        My Vehicles
+                        <Car size={18} aria-hidden="true" />
+                        <span>My Vehicles</span>
                       </Link>
                     )}
-                    <hr className="my-2" />
+                    <hr className="my-2 border-gray-100" aria-hidden="true" />
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-50"
+                      className="flex items-center gap-3 w-full text-left px-4 py-2.5 text-[var(--color-error)] hover:bg-red-50 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-red-50"
+                      role="menuitem"
                     >
-                      Sign Out
+                      <LogOut size={18} aria-hidden="true" />
+                      <span>Sign Out</span>
                     </button>
                   </div>
                 )}
@@ -141,13 +197,13 @@ export default function Navigation() {
               <>
                 <Link 
                   href="/login" 
-                  className="text-gray-700 hover:text-blue-900 font-medium"
+                  className="text-gray-700 hover:text-[var(--color-primary)] font-medium min-h-[44px] flex items-center px-4 rounded-lg hover:bg-gray-50 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
                 >
                   {t('nav.login')}
                 </Link>
                 <Link 
                   href="/register" 
-                  className="bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white px-6 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
+                  className="bg-gradient-to-r from-[var(--color-accent)] to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2"
                 >
                   {t('nav.register')}
                 </Link>
@@ -155,125 +211,91 @@ export default function Navigation() {
             )}
           </div>
 
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-gray-700 hover:text-blue-900"
+          {/* Mobile Navigation */}
+          <div className="md:hidden flex items-center gap-2">
+            <CurrencySwitcher />
+            <LanguageSwitcher />
+            <MobileNav
+              isOpen={mobileMenuOpen}
+              onClose={() => setMobileMenuOpen(false)}
+              onToggle={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {mobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
+              <MobileNavSection>
+                <MobileNavLink href="/marketplace" onClick={() => setMobileMenuOpen(false)} active={isActive('/marketplace')}>
+                  {t('nav.marketplace')}
+                </MobileNavLink>
+                <MobileNavLink href="/how-it-works" onClick={() => setMobileMenuOpen(false)} active={isActive('/how-it-works')}>
+                  {t('nav.how_it_works')}
+                </MobileNavLink>
+                <MobileNavLink href="/benefits" onClick={() => setMobileMenuOpen(false)} active={isActive('/benefits')}>
+                  {t('nav.benefits')}
+                </MobileNavLink>
+                <MobileNavLink href="/dealers" onClick={() => setMobileMenuOpen(false)} active={isActive('/dealers')}>
+                  {t('nav.dealers')}
+                </MobileNavLink>
+              </MobileNavSection>
+
+              {isAuthenticated ? (
+                <>
+                  <MobileNavDivider />
+                  <div className="px-4 py-3 bg-blue-50 rounded-lg mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white font-bold">
+                        {user?.name?.charAt(0).toUpperCase()}
+                      </div>
+                      <div>
+                        <p className="font-bold text-[var(--color-primary)]">{user?.name}</p>
+                        <p className="text-xs text-gray-600 capitalize">{user?.role}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <MobileNavSection>
+                    <MobileNavLink href={user?.role === 'seller' ? '/dashboard/seller' : '/dashboard/buyer'} onClick={() => setMobileMenuOpen(false)}>
+                      <LayoutDashboard size={20} aria-hidden="true" />
+                      <span>Dashboard</span>
+                    </MobileNavLink>
+                    {user?.role === 'seller' && (
+                      <MobileNavLink href="/dashboard/vehicles" onClick={() => setMobileMenuOpen(false)}>
+                        <Car size={20} aria-hidden="true" />
+                        <span>My Vehicles</span>
+                      </MobileNavLink>
+                    )}
+                    <MobileNavLink href="/dashboard/profile" onClick={() => setMobileMenuOpen(false)}>
+                      <Settings size={20} aria-hidden="true" />
+                      <span>Profile Settings</span>
+                    </MobileNavLink>
+                  </MobileNavSection>
+                  <MobileNavDivider />
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg text-[var(--color-error)] hover:bg-red-50 font-medium transition-all min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-error)]"
+                  >
+                    <LogOut size={20} aria-hidden="true" />
+                    <span>Sign Out</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <MobileNavDivider />
+                  <MobileNavSection>
+                    <MobileNavLink href="/login" onClick={() => setMobileMenuOpen(false)}>
+                      <User size={20} aria-hidden="true" />
+                      <span>{t('nav.login')}</span>
+                    </MobileNavLink>
+                  </MobileNavSection>
+                  <Link 
+                    href="/register" 
+                    className="block bg-gradient-to-r from-[var(--color-accent)] to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white px-6 py-3.5 rounded-lg font-semibold text-center shadow-lg transition-all duration-300 hover:scale-[1.02] min-h-[52px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {t('nav.register')}
+                  </Link>
+                </>
+              )}
+            </MobileNav>
           </div>
         </div>
       </div>
-
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-200 animate-slide-in-left">
-          <div className="px-4 py-3 space-y-1 bg-gradient-to-b from-white to-gray-50">
-            <Link 
-              href="/marketplace" 
-              className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-200"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              🏪 Marketplace
-            </Link>
-            <Link 
-              href="/how-it-works" 
-              className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-400"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              ℹ️ How It Works
-            </Link>
-            <Link 
-              href="/benefits" 
-              className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-600"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              ⭐ Benefits
-            </Link>
-            <Link 
-              href="/dealers" 
-              className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-800"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              🏢 Dealers
-            </Link>
-            
-            {/* Mobile Language and Currency Switchers */}
-            <div className="flex items-center gap-2 pt-2 px-4 animate-fade-in animation-delay-1000">
-              <CurrencySwitcher />
-              <LanguageSwitcher />
-            </div>
-            
-            {isAuthenticated ? (
-              <>
-                <hr className="my-3" />
-                <div className="flex items-center gap-3 text-blue-900 font-bold px-4 py-2 animate-fade-in animation-delay-200">
-                  <div className="w-10 h-10 bg-gradient-to-br from-blue-900 to-blue-700 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-md">
-                    {user?.name?.charAt(0).toUpperCase()}
-                  </div>
-                  <div>
-                    <p className="font-bold">{user?.name}</p>
-                    <p className="text-xs text-gray-600 capitalize">{user?.role}</p>
-                  </div>
-                </div>
-                <Link
-                  href={user?.role === 'seller' ? '/dashboard/seller' : '/dashboard/buyer'}
-                  className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-400"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  📊 Dashboard
-                </Link>
-                {user?.role === 'seller' && (
-                  <Link 
-                    href="/dashboard/vehicles" 
-                    className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-600"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    🚗 My Vehicles
-                  </Link>
-                )}
-                <Link 
-                  href="/dashboard/profile" 
-                  className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-800"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  ⚙️ Profile Settings
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="block w-full text-left text-red-600 hover:bg-red-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-1000"
-                >
-                  🚪 Sign Out
-                </button>
-              </>
-            ) : (
-              <>
-                <hr className="my-3" />
-                <Link 
-                  href="/login" 
-                  className="block text-gray-700 hover:text-blue-900 hover:bg-blue-50 font-medium px-4 py-3 rounded-lg transition-all duration-200 animate-fade-in animation-delay-200"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  🔑 Sign In
-                </Link>
-                <Link 
-                  href="/register" 
-                  className="block bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white px-6 py-3 rounded-lg font-semibold text-center shadow-lg transition-all duration-300 hover:scale-[1.02] animate-fade-in animation-delay-400"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  🚀 Get Started
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      )}
     </nav>
   )
 }

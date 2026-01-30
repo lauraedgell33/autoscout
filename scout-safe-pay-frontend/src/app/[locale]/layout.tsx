@@ -8,6 +8,7 @@ import { ToastProvider } from '@/components/providers/toast-provider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import CookieBanner from '@/components/CookieBanner';
+import { SkipLink } from '@/components/common/SkipLink';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '../globals.css';
@@ -136,12 +137,13 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={inter.variable}>
       <body className="font-sans antialiased">
+        <SkipLink />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <CurrencyProvider>
             <AuthProvider>
               <ToastProvider />
               <Navigation />
-              <main className="min-h-screen">
+              <main id="main-content" className="min-h-screen focus:outline-none" tabIndex={-1}>
                 {children}
               </main>
               <Footer />
