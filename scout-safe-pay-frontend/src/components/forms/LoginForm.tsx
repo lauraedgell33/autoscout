@@ -34,10 +34,10 @@ export const LoginForm: React.FC = () => {
       };
       setUser(user);
       setToken(response.token);
-      addToast('Login successful!');
+      addToast({ message: 'Login successful!', type: 'success' });
       // Router will handle redirect
     } catch (error) {
-      addToast('Login failed. Please try again.');
+      addToast({ message: 'Login failed. Please try again.', type: 'error' });
     }
   };
 

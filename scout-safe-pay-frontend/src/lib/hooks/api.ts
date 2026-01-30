@@ -41,12 +41,23 @@ export const useDashboardStats = (userType: 'buyer' | 'seller' | 'dealer') => {
     queryKey: ['dashboard-stats', userType],
     queryFn: async () => {
       // Connect to real API endpoints based on user type
-      const endpoint = userType === 'buyer' 
-        ? '/dashboard' 
-        : `/${userType}/stats`;
+      const endpoint = `/${userType}/stats`;
       
-      const response = await apiClient.get<any>(endpoint);
+      const response = await apiClient.get<DashboardStats>(endpoint);
       return response;
     },
   });
 };
+
+interface DashboardStats {
+  totalSales?: number;
+  totalOrders?: number;
+  pendingOrders?: number;
+  totalCustomers?: number;
+  revenue?: number;
+  conversionRate?: number;
+  chartData?: Array<{ month: string; sales: number; orders: number }>;
+  revenueChart?: Array<{ date: string; amount: number }>;
+  topVehicles?: Array<{ name: string; sales: number }>;
+  [key: string]: any; // Allow for additional dynamic properties from different user types
+}
