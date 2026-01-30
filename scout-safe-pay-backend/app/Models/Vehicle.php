@@ -67,6 +67,11 @@ class Vehicle extends Model
         return $this->hasMany(Transaction::class);
     }
 
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
     /**
      * Get the indexable data array for the model.
      *

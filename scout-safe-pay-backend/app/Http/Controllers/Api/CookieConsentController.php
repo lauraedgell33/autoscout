@@ -24,7 +24,7 @@ class CookieConsentController extends Controller
         try {
             $preference = $this->cookieService->getOrCreatePreference($request);
 
-            $response = response()->json([
+            return response()->json([
                 'success' => true,
                 'data' => [
                     'preferences' => [
@@ -38,24 +38,17 @@ class CookieConsentController extends Controller
                     'needs_refresh' => $preference->needsRefresh(),
                     'is_expired' => $preference->isExpired(),
                 ],
-            ]);
-
-            // Set cookie ID in response for anonymous users
-            if (!$request->cookie('cookie_consent_id')) {
-                $response->cookie(
-                    'cookie_consent_id',
-                    $preference->session_id,
-                    525600, // 1 year
-                    '/',
-                    null,
-                    false, // not HTTPS only for development
-                    true,  // HttpOnly
-                    false, // not raw
-                    'lax'  // SameSite
-                );
-            }
-
-            return $response;
+            ])->cookie(
+                'cookie_consent_id',
+                $preference->session_id,
+                525600, // 1 year in minutes
+                '/',
+                null,
+                true,  // secure
+                true,  // httpOnly
+                false, // not raw
+                'lax'  // SameSite
+            );
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -80,7 +73,7 @@ class CookieConsentController extends Controller
 
             $preference = $this->cookieService->updatePreferences($request, $validated);
 
-            $response = response()->json([
+            return response()->json([
                 'success' => true,
                 'message' => 'Cookie preferences updated successfully',
                 'data' => [
@@ -92,14 +85,15 @@ class CookieConsentController extends Controller
                     ],
                     'expires_at' => $preference->expires_at?->toISOString(),
                 ],
-            ]);
-
-            // Set cookie ID in response
-            if (!$request->cookie('cookie_consent_id')) {
-                $response->cookie('cookie_consent_id', $preference->session_id, 525600, '/', null, false, true, false, 'lax');
-            }
-
-            return $response;
+            ])->cookie(
+                'cookie_consent_id',
+                $preference->session_id,
+                525600, // 1 year in minutes
+                '/',
+                null,
+                true,  // secure
+                true   // httpOnly
+            );
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -117,7 +111,7 @@ class CookieConsentController extends Controller
         try {
             $preference = $this->cookieService->acceptAll($request);
 
-            $response = response()->json([
+            return response()->json([
                 'success' => true,
                 'message' => 'All cookies accepted',
                 'data' => [
@@ -129,14 +123,15 @@ class CookieConsentController extends Controller
                     ],
                     'expires_at' => $preference->expires_at?->toISOString(),
                 ],
-            ]);
-
-            // Set cookie ID in response
-            if (!$request->cookie('cookie_consent_id')) {
-                $response->cookie('cookie_consent_id', $preference->session_id, 525600, '/', null, false, true, false, 'lax');
-            }
-
-            return $response;
+            ])->cookie(
+                'cookie_consent_id',
+                $preference->session_id,
+                525600, // 1 year in minutes
+                '/',
+                null,
+                true,  // secure
+                true   // httpOnly
+            );
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -154,7 +149,7 @@ class CookieConsentController extends Controller
         try {
             $preference = $this->cookieService->acceptEssentialOnly($request);
 
-            $response = response()->json([
+            return response()->json([
                 'success' => true,
                 'message' => 'Only essential cookies accepted',
                 'data' => [
@@ -166,14 +161,15 @@ class CookieConsentController extends Controller
                     ],
                     'expires_at' => $preference->expires_at?->toISOString(),
                 ],
-            ]);
-
-            // Set cookie ID in response
-            if (!$request->cookie('cookie_consent_id')) {
-                $response->cookie('cookie_consent_id', $preference->session_id, 525600, '/', null, false, true, false, 'lax');
-            }
-
-            return $response;
+            ])->cookie(
+                'cookie_consent_id',
+                $preference->session_id,
+                525600, // 1 year in minutes
+                '/',
+                null,
+                true,  // secure
+                true   // httpOnly
+            );
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
