@@ -24,17 +24,17 @@ export const kycService = {
     formData.append('id_document_image', data.id_document_image)
     formData.append('selfie_image', data.selfie_image)
 
-    const response = await apiClient.post('/kyc/submit', formData, {
+    const response = await apiClient.post<{ message: string; user: UserType }>('/kyc/submit', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
-    return response.data
+    return response
   },
 
   async getStatus(): Promise<KYCStatus> {
-    const response = await apiClient.get('/kyc/status')
-    return response.data
+    const response = await apiClient.get<KYCStatus>('/kyc/status')
+    return response
   },
 }
 

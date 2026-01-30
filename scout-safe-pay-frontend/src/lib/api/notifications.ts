@@ -41,10 +41,10 @@ export interface NotificationPreferences {
 export const notificationService = {
   // Get all notifications
   async getAll(page = 1, unreadOnly = false): Promise<NotificationResponse> {
-    const response = await apiClient.get('/notifications', {
+    const response = await apiClient.get<NotificationResponse>('/notifications', {
       params: { page, unread_only: unreadOnly }
     })
-    return response.data
+    return response
   },
 
   // Get unread notifications
@@ -55,8 +55,8 @@ export const notificationService = {
 
   // Get unread count
   async getUnreadCount(): Promise<number> {
-    const response = await apiClient.get('/notifications/unread-count')
-    return response.data.unread_count
+    const response = await apiClient.get<{ unread_count: number }>('/notifications/unread-count')
+    return response.unread_count
   },
 
   // Get user preferences

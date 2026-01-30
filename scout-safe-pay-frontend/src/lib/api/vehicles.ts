@@ -126,16 +126,16 @@ export const vehicleService = {
       })
     }
 
-    const response = await apiClient.get(`/vehicles?${params.toString()}`)
-    return response.data
+    const response = await apiClient.get<VehicleListResponse>(`/vehicles?${params.toString()}`)
+    return response
   },
 
   /**
    * Get vehicle by ID
    */
   async getVehicle(id: number): Promise<Vehicle> {
-    const response = await apiClient.get(`/vehicles/${id}`)
-    return response.data.vehicle
+    const response = await apiClient.get<{ vehicle: Vehicle }>(`/vehicles/${id}`)
+    return response.vehicle
   },
 
   /**
@@ -149,32 +149,32 @@ export const vehicleService = {
    * Get featured vehicles
    */
   async getFeaturedVehicles(): Promise<Vehicle[]> {
-    const response = await apiClient.get('/vehicles-featured')
-    return response.data.vehicles
+    const response = await apiClient.get<{ vehicles: Vehicle[] }>('/vehicles-featured')
+    return response.vehicles
   },
 
   /**
    * Get vehicle statistics
    */
   async getStatistics(): Promise<VehicleStatistics> {
-    const response = await apiClient.get('/vehicles-statistics')
-    return response.data
+    const response = await apiClient.get<VehicleStatistics>('/vehicles-statistics')
+    return response
   },
 
   /**
    * Create a new vehicle (requires authentication)
    */
   async createVehicle(data: CreateVehicleData): Promise<Vehicle> {
-    const response = await apiClient.post('/vehicles', data)
-    return response.data.vehicle
+    const response = await apiClient.post<{ vehicle: Vehicle }>('/vehicles', data)
+    return response.vehicle
   },
 
   /**
    * Update vehicle (requires authentication)
    */
   async updateVehicle(id: number, data: Partial<CreateVehicleData>): Promise<Vehicle> {
-    const response = await apiClient.put(`/vehicles/${id}`, data)
-    return response.data.vehicle
+    const response = await apiClient.put<{ vehicle: Vehicle }>(`/vehicles/${id}`, data)
+    return response.vehicle
   },
 
   /**
@@ -198,13 +198,13 @@ export const vehicleService = {
       formData.append('primary', primaryIndex.toString())
     }
 
-    const response = await apiClient.post(`/vehicles/${id}/images`, formData, {
+    const response = await apiClient.post<{ images: string[]; primary_image: string }>(`/vehicles/${id}/images`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
     
-    return response.data
+    return response
   },
 
   /**
@@ -221,8 +221,8 @@ export const vehicleService = {
       })
     }
 
-    const response = await apiClient.get(`/my-vehicles?${params.toString()}`)
-    return response.data
+    const response = await apiClient.get<VehicleListResponse>(`/my-vehicles?${params.toString()}`)
+    return response
   },
 
   /**

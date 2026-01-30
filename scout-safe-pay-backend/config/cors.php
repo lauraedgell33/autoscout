@@ -11,6 +11,8 @@ return [
         env('APP_ENV') === 'local' ? 'http://localhost:3002' : null,
         env('APP_ENV') === 'local' ? 'http://localhost:3005' : null,
         env('FRONTEND_URL'),
+        'https://autoscout24safetrade.com',
+        'https://www.autoscout24safetrade.com',
     ]),
 
     'allowed_origins_patterns' => env('APP_ENV') === 'production' ? [

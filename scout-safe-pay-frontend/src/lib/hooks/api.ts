@@ -1,20 +1,26 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { LoginFormData } from '@/lib/schemas';
 import { vehicleService } from '@/lib/api/vehicles';
+import { apiClient } from '@/lib/api/client';
 
 export const useLogin = () => {
   return useMutation({
     mutationFn: async (data: LoginFormData) => {
-      // Mock login
-      return {
-        token: 'mock-token',
+      // Real API login
+      const response = await apiClient.post<{
+        token: string;
         user: {
-          id: '1',
-          email: data.email,
-          name: 'User',
-          role: 'buyer' as const,
-        },
-      };
+          id: number;
+          email: string;
+          name: string;
+          role: 'buyer' | 'seller' | 'dealer' | 'admin';
+          user_type?: 'buyer' | 'seller' | 'dealer' | 'admin';
+        };
+      }>('/login', {
+        email: data.email,
+        password: data.password,
+      });
+      return response;
     },
   });
 };

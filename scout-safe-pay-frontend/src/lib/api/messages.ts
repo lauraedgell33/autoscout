@@ -83,24 +83,24 @@ export const messageService = {
    * Get all conversations
    */
   async getConversations(): Promise<Conversation[]> {
-    const response = await apiClient.get('/messages/conversations')
-    return response.data.conversations
+    const response = await apiClient.get<{ conversations: Conversation[] }>('/messages/conversations')
+    return response.conversations
   },
 
   /**
    * Get messages for a transaction
    */
   async getMessages(transactionId: number): Promise<ConversationDetail> {
-    const response = await apiClient.get(`/transactions/${transactionId}/messages`)
-    return response.data
+    const response = await apiClient.get<ConversationDetail>(`/transactions/${transactionId}/messages`)
+    return response
   },
 
   /**
    * Send a message
    */
   async sendMessage(transactionId: number, data: SendMessageData): Promise<Message> {
-    const response = await apiClient.post(`/transactions/${transactionId}/messages`, data)
-    return response.data.data
+    const response = await apiClient.post<Message>(`/transactions/${transactionId}/messages`, data)
+    return response
   },
 
   /**
@@ -128,8 +128,8 @@ export const messageService = {
    * Get unread message count
    */
   async getUnreadCount(): Promise<number> {
-    const response = await apiClient.get('/messages/unread-count')
-    return response.data.unread_count
+    const response = await apiClient.get<{ unread_count: number }>('/messages/unread-count')
+    return response.unread_count
   },
 
   /**
