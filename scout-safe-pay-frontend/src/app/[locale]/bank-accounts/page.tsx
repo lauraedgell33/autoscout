@@ -140,20 +140,20 @@ export default function AllBankAccountsPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-1">Account Holder *</label>
-                <Input required value={formData.account_holder} onChange={(e) => setFormData({...formData, account_holder: e.target.value})} />
+                <label htmlFor="bank-account-holder" className="block text-sm font-medium mb-1">Account Holder *</label>
+                <Input id="bank-account-holder" name="accountHolder" required value={formData.account_holder} onChange={(e) => setFormData({...formData, account_holder: e.target.value})} autoComplete="name" />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Bank Name *</label>
-                <Input required value={formData.bank_name} onChange={(e) => setFormData({...formData, bank_name: e.target.value})} />
+                <label htmlFor="bank-bank-name" className="block text-sm font-medium mb-1">Bank Name *</label>
+                <Input id="bank-bank-name" name="bankName" required value={formData.bank_name} onChange={(e) => setFormData({...formData, bank_name: e.target.value})} autoComplete="off" />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">IBAN *</label>
-                <Input required value={formData.iban} onChange={(e) => setFormData({...formData, iban: e.target.value})} placeholder="DE89370400440532013000" />
+                <label htmlFor="bank-iban" className="block text-sm font-medium mb-1">IBAN *</label>
+                <Input id="bank-iban" name="iban" required value={formData.iban} onChange={(e) => setFormData({...formData, iban: e.target.value})} placeholder="DE89370400440532013000" autoComplete="off" />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">BIC/SWIFT *</label>
-                <Input required value={formData.bic_swift} onChange={(e) => setFormData({...formData, bic_swift: e.target.value})} placeholder="COBADEFFXXX" />
+                <label htmlFor="bank-bic" className="block text-sm font-medium mb-1">BIC/SWIFT *</label>
+                <Input id="bank-bic" name="bicSwift" required value={formData.bic_swift} onChange={(e) => setFormData({...formData, bic_swift: e.target.value})} placeholder="COBADEFFXXX" autoComplete="off" />
               </div>
             </div>
             <div className="flex justify-end space-x-2">

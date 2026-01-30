@@ -98,11 +98,14 @@ export default function MarketplacePage() {
             <form onSubmit={handleSearch} className="max-w-3xl mx-auto">
               <div className="flex gap-2">
                 <input
+                  id="marketplace-search"
+                  name="search"
                   type="text"
                   placeholder={t('marketplace.search_placeholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="flex-1 px-6 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-lg"
+                  autoComplete="off"
                 />
                 <button
                   type="submit"
@@ -186,21 +189,27 @@ export default function MarketplacePage() {
 
                   {/* Price Range */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('filters.price_range')}</label>
+                    <label htmlFor="marketplace-price-min" className="block text-sm font-medium text-gray-700 mb-2">{t('filters.price_range')}</label>
                     <div className="grid grid-cols-2 gap-2">
                       <input
+                        id="marketplace-price-min"
+                        name="priceMin"
                         type="number"
                         placeholder={tCommon('from')}
                         value={filters.price_min || ''}
                         onChange={(e) => handleFilterChange('price_min', e.target.value ? parseInt(e.target.value) : undefined)}
                         className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        autoComplete="off"
                       />
                       <input
+                        id="marketplace-price-max"
+                        name="priceMax"
                         type="number"
                         placeholder={tCommon('to')}
                         value={filters.price_max || ''}
                         onChange={(e) => handleFilterChange('price_max', e.target.value ? parseInt(e.target.value) : undefined)}
                         className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        autoComplete="off"
                       />
                     </div>
                   </div>
@@ -233,7 +242,7 @@ export default function MarketplacePage() {
                     <VehicleCardSkeleton key={i} />
                   ))}
                 </div>
-              ) : vehicles.length === 0 ? (
+              ) : (!vehicles || vehicles.length === 0) ? (
                 <EmptyState
                   icon={ShoppingCart}
                   title={t('marketplace.no_results')}

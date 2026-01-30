@@ -57,62 +57,80 @@ export default function VehicleSearchPage({ params }: { params: { locale: string
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
             <Input
+              id="search-query"
+              name="search"
               type="text"
               placeholder="Search by make, model, or keyword..."
               value={filters.search}
               onChange={(e) => setFilters({...filters, search: e.target.value})}
               className="pl-10"
+              autoComplete="off"
             />
           </div>
 
           {/* Filter Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Make</label>
+              <label htmlFor="search-make" className="block text-sm font-medium mb-1">Make</label>
               <Input
+                id="search-make"
+                name="make"
                 placeholder="e.g., BMW"
                 value={filters.make}
                 onChange={(e) => setFilters({...filters, make: e.target.value})}
+                autoComplete="off"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Min Price (€)</label>
+              <label htmlFor="search-min-price" className="block text-sm font-medium mb-1">Min Price (€)</label>
               <Input
+                id="search-min-price"
+                name="minPrice"
                 type="number"
                 placeholder="0"
                 value={filters.price_min}
                 onChange={(e) => setFilters({...filters, price_min: e.target.value})}
+                autoComplete="off"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Max Price (€)</label>
+              <label htmlFor="search-max-price" className="block text-sm font-medium mb-1">Max Price (€)</label>
               <Input
+                id="search-max-price"
+                name="maxPrice"
                 type="number"
                 placeholder="100000"
                 value={filters.price_max}
                 onChange={(e) => setFilters({...filters, price_max: e.target.value})}
+                autoComplete="off"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Year From</label>
+              <label htmlFor="search-year-from" className="block text-sm font-medium mb-1">Year From</label>
               <Input
+                id="search-year-from"
+                name="yearFrom"
                 type="number"
                 placeholder="2015"
                 value={filters.year_from}
                 onChange={(e) => setFilters({...filters, year_from: e.target.value})}
+                autoComplete="off"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Year To</label>
+              <label htmlFor="search-year-to" className="block text-sm font-medium mb-1">Year To</label>
               <Input
+                id="search-year-to"
+                name="yearTo"
                 type="number"
                 placeholder="2024"
                 value={filters.year_to}
                 onChange={(e) => setFilters({...filters, year_to: e.target.value})}
+                autoComplete="off"
               />
             </div>
 

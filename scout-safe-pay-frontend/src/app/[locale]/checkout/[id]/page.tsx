@@ -212,12 +212,12 @@ export default function CheckoutPage() {
               {currentStep === 1 && (
                 <div className="space-y-4">
                   <h2 className="text-xl font-bold mb-4">{t('checkout.buyer_info')}</h2>
-                  <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} placeholder="Full Name *" required className="w-full px-4 py-2 border rounded-lg" />
+                  <input id="checkout-fullname" type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} placeholder="Full Name *" required className="w-full px-4 py-2 border rounded-lg" autoComplete="name" />
                   <div className="grid grid-cols-2 gap-4">
-                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email *" required className="w-full px-4 py-2 border rounded-lg" />
-                    <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Phone *" required className="w-full px-4 py-2 border rounded-lg" />
+                    <input id="checkout-email" type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email *" required className="w-full px-4 py-2 border rounded-lg" autoComplete="email" />
+                    <input id="checkout-phone" type="tel" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Phone *" required className="w-full px-4 py-2 border rounded-lg" autoComplete="tel" />
                   </div>
-                  <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg" />
+                  <input id="checkout-dob" type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg" autoComplete="bday" />
                 </div>
               )}
 
@@ -225,14 +225,14 @@ export default function CheckoutPage() {
                 <div className="space-y-4">
                   <h2 className="text-xl font-bold mb-4">{t('checkout.delivery_address')}</h2>
                   <div className="grid grid-cols-3 gap-4">
-                    <input type="text" name="street" value={formData.street} onChange={handleInputChange} placeholder="Street *" required className="col-span-2 px-4 py-2 border rounded-lg" />
-                    <input type="text" name="houseNumber" value={formData.houseNumber} onChange={handleInputChange} placeholder="No. *" required className="px-4 py-2 border rounded-lg" />
+                    <input id="checkout-street" type="text" name="street" value={formData.street} onChange={handleInputChange} placeholder="Street *" required className="col-span-2 px-4 py-2 border rounded-lg" autoComplete="address-line1" />
+                    <input id="checkout-house-number" type="text" name="houseNumber" value={formData.houseNumber} onChange={handleInputChange} placeholder="No. *" required className="px-4 py-2 border rounded-lg" autoComplete="off" />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
-                    <input type="text" name="city" value={formData.city} onChange={handleInputChange} placeholder="City *" required className="px-4 py-2 border rounded-lg" />
-                    <input type="text" name="postalCode" value={formData.postalCode} onChange={handleInputChange} placeholder="Postal Code *" required className="px-4 py-2 border rounded-lg" />
+                    <input id="checkout-city" type="text" name="city" value={formData.city} onChange={handleInputChange} placeholder="City *" required className="px-4 py-2 border rounded-lg" autoComplete="address-level2" />
+                    <input id="checkout-postal-code" type="text" name="postalCode" value={formData.postalCode} onChange={handleInputChange} placeholder="Postal Code *" required className="px-4 py-2 border rounded-lg" autoComplete="postal-code" />
                   </div>
-                  <select name="country" value={formData.country} onChange={handleInputChange} className="w-full px-4 py-2 border rounded-lg">
+                  <select id="checkout-country" name="country" value={formData.country} onChange={handleInputChange} className="w-full px-4 py-2 border rounded-lg">
                     <option value="DE">{t('countries.germany')}</option>
                     <option value="AT">{t('countries.austria')}</option>
                     <option value="CH">{t('countries.switzerland')}</option>
@@ -246,12 +246,12 @@ export default function CheckoutPage() {
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <p className="text-sm text-gray-700">{t('kyc.instructions')}</p>
                   </div>
-                  <select name="idType" value={formData.idType} onChange={handleInputChange} className="w-full px-4 py-2 border rounded-lg">
+                  <select id="checkout-id-type" name="idType" value={formData.idType} onChange={handleInputChange} className="w-full px-4 py-2 border rounded-lg">
                     <option value="passport">{t('kyc.id_types.passport')}</option>
                     <option value="id_card">{t('kyc.id_types.id_card')}</option>
                     <option value="drivers_license">{t('kyc.id_types.drivers_license')}</option>
                   </select>
-                  <input type="text" name="idNumber" value={formData.idNumber} onChange={handleInputChange} placeholder="ID Number *" required className="w-full px-4 py-2 border rounded-lg" />
+                  <input id="checkout-id-number" type="text" name="idNumber" value={formData.idNumber} onChange={handleInputChange} placeholder="ID Number *" required className="w-full px-4 py-2 border rounded-lg" autoComplete="off" />
                   <div className="border-2 border-dashed p-6 text-center rounded-lg">
                     {idImagePreview ? (
                       <div><img src={idImagePreview} alt="ID" className="max-h-48 mx-auto rounded" /><button type="button" onClick={() => { setIdImagePreview(null); setFormData(prev => ({ ...prev, idImage: null })) }} className="mt-2 text-sm text-red-600">Remove</button></div>
@@ -278,9 +278,9 @@ export default function CheckoutPage() {
                     <p>{formData.street} {formData.houseNumber}, {formData.postalCode} {formData.city}</p>
                     {!isDealer && <p className="text-green-600 text-sm">✓ KYC Verification submitted</p>}
                   </div>
-                  <label className="flex items-start gap-2"><input type="checkbox" name="acceptTerms" checked={formData.acceptTerms} onChange={handleInputChange} required className="mt-1" /><span className="text-sm">{t('checkout.terms_agree')} {t('checkout.terms_link')} *</span></label>
-                  <label className="flex items-start gap-2"><input type="checkbox" name="acceptDataProcessing" checked={formData.acceptDataProcessing} onChange={handleInputChange} required className="mt-1" /><span className="text-sm">{t('consents.data_processing')} *</span></label>
-                  <label className="flex items-start gap-2"><input type="checkbox" name="acceptContract" checked={formData.acceptContract} onChange={handleInputChange} required className="mt-1" /><span className="text-sm">{t('consents.purchase_contract')} *</span></label>
+                  <label htmlFor="checkout-accept-terms" className="flex items-start gap-2"><input id="checkout-accept-terms" type="checkbox" name="acceptTerms" checked={formData.acceptTerms} onChange={handleInputChange} required className="mt-1" /><span className="text-sm">{t('checkout.terms_agree')} {t('checkout.terms_link')} *</span></label>
+                  <label htmlFor="checkout-accept-data" className="flex items-start gap-2"><input id="checkout-accept-data" type="checkbox" name="acceptDataProcessing" checked={formData.acceptDataProcessing} onChange={handleInputChange} required className="mt-1" /><span className="text-sm">{t('consents.data_processing')} *</span></label>
+                  <label htmlFor="checkout-accept-contract" className="flex items-start gap-2"><input id="checkout-accept-contract" type="checkbox" name="acceptContract" checked={formData.acceptContract} onChange={handleInputChange} required className="mt-1" /><span className="text-sm">{t('consents.purchase_contract')} *</span></label>
                 </div>
               )}
 
