@@ -31,9 +31,10 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\AutoRefreshCookies::class,
         ]);
         
-        // Alias for rate limiting
+        // Alias for rate limiting and role checking
         $middleware->alias([
             'rate.limit.ip' => \App\Http\Middleware\RateLimitByIP::class,
+            'role' => \App\Http\Middleware\CheckRole::class,
         ]);
     })
     ->withSchedule(function ($schedule) {

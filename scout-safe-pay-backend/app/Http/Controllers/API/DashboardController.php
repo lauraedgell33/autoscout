@@ -24,8 +24,8 @@ class DashboardController extends Controller
                 'end_date' => 'nullable|date|date_format:Y-m-d|after_or_equal:start_date',
             ]);
 
-            $startDate = $validated['start_date'] ? Carbon::parse($validated['start_date'])->startOfDay() : null;
-            $endDate = $validated['end_date'] ? Carbon::parse($validated['end_date'])->endOfDay() : null;
+            $startDate = isset($validated['start_date']) && $validated['start_date'] ? Carbon::parse($validated['start_date'])->startOfDay() : null;
+            $endDate = isset($validated['end_date']) && $validated['end_date'] ? Carbon::parse($validated['end_date'])->endOfDay() : null;
 
             $stats = AnalyticsService::getOverallStats($startDate, $endDate);
 

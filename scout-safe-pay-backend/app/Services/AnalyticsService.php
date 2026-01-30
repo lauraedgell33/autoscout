@@ -7,7 +7,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Payment;
 use App\Models\Dispute;
-use App\Models\KYCVerification;
+use App\Models\Verification;
 use App\Models\Message;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -37,8 +37,8 @@ class AnalyticsService
             'total_users' => User::whereNotNull('email_verified_at')->count(),
             'active_sellers' => User::where('role', 'seller')->whereNotNull('email_verified_at')->count(),
             'active_buyers' => User::where('role', 'buyer')->whereNotNull('email_verified_at')->count(),
-            'kyc_verified_users' => KYCVerification::where('status', 'verified')->count(),
-            'pending_kyc' => KYCVerification::where('status', 'pending')->count(),
+            'verified_users' => Verification::where('status', 'verified')->count(),
+            'pending_verifications' => Verification::where('status', 'pending')->count(),
         ];
     }
 
