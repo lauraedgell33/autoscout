@@ -110,19 +110,18 @@ export const ReviewStats: React.FC<ReviewStatsProps> = ({ stats }) => {
             <div className="grid grid-cols-2 gap-4 text-center">
               <div>
                 <div className="text-2xl font-bold text-green-600">
-                  {Math.round((verified_count / total_reviews) * 100)}%
+                  {total_reviews > 0 ? Math.round((verified_count / total_reviews) * 100) : 0}%
                 </div>
                 <div className="text-sm text-gray-600">Verified</div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-primary-600">
-                  {Math.round(
-                    (Object.entries(rating_breakdown)
+                  {(() => {
+                    const highRatingCount = Object.entries(rating_breakdown)
                       .filter(([rating]) => Number(rating) >= 4)
-                      .reduce((sum, [, count]) => sum + count, 0) /
-                      total_reviews) *
-                      100
-                  )}%
+                      .reduce((sum, [, count]) => sum + count, 0);
+                    return total_reviews > 0 ? Math.round((highRatingCount / total_reviews) * 100) : 0;
+                  })()}%
                 </div>
                 <div className="text-sm text-gray-600">4+ Stars</div>
               </div>

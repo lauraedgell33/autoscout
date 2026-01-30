@@ -7,7 +7,7 @@ import { Review, ReviewFilters } from '@/types/review';
 import { reviewService } from '@/lib/api/reviews';
 import { Button } from '@/components/ui/button';
 import { TabsList, TabsTrigger, Tabs as TabsContainer } from '@/components/ui/tabs';
-import { EmptyState } from '@/components/ui/empty-state';
+import EmptyState from '@/components/ui/empty-state';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 
 interface ReviewListProps {
@@ -91,11 +91,17 @@ export const ReviewList: React.FC<ReviewListProps> = ({ vehicleId, userId, revie
   const handleFlag = async (reviewId: number, reason: string, details?: string) => {
     try {
       await reviewService.flagReview(reviewId, reason, details);
-      // Show success message
-      alert('Review has been flagged for moderation');
+      // Update UI to show flagged state
+      setReviews(prev => 
+        prev.map(review => 
+          review.id === reviewId 
+            ? { ...review, flagged: true, flag_count: review.flag_count + 1 } 
+            : review
+        )
+      );
     } catch (err) {
       console.error('Failed to flag review:', err);
-      alert('Failed to flag review');
+      setError('Failed to flag review. Please try again.');
     }
   };
 
@@ -172,7 +178,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({ vehicleId, userId, revie
       {/* Reviews List */}
       {reviews.length === 0 ? (
         <EmptyState
-          icon={<Inbox className="h-12 w-12" />}
+          icon={Inbox}
           title="No reviews yet"
           description={
             activeTab === 'verified' 
