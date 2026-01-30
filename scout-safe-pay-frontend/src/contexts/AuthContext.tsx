@@ -64,12 +64,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const role = user.user_type || user.role
       if (role === 'admin') {
         window.location.href = '/admin'
-      } else if (role === 'seller') {
-        router.push('/dashboard/seller')
-      } else if (role === 'dealer') {
-        router.push('/dashboard/dealer')
       } else {
-        router.push('/dashboard/buyer')
+        // All non-admin users go to dashboard
+        router.push('/dashboard')
       }
     } catch (error: any) {
       const message = error.response?.data?.message || error.message || 'Login failed'
@@ -90,15 +87,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       toast.success('Successfully registered!')
       
-      // Redirect based on user role
-      const role = user.user_type || user.role
-      if (role === 'seller') {
-        router.push('/dashboard/seller')
-      } else if (role === 'dealer') {
-        router.push('/dashboard/dealer')
-      } else {
-        router.push('/dashboard/buyer')
-      }
+      // Redirect to dashboard after registration
+      router.push('/dashboard')
     } catch (error: any) {
       const message = error.response?.data?.message || error.message || 'Registration failed'
       toast.error(message)
