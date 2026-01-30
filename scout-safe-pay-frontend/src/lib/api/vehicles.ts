@@ -24,6 +24,8 @@ export interface Vehicle {
   power_hp: number | null
   location_city: string | null
   location_country: string
+  latitude: number | null
+  longitude: number | null
   status: 'draft' | 'active' | 'sold' | 'reserved' | 'removed'
   autoscout_listing_id: string | null
   autoscout_data: AutoScout24Data | null
@@ -104,6 +106,8 @@ export interface CreateVehicleData {
   power_hp?: number
   location_city?: string
   location_country?: string
+  latitude?: number
+  longitude?: number
   status?: 'draft' | 'active'
 }
 
