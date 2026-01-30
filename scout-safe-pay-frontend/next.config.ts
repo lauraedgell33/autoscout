@@ -17,9 +17,9 @@ const nextConfig: NextConfig = {
   //   root: __dirname,
   // },
   
-  // Disable TypeScript checking errors in production builds
+  // Enable TypeScript checking for production builds
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   
   // Performance optimizations

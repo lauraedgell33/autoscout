@@ -57,7 +57,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
 
   useEffect(() => {
     if (dealer?.vehicles) {
-      let sorted = [...dealer.vehicles]
+      let sorted = [...(dealer.vehicles ?? [])]
       
       switch (sortBy) {
         case 'price-low':

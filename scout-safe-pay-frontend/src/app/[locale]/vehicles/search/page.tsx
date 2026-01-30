@@ -269,22 +269,25 @@ export default function VehicleSearchPage({ params }: { params: { locale: string
           ) : (
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               {/* Show first vehicle with coordinates or a generic map */}
-              {vehicles.find(v => v.latitude && v.longitude) ? (
-                <VehicleMap
-                  latitude={vehicles.find(v => v.latitude && v.longitude)!.latitude!}
-                  longitude={vehicles.find(v => v.latitude && v.longitude)!.longitude!}
-                  title="Search Results Map"
-                  height="600px"
-                  zoom={12}
-                />
-              ) : (
-                <div className="h-96 bg-gray-200 rounded-lg flex items-center justify-center">
-                  <div className="text-center text-gray-500">
-                    <MapPin className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                    <p>Map data not available for selected vehicles</p>
+              {(() => {
+                const vehicleWithCoords = (vehicles ?? []).find(v => v.latitude && v.longitude);
+                return vehicleWithCoords ? (
+                  <VehicleMap
+                    latitude={vehicleWithCoords.latitude!}
+                    longitude={vehicleWithCoords.longitude!}
+                    title="Search Results Map"
+                    height="600px"
+                    zoom={12}
+                  />
+                ) : (
+                  <div className="h-96 bg-gray-200 rounded-lg flex items-center justify-center">
+                    <div className="text-center text-gray-500">
+                      <MapPin className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                      <p>Map data not available for selected vehicles</p>
+                    </div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
               <p className="text-sm text-gray-600 mt-4 text-center">
                 Showing location of first result with available coordinates
               </p>

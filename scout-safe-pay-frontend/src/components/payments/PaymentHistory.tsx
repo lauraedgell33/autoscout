@@ -98,7 +98,7 @@ export const PaymentHistory: React.FC<PaymentHistoryProps> = ({
 
   // Filter payments based on search and status
   useEffect(() => {
-    let filtered = payments;
+    let filtered = payments ?? [];
 
     // Filter by status
     if (filterStatus !== 'all') {

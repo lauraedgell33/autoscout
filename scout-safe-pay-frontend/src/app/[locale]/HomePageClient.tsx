@@ -176,8 +176,8 @@ export default function HomePageClient() {
                   </div>
                 </div>
               ))
-            ) : vehicles.length > 0 ? (
-              vehicles.map((vehicle) => (
+            ) : (vehicles ?? []).length > 0 ? (
+              (vehicles ?? []).map((vehicle) => (
                 <Link
                   key={vehicle.id}
                   href={`/vehicle/${vehicle.id}`}

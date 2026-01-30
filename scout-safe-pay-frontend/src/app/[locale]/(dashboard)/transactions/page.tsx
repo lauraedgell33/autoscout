@@ -48,10 +48,10 @@ export default function TransactionsPage() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">{t('transactions.title')}</h1>
       {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded">{error}</div>}
-      {transactions.length === 0 ? (
+      {(transactions ?? []).length === 0 ? (
         <Card><CardContent className="py-12 text-center text-gray-500">{t('transactions.no_transactions')}</CardContent></Card>
       ) : (
-        transactions.map((tx: any) => (
+        (transactions ?? []).map((tx: any) => (
           <Card key={tx.id}>
             <CardContent className="pt-6">
               <div className="flex justify-between items-center">

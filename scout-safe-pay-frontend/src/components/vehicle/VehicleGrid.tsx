@@ -21,16 +21,14 @@ export const VehicleGrid: React.FC = () => {
   const addToast = useUIStore((state) => state.addToast);
 
   const handleAddToCart = (vehicle: any) => {
+    const vehicleName = `${vehicle.make} ${vehicle.model}`;
     addItem({
-      id: vehicle.id,
-      vehicleId: vehicle.id,
-      vehicleName: vehicle.name,
-      price: vehicle.price,
+      id: vehicle.id.toString(),
+      name: vehicleName,
+      price: parseFloat(vehicle.price),
       quantity: 1,
-      image: vehicle.images?.[0],
-      addedAt: Date.now(),
     });
-    addToast(`${vehicle.name} added to cart!`, 'success');
+    addToast({ message: `${vehicleName} added to cart!`, type: 'success' });
   };
 
   if (isLoading) return <div className="text-center py-8">Loading vehicles...</div>;
@@ -53,10 +51,10 @@ export const VehicleGrid: React.FC = () => {
         >
           {/* Image */}
           <div className="relative h-48 bg-gray-200 overflow-hidden">
-            {vehicle.images?.[0] && (
+            {(vehicle.primary_image || vehicle.images?.[0]) && (
               <img
-                src={vehicle.images[0]}
-                alt={vehicle.name}
+                src={vehicle.primary_image || vehicle.images[0]}
+                alt={`${vehicle.make} ${vehicle.model}`}
                 className="w-full h-full object-cover"
               />
             )}
@@ -67,7 +65,7 @@ export const VehicleGrid: React.FC = () => {
 
           {/* Content */}
           <div className="p-4">
-            <h3 className="font-semibold text-gray-900">{vehicle.name}</h3>
+            <h3 className="font-semibold text-gray-900">{vehicle.make} {vehicle.model}</h3>
 
             <div className="flex items-center justify-between mt-2">
               <span className="text-2xl font-bold text-blue-600">€{vehicle.price.toLocaleString()}</span>
@@ -75,11 +73,11 @@ export const VehicleGrid: React.FC = () => {
             </div>
 
             <p className="text-sm text-gray-600 mt-2">
-              {vehicle.year} • {vehicle.mileage.toLocaleString()} km
+              {vehicle.year} • {vehicle.mileage?.toLocaleString()} km
             </p>
 
             <p className="text-sm text-gray-600">
-              {vehicle.transmission} • {vehicle.fuelType}
+              {vehicle.transmission} • {vehicle.fuel_type}
             </p>
 
             <div className="flex items-center gap-1 mt-2">

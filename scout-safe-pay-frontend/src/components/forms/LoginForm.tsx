@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema, type LoginFormData } from '@/lib/schemas';
 import { useLogin } from '@/lib/hooks/api';
-import { useUserStore } from '@/lib/stores/userStore';
+import { useAuthStore } from '@/store/auth-store';
 import { useUIStore } from '@/lib/stores/uiStore';
 import { motion } from 'framer-motion';
 import { fadeInUp } from '@/lib/animations/variants';
@@ -20,18 +20,24 @@ export const LoginForm: React.FC = () => {
   });
 
   const login = useLogin();
-  const setUser = useUserStore((state) => state.setUser);
+  const setUser = useAuthStore((state) => state.setUser);
+  const setToken = useAuthStore((state) => state.setToken);
   const addToast = useUIStore((state) => state.addToast);
 
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await login.mutateAsync(data);
-      setUser(response.user);
-      localStorage.setItem('authToken', response.token);
-      addToast('Login successful!', 'success');
+      // Map role to user_type if user_type is not provided
+      const user = {
+        ...response.user,
+        user_type: response.user.user_type || response.user.role,
+      };
+      setUser(user);
+      setToken(response.token);
+      addToast({ message: 'Login successful!', type: 'success' });
       // Router will handle redirect
     } catch (error) {
-      addToast('Login failed. Please try again.', 'error');
+      addToast({ message: 'Login failed. Please try again.', type: 'error' });
     }
   };
 

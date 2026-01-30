@@ -172,7 +172,7 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
           </Link>
         </div>
 
-        {recentTransactions && recentTransactions.length === 0 ? (
+        {(recentTransactions ?? []).length === 0 ? (
           <div className="text-center py-12">
             <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">

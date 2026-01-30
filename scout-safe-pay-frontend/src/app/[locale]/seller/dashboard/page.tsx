@@ -161,7 +161,7 @@ export default function SellerDashboardPage({ params }: { params: { locale: stri
           </Link>
         </div>
 
-        {recentSales.length === 0 ? (
+        {(recentSales ?? []).length === 0 ? (
           <div className="text-center py-12">
             <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
@@ -176,7 +176,7 @@ export default function SellerDashboardPage({ params }: { params: { locale: stri
           </div>
         ) : (
           <div className="space-y-4">
-            {recentSales.map((sale) => (
+            {(recentSales ?? []).map((sale) => (
               <div
                 key={sale.id}
                 className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg"
