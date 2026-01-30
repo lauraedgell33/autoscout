@@ -78,7 +78,7 @@ export default function VehicleBadge({ type, className = '', size = 'md' }: Vehi
 
   return (
     <Badge
-      variant="outline"
+      variant="default"
       className={`
         ${config.colors} 
         ${sizeClasses[size]}
@@ -129,7 +129,7 @@ export function StatusBadge({ status, className = '' }: StatusBadgeProps) {
 
   return (
     <Badge
-      variant="outline"
+      variant="default"
       className={`${config.colors} ${className} font-semibold border-2`}
     >
       {config.label}
@@ -171,7 +171,7 @@ export function ConditionBadge({ condition, className = '' }: ConditionBadgeProp
 
   return (
     <Badge
-      variant="outline"
+      variant="default"
       className={`${config.colors} ${className} font-semibold border-2 inline-flex items-center gap-1`}
     >
       <span>{config.icon}</span>
@@ -203,7 +203,7 @@ export function PriceBadge({ originalPrice, currentPrice, currency = '€', clas
           <span className="text-sm text-gray-500 line-through">
             {currency}{originalPrice!.toLocaleString()}
           </span>
-          <Badge variant="outline" className="bg-red-100 text-red-800 border-red-300 font-bold">
+          <Badge variant="default" className="bg-red-100 text-red-800 border-red-300 font-bold">
             Save {savingsPercent}%
           </Badge>
         </div>

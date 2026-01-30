@@ -127,7 +127,7 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
             {MAKES.map((make) => (
               <Badge
                 key={make}
-                variant={filters.make === make ? 'default' : 'outline'}
+                variant="default"
                 className={`cursor-pointer transition-all ${
                   filters.make === make
                     ? 'bg-blue-600 hover:bg-blue-700'
@@ -245,7 +245,7 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
               {FUEL_TYPES.map((fuel) => (
                 <Button
                   key={fuel}
-                  variant={filters.fuelType === fuel ? 'default' : 'outline'}
+                  variant={filters.fuelType === fuel ? 'primary' : 'outline'}
                   size="sm"
                   onClick={() => handleFilterChange('fuelType', filters.fuelType === fuel ? '' : fuel)}
                   className="justify-start"
@@ -266,7 +266,7 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
               {TRANSMISSIONS.map((trans) => (
                 <Button
                   key={trans}
-                  variant={filters.transmission === trans ? 'default' : 'outline'}
+                  variant={filters.transmission === trans ? 'primary' : 'outline'}
                   size="sm"
                   onClick={() => handleFilterChange('transmission', filters.transmission === trans ? '' : trans)}
                 >
@@ -285,7 +285,7 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
               {BODY_TYPES.map((type) => (
                 <Button
                   key={type}
-                  variant={filters.bodyType === type ? 'default' : 'outline'}
+                  variant={filters.bodyType === type ? 'primary' : 'outline'}
                   size="sm"
                   onClick={() => handleFilterChange('bodyType', filters.bodyType === type ? '' : type)}
                 >
@@ -304,7 +304,7 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
               {FEATURES.map((feature) => (
                 <Badge
                   key={feature}
-                  variant={(filters.features || []).includes(feature) ? 'default' : 'outline'}
+                  variant="default"
                   className="cursor-pointer"
                   onClick={() => toggleFeature(feature)}
                 >

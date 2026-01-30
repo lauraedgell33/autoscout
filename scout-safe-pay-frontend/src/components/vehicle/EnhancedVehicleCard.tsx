@@ -115,17 +115,15 @@ export default function EnhancedVehicleCard({
           {images.length > 1 && isImageHovered && (
             <>
               <Button
-                size="icon"
                 variant="ghost"
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg z-10"
+                className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 p-0 bg-white/90 hover:bg-white shadow-lg z-10 rounded-full"
                 onClick={handlePrevImage}
               >
                 <ChevronLeft className="h-5 w-5" />
               </Button>
               <Button
-                size="icon"
                 variant="ghost"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg z-10"
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 p-0 bg-white/90 hover:bg-white shadow-lg z-10 rounded-full"
                 onClick={handleNextImage}
               >
                 <ChevronRight className="h-5 w-5" />
@@ -162,9 +160,9 @@ export default function EnhancedVehicleCard({
           {/* Action Buttons */}
           <div className="absolute top-3 right-3 flex gap-2 z-10">
             <Button
-              size="icon"
               variant="ghost"
               className={`
+                w-10 h-10 p-0 rounded-full
                 bg-white/90 hover:bg-white shadow-lg
                 ${isSaved ? 'text-red-600' : 'text-gray-700'}
               `}
@@ -173,9 +171,8 @@ export default function EnhancedVehicleCard({
               <Heart className={`h-5 w-5 ${isSaved ? 'fill-current' : ''}`} />
             </Button>
             <Button
-              size="icon"
               variant="ghost"
-              className="bg-white/90 hover:bg-white shadow-lg text-gray-700"
+              className="w-10 h-10 p-0 rounded-full bg-white/90 hover:bg-white shadow-lg text-gray-700"
               onClick={handleShare}
             >
               <Share2 className="h-5 w-5" />

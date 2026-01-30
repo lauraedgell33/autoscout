@@ -124,7 +124,7 @@ export default function UIShowcase() {
         </div>
 
         {/* Tabs Navigation */}
-        <Tabs defaultValue="filters" className="w-full">
+        <Tabs className="w-full">
           <TabsList className="grid w-full grid-cols-5 h-auto">
             <TabsTrigger value="filters" className="py-3">
               🔍 Filtre Avansate
@@ -152,7 +152,8 @@ export default function UIShowcase() {
                 tipuri de combustibil, transmisie, caroserie și caracteristici.
               </p>
               <AdvancedFilters
-                onFilterChange={(filters) => console.log('Filters:', filters)}
+                onApplyFilters={(filters) => console.log('Filters:', filters)}
+                onReset={() => console.log('Reset filters')}
               />
             </Card>
           </TabsContent>

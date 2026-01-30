@@ -30,7 +30,9 @@ export default function RegisterPage({ params }: { params: { locale: string } })
     }
 
     try {
-      await register(formData);
+      // Convert role to user_type for API
+      const { role, ...rest } = formData;
+      await register({ ...rest, user_type: role });
       // Redirect is handled by AuthContext
     } catch (err: any) {
       setError(err.message || 'Registration failed. Please try again.');

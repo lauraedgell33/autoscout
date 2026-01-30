@@ -147,14 +147,8 @@ export default function VehicleContactForm({
               <Button
                 key={type}
                 type="button"
-                variant={formData.requestType === type ? 'default' : 'outline'}
-                className={`
-                  h-auto py-3 flex-col gap-2
-                  ${formData.requestType === type 
-                    ? 'bg-blue-600 hover:bg-blue-700' 
-                    : 'hover:bg-gray-50'
-                  }
-                `}
+                variant={formData.requestType === type ? 'primary' : 'outline'}
+                className="h-auto py-3 flex-col gap-2"
                 onClick={() => handleTemplateSelect(type)}
               >
                 <Icon className="h-5 w-5" />
@@ -261,7 +255,7 @@ export default function VehicleContactForm({
         {/* Privacy Note */}
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
           <p className="text-xs text-blue-700 leading-relaxed">
-            <Badge variant="outline" className="bg-blue-100 text-blue-800 mb-2">
+            <Badge variant="default" className="bg-blue-100 text-blue-800 mb-2">
               Privacy Protected
             </Badge>
             <br />
