@@ -23,7 +23,7 @@ export default function DealerAnalyticsPage() {
   const fetchAnalytics = async () => {
     try {
       // Use apiClient instead of direct fetch
-      const data = await apiClient.get(`/dealer/analytics?period=${period}`);
+      const data = await apiClient.get(`/dealer/analytics?period=${period}`) as typeof analytics;
       setAnalytics(data);
     } catch (error) {
       console.error('Error fetching analytics:', error);

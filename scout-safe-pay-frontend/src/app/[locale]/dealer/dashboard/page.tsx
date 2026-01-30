@@ -25,7 +25,7 @@ export default function DealerDashboardPage({ params }: { params: { locale: stri
   const fetchDashboardData = async () => {
     try {
       // Use apiClient instead of direct fetch
-      const data = await apiClient.get('/dealer/stats');
+      const data = await apiClient.get('/dealer/stats') as typeof stats;
       setStats(data);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);

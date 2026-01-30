@@ -51,11 +51,11 @@ export default function SellerDashboardPage({ params }: { params: { locale: stri
   const fetchDashboardData = async () => {
     try {
       // Fetch seller stats using apiClient
-      const statsData = await apiClient.get('/seller/stats');
+      const statsData = await apiClient.get('/seller/stats') as SellerStats;
       setStats(statsData);
 
       // Fetch recent sales using apiClient
-      const salesData = await apiClient.get('/seller/sales?per_page=5');
+      const salesData = await apiClient.get('/seller/sales?per_page=5') as any;
       setRecentSales((salesData.data ?? salesData) || []);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);

@@ -28,7 +28,11 @@ export default function BuyerTransactionsPage({ params }: { params: { locale: st
       }
       
       const response = await transactionService.list(filters);
-      setTransactions((response.data ?? response) || []);
+      // Safely extract data array
+      const transactionsData = Array.isArray(response.data) 
+        ? response.data 
+        : (Array.isArray(response) ? response : []);
+      setTransactions(transactionsData);
       setTotalPages(response.meta?.last_page ?? 1);
     } catch (error) {
       console.error('Error fetching transactions:', error);
