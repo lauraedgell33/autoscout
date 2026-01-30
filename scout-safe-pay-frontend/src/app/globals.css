@@ -394,3 +394,117 @@ h3 {
   }
 }
 
+/* ============================================ */
+/* Mobile Optimizations (FAZA 1) */
+/* ============================================ */
+
+/* Ensure all interactive elements have minimum 44x44px touch targets */
+button,
+a,
+input[type="checkbox"],
+input[type="radio"],
+select,
+textarea,
+input[type="button"],
+input[type="submit"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Better touch feedback on mobile */
+@media (hover: none) and (pointer: coarse) {
+  button:active,
+  a:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Responsive touch padding */
+@media (max-width: 640px) {
+  /* Increase padding for easier touch interaction */
+  button {
+    padding: 0.75rem 1rem;
+  }
+  
+  /* Better spacing for form elements - prevents iOS zoom */
+  input,
+  textarea,
+  select {
+    padding: 0.75rem;
+    font-size: 16px;
+  }
+  
+  /* Bottom safe area for sticky elements */
+  .sticky-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Disable default tap highlight on mobile */
+a,
+button,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: rgba(0, 50, 129, 0.1);
+}
+
+/* Smooth scrolling support */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Safe area support for notched devices */
+@supports (padding: max(0px)) {
+  .bottom-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  
+  .top-safe {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+}
+
+/* Bottom sheet animation */
+@keyframes slide-up-sheet {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.bottom-sheet {
+  animation: slide-up-sheet 0.3s ease-out;
+  border-radius: 1.5rem 1.5rem 0 0;
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 641px) {
+  .show-mobile {
+    display: none !important;
+  }
+}
+
+/* Swipe-friendly elements */
+.swipe-container {
+  touch-action: pan-y;
+}
+
+/* Prevent text selection on interactive elements */
+button,
+[role="button"] {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
