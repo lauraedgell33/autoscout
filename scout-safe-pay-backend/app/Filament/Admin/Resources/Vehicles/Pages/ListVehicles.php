@@ -15,7 +15,7 @@ class ListVehicles extends ListRecords
     {
         return [
             CreateAction::make()
-                ->label('Adaugă vehicul')
+                ->label('Add Vehicle')
                 ->icon('heroicon-o-plus'),
         ];
     }

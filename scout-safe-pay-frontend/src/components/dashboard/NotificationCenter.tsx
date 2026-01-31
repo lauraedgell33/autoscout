@@ -43,11 +43,8 @@ export function NotificationCenter({
   onDelete,
   onClearAll,
 }: NotificationCenterProps) {
-  const [unreadCount, setUnreadCount] = useState(0);
-
-  useEffect(() => {
-    setUnreadCount(notifications.filter((n) => !n.read).length);
-  }, [notifications]);
+  // Compute unreadCount directly from notifications (no effect needed)
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   const handleMarkAsRead = (id: string) => {
     onMarkAsRead?.(id);

@@ -147,7 +147,7 @@ export default function MarketplacePage() {
           {showAdvancedFilters && (
             <Card className="mb-6 p-4 sm:p-6">
               <AdvancedFilters
-                onApply={(appliedFilters) => {
+                onApplyFilters={(appliedFilters) => {
                   setFilters({ ...filters, ...appliedFilters, page: 1 })
                   setShowAdvancedFilters(false)
                 }}
@@ -155,6 +155,7 @@ export default function MarketplacePage() {
                   setFilters({ sort_by: 'created_at', sort_order: 'desc', per_page: 12 })
                   setSearchQuery('')
                 }}
+                isLoading={loading}
               />
             </Card>
           )}
@@ -298,9 +299,23 @@ export default function MarketplacePage() {
                     {(vehicles || []).map((vehicle) => (
                       <EnhancedVehicleCard
                         key={vehicle.id}
-                        vehicle={vehicle}
-                        onFavoriteClick={() => {
+                        id={String(vehicle.id)}
+                        title={`${vehicle.make} ${vehicle.model} ${vehicle.year}`}
+                        make={vehicle.make}
+                        model={vehicle.model}
+                        year={vehicle.year}
+                        price={Number.parseFloat(vehicle.price || '0')}
+                        mileage={vehicle.mileage ?? 0}
+                        fuelType={vehicle.fuel_type ?? '—'}
+                        transmission={vehicle.transmission ?? '—'}
+                        location={[vehicle.location_city, vehicle.location_country].filter(Boolean).join(', ')}
+                        images={vehicle.images ?? (vehicle.primary_image ? [vehicle.primary_image] : [])}
+                        status={vehicle.status === 'sold' ? 'sold' : vehicle.status === 'reserved' ? 'reserved' : 'active'}
+                        onSave={() => {
                           // TODO: Implement favorite functionality
+                        }}
+                        onShare={() => {
+                          // TODO: Implement share functionality
                         }}
                       />
                     ))}

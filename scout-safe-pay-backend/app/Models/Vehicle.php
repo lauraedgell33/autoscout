@@ -72,6 +72,16 @@ class Vehicle extends Model
         return $this->hasMany(Favorite::class);
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function categoryRelation(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
     /**
      * Get the indexable data array for the model.
      *

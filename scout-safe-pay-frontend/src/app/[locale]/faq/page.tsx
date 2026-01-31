@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
@@ -80,12 +81,12 @@ export default function FAQPage() {
               <p className="text-gray-700 mb-4">
                 Our support team is here to help. Contact us anytime.
               </p>
-              <a 
+              <Link 
                 href="/contact"
                 className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 Contact Support
-              </a>
+              </Link>
             </CardContent>
           </Card>
         </div>

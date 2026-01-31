@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { Package, CreditCard, Heart, Clock, TrendingUp, AlertCircle } from 'lucide-react';
@@ -18,7 +19,10 @@ interface DashboardStats {
   total_spent: string;
 }
 
-export default function BuyerDashboardPage({ params }: { params: { locale: string } }) {
+export default function BuyerDashboardPage() {
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
+
   const t = useTranslations();
   const { user } = useAuth();
   const [stats, setStats] = useState<DashboardStats>({
@@ -105,7 +109,7 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
             Here's your purchase activity overview
           </p>
         </div>
-        <Link href={`/${params.locale}/marketplace`}>
+        <Link href={`/${locale}/marketplace`}>
           <Button>Browse Vehicles</Button>
         </Link>
       </div>
@@ -167,7 +171,7 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
             Recent Transactions
           </h2>
-          <Link href={`/${params.locale}/buyer/transactions`}>
+          <Link href={`/${locale}/buyer/transactions`}>
             <Button variant="outline" size="sm">View All</Button>
           </Link>
         </div>
@@ -181,7 +185,7 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               Start browsing vehicles to make your first purchase
             </p>
-            <Link href={`/${params.locale}/marketplace`}>
+            <Link href={`/${locale}/marketplace`}>
               <Button>Browse Marketplace</Button>
             </Link>
           </div>
@@ -216,7 +220,7 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
                     </span>
                   </div>
                 </div>
-                <Link href={`/${params.locale}/transaction/${transaction.id}`}>
+                <Link href={`/${locale}/transaction/${transaction.id}`}>
                   <Button variant="outline" size="sm">View Details</Button>
                 </Link>
               </div>
@@ -227,7 +231,7 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Link href={`/${params.locale}/buyer/favorites`}>
+        <Link href={`/${locale}/buyer/favorites`}>
           <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
             <Heart className="h-8 w-8 text-red-600 mb-3" />
             <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
@@ -239,7 +243,7 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
           </Card>
         </Link>
 
-        <Link href={`/${params.locale}/buyer/payment-methods`}>
+        <Link href={`/${locale}/buyer/payment-methods`}>
           <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
             <CreditCard className="h-8 w-8 text-blue-600 mb-3" />
             <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
@@ -251,7 +255,7 @@ export default function BuyerDashboardPage({ params }: { params: { locale: strin
           </Card>
         </Link>
 
-        <Link href={`/${params.locale}/disputes`}>
+        <Link href={`/${locale}/disputes`}>
           <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
             <AlertCircle className="h-8 w-8 text-yellow-600 mb-3" />
             <h3 className="font-semibold text-gray-900 dark:text-white mb-2">

@@ -5,10 +5,12 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PaymentVerificationResource\Pages;
 use App\Models\Transaction;
 use App\Notifications\PaymentReceivedNotification;
+use Filament\Schemas;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Actions;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
@@ -32,7 +34,7 @@ class PaymentVerificationResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\Section::make('Transaction Information')
                     ->schema([
@@ -136,7 +138,7 @@ class PaymentVerificationResource extends Resource
                     ->relationship('vehicle', 'category'),
             ])
             ->actions([
-                Tables\Actions\Action::make('view_proof')
+                Actions\Action::make('view_proof')
                     ->label('View Proof')
                     ->icon('heroicon-o-eye')
                     ->modalHeading('Payment Proof')
@@ -144,7 +146,7 @@ class PaymentVerificationResource extends Resource
                     ->modalSubmitAction(false)
                     ->modalCancelActionLabel('Close'),
 
-                Tables\Actions\Action::make('verify')
+                Actions\Action::make('verify')
                     ->label('Verify Payment')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
@@ -171,7 +173,7 @@ class PaymentVerificationResource extends Resource
                             ->send();
                     }),
 
-                Tables\Actions\Action::make('reject')
+                Actions\Action::make('reject')
                     ->label('Reject')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
@@ -198,8 +200,8 @@ class PaymentVerificationResource extends Resource
                     }),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('verify_selected')
+                Actions\BulkActionGroup::make([
+                    Actions\BulkAction::make('verify_selected')
                         ->label('Verify Selected')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')

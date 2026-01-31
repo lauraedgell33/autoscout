@@ -18,19 +18,19 @@ class EditVehicle extends EditRecord
     {
         return [
             ViewAction::make()
-                ->label('Vizualizare'),
+                ->label('View'),
             DeleteAction::make()
-                ->label('Șterge')
+                ->label('Delete')
                 ->successNotification(
                     Notification::make()
                         ->success()
-                        ->title('Vehicul șters')
-                        ->body('Vehiculul a fost șters cu succes.')
+                        ->title('Vehicle Deleted')
+                        ->body('The vehicle has been deleted successfully.')
                 ),
             ForceDeleteAction::make()
-                ->label('Șterge permanent'),
+                ->label('Force Delete'),
             RestoreAction::make()
-                ->label('Restaurează'),
+                ->label('Restore'),
         ];
     }
 
@@ -38,7 +38,7 @@ class EditVehicle extends EditRecord
     {
         return Notification::make()
             ->success()
-            ->title('Vehicul actualizat')
-            ->body('Modificările au fost salvate cu succes.');
+            ->title('Vehicle Updated')
+            ->body('Changes have been saved successfully.');
     }
 }

@@ -16,24 +16,19 @@ class CreateDocument extends CreateRecord
             $data['uploaded_by'] = auth()->id();
         }
 
-        // Auto-generate version if not set
-        if (empty($data['version'])) {
-            $data['version'] = '1.0';
-        }
-
         // Auto-detect file details from uploaded file
         if (!empty($data['file_path'])) {
             $filePath = storage_path('app/public/' . $data['file_path']);
             
             if (file_exists($filePath)) {
-                // Get file size in KB
+                // Get file size
                 if (empty($data['file_size'])) {
-                    $data['file_size'] = round(filesize($filePath) / 1024, 2);
+                    $data['file_size'] = filesize($filePath);
                 }
 
-                // Get MIME type
-                if (empty($data['mime_type'])) {
-                    $data['mime_type'] = mime_content_type($filePath);
+                // Get file type
+                if (empty($data['file_type'])) {
+                    $data['file_type'] = mime_content_type($filePath);
                 }
 
                 // Get file name from path if not set
@@ -43,16 +38,11 @@ class CreateDocument extends CreateRecord
             }
         }
 
-        // Auto-expire documents with expiration date in the past
-        if (!empty($data['expires_at']) && strtotime($data['expires_at']) < time()) {
-            $data['status'] = 'expired';
-        }
-
         return $data;
     }
 
     protected function getRedirectUrl(): string
     {
-        return $this->getResource()::getUrl('view', ['record' => $this->getRecord()]);
+        return $this->getResource()::getUrl('index');
     }
 }

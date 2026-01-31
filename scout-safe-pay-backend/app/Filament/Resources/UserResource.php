@@ -4,10 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
+use Filament\Schemas;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Actions;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +23,7 @@ class UserResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\Section::make('User Information')
                     ->schema([
@@ -251,7 +253,7 @@ class UserResource extends Resource
                     }),
             ])
             ->actions([
-                Tables\Actions\Action::make('impersonate')
+                Actions\Action::make('impersonate')
                     ->label('Login As')
                     ->icon('heroicon-o-arrow-right-on-rectangle')
                     ->color('info')
@@ -261,7 +263,7 @@ class UserResource extends Resource
                     ->action(fn () => null)
                     ->visible(fn ($record) => auth()->user()->user_type === 'admin' && $record->id !== auth()->id()),
 
-                Tables\Actions\Action::make('view_kyc')
+                Actions\Action::make('view_kyc')
                     ->label('View KYC')
                     ->icon('heroicon-o-identification')
                     ->color('warning')
@@ -271,7 +273,7 @@ class UserResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
 
-                Tables\Actions\Action::make('verify_email')
+                Actions\Action::make('verify_email')
                     ->label('Verify Email')
                     ->icon('heroicon-o-check-badge')
                     ->color('success')
@@ -283,15 +285,15 @@ class UserResource extends Resource
                     ->visible(fn ($record) => $record->id !== auth()->id()),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('verify_emails')
+                Actions\BulkActionGroup::make([
+                    Actions\BulkAction::make('verify_emails')
                         ->label('Verify Emails')
                         ->icon('heroicon-o-check-badge')
                         ->color('success')
                         ->requiresConfirmation()
                         ->action(fn ($records) => $records->each->update(['is_verified' => true])),
 
-                    Tables\Actions\BulkAction::make('make_sellers')
+                    Actions\BulkAction::make('make_sellers')
                         ->label('Make Sellers')
                         ->icon('heroicon-o-building-storefront')
                         ->color('warning')

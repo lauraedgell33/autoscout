@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { Package, TrendingUp, DollarSign, Eye, Plus, BarChart } from 'lucide-react';
@@ -35,7 +36,10 @@ interface SalesResponse {
   data?: RecentSale[];
 }
 
-export default function SellerDashboardPage({ params }: { params: { locale: string } }) {
+export default function SellerDashboardPage() {
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
+
   const t = useTranslations();
   const [stats, setStats] = useState<SellerStats>({
     total_listings: 0,
@@ -90,7 +94,7 @@ export default function SellerDashboardPage({ params }: { params: { locale: stri
             Manage your listings and track your sales
           </p>
         </div>
-        <Link href={`/${params.locale}/seller/vehicles/new`}>
+        <Link href={`/${locale}/seller/vehicles/new`}>
           <Button>
             <Plus className="h-4 w-4 mr-2" />
             List New Vehicle
@@ -155,7 +159,7 @@ export default function SellerDashboardPage({ params }: { params: { locale: stri
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
             Recent Sales
           </h2>
-          <Link href={`/${params.locale}/seller/sales`}>
+          <Link href={`/${locale}/seller/sales`}>
             <Button variant="outline" size="sm">View All</Button>
           </Link>
         </div>
@@ -169,7 +173,7 @@ export default function SellerDashboardPage({ params }: { params: { locale: stri
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               List your first vehicle to start selling
             </p>
-            <Link href={`/${params.locale}/seller/vehicles/new`}>
+            <Link href={`/${locale}/seller/vehicles/new`}>
               <Button>List a Vehicle</Button>
             </Link>
           </div>
@@ -202,7 +206,7 @@ export default function SellerDashboardPage({ params }: { params: { locale: stri
                     </p>
                   </div>
                 </div>
-                <Link href={`/${params.locale}/transaction/${sale.id}`}>
+                <Link href={`/${locale}/transaction/${sale.id}`}>
                   <Button variant="outline" size="sm">
                     <Eye className="h-4 w-4 mr-2" />
                     View
@@ -216,7 +220,7 @@ export default function SellerDashboardPage({ params }: { params: { locale: stri
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Link href={`/${params.locale}/seller/vehicles`}>
+        <Link href={`/${locale}/seller/vehicles`}>
           <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
             <Package className="h-8 w-8 text-blue-600 mb-3" />
             <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
@@ -228,7 +232,7 @@ export default function SellerDashboardPage({ params }: { params: { locale: stri
           </Card>
         </Link>
 
-        <Link href={`/${params.locale}/seller/analytics`}>
+        <Link href={`/${locale}/seller/analytics`}>
           <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
             <BarChart className="h-8 w-8 text-purple-600 mb-3" />
             <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
@@ -240,7 +244,7 @@ export default function SellerDashboardPage({ params }: { params: { locale: stri
           </Card>
         </Link>
 
-        <Link href={`/${params.locale}/seller/bank-accounts`}>
+        <Link href={`/${locale}/seller/bank-accounts`}>
           <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
             <DollarSign className="h-8 w-8 text-green-600 mb-3" />
             <h3 className="font-semibold text-gray-900 dark:text-white mb-2">

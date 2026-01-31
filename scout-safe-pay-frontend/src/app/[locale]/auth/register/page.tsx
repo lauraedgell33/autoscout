@@ -2,9 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 
-export default function RegisterPage({ params }: { params: { locale: string } }) {
+export default function RegisterPage() {
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
   const { register, loading: authLoading } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
@@ -58,7 +61,7 @@ export default function RegisterPage({ params }: { params: { locale: string } })
           <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
             Or{' '}
             <Link
-              href={`/${params.locale}/auth/login`}
+              href={`/${locale}/auth/login`}
               className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
             >
               sign in to your existing account
@@ -173,11 +176,11 @@ export default function RegisterPage({ params }: { params: { locale: string } })
 
           <p className="mt-2 text-center text-xs text-gray-600 dark:text-gray-400">
             By signing up, you agree to our{' '}
-            <Link href={`/${params.locale}/legal/terms`} className="text-blue-600 hover:text-blue-500">
+            <Link href={`/${locale}/legal/terms`} className="text-blue-600 hover:text-blue-500">
               Terms of Service
             </Link>{' '}
             and{' '}
-            <Link href={`/${params.locale}/legal/privacy`} className="text-blue-600 hover:text-blue-500">
+            <Link href={`/${locale}/legal/privacy`} className="text-blue-600 hover:text-blue-500">
               Privacy Policy
             </Link>
           </p>

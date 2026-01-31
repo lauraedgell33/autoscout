@@ -14,13 +14,16 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
   const router = useRouter();
 
   useEffect(() => {
-    setIsMounted(true);
-    const token = localStorage.getItem('auth_token');
-    if (!token) {
-      router.push('/login');
-    } else {
-      setIsAuthenticated(true);
-    }
+    const frame = requestAnimationFrame(() => {
+      setIsMounted(true);
+      const token = localStorage.getItem('auth_token');
+      if (!token) {
+        router.push('/login');
+      } else {
+        setIsAuthenticated(true);
+      }
+    });
+    return () => cancelAnimationFrame(frame);
   }, [router]);
 
   if (!isMounted || !isAuthenticated) {

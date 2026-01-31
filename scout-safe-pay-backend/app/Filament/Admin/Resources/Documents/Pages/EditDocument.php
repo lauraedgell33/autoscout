@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Resources\Documents\Pages;
 
 use App\Filament\Admin\Resources\Documents\DocumentResource;
 use Filament\Actions;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 
 class EditDocument extends EditRecord
@@ -21,29 +22,23 @@ class EditDocument extends EditRecord
                 ->openUrlInNewTab()
                 ->visible(fn () => !empty($this->record->file_path)),
 
-            Actions\Action::make('new_version')
-                ->label('Create New Version')
-                ->icon('heroicon-o-document-duplicate')
-                ->color('info')
+            Actions\Action::make('verify')
+                ->label('Verify Document')
+                ->icon('heroicon-o-check-circle')
+                ->color('success')
                 ->requiresConfirmation()
                 ->action(function () {
-                    // Increment version (e.g., 1.0 -> 2.0, 1.5 -> 2.5)
-                    $currentVersion = (float) $this->record->version;
-                    $newVersion = ceil($currentVersion) + 1 . '.0';
-                    
-                    $this->record->update([
-                        'version' => $newVersion,
-                        'status' => 'draft',
-                    ]);
-                    
-                    $this->notify('success', 'New version created: v' . $newVersion);
+                    $this->record->verify(auth()->user());
+                    Notification::make()
+                        ->title('Document verified successfully')
+                        ->success()
+                        ->send();
                 })
-                ->visible(fn () => $this->record->status === 'active'),
+                ->visible(fn () => !$this->record->is_verified),
 
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
-            Actions\ForceDeleteAction::make(),
-            Actions\RestoreAction::make(),
+            DeleteAction::make(),
+            ForceDeleteAction::make(),
+            RestoreAction::make(),
         ];
     }
 
@@ -54,20 +49,10 @@ class EditDocument extends EditRecord
             $filePath = storage_path('app/public/' . $data['file_path']);
             
             if (file_exists($filePath)) {
-                // Update file size
-                $data['file_size'] = round(filesize($filePath) / 1024, 2);
-                
-                // Update MIME type
-                $data['mime_type'] = mime_content_type($filePath);
-                
-                // Update file name
+                $data['file_size'] = filesize($filePath);
+                $data['file_type'] = mime_content_type($filePath);
                 $data['file_name'] = basename($filePath);
             }
-        }
-
-        // Auto-expire if expiration date passed
-        if (!empty($data['expires_at']) && strtotime($data['expires_at']) < time() && $data['status'] !== 'expired') {
-            $data['status'] = 'expired';
         }
 
         return $data;
@@ -75,6 +60,6 @@ class EditDocument extends EditRecord
 
     protected function getRedirectUrl(): string
     {
-        return $this->getResource()::getUrl('view', ['record' => $this->getRecord()]);
+        return $this->getResource()::getUrl('index');
     }
 }

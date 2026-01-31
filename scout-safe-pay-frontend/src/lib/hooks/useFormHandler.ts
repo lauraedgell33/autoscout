@@ -1,16 +1,16 @@
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, DefaultValues } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ZodSchema } from 'zod';
+import { ZodSchema, z } from 'zod';
 
-export function useFormHandler<T extends Record<string, any>>(
-  schema: ZodSchema,
-  onSubmit: SubmitHandler<T>,
-  defaultValues?: Partial<T>
+export function useFormHandler<T extends z.ZodType>(
+  schema: T,
+  onSubmit: SubmitHandler<z.infer<T>>,
+  defaultValues?: DefaultValues<z.infer<T>>
 ) {
-  return useForm<T>({
-    resolver: zodResolver(schema),
+  return useForm<z.infer<T>>({
+    resolver: zodResolver(schema) as any,
     mode: 'onBlur',
-    defaultValues: defaultValues as any,
+    defaultValues,
   });
 }
 

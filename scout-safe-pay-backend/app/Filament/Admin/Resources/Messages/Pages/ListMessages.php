@@ -5,19 +5,13 @@ namespace App\Filament\Admin\Resources\Messages\Pages;
 use App\Filament\Admin\Resources\Messages\MessageResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Resources\Pages\ListRecords\Tab;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListMessages extends ListRecords
 {
     protected static string $resource = MessageResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\CreateAction::make(),
-        ];
-    }
 
     public function getTabs(): array
     {

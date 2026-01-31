@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { Search, Filter, Download, Eye, Package } from 'lucide-react';
@@ -10,7 +11,10 @@ import { Button } from '@/components/ui/button';
 import { useRealtimeEvent } from '@/lib/realtime-client';
 import { Input } from '@/components/ui/input';
 
-export default function BuyerTransactionsPage({ params }: { params: { locale: string } }) {
+export default function BuyerTransactionsPage() {
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
+
   const t = useTranslations();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
@@ -64,7 +68,7 @@ export default function BuyerTransactionsPage({ params }: { params: { locale: st
     searchQuery === '' ||
     transaction.vehicle?.make?.toLowerCase().includes(searchQuery.toLowerCase()) ||
     transaction.vehicle?.model?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    transaction.id?.toLowerCase().includes(searchQuery.toLowerCase())
+    String(transaction.id ?? '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const getStatusColor = (status: string) => {
@@ -170,7 +174,7 @@ export default function BuyerTransactionsPage({ params }: { params: { locale: st
                 : 'Start shopping to see your transactions here'}
             </p>
             {!searchQuery && statusFilter === 'all' && (
-              <Link href={`/${params.locale}/marketplace`}>
+              <Link href={`/${locale}/marketplace`}>
                 <Button>Browse Marketplace</Button>
               </Link>
             )}
@@ -205,7 +209,7 @@ export default function BuyerTransactionsPage({ params }: { params: { locale: st
                   <tr key={transaction.id} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900 dark:text-white">
-                        #{transaction.id.slice(0, 8)}
+                        #{String(transaction.id).slice(0, 8)}
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -247,7 +251,7 @@ export default function BuyerTransactionsPage({ params }: { params: { locale: st
                       {formatDate(transaction.created_at)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <Link href={`/${params.locale}/transaction/${transaction.id}`}>
+                      <Link href={`/${locale}/transaction/${transaction.id}`}>
                         <Button variant="ghost" size="sm">
                           <Eye className="h-4 w-4 mr-1" />
                           View

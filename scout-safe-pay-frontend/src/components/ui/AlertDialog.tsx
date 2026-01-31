@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import * as RadixAlert from '@radix-ui/react-alert-dialog';
 import { motion } from 'framer-motion';

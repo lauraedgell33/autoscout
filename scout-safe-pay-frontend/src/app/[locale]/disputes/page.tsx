@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { AlertCircle, Plus, MessageCircle, Eye } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -18,7 +19,10 @@ interface Dispute {
   };
 }
 
-export default function DisputesPage({ params }: { params: { locale: string } }) {
+export default function DisputesPage() {
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
+
   const [disputes, setDisputes] = useState<Dispute[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -74,7 +78,7 @@ export default function DisputesPage({ params }: { params: { locale: string } })
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               You don't have any active disputes. We hope it stays that way!
             </p>
-            <Link href={`/${params.locale}/buyer/transactions`}>
+            <Link href={`/${locale}/buyer/transactions`}>
               <Button>View Transactions</Button>
             </Link>
           </div>
@@ -111,7 +115,7 @@ export default function DisputesPage({ params }: { params: { locale: string } })
                 </div>
 
                 <div className="flex flex-col space-y-2 ml-4">
-                  <Link href={`/${params.locale}/disputes/${dispute.id}`}>
+                  <Link href={`/${locale}/disputes/${dispute.id}`}>
                     <Button variant="outline" size="sm">
                       <Eye className="h-4 w-4 mr-2" />
                       View Details

@@ -43,14 +43,14 @@ export function useScrollAnimation<T extends HTMLElement = HTMLDivElement>(
 
     // If user prefers reduced motion, make visible immediately
     if (prefersReducedMotion) {
-      setIsVisible(true);
-      return;
+      const frame = requestAnimationFrame(() => setIsVisible(true));
+      return () => cancelAnimationFrame(frame);
     }
 
     // Check if IntersectionObserver is supported
     if (typeof IntersectionObserver === 'undefined') {
-      setIsVisible(true);
-      return;
+      const frame = requestAnimationFrame(() => setIsVisible(true));
+      return () => cancelAnimationFrame(frame);
     }
 
     const observer = new IntersectionObserver(

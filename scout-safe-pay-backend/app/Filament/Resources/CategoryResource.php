@@ -4,9 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Models\Category;
-use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -20,40 +24,40 @@ class CategoryResource extends Resource
     
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
+        return $schema
+            ->components([
+                TextInput::make('name')
                     ->required()
                     ->maxLength(50)
                     ->unique(ignoreRecord: true),
                     
-                Forms\Components\TextInput::make('slug')
+                TextInput::make('slug')
                     ->required()
                     ->maxLength(50)
                     ->unique(ignoreRecord: true)
                     ->helperText('URL-friendly name'),
                     
-                Forms\Components\Textarea::make('description')
+                Textarea::make('description')
                     ->maxLength(500)
                     ->columnSpanFull(),
                     
-                Forms\Components\TextInput::make('icon')
+                TextInput::make('icon')
                     ->maxLength(50)
                     ->helperText('Icon name or emoji'),
                     
-                Forms\Components\FileUpload::make('image_url')
+                FileUpload::make('image_url')
                     ->image()
                     ->directory('categories')
                     ->visibility('public'),
                     
-                Forms\Components\TextInput::make('sort_order')
+                TextInput::make('sort_order')
                     ->numeric()
                     ->default(0)
                     ->helperText('Display order (lower numbers first)'),
                     
-                Forms\Components\Toggle::make('is_active')
+                Toggle::make('is_active')
                     ->default(true)
                     ->label('Active'),
             ]);
@@ -98,7 +102,7 @@ class CategoryResource extends Resource
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+                Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])

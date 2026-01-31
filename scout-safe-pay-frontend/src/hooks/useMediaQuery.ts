@@ -22,17 +22,22 @@ export function useMediaQuery(query: string): boolean {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    // Use RAF to avoid synchronous setState warning
+    const frame = requestAnimationFrame(() => {
+      setMounted(true);
+    });
     
     // Check if window is available (client-side)
     if (typeof window === 'undefined') {
-      return;
+      return () => cancelAnimationFrame(frame);
     }
 
     const mediaQuery = window.matchMedia(query);
     
-    // Set initial value
-    setMatches(mediaQuery.matches);
+    // Set initial value asynchronously
+    requestAnimationFrame(() => {
+      setMatches(mediaQuery.matches);
+    });
 
     // Create event listener function
     const handleChange = (event: MediaQueryListEvent) => {
@@ -50,6 +55,7 @@ export function useMediaQuery(query: string): boolean {
 
     // Cleanup
     return () => {
+      cancelAnimationFrame(frame);
       if (mediaQuery.removeEventListener) {
         mediaQuery.removeEventListener('change', handleChange);
       } else {

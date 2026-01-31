@@ -6,10 +6,14 @@ export default function BuyerNotificationsPage() {
   const [notifications, setNotifications] = useState<any[]>([]);
 
   useEffect(() => {
-    setNotifications([
-      { id: 1, title: 'New vehicle available', message: 'A vehicle matching your criteria is now available', read: false },
-      { id: 2, title: 'Purchase confirmed', message: 'Your purchase has been confirmed', read: true },
-    ]);
+    // Initial data - using RAF to avoid synchronous setState warning
+    const frame = requestAnimationFrame(() => {
+      setNotifications([
+        { id: 1, title: 'New vehicle available', message: 'A vehicle matching your criteria is now available', read: false },
+        { id: 2, title: 'Purchase confirmed', message: 'Your purchase has been confirmed', read: true },
+      ]);
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   return (

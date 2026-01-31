@@ -18,7 +18,7 @@ interface PaymentMethod {
   created_at: string;
 }
 
-export default function BuyerPaymentMethodsPage({ params }: { params: { locale: string } }) {
+export default function BuyerPaymentMethodsPage() {
   const t = useTranslations();
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [loading, setLoading] = useState(true);

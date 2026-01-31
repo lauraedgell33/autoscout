@@ -3,11 +3,11 @@
 namespace App\Filament\Admin\Resources\Vehicles\Schemas;
 
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Group;
+use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 
 class VehicleForm
@@ -18,26 +18,35 @@ class VehicleForm
             ->components([
                 Grid::make(3)->schema([
                     Select::make('category')
-                        ->label('Categorie')
+                        ->label('Category')
                         ->options([
-                            'car' => 'Autoturism',
-                            'suv' => 'SUV',
-                            'truck' => 'Camion',
-                            'van' => 'Dubă',
-                            'motorcycle' => 'Motocicletă',
+                            'car' => 'Car',
+                            'motorcycle' => 'Motorcycle',
+                            'van' => 'Van',
+                            'truck' => 'Truck',
+                            'trailer' => 'Trailer',
+                            'caravan' => 'Caravan',
+                            'motorhome' => 'Motorhome',
+                            'construction_machinery' => 'Construction Machinery',
+                            'agricultural_machinery' => 'Agricultural Machinery',
+                            'forklift' => 'Forklift',
+                            'boat' => 'Boat',
+                            'atv' => 'ATV',
+                            'quad' => 'Quad',
                         ])
                         ->required()
                         ->default('car')
-                        ->native(false),
+                        ->native(false)
+                        ->searchable(),
                     
                     Select::make('status')
                         ->label('Status')
                         ->options([
-                            'draft' => 'Ciornă',
-                            'active' => 'Activ',
-                            'pending' => 'În așteptare',
-                            'sold' => 'Vândut',
-                            'reserved' => 'Rezervat',
+                            'draft' => 'Draft',
+                            'active' => 'Active',
+                            'pending' => 'Pending',
+                            'sold' => 'Sold',
+                            'reserved' => 'Reserved',
                         ])
                         ->required()
                         ->default('draft')
@@ -51,7 +60,7 @@ class VehicleForm
                 ]),
                 
                 Select::make('seller_id')
-                    ->label('Vânzător')
+                    ->label('Seller')
                     ->relationship('seller', 'name')
                     ->searchable()
                     ->preload()
@@ -59,19 +68,19 @@ class VehicleForm
 
                 Grid::make(3)->schema([
                     TextInput::make('make')
-                        ->label('Marcă')
+                        ->label('Make')
                         ->required()
                         ->maxLength(100)
-                        ->placeholder('Ex: BMW, Audi, Mercedes'),
+                        ->placeholder('e.g. BMW, Audi, Mercedes'),
                     
                     TextInput::make('model')
                         ->label('Model')
                         ->required()
                         ->maxLength(100)
-                        ->placeholder('Ex: X5, A4, C-Class'),
+                        ->placeholder('e.g. X5, A4, C-Class'),
                     
                     TextInput::make('year')
-                        ->label('An fabricație')
+                        ->label('Year')
                         ->required()
                         ->numeric()
                         ->minValue(1900)
@@ -84,40 +93,41 @@ class VehicleForm
                         ->label('VIN')
                         ->maxLength(17)
                         ->unique(ignoreRecord: true)
-                        ->placeholder('17 caractere')
-                        ->helperText('Numărul de identificare al vehiculului'),
+                        ->placeholder('17 characters')
+                        ->helperText('Vehicle Identification Number'),
                     
                     TextInput::make('color')
-                        ->label('Culoare')
+                        ->label('Color')
                         ->maxLength(50)
-                        ->placeholder('Ex: Negru, Alb, Roșu'),
+                        ->placeholder('e.g. Black, White, Red'),
                 ]),
 
                 Grid::make(3)->schema([
                     Select::make('fuel_type')
-                        ->label('Tip combustibil')
+                        ->label('Fuel Type')
                         ->options([
-                            'petrol' => 'Benzină',
-                            'diesel' => 'Motorină',
+                            'petrol' => 'Petrol',
+                            'diesel' => 'Diesel',
                             'electric' => 'Electric',
-                            'hybrid' => 'Hibrid',
-                            'plugin_hybrid' => 'Hibrid Plug-in',
-                            'lpg' => 'GPL',
+                            'hybrid' => 'Hybrid',
+                            'plugin_hybrid' => 'Plug-in Hybrid',
+                            'lpg' => 'LPG',
                             'cng' => 'CNG',
+                            'hydrogen' => 'Hydrogen',
                         ])
                         ->native(false),
                     
                     Select::make('transmission')
-                        ->label('Transmisie')
+                        ->label('Transmission')
                         ->options([
-                            'manual' => 'Manuală',
-                            'automatic' => 'Automată',
-                            'semi_automatic' => 'Semi-automată',
+                            'manual' => 'Manual',
+                            'automatic' => 'Automatic',
+                            'semi_automatic' => 'Semi-Automatic',
                         ])
                         ->native(false),
                     
                     TextInput::make('mileage')
-                        ->label('Kilometraj')
+                        ->label('Mileage')
                         ->numeric()
                         ->suffix('km')
                         ->minValue(0)
@@ -126,44 +136,45 @@ class VehicleForm
                 
                 Grid::make(3)->schema([
                     TextInput::make('engine_size')
-                        ->label('Capacitate motor')
+                        ->label('Engine Size')
                         ->numeric()
                         ->suffix('cc')
                         ->minValue(0)
                         ->placeholder('2000'),
                     
                     TextInput::make('power_hp')
-                        ->label('Putere')
+                        ->label('Power')
                         ->numeric()
-                        ->suffix('CP')
+                        ->suffix('HP')
                         ->minValue(0)
                         ->placeholder('150'),
                     
                     Select::make('body_type')
-                        ->label('Tip caroserie')
+                        ->label('Body Type')
                         ->options([
                             'sedan' => 'Sedan',
                             'hatchback' => 'Hatchback',
                             'suv' => 'SUV',
                             'coupe' => 'Coupe',
-                            'convertible' => 'Cabrio',
-                            'wagon' => 'Break',
-                            'van' => 'Dubă',
-                            'pickup' => 'Pickup',
+                            'convertible' => 'Convertible',
+                            'wagon' => 'Wagon',
+                            'van' => 'Van',
+                            'truck' => 'Truck',
+                            'minivan' => 'Minivan',
                         ])
                         ->native(false),
                 ]),
                 
                 Grid::make(2)->schema([
                     TextInput::make('doors')
-                        ->label('Număr uși')
+                        ->label('Doors')
                         ->numeric()
                         ->minValue(2)
                         ->maxValue(5)
                         ->placeholder('4'),
                     
                     TextInput::make('seats')
-                        ->label('Număr locuri')
+                        ->label('Seats')
                         ->numeric()
                         ->minValue(1)
                         ->maxValue(9)
@@ -172,7 +183,7 @@ class VehicleForm
 
                 Grid::make(3)->schema([
                     TextInput::make('price')
-                        ->label('Preț')
+                        ->label('Price')
                         ->required()
                         ->numeric()
                         ->minValue(0)
@@ -180,38 +191,38 @@ class VehicleForm
                         ->placeholder('25000'),
                     
                     Select::make('currency')
-                        ->label('Monedă')
+                        ->label('Currency')
                         ->options([
                             'EUR' => 'EUR (€)',
                             'USD' => 'USD ($)',
                             'GBP' => 'GBP (£)',
-                            'RON' => 'RON (lei)',
+                            'RON' => 'RON',
                         ])
                         ->required()
                         ->default('EUR')
                         ->native(false),
                     
                     TextInput::make('location_city')
-                        ->label('Oraș')
+                        ->label('City')
                         ->maxLength(100)
-                        ->placeholder('Ex: București'),
+                        ->placeholder('e.g. Berlin'),
                 ]),
                 
                 TextInput::make('location_country')
-                    ->label('Țară')
+                    ->label('Country')
                     ->required()
                     ->default('DE')
                     ->maxLength(2)
-                    ->placeholder('Cod țară (DE, RO, etc.)'),
+                    ->placeholder('Country code (DE, US, etc.)'),
 
                 Textarea::make('description')
-                    ->label('Descriere')
+                    ->label('Description')
                     ->rows(4)
                     ->columnSpanFull()
-                    ->placeholder('Descriere detaliată a vehiculului...'),
+                    ->placeholder('Detailed vehicle description...'),
                 
                 FileUpload::make('primary_image')
-                    ->label('Imagine principală')
+                    ->label('Primary Image')
                     ->image()
                     ->imageEditor()
                     ->imageEditorAspectRatios([
@@ -224,7 +235,7 @@ class VehicleForm
                     ->columnSpanFull(),
                 
                 FileUpload::make('images')
-                    ->label('Galerie imagini')
+                    ->label('Image Gallery')
                     ->image()
                     ->multiple()
                     ->reorderable()
@@ -232,18 +243,18 @@ class VehicleForm
                     ->maxSize(5120)
                     ->directory('vehicles/gallery')
                     ->columnSpanFull()
-                    ->helperText('Poți adăuga până la 20 de imagini'),
+                    ->helperText('You can add up to 20 images'),
 
                 Grid::make(2)->schema([
                     TextInput::make('autoscout_listing_id')
-                        ->label('ID Listing AutoScout24')
+                        ->label('AutoScout24 Listing ID')
                         ->maxLength(100)
-                        ->placeholder('ID-ul anunțului pe AutoScout24'),
+                        ->placeholder('AutoScout24 listing ID'),
                     
                     Textarea::make('autoscout_data')
-                        ->label('Date AutoScout24 (JSON)')
+                        ->label('AutoScout24 Data (JSON)')
                         ->rows(3)
-                        ->placeholder('Date suplimentare în format JSON'),
+                        ->placeholder('Additional data in JSON format'),
                 ]),
             ]);
     }

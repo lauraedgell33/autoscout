@@ -72,6 +72,12 @@ class Transaction extends Model
             if (!$transaction->payment_reference) {
                 $transaction->payment_reference = 'AS24-REF-' . strtoupper(Str::random(12));
             }
+            if (!$transaction->escrow_account_iban) {
+                $transaction->escrow_account_iban = config('services.escrow.iban', 'DE89370400440532013000');
+            }
+            if (!$transaction->escrow_account_country) {
+                $transaction->escrow_account_country = config('services.escrow.country', 'DE');
+            }
         });
     }
 

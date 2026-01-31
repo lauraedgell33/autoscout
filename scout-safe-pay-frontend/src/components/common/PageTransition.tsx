@@ -4,6 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 
 /**
+ * Easing curves (typed as tuples to satisfy Framer Motion's Easing types)
+ */
+const easeOut = [0.16, 1, 0.3, 1] as const;
+const easeIn = [0.7, 0, 0.84, 0] as const;
+
+/**
  * Page transition variants
  */
 const pageVariants = {
@@ -16,7 +22,7 @@ const pageVariants = {
     y: 0,
     transition: {
       duration: 0.3,
-      ease: 'easeOut'
+      ease: easeOut
     }
   },
   exit: { 
@@ -24,7 +30,7 @@ const pageVariants = {
     y: -20,
     transition: {
       duration: 0.2,
-      ease: 'easeIn'
+      ease: easeIn
     }
   }
 };
@@ -57,7 +63,7 @@ const slideVariants = {
     x: 0,
     transition: {
       duration: 0.3,
-      ease: 'easeOut'
+      ease: easeOut
     }
   },
   exit: { 
@@ -65,7 +71,7 @@ const slideVariants = {
     x: 20,
     transition: {
       duration: 0.2,
-      ease: 'easeIn'
+      ease: easeIn
     }
   }
 };
@@ -170,7 +176,7 @@ export function SlideIn({
     <motion.div
       initial={{ opacity: 0, ...directionMap[direction] }}
       animate={{ opacity: 1, y: 0, x: 0 }}
-      transition={{ duration, delay, ease: 'easeOut' }}
+      transition={{ duration, delay, ease: easeOut }}
       className={className}
     >
       {children}
@@ -197,7 +203,7 @@ export function ScaleIn({
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration, delay, ease: 'easeOut' }}
+      transition={{ duration, delay, ease: easeOut }}
       className={className}
     >
       {children}

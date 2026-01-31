@@ -1,13 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { CheckCircle, Download, Home, Eye } from 'lucide-react';
 import { transactionService } from '@/lib/api/transactions';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
-export default function PaymentSuccessPage({ params }: { params: { locale: string } }) {
+export default function PaymentSuccessPage() {
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
+
   const [transaction, setTransaction] = useState<any>(null);
   const [bankDetails, setBankDetails] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -161,12 +165,12 @@ IMPORTANT: Please include the reference number in your transfer!
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row gap-4">
-        <Link href={`/${params.locale}/transaction/${transaction?.id}`} className="flex-1">
+        <Link href={`/${locale}/transaction/${transaction?.id}`} className="flex-1">
           <Button variant="outline" className="w-full">
             <Eye className="h-4 w-4 mr-2" />View Transaction
           </Button>
         </Link>
-        <Link href={`/${params.locale}/marketplace`} className="flex-1">
+        <Link href={`/${locale}/marketplace`} className="flex-1">
           <Button variant="outline" className="w-full">
             <Home className="h-4 w-4 mr-2" />Back to Marketplace
           </Button>

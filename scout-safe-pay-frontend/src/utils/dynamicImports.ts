@@ -21,7 +21,7 @@ function LoadingFallback() {
 /**
  * Create a dynamically imported component with loading state
  */
-export function createDynamicComponent<T = {}>(
+export function createDynamicComponent<T extends Record<string, unknown> = Record<string, unknown>>(
   importFn: () => Promise<{ default: ComponentType<T> }>,
   options?: {
     ssr?: boolean

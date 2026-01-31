@@ -43,7 +43,8 @@ export default function RegisterPage() {
         password: formData.password,
         password_confirmation: formData.confirmPassword,
         phone: formData.phone || undefined,
-        user_type: formData.userType
+        user_type: formData.userType,
+        country: 'DE',
       })
       // Redirect handled in AuthContext
     } catch (err: unknown) {

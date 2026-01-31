@@ -134,13 +134,28 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Favorite::class);
     }
 
+    public function givenReviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'reviewer_id');
+    }
+
+    public function receivedReviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'reviewee_id');
+    }
+
+    // Alias for Filament RelationManager
+    public function buyerTransactions(): HasMany
+    {
+        return $this->transactionsAsBuyer();
+    }
+
     /**
      * Determine if the user can access the Filament admin panel.
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        // Allow all authenticated users
-        return true;
+        return $this->isAdmin();
     }
 
     /**
@@ -148,7 +163,38 @@ class User extends Authenticatable implements FilamentUser
      */
     public function canAccessFilament(): bool
     {
-        // Allow all authenticated users
-        return auth()->check();
+        return $this->isAdmin();
+    }
+
+    /**
+     * Check if user is an admin.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->user_type === 'admin';
+    }
+
+    /**
+     * Check if user is a buyer.
+     */
+    public function isBuyer(): bool
+    {
+        return $this->user_type === 'buyer';
+    }
+
+    /**
+     * Check if user is a seller.
+     */
+    public function isSeller(): bool
+    {
+        return $this->user_type === 'seller';
+    }
+
+    /**
+     * Check if user is a dealer.
+     */
+    public function isDealer(): bool
+    {
+        return $this->user_type === 'dealer';
     }
 }

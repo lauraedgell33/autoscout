@@ -13,35 +13,35 @@ class EditInvoice extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\Action::make('generatePDF')
-                ->label('Generate PDF')
-                ->icon('heroicon-o-document')
-                ->color('primary')
+            Actions\Action::make('mark_paid')
+                ->label('Mark as Paid')
+                ->icon('heroicon-o-banknotes')
+                ->color('info')
                 ->requiresConfirmation()
-                ->action(fn () => $this->record->update([
-                    'pdf_url' => '/storage/invoices/' . $this->record->invoice_number . '.pdf',
-                ])),
+                ->visible(fn () => $this->record->isPending())
+                ->action(fn () => $this->record->markAsPaid()),
 
-            Actions\Action::make('sendEmail')
-                ->label('Send Email')
-                ->icon('heroicon-o-envelope')
+            Actions\Action::make('confirm')
+                ->label('Confirm Payment')
+                ->icon('heroicon-o-check-circle')
                 ->color('success')
                 ->requiresConfirmation()
-                ->action(fn () => $this->record->update(['status' => 'sent'])),
+                ->visible(fn () => $this->record->isPaid())
+                ->action(fn () => $this->record->markAsConfirmed(auth()->user())),
 
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
-            Actions\ForceDeleteAction::make(),
-            Actions\RestoreAction::make(),
+            ViewAction::make(),
+            DeleteAction::make(),
+            ForceDeleteAction::make(),
+            RestoreAction::make(),
         ];
     }
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        // Recalculate total if amounts changed
-        if (isset($data['amount']) || isset($data['tax_amount'])) {
-            $data['total_amount'] = ($data['amount'] ?? $this->record->amount) + 
-                                   ($data['tax_amount'] ?? $this->record->tax_amount);
+        // Recalculate VAT and total if amount changed
+        if (isset($data['amount']) && isset($data['vat_percentage'])) {
+            $data['vat_amount'] = round($data['amount'] * ($data['vat_percentage'] / 100), 2);
+            $data['total_amount'] = round($data['amount'] + $data['vat_amount'], 2);
         }
 
         return $data;

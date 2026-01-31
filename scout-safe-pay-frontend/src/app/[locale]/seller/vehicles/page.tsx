@@ -1,13 +1,17 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { Plus, Eye, Edit, Trash2, Package } from 'lucide-react';
 import vehicleService, { Vehicle } from '@/lib/api/vehicles';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
-export default function SellerVehiclesPage({ params }: { params: { locale: string } }) {
+export default function SellerVehiclesPage() {
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
+
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -61,7 +65,7 @@ export default function SellerVehiclesPage({ params }: { params: { locale: strin
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">My Vehicles</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">{(vehicles || []).length} total listings</p>
         </div>
-        <Link href={`/${params.locale}/seller/vehicles/new`}>
+        <Link href={`/${locale}/seller/vehicles/new`}>
           <Button><Plus className="h-4 w-4 mr-2" />Add Vehicle</Button>
         </Link>
       </div>
@@ -72,7 +76,7 @@ export default function SellerVehiclesPage({ params }: { params: { locale: strin
             <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No vehicles listed</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">Start selling by adding your first vehicle</p>
-            <Link href={`/${params.locale}/seller/vehicles/new`}>
+            <Link href={`/${locale}/seller/vehicles/new`}>
               <Button>Add Your First Vehicle</Button>
             </Link>
           </div>
@@ -103,7 +107,7 @@ export default function SellerVehiclesPage({ params }: { params: { locale: strin
                   <div className="flex justify-between"><span>Mileage:</span><span>{vehicle.mileage?.toLocaleString()} km</span></div>
                 </div>
                 <div className="flex space-x-2">
-                  <Link href={`/${params.locale}/vehicle/${vehicle.id}`} className="flex-1">
+                  <Link href={`/${locale}/vehicle/${vehicle.id}`} className="flex-1">
                     <Button variant="outline" className="w-full" size="sm"><Eye className="h-4 w-4 mr-1" />View</Button>
                   </Link>
                   <Button variant="outline" size="sm"><Edit className="h-4 w-4" /></Button>

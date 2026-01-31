@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 export const Tabs = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (

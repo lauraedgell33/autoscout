@@ -10,9 +10,12 @@ import { useAuthStore } from '@/store/auth-store'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
-export default function MessageThreadPage({ params }: { params: { locale: string; id: string } }) {
-  const routeParams = useParams()
-  const transactionId = Number(params.id || routeParams.id)
+export default function MessageThreadPage() {
+  const routeParams = useParams<{ locale: string; id: string }>()
+  const locale = routeParams?.locale
+  const transactionId = Number(routeParams?.id)
+  const hasValidParams = Boolean(locale) && Number.isFinite(transactionId)
+
   const currentUserId = useAuthStore((state) => state.user?.id)
 
   const [conversation, setConversation] = useState<ConversationDetail | null>(null)
@@ -33,6 +36,7 @@ export default function MessageThreadPage({ params }: { params: { locale: string
   }, [conversation, currentUserId])
 
   const loadConversation = useCallback(async () => {
+    if (!hasValidParams) return
     try {
       setLoading(true)
       const data = await messageService.getMessages(transactionId)
@@ -43,11 +47,16 @@ export default function MessageThreadPage({ params }: { params: { locale: string
     } finally {
       setLoading(false)
     }
-  }, [transactionId])
+  }, [hasValidParams, transactionId])
 
   useEffect(() => {
+    if (!hasValidParams) {
+      setError('Invalid route parameters')
+      setLoading(false)
+      return
+    }
     loadConversation()
-  }, [loadConversation])
+  }, [hasValidParams, loadConversation])
 
   useEffect(() => {
     if (listRef.current) {
@@ -159,7 +168,7 @@ export default function MessageThreadPage({ params }: { params: { locale: string
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-5xl mx-auto px-4">
         <div className="mb-6 flex items-center gap-4">
-          <Link href={`/${params.locale}/messages`}>
+          <Link href={`/${locale}/messages`}>
             <Button variant="ghost" size="sm">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Messages

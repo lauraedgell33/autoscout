@@ -53,15 +53,17 @@ export function useDebounce<T>(value: T, delay: number = 500): T {
  */
 export function useThrottle<T>(value: T, limit: number = 300): T {
   const [throttledValue, setThrottledValue] = useState<T>(value);
-  const lastRan = useRef(Date.now());
+  const lastRan = useRef<number>(0);
 
   useEffect(() => {
+    const now = Date.now();
+    const timeSinceLastRan = lastRan.current ? now - lastRan.current : limit;
     const handler = setTimeout(() => {
       if (Date.now() - lastRan.current >= limit) {
         setThrottledValue(value);
         lastRan.current = Date.now();
       }
-    }, limit - (Date.now() - lastRan.current));
+    }, Math.max(0, limit - timeSinceLastRan));
 
     return () => clearTimeout(handler);
   }, [value, limit]);

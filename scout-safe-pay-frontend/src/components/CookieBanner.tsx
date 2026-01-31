@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { Link } from '@/i18n/routing';
 import { X } from 'lucide-react';
 
 export default function CookieBanner() {
@@ -8,10 +9,13 @@ export default function CookieBanner() {
 
   useEffect(() => {
     // Check if user already accepted cookies
-    const cookiesAccepted = localStorage.getItem('cookiesAccepted');
-    if (!cookiesAccepted) {
-      setIsVisible(true);
-    }
+    const frame = requestAnimationFrame(() => {
+      const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+      if (!cookiesAccepted) {
+        setIsVisible(true);
+      }
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const handleAccept = () => {
@@ -40,9 +44,9 @@ export default function CookieBanner() {
             <p className="text-xs sm:text-sm text-gray-300">
               We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
               By clicking "Accept All", you consent to our use of cookies.{' '}
-              <a href="/legal/cookies" className="underline hover:text-white">
+              <Link href="/legal/cookies" className="underline hover:text-white">
                 Learn more
-              </a>
+              </Link>
             </p>
           </div>
           

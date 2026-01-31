@@ -27,6 +27,8 @@ export interface Vehicle {
   latitude: number | null
   longitude: number | null
   status: 'draft' | 'active' | 'sold' | 'reserved' | 'removed'
+  // Optional quality/condition flag if provided by backend
+  condition?: 'new' | 'excellent' | 'good' | 'fair' | null
   autoscout_listing_id: string | null
   autoscout_data: AutoScout24Data | null
   images: string[] | null

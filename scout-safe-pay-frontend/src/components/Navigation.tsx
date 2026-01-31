@@ -44,7 +44,11 @@ export default function Navigation() {
 
   // Close mobile menu on route change
   useEffect(() => {
-    setMobileMenuOpen(false)
+    // Wrapped in RAF to avoid synchronous setState warning
+    const frame = requestAnimationFrame(() => {
+      setMobileMenuOpen(false)
+    })
+    return () => cancelAnimationFrame(frame)
   }, [pathname])
 
   return (

@@ -9,8 +9,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Wizard;
-use Filament\Forms\Components\Wizard\Step;
+use Filament\Schemas\Components\Wizard;
+use Filament\Schemas\Components\Wizard\Step;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
@@ -36,7 +37,7 @@ class CreateTransactionWizard extends Page
     
     public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Wizard::make([
                     Step::make('Parties')
@@ -204,7 +205,7 @@ class CreateTransactionWizard extends Page
                         ->description('Review and confirm')
                         ->icon('heroicon-o-check-circle')
                         ->schema([
-                            \Filament\Forms\Components\Placeholder::make('review_info')
+                            \Filament\Schemas\Components\Placeholder::make('review_info')
                                 ->label('')
                                 ->content(fn ($get) => new \Illuminate\Support\HtmlString('
                                     <div class="space-y-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">

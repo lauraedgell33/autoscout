@@ -2,8 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
-export default function BuyerProfilePage({ params }: { params: { locale: string } }) {
+export default function BuyerProfilePage() {
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
+
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -55,7 +59,7 @@ export default function BuyerProfilePage({ params }: { params: { locale: string 
           
           <div className="pt-4">
             <Link
-              href={`/${params.locale}/buyer/settings`}
+              href={`/${locale}/buyer/settings`}
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
             >
               Edit Profile

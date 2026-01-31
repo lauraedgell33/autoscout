@@ -1,17 +1,25 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { Search, Filter, SlidersHorizontal, MapPin, Map } from 'lucide-react';
 import vehicleService, { Vehicle } from '@/lib/api/vehicles';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Link } from '@/i18n/routing';
-import VehicleMap from '@/components/map/VehicleMap';
 
-export default function VehicleSearchPage({ params }: { params: { locale: string } }) {
+// Dynamic import for Leaflet map (requires window)
+const VehicleMap = dynamic(() => import('@/components/map/VehicleMap'), {
+  ssr: false,
+  loading: () => <div className="h-96 bg-gray-200 rounded-lg flex items-center justify-center"><p>Loading map...</p></div>
+});
+
+export default function VehicleSearchPage() {
   const router = useRouter();
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
@@ -235,7 +243,7 @@ export default function VehicleSearchPage({ params }: { params: { locale: string
           {viewMode === 'grid' ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {vehicles.map((vehicle) => (
-                <Link key={vehicle.id} href={`/${params.locale}/vehicle/${vehicle.id}`}>
+                <Link key={vehicle.id} href={`/${locale}/vehicle/${vehicle.id}`}>
                   <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
                     <div className="aspect-video bg-gray-200 dark:bg-gray-700">
                       {vehicle.primary_image && (

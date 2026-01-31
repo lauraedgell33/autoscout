@@ -1,15 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { Upload, X, Plus } from 'lucide-react';
 import vehicleService from '@/lib/api/vehicles';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-export default function AddVehiclePage({ params }: { params: { locale: string } }) {
+export default function AddVehiclePage() {
   const router = useRouter();
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState<File[]>([]);
   const [formData, setFormData] = useState({
@@ -70,7 +72,7 @@ export default function AddVehiclePage({ params }: { params: { locale: string } 
         await vehicleService.uploadImages(response.id, images);
       }
 
-      router.push(`/${params.locale}/seller/vehicles`);
+      router.push(`/${locale}/seller/vehicles`);
     } catch (error) {
       console.error('Error creating vehicle:', error);
       alert('Failed to create vehicle listing. Please try again.');

@@ -4,10 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CookiePreferenceResource\Pages;
 use App\Models\CookiePreference;
+use Filament\Schemas;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Actions;
 use Filament\Tables\Table;
 use Filament\Support\Colors\Color;
 
@@ -25,9 +27,9 @@ class CookiePreferenceResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Section::make('User Information')
+        return $schema
+            ->components([
+                Schemas\Components\Section::make('User Information')
                     ->schema([
                         Forms\Components\Select::make('user_id')
                             ->label('User')
@@ -43,7 +45,7 @@ class CookiePreferenceResource extends Resource
                             ->helperText('Automatically assigned for guest users'),
                     ])->columns(2),
                 
-                Forms\Components\Section::make('Cookie Categories')
+                Schemas\Components\Section::make('Cookie Categories')
                     ->schema([
                         Forms\Components\Toggle::make('essential')
                             ->label('Essential Cookies')
@@ -61,7 +63,7 @@ class CookiePreferenceResource extends Resource
                             ->helperText('Used for targeted advertising'),
                     ])->columns(2),
                 
-                Forms\Components\Section::make('Tracking Information')
+                Schemas\Components\Section::make('Tracking Information')
                     ->schema([
                         Forms\Components\TextInput::make('ip_address')
                             ->label('IP Address')
@@ -75,7 +77,7 @@ class CookiePreferenceResource extends Resource
                             ->columnSpanFull(),
                     ])->columns(2),
                 
-                Forms\Components\Section::make('Timestamps')
+                Schemas\Components\Section::make('Timestamps')
                     ->schema([
                         Forms\Components\DateTimePicker::make('accepted_at')
                             ->label('Accepted At')
@@ -183,7 +185,7 @@ class CookiePreferenceResource extends Resource
                     ->toggle(),
             ])
             ->actions([
-                Tables\Actions\Action::make('refresh')
+                Actions\Action::make('refresh')
                     ->label('Refresh')
                     ->icon('heroicon-o-arrow-path')
                     ->color(Color::Emerald)
@@ -202,8 +204,8 @@ class CookiePreferenceResource extends Resource
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('refresh_all')
+                Actions\BulkActionGroup::make([
+                    Actions\BulkAction::make('refresh_all')
                         ->label('Refresh All Selected')
                         ->icon('heroicon-o-arrow-path')
                         ->color(Color::Emerald)

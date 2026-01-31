@@ -6,6 +6,8 @@ interface User {
   name: string;
   email: string;
   user_type: 'buyer' | 'seller' | 'dealer' | 'admin';
+  // Some backend responses may still use `role`
+  role?: 'buyer' | 'seller' | 'dealer' | 'admin';
   phone?: string;
   country?: string;
 }

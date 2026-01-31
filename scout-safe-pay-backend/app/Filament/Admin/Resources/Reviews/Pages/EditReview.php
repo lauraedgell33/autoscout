@@ -29,10 +29,10 @@ class EditReview extends EditRecord
                 ->action(fn () => $this->record->update(['status' => 'rejected']))
                 ->visible(fn () => $this->record->status !== 'rejected'),
 
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
-            Actions\ForceDeleteAction::make(),
-            Actions\RestoreAction::make(),
+            ViewAction::make(),
+            DeleteAction::make(),
+            ForceDeleteAction::make(),
+            RestoreAction::make(),
         ];
     }
 }

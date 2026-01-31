@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams , useParams} from 'next/navigation';
 import Link from 'next/link';
 
-export default function ResetPasswordPage({ params }: { params: { locale: string } }) {
+export default function ResetPasswordPage() {
   const router = useRouter();
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const email = searchParams.get('email');
@@ -46,7 +48,7 @@ export default function ResetPasswordPage({ params }: { params: { locale: string
 
       if (response.ok) {
         // Redirect to login page with success message
-        router.push(`/${params.locale}/auth/login?reset=success`);
+        router.push(`/${locale}/auth/login?reset=success`);
       } else {
         setError(data.message || 'Failed to reset password. Please try again.');
       }
@@ -77,7 +79,7 @@ export default function ResetPasswordPage({ params }: { params: { locale: string
               </p>
               <div className="mt-4">
                 <Link
-                  href={`/${params.locale}/auth/forgot-password`}
+                  href={`/${locale}/auth/forgot-password`}
                   className="font-medium text-blue-600 hover:text-blue-500"
                 >
                   Request new reset link

@@ -17,7 +17,7 @@ class VehicleInfolist
             ->components([
                 Grid::make(3)->schema([
                     TextEntry::make('make')
-                        ->label('Marcă')
+                        ->label('Make')
                         ->size('lg')
                         ->weight('bold'),
                     
@@ -27,29 +27,45 @@ class VehicleInfolist
                         ->weight('bold'),
                     
                     TextEntry::make('year')
-                        ->label('An fabricație')
+                        ->label('Year')
                         ->badge()
                         ->color('info'),
                 ]),
                 
                 Grid::make(3)->schema([
                     TextEntry::make('category')
-                        ->label('Categorie')
+                        ->label('Category')
                         ->badge()
                         ->formatStateUsing(fn (string $state): string => match ($state) {
-                            'car' => 'Autoturism',
-                            'suv' => 'SUV',
-                            'truck' => 'Camion',
-                            'van' => 'Dubă',
-                            'motorcycle' => 'Motocicletă',
+                            'car' => 'Car',
+                            'motorcycle' => 'Motorcycle',
+                            'van' => 'Van',
+                            'truck' => 'Truck',
+                            'trailer' => 'Trailer',
+                            'caravan' => 'Caravan',
+                            'motorhome' => 'Motorhome',
+                            'construction_machinery' => 'Construction Machinery',
+                            'agricultural_machinery' => 'Agricultural Machinery',
+                            'forklift' => 'Forklift',
+                            'boat' => 'Boat',
+                            'atv' => 'ATV',
+                            'quad' => 'Quad',
                             default => $state,
                         })
                         ->color(fn (string $state): string => match ($state) {
                             'car' => 'primary',
-                            'suv' => 'success',
-                            'truck' => 'warning',
-                            'van' => 'info',
                             'motorcycle' => 'danger',
+                            'van' => 'info',
+                            'truck' => 'warning',
+                            'trailer' => 'gray',
+                            'caravan' => 'success',
+                            'motorhome' => 'success',
+                            'construction_machinery' => 'warning',
+                            'agricultural_machinery' => 'warning',
+                            'forklift' => 'info',
+                            'boat' => 'primary',
+                            'atv' => 'danger',
+                            'quad' => 'danger',
                             default => 'gray',
                         }),
                     
@@ -57,11 +73,11 @@ class VehicleInfolist
                         ->label('Status')
                         ->badge()
                         ->formatStateUsing(fn (string $state): string => match ($state) {
-                            'draft' => 'Ciornă',
-                            'active' => 'Activ',
-                            'pending' => 'În așteptare',
-                            'sold' => 'Vândut',
-                            'reserved' => 'Rezervat',
+                            'draft' => 'Draft',
+                            'active' => 'Active',
+                            'pending' => 'Pending',
+                            'sold' => 'Sold',
+                            'reserved' => 'Reserved',
                             default => $state,
                         })
                         ->color(fn (string $state): string => match ($state) {
@@ -75,41 +91,42 @@ class VehicleInfolist
                     
                     TextEntry::make('vin')
                         ->label('VIN')
-                        ->placeholder('Nespecificat')
+                        ->placeholder('Not specified')
                         ->copyable(),
                 ]),
 
                 Grid::make(3)->schema([
                     TextEntry::make('price')
-                        ->label('Preț')
+                        ->label('Price')
                         ->money(fn ($record) => $record->currency ?? 'EUR')
                         ->size('lg')
                         ->weight('bold')
                         ->color('success'),
                     
                     TextEntry::make('location_city')
-                        ->label('Oraș')
-                        ->placeholder('Nespecificat')
+                        ->label('City')
+                        ->placeholder('Not specified')
                         ->icon('heroicon-o-map-pin'),
                     
                     TextEntry::make('location_country')
-                        ->label('Țară')
-                        ->placeholder('Nespecificat'),
+                        ->label('Country')
+                        ->placeholder('Not specified'),
                 ]),
 
                 Grid::make(3)->schema([
                     TextEntry::make('fuel_type')
-                        ->label('Combustibil')
+                        ->label('Fuel Type')
                         ->badge()
                         ->formatStateUsing(fn (?string $state): string => match ($state) {
-                            'petrol' => 'Benzină',
-                            'diesel' => 'Motorină',
+                            'petrol' => 'Petrol',
+                            'diesel' => 'Diesel',
                             'electric' => 'Electric',
-                            'hybrid' => 'Hibrid',
-                            'plugin_hybrid' => 'Hibrid Plug-in',
-                            'lpg' => 'GPL',
+                            'hybrid' => 'Hybrid',
+                            'plugin_hybrid' => 'Plug-in Hybrid',
+                            'lpg' => 'LPG',
                             'cng' => 'CNG',
-                            default => $state ?? 'Nespecificat',
+                            'hydrogen' => 'Hydrogen',
+                            default => $state ?? 'Not specified',
                         })
                         ->color(fn (?string $state): string => match ($state) {
                             'petrol' => 'warning',
@@ -117,84 +134,86 @@ class VehicleInfolist
                             'electric' => 'success',
                             'hybrid' => 'primary',
                             'plugin_hybrid' => 'primary',
+                            'hydrogen' => 'success',
                             default => 'gray',
                         }),
                     
                     TextEntry::make('transmission')
-                        ->label('Transmisie')
+                        ->label('Transmission')
                         ->formatStateUsing(fn (?string $state): string => match ($state) {
-                            'manual' => 'Manuală',
-                            'automatic' => 'Automată',
-                            'semi_automatic' => 'Semi-automată',
-                            default => $state ?? 'Nespecificat',
+                            'manual' => 'Manual',
+                            'automatic' => 'Automatic',
+                            'semi_automatic' => 'Semi-Automatic',
+                            default => $state ?? 'Not specified',
                         })
-                        ->placeholder('Nespecificat'),
+                        ->placeholder('Not specified'),
                     
                     TextEntry::make('body_type')
-                        ->label('Tip caroserie')
+                        ->label('Body Type')
                         ->formatStateUsing(fn (?string $state): string => match ($state) {
                             'sedan' => 'Sedan',
                             'hatchback' => 'Hatchback',
                             'suv' => 'SUV',
                             'coupe' => 'Coupe',
-                            'convertible' => 'Cabrio',
-                            'wagon' => 'Break',
-                            'van' => 'Dubă',
-                            'pickup' => 'Pickup',
-                            default => $state ?? 'Nespecificat',
+                            'convertible' => 'Convertible',
+                            'wagon' => 'Wagon',
+                            'van' => 'Van',
+                            'truck' => 'Truck',
+                            'minivan' => 'Minivan',
+                            default => $state ?? 'Not specified',
                         })
-                        ->placeholder('Nespecificat'),
+                        ->placeholder('Not specified'),
                 ]),
 
                 Grid::make(3)->schema([
                     TextEntry::make('mileage')
-                        ->label('Kilometraj')
+                        ->label('Mileage')
                         ->numeric()
                         ->suffix(' km')
-                        ->placeholder('Nespecificat'),
+                        ->placeholder('Not specified'),
                     
                     TextEntry::make('engine_size')
-                        ->label('Capacitate motor')
+                        ->label('Engine Size')
                         ->numeric()
                         ->suffix(' cc')
-                        ->placeholder('Nespecificat'),
+                        ->placeholder('Not specified'),
                     
                     TextEntry::make('power_hp')
-                        ->label('Putere')
+                        ->label('Power')
                         ->numeric()
-                        ->suffix(' CP')
-                        ->placeholder('Nespecificat'),
+                        ->suffix(' HP')
+                        ->placeholder('Not specified'),
                 ]),
 
                 Grid::make(3)->schema([
                     TextEntry::make('color')
-                        ->label('Culoare')
-                        ->placeholder('Nespecificat'),
+                        ->label('Color')
+                        ->placeholder('Not specified'),
                     
                     TextEntry::make('doors')
-                        ->label('Număr uși')
+                        ->label('Doors')
                         ->numeric()
-                        ->placeholder('Nespecificat'),
+                        ->placeholder('Not specified'),
                     
                     TextEntry::make('seats')
-                        ->label('Număr locuri')
+                        ->label('Seats')
                         ->numeric()
-                        ->placeholder('Nespecificat'),
+                        ->placeholder('Not specified'),
                 ]),
 
                 TextEntry::make('description')
-                    ->label('Descriere')
-                    ->placeholder('Fără descriere')
+                    ->label('Description')
+                    ->placeholder('No description')
                     ->columnSpanFull()
                     ->html(),
 
                 ImageEntry::make('primary_image')
-                    ->label('Imagine principală')
+                    ->label('Primary Image')
                     ->defaultImageUrl(url('/images/placeholder-vehicle.png'))
                     ->size(300),
 
                 ImageEntry::make('images')
-                    ->label('Galerie imagini')
+                    ->label('Image Gallery')
                     ->columnSpanFull()
                     ->limit(10)
                     ->size(150),
@@ -202,28 +221,28 @@ class VehicleInfolist
                 Grid::make(2)->schema([
                     TextEntry::make('dealer.name')
                         ->label('Dealer')
-                        ->placeholder('Fără dealer')
+                        ->placeholder('No dealer')
                         ->icon('heroicon-o-building-storefront'),
                     
                     TextEntry::make('seller.name')
-                        ->label('Vânzător')
+                        ->label('Seller')
                         ->icon('heroicon-o-user'),
                 ]),
 
                 Grid::make(3)->schema([
                     TextEntry::make('created_at')
-                        ->label('Creat la')
-                        ->dateTime('d/m/Y H:i')
+                        ->label('Created At')
+                        ->dateTime('Y-m-d H:i')
                         ->icon('heroicon-o-clock'),
                     
                     TextEntry::make('updated_at')
-                        ->label('Actualizat la')
-                        ->dateTime('d/m/Y H:i')
+                        ->label('Updated At')
+                        ->dateTime('Y-m-d H:i')
                         ->icon('heroicon-o-arrow-path'),
                     
                     TextEntry::make('deleted_at')
-                        ->label('Șters la')
-                        ->dateTime('d/m/Y H:i')
+                        ->label('Deleted At')
+                        ->dateTime('Y-m-d H:i')
                         ->icon('heroicon-o-trash')
                         ->visible(fn (Vehicle $record): bool => $record->trashed())
                         ->color('danger'),

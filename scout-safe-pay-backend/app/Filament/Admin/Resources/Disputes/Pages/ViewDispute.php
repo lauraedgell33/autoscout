@@ -6,6 +6,7 @@ use App\Filament\Admin\Resources\Disputes\DisputeResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Infolists;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 
 class ViewDispute extends ViewRecord
@@ -63,14 +64,14 @@ class ViewDispute extends ViewRecord
                 ->action(fn () => $this->record->update(['status' => 'escalated']))
                 ->visible(fn () => $this->record->status !== 'escalated'),
 
-            Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            EditAction::make(),
+            DeleteAction::make(),
         ];
     }
 
     public function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->schema([
                 Infolists\Components\Section::make('Dispute Details')
                     ->schema([

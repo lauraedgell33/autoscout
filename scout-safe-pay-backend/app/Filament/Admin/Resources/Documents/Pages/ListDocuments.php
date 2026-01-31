@@ -3,8 +3,9 @@
 namespace App\Filament\Admin\Resources\Documents\Pages;
 
 use App\Filament\Admin\Resources\Documents\DocumentResource;
+use App\Models\Document;
 use Filament\Actions;
-use Filament\Resources\Pages\ListRecords\Tab;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -23,56 +24,39 @@ class ListDocuments extends ListRecords
     {
         return [
             'all' => Tab::make('All Documents')
-                ->badge(fn () => $this->getModel()::count()),
+                ->badge(fn () => Document::count()),
 
-            'active' => Tab::make('Active')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'active'))
-                ->badge(fn () => $this->getModel()::where('status', 'active')->count())
+            'verified' => Tab::make('Verified')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('is_verified', true))
+                ->badge(fn () => Document::where('is_verified', true)->count())
                 ->badgeColor('success'),
 
-            'draft' => Tab::make('Draft')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'draft'))
-                ->badge(fn () => $this->getModel()::where('status', 'draft')->count())
-                ->badgeColor('secondary'),
-
-            'expired' => Tab::make('Expired')
-                ->modifyQueryUsing(fn (Builder $query) => 
-                    $query->whereNotNull('expires_at')
-                        ->whereDate('expires_at', '<', now())
-                )
-                ->badge(fn () => $this->getModel()::whereNotNull('expires_at')
-                    ->whereDate('expires_at', '<', now())->count())
-                ->badgeColor('danger'),
-
-            'expiring_soon' => Tab::make('Expiring Soon')
-                ->modifyQueryUsing(fn (Builder $query) => 
-                    $query->whereNotNull('expires_at')
-                        ->whereDate('expires_at', '<=', now()->addDays(30))
-                        ->whereDate('expires_at', '>=', now())
-                )
-                ->badge(fn () => $this->getModel()::whereNotNull('expires_at')
-                    ->whereDate('expires_at', '<=', now()->addDays(30))
-                    ->whereDate('expires_at', '>=', now())->count())
+            'pending' => Tab::make('Pending Verification')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('is_verified', false))
+                ->badge(fn () => Document::where('is_verified', false)->count())
                 ->badgeColor('warning'),
 
             'contracts' => Tab::make('Contracts')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', 'contract'))
-                ->badge(fn () => $this->getModel()::where('type', 'contract')->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', Document::TYPE_SALES_CONTRACT))
+                ->badge(fn () => Document::where('type', Document::TYPE_SALES_CONTRACT)->count())
                 ->badgeColor('primary'),
 
-            'certificates' => Tab::make('Certificates')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', 'certificate'))
-                ->badge(fn () => $this->getModel()::where('type', 'certificate')->count())
-                ->badgeColor('warning'),
-
-            'archived' => Tab::make('Archived')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'archived'))
-                ->badge(fn () => $this->getModel()::where('status', 'archived')->count())
-                ->badgeColor('gray'),
+            'vehicle_docs' => Tab::make('Vehicle Documents')
+                ->modifyQueryUsing(fn (Builder $query) => $query->whereIn('type', [
+                    Document::TYPE_VEHICLE_REGISTRATION,
+                    Document::TYPE_INSPECTION_REPORT,
+                    Document::TYPE_OWNERSHIP_CERTIFICATE,
+                ]))
+                ->badge(fn () => Document::whereIn('type', [
+                    Document::TYPE_VEHICLE_REGISTRATION,
+                    Document::TYPE_INSPECTION_REPORT,
+                    Document::TYPE_OWNERSHIP_CERTIFICATE,
+                ])->count())
+                ->badgeColor('info'),
 
             'trashed' => Tab::make('Trashed')
                 ->modifyQueryUsing(fn (Builder $query) => $query->onlyTrashed())
-                ->badge(fn () => $this->getModel()::onlyTrashed()->count())
+                ->badge(fn () => Document::onlyTrashed()->count())
                 ->badgeColor('danger'),
         ];
     }

@@ -5,7 +5,7 @@ namespace App\Filament\Admin\Resources\Invoices\Pages;
 use App\Filament\Admin\Resources\Invoices\InvoiceResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Resources\Pages\ListRecords\Tab;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListInvoices extends ListRecords
@@ -43,16 +43,23 @@ class ListInvoices extends ListRecords
             'overdue' => Tab::make('Overdue')
                 ->modifyQueryUsing(fn (Builder $query) => 
                     $query->where('status', '!=', 'paid')
-                        ->whereDate('due_date', '<', now())
+                        ->whereNotNull('due_at')
+                        ->whereDate('due_at', '<', now())
                 )
                 ->badge(fn () => \App\Models\Invoice::where('status', '!=', 'paid')
-                    ->whereDate('due_date', '<', now())
+                    ->whereNotNull('due_at')
+                    ->whereDate('due_at', '<', now())
                     ->count())
                 ->badgeColor('danger'),
             
+            'confirmed' => Tab::make('Confirmed')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'confirmed'))
+                ->badge(fn () => \App\Models\Invoice::where('status', 'confirmed')->count())
+                ->badgeColor('success'),
+            
             'this_month' => Tab::make('This Month')
-                ->modifyQueryUsing(fn (Builder $query) => $query->whereMonth('invoice_date', now()->month))
-                ->badge(fn () => \App\Models\Invoice::whereMonth('invoice_date', now()->month)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->whereMonth('issued_at', now()->month))
+                ->badge(fn () => \App\Models\Invoice::whereMonth('issued_at', now()->month)->count())
                 ->badgeColor('warning'),
         ];
     }

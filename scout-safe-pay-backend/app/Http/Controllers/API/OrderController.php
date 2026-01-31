@@ -40,7 +40,7 @@ class OrderController extends Controller
             ], 422);
         }
 
-        // Create transaction
+        // Create transaction with required escrow fields
         $transaction = Transaction::create([
             'transaction_code' => 'TXN-' . strtoupper(Str::random(10)),
             'buyer_id' => Auth::id(),
@@ -49,9 +49,10 @@ class OrderController extends Controller
             'dealer_id' => $vehicle->dealer_id,
             'amount' => $vehicle->price,
             'currency' => 'EUR',
-            'status' => 'draft',
-            'delivery_address' => $request->delivery_address,
-            'delivery_contact' => $request->delivery_contact,
+            'status' => 'pending',
+            'escrow_account_iban' => config('services.escrow.iban', 'DE89370400440532013000'),
+            'escrow_account_country' => config('services.escrow.country', 'DE'),
+            'payment_reference' => 'AS24-REF-' . strtoupper(Str::random(12)),
             'metadata' => [
                 'buyer_name' => Auth::user()->name,
                 'buyer_email' => Auth::user()->email,
@@ -62,9 +63,21 @@ class OrderController extends Controller
         // Update vehicle status
         $vehicle->update(['status' => 'reserved']);
 
+        $transaction->load(['vehicle', 'buyer', 'dealer']);
+        
         return response()->json([
             'message' => 'Order created successfully',
-            'transaction' => $transaction->load(['vehicle', 'buyer', 'dealer'])
+            'data' => [
+                'id' => $transaction->id,
+                'reference_number' => $transaction->transaction_code,
+                'status' => $transaction->status,
+                'vehicle_id' => $transaction->vehicle_id,
+                'buyer_id' => $transaction->buyer_id,
+                'seller_id' => $transaction->seller_id,
+                'amount' => $transaction->amount,
+                'created_at' => $transaction->created_at,
+            ],
+            'transaction' => $transaction,
         ], 201);
     }
 

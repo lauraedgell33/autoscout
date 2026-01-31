@@ -12,6 +12,24 @@ use Illuminate\Support\Facades\Validator;
 class MessageController extends Controller
 {
     /**
+     * Get all messages for authenticated user
+     */
+    public function allMessages(Request $request)
+    {
+        $userId = auth()->id();
+        
+        $messages = Message::where(function($query) use ($userId) {
+                $query->where('sender_id', $userId)
+                      ->orWhere('receiver_id', $userId);
+            })
+            ->with(['sender:id,name,email', 'receiver:id,name,email', 'transaction:id,amount,status'])
+            ->orderBy('created_at', 'desc')
+            ->paginate($request->get('per_page', 20));
+
+        return response()->json($messages);
+    }
+
+    /**
      * Get all conversations for authenticated user
      */
     public function conversations(Request $request)

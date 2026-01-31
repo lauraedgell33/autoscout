@@ -7,10 +7,21 @@ use App\Filament\Admin\Resources\Disputes\Pages\EditDispute;
 use App\Filament\Admin\Resources\Disputes\Pages\ListDisputes;
 use App\Filament\Admin\Resources\Disputes\Pages\ViewDispute;
 use App\Models\Dispute;
+use Filament\Schemas;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Tables;
+use Filament\Actions;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -48,9 +59,9 @@ class DisputeResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
-                Forms\Components\Section::make('Dispute Information')
+                Schemas\Components\Section::make('Dispute Information')
                     ->schema([
                         Forms\Components\TextInput::make('dispute_code')
                             ->label('Dispute Code')
@@ -98,7 +109,7 @@ class DisputeResource extends Resource
                             ->maxLength(2000),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Evidence')
+                Schemas\Components\Section::make('Evidence')
                     ->schema([
                         Forms\Components\FileUpload::make('evidence_urls')
                             ->label('Evidence Files')
@@ -113,7 +124,7 @@ class DisputeResource extends Resource
                             ->previewable(),
                     ]),
 
-                Forms\Components\Section::make('Resolution')
+                Schemas\Components\Section::make('Resolution')
                     ->schema([
                         Forms\Components\Select::make('status')
                             ->label('Status')
@@ -157,7 +168,7 @@ class DisputeResource extends Resource
                             ->visible(fn (callable $get) => in_array($get('status'), ['resolved', 'closed'])),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Party Responses')
+                Schemas\Components\Section::make('Party Responses')
                     ->schema([
                         Forms\Components\Textarea::make('seller_response')
                             ->label('Seller Response')
@@ -175,7 +186,7 @@ class DisputeResource extends Resource
                             ->helperText('Internal notes (not visible to users)'),
                     ])->columns(1),
 
-                Forms\Components\Section::make('Additional Data')
+                Schemas\Components\Section::make('Additional Data')
                     ->schema([
                         Forms\Components\KeyValue::make('metadata')
                             ->label('Metadata')
@@ -303,7 +314,7 @@ class DisputeResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\Action::make('investigate')
+                Actions\Action::make('investigate')
                     ->label('Investigate')
                     ->icon('heroicon-o-magnifying-glass')
                     ->color('warning')
@@ -311,7 +322,7 @@ class DisputeResource extends Resource
                     ->action(fn (Dispute $record) => $record->update(['status' => 'investigating']))
                     ->visible(fn (Dispute $record) => $record->status === 'open'),
 
-                Tables\Actions\Action::make('resolve')
+                Actions\Action::make('resolve')
                     ->label('Resolve')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
@@ -343,7 +354,7 @@ class DisputeResource extends Resource
                     })
                     ->visible(fn (Dispute $record) => !in_array($record->status, ['resolved', 'closed'])),
 
-                Tables\Actions\Action::make('escalate')
+                Actions\Action::make('escalate')
                     ->label('Escalate')
                     ->icon('heroicon-o-arrow-up-circle')
                     ->color('danger')
@@ -351,31 +362,31 @@ class DisputeResource extends Resource
                     ->action(fn (Dispute $record) => $record->update(['status' => 'escalated']))
                     ->visible(fn (Dispute $record) => $record->status !== 'escalated'),
 
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
+                ForceDeleteAction::make(),
+                RestoreAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('mark_investigating')
+                BulkActionGroup::make([
+                    Actions\BulkAction::make('mark_investigating')
                         ->label('Mark as Investigating')
                         ->icon('heroicon-o-magnifying-glass')
                         ->color('warning')
                         ->requiresConfirmation()
                         ->action(fn ($records) => $records->each->update(['status' => 'investigating'])),
 
-                    Tables\Actions\BulkAction::make('assign_to_me')
+                    Actions\BulkAction::make('assign_to_me')
                         ->label('Assign to Me')
                         ->icon('heroicon-o-user')
                         ->color('info')
                         ->requiresConfirmation()
                         ->action(fn ($records) => $records->each->update(['resolved_by' => auth()->id()])),
 
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+                    DeleteBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ])
             ->poll('30s');

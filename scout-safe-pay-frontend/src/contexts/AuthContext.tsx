@@ -32,7 +32,7 @@ interface RegisterData {
   password_confirmation: string
   phone?: string
   user_type: 'buyer' | 'seller' | 'dealer'
-  country?: string
+  country: string
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)

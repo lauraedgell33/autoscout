@@ -199,7 +199,7 @@ export default function VehicleDetailsPage() {
                   </h1>
                   <div className="flex flex-wrap gap-2">
                     <StatusBadge status={vehicle.status} />
-                    <ConditionBadge condition={vehicle.condition} />
+                    <ConditionBadge condition={vehicle.condition ?? 'good'} />
                   </div>
                 </div>
                 

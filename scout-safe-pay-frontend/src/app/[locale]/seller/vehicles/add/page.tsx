@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
-export default function AddVehiclePage({ params }: { params: { locale: string } }) {
+export default function AddVehiclePage() {
   const router = useRouter();
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
   const [formData, setFormData] = useState({
     title: '',
     price: '',
@@ -18,7 +20,7 @@ export default function AddVehiclePage({ params }: { params: { locale: string } 
     e.preventDefault();
     // Add vehicle logic
     alert('Vehicle added successfully!');
-    router.push(`/${params.locale}/seller/listings`);
+    router.push(`/${locale}/seller/listings`);
   };
 
   return (

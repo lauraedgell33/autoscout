@@ -1,6 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/routing'
 import { Briefcase, MapPin, Clock, Users } from 'lucide-react'
 
 export default function CareersPage() {
@@ -55,9 +56,9 @@ export default function CareersPage() {
                         <div className="flex items-center"><Clock className="w-4 h-4 mr-2" />{position.type}</div>
                       </div>
                     </div>
-                    <a href="/contact" className="mt-4 md:mt-0 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 inline-block text-center">
+                    <Link href="/contact" className="mt-4 md:mt-0 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 inline-block text-center">
                       {t('pages.careers.apply_now')}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -68,9 +69,9 @@ export default function CareersPage() {
               <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
                 We're always looking for talented people. Send us your CV and tell us how you could contribute to our team.
               </p>
-              <a href="/contact" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 inline-block">
+              <Link href="/contact" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 inline-block">
                 {t('pages.careers.send_application')}
-              </a>
+              </Link>
             </div>
           </div>
         </div>

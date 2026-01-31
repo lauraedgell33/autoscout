@@ -4,10 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\VehicleResource\Pages;
 use App\Models\Vehicle;
+use Filament\Schemas;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Actions;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -20,7 +22,7 @@ class VehicleResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\Section::make('Basic Information')
                     ->schema([
@@ -320,7 +322,7 @@ class VehicleResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 
-                Tables\Actions\Action::make('publish')
+                Actions\Action::make('publish')
                     ->label('Publish')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
@@ -328,7 +330,7 @@ class VehicleResource extends Resource
                     ->action(fn ($record) => $record->update(['status' => 'active']))
                     ->visible(fn ($record) => $record->status === 'draft'),
 
-                Tables\Actions\Action::make('unpublish')
+                Actions\Action::make('unpublish')
                     ->label('Unpublish')
                     ->icon('heroicon-o-x-circle')
                     ->color('warning')
@@ -339,15 +341,15 @@ class VehicleResource extends Resource
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('publish')
+                Actions\BulkActionGroup::make([
+                    Actions\BulkAction::make('publish')
                         ->label('Publish Selected')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
                         ->requiresConfirmation()
                         ->action(fn ($records) => $records->each->update(['status' => 'active'])),
 
-                    Tables\Actions\BulkAction::make('unpublish')
+                    Actions\BulkAction::make('unpublish')
                         ->label('Unpublish Selected')
                         ->icon('heroicon-o-x-circle')
                         ->color('warning')

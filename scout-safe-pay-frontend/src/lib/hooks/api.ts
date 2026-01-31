@@ -25,7 +25,16 @@ export const useLogin = () => {
   });
 };
 
-export const useVehicles = (filters?: { minPrice?: number; maxPrice?: number; brand?: string }) => {
+export const useVehicles = (filters?: {
+  price_min?: number;
+  price_max?: number;
+  make?: string;
+  category?: string;
+  status?: string;
+  search?: string;
+  per_page?: number;
+  page?: number;
+}) => {
   return useQuery({
     queryKey: ['vehicles', filters],
     queryFn: async () => {

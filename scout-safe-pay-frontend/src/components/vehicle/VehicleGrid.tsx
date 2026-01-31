@@ -13,9 +13,9 @@ import { EmptyState } from '@/components/ui/empty-state';
 export const VehicleGrid: React.FC = () => {
   const filters = useFilterStore((state) => state.filters);
   const { data: vehicles, isLoading } = useVehicles({
-    minPrice: filters.priceRange[0],
-    maxPrice: filters.priceRange[1],
-    brand: filters.brands[0],
+    price_min: filters.priceRange[0],
+    price_max: filters.priceRange[1],
+    make: filters.brands[0],
   });
 
   const addItem = useCartStore((state) => state.addItem);

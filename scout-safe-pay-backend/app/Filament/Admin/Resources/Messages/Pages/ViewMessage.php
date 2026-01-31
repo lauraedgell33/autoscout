@@ -6,6 +6,7 @@ use App\Filament\Admin\Resources\Messages\MessageResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Infolists;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 
 class ViewMessage extends ViewRecord
@@ -43,15 +44,15 @@ class ViewMessage extends ViewRecord
                     ]);
                 }),
 
-            Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            EditAction::make(),
+            DeleteAction::make(),
         ];
     }
 
     public function infolist(Schema $schema): Schema
     {
-        return $infolist
-            ->schema([
+        return $schema
+            ->components([
                 Infolists\Components\Section::make('Message Details')
                     ->schema([
                         Infolists\Components\TextEntry::make('sender.name')

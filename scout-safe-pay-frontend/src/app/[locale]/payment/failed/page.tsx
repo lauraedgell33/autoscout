@@ -1,13 +1,15 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams , useParams} from 'next/navigation';
 import { useEffect } from 'react';
 import { XCircle, ArrowLeft, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default function PaymentFailedPage({ params }: { params: { locale: string } }) {
+export default function PaymentFailedPage() {
   const router = useRouter();
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
   const searchParams = useSearchParams();
   const reason = searchParams.get('reason') || 'Unknown error occurred';
   const transactionId = searchParams.get('transaction_id');
@@ -80,7 +82,7 @@ export default function PaymentFailedPage({ params }: { params: { locale: string
               </Button>
               <Button
                 variant="outline"
-                onClick={() => router.push(`/${params.locale}/support/help`)}
+                onClick={() => router.push(`/${locale}/support/help`)}
                 className="flex-1 h-14 border-2 text-lg"
               >
                 <HelpCircle className="w-5 h-5 mr-2" />
@@ -91,7 +93,7 @@ export default function PaymentFailedPage({ params }: { params: { locale: string
             <div className="text-center pt-4">
               <Button
                 variant="ghost"
-                onClick={() => router.push(`/${params.locale}`)}
+                onClick={() => router.push(`/${locale}`)}
                 className="text-gray-600"
               >
                 Return to Homepage

@@ -4,10 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TransactionResource\Pages;
 use App\Models\Transaction;
+use Filament\Schemas;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Actions;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -20,7 +22,7 @@ class TransactionResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\Section::make('Transaction Information')
                     ->schema([
@@ -198,13 +200,13 @@ class TransactionResource extends Resource
                     }),
             ])
             ->actions([
-                Tables\Actions\Action::make('view_contract')
+                Actions\Action::make('view_contract')
                     ->label('Contract')
                     ->icon('heroicon-o-document')
                     ->url(fn ($record) => route('api.contracts.preview', $record))
                     ->openUrlInNewTab(),
 
-                Tables\Actions\Action::make('view_invoice')
+                Actions\Action::make('view_invoice')
                     ->label('Invoice')
                     ->icon('heroicon-o-receipt-percent')
                     ->url(fn ($record) => route('api.invoices.preview', $record))
@@ -213,7 +215,7 @@ class TransactionResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
 
-                Tables\Actions\Action::make('complete')
+                Actions\Action::make('complete')
                     ->label('Mark Completed')
                     ->icon('heroicon-o-check-badge')
                     ->color('success')
@@ -224,7 +226,7 @@ class TransactionResource extends Resource
                     ]))
                     ->visible(fn ($record) => $record->status === 'payment_received'),
 
-                Tables\Actions\Action::make('cancel')
+                Actions\Action::make('cancel')
                     ->label('Cancel')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
@@ -248,7 +250,7 @@ class TransactionResource extends Resource
                     ->visible(fn ($record) => !in_array($record->status, ['completed', 'cancelled'])),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+                Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);

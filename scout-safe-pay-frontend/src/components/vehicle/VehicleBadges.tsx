@@ -97,7 +97,7 @@ export default function VehicleBadge({ type, className = '', size = 'md' }: Vehi
 
 // Status Badge Component
 export interface StatusBadgeProps {
-  status: 'active' | 'sold' | 'reserved' | 'pending' | 'draft';
+  status: 'active' | 'sold' | 'reserved' | 'pending' | 'draft' | 'removed';
   className?: string;
 }
 
@@ -122,6 +122,10 @@ export function StatusBadge({ status, className = '' }: StatusBadgeProps) {
     draft: {
       label: 'Draft',
       colors: 'bg-gray-100 text-gray-600 border-gray-300',
+    },
+    removed: {
+      label: 'Removed',
+      colors: 'bg-red-100 text-red-800 border-red-300',
     },
   };
 

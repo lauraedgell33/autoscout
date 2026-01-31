@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function BuyerSettingsPage({ params }: { params: { locale: string } }) {
+export default function BuyerSettingsPage() {
   const [settings, setSettings] = useState({
     notifications: true,
     emailAlerts: true,

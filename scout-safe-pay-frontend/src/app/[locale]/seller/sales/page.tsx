@@ -1,13 +1,17 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { Search, Filter, Eye, Package } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-export default function SellerSalesPage({ params }: { params: { locale: string } }) {
+export default function SellerSalesPage() {
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
+
   const [sales, setSales] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -127,7 +131,7 @@ export default function SellerSalesPage({ params }: { params: { locale: string }
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <Link href={`/${params.locale}/transaction/${sale.id}`}>
+                      <Link href={`/${locale}/transaction/${sale.id}`}>
                         <Button variant="ghost" size="sm"><Eye className="h-4 w-4 mr-1" />View</Button>
                       </Link>
                     </td>

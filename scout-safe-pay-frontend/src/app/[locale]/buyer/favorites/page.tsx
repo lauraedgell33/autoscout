@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { Heart, X, Eye, Package } from 'lucide-react';
@@ -28,7 +29,10 @@ interface FavoriteVehicle {
   created_at: string;
 }
 
-export default function BuyerFavoritesPage({ params }: { params: { locale: string } }) {
+export default function BuyerFavoritesPage() {
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
+
   const t = useTranslations();
   const [favorites, setFavorites] = useState<FavoriteVehicle[]>([]);
   const [loading, setLoading] = useState(true);
@@ -81,7 +85,7 @@ export default function BuyerFavoritesPage({ params }: { params: { locale: strin
             {(favorites || []).length} saved {(favorites || []).length === 1 ? 'vehicle' : 'vehicles'}
           </p>
         </div>
-        <Link href={`/${params.locale}/marketplace`}>
+        <Link href={`/${locale}/marketplace`}>
           <Button>Browse Vehicles</Button>
         </Link>
       </div>
@@ -97,7 +101,7 @@ export default function BuyerFavoritesPage({ params }: { params: { locale: strin
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               Start adding vehicles to your favorites to see them here
             </p>
-            <Link href={`/${params.locale}/marketplace`}>
+            <Link href={`/${locale}/marketplace`}>
               <Button>Browse Marketplace</Button>
             </Link>
           </div>
@@ -164,13 +168,13 @@ export default function BuyerFavoritesPage({ params }: { params: { locale: strin
                 </div>
 
                 <div className="flex space-x-2">
-                  <Link href={`/${params.locale}/vehicle/${favorite.vehicle_id}`} className="flex-1">
+                  <Link href={`/${locale}/vehicle/${favorite.vehicle_id}`} className="flex-1">
                     <Button variant="outline" className="w-full" size="sm">
                       <Eye className="h-4 w-4 mr-2" />
                       View Details
                     </Button>
                   </Link>
-                  <Link href={`/${params.locale}/checkout/${favorite.vehicle_id}`} className="flex-1">
+                  <Link href={`/${locale}/checkout/${favorite.vehicle_id}`} className="flex-1">
                     <Button className="w-full" size="sm">
                       Buy Now
                     </Button>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { InputHTMLAttributes, forwardRef, useState } from 'react';
+import React, { InputHTMLAttributes, forwardRef, useState, useId } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { AlertCircle, CheckCircle2, Eye, EyeOff } from 'lucide-react';
@@ -40,8 +40,8 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
   ) => {
     const [showPassword, setShowPassword] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
-    // Use React 18+ useId for unique IDs if available, fallback to random
-    const inputId = id || `input-${React.useId?.() || Math.random().toString(36).substr(2, 9)}`;
+    const generatedId = useId();
+    const inputId = id || `input-${generatedId}`;
     const isPassword = type === 'password';
     const inputType = isPassword && showPassword ? 'text' : type;
 
@@ -72,29 +72,20 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       ),
     };
 
-    const ValidationIcon = () => {
-      if (!showValidationIcon) return null;
-      
-      if (error) {
-        return (
-          <AlertCircle 
-            className="w-5 h-5 text-error-500" 
-            aria-hidden="true"
-          />
-        );
-      }
-      
-      if (success) {
-        return (
-          <CheckCircle2 
-            className="w-5 h-5 text-success-500" 
-            aria-hidden="true"
-          />
-        );
-      }
-      
-      return null;
-    };
+    // Compute validation icon inline
+    const validationIcon = showValidationIcon ? (
+      error ? (
+        <AlertCircle 
+          className="w-5 h-5 text-error-500" 
+          aria-hidden="true"
+        />
+      ) : success ? (
+        <CheckCircle2 
+          className="w-5 h-5 text-success-500" 
+          aria-hidden="true"
+        />
+      ) : null
+    ) : null;
 
     return (
       <div className="w-full">
@@ -153,7 +144,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           {/* Right Icons Container */}
           <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
             {/* Validation Icon */}
-            <ValidationIcon />
+            {validationIcon}
 
             {/* Password Toggle */}
             {isPassword && (

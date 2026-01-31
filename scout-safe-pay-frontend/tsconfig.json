@@ -37,6 +37,10 @@
     "**/*.test.ts",
     "**/*.test.tsx",
     "**/__tests__/**",
-    "cypress/**"
+    "cypress/**",
+
+    // Non-production/example artifacts outside src/
+    "EXAMPLE_USAGE.tsx",
+    "components/**"
   ]
 }

@@ -122,14 +122,14 @@ export default function NotificationsPage() {
           <div className="flex gap-2">
             <Button
               onClick={() => setFilter('all')}
-              variant={filter === 'all' ? 'default' : 'outline'}
+              variant={filter === 'all' ? 'primary' : 'outline'}
               className="flex-1 sm:flex-initial"
             >
               All
             </Button>
             <Button
               onClick={() => setFilter('unread')}
-              variant={filter === 'unread' ? 'default' : 'outline'}
+              variant={filter === 'unread' ? 'primary' : 'outline'}
               className="flex-1 sm:flex-initial"
             >
               Unread
@@ -168,7 +168,7 @@ export default function NotificationsPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2 mb-1">
                       <h3 className="font-semibold text-blue-900 text-sm sm:text-base">
-                        {notification.title || 'Notification'}
+                        {notificationService.getNotificationTitle(notification.data?.type || notification.type)}
                       </h3>
                       {!notification.read_at && (
                         <Badge className="bg-orange-500 hover:bg-orange-600 text-xs flex-shrink-0">
@@ -178,7 +178,7 @@ export default function NotificationsPage() {
                     </div>
                     
                     <p className="text-sm text-gray-600 mb-2">
-                      {notification.message || 'You have a new notification'}
+                      {notification.data?.message || 'You have a new notification'}
                     </p>
                     
                     <div className="flex items-center gap-4 text-xs text-gray-500">

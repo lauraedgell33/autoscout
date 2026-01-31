@@ -11,14 +11,15 @@ class CreateInvoice extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // Calculate total if not provided
-        if (empty($data['total_amount'])) {
-            $data['total_amount'] = ($data['amount'] ?? 0) + ($data['tax_amount'] ?? 0);
-        }
-
         // Generate invoice number if not provided
         if (empty($data['invoice_number'])) {
-            $data['invoice_number'] = 'INV-' . date('Ymd') . '-' . strtoupper(substr(md5(time() . rand()), 0, 6));
+            $data['invoice_number'] = \App\Models\Invoice::generateInvoiceNumber();
+        }
+
+        // Calculate VAT and total
+        if (isset($data['amount']) && isset($data['vat_percentage'])) {
+            $data['vat_amount'] = round($data['amount'] * ($data['vat_percentage'] / 100), 2);
+            $data['total_amount'] = round($data['amount'] + $data['vat_amount'], 2);
         }
 
         return $data;

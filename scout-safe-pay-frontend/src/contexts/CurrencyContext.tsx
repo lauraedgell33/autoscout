@@ -45,8 +45,11 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
 
   // Auto-change currency when locale changes
   useEffect(() => {
-    const defaultCurrency = localeToCurrency[locale] || 'EUR';
-    setCurrencyState(defaultCurrency);
+    const frame = requestAnimationFrame(() => {
+      const defaultCurrency = localeToCurrency[locale] || 'EUR';
+      setCurrencyState(defaultCurrency);
+    });
+    return () => cancelAnimationFrame(frame);
   }, [locale]);
 
   const setCurrency = (newCurrency: Currency) => {

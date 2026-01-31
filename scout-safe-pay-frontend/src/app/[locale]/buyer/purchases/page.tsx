@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { Package, Eye, Download, FileText } from 'lucide-react';
@@ -26,7 +27,10 @@ interface Purchase {
   invoice_url?: string;
 }
 
-export default function BuyerPurchasesPage({ params }: { params: { locale: string } }) {
+export default function BuyerPurchasesPage() {
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
+
   const t = useTranslations();
   const [purchases, setPurchases] = useState<Purchase[]>([]);
   const [loading, setLoading] = useState(true);
@@ -95,7 +99,7 @@ export default function BuyerPurchasesPage({ params }: { params: { locale: strin
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               Your completed purchases will appear here
             </p>
-            <Link href={`/${params.locale}/marketplace`}>
+            <Link href={`/${locale}/marketplace`}>
               <Button>Browse Marketplace</Button>
             </Link>
           </div>
@@ -142,7 +146,7 @@ export default function BuyerPurchasesPage({ params }: { params: { locale: strin
                 </div>
 
                 <div className="flex flex-col space-y-2 md:items-end">
-                  <Link href={`/${params.locale}/transaction/${purchase.transaction_id}`}>
+                  <Link href={`/${locale}/transaction/${purchase.transaction_id}`}>
                     <Button variant="outline" size="sm" className="w-full md:w-auto">
                       <Eye className="h-4 w-4 mr-2" />
                       View Details

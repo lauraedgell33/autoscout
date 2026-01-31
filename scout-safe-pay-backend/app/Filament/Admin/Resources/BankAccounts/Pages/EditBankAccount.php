@@ -25,9 +25,9 @@ class EditBankAccount extends EditRecord
                 ]))
                 ->visible(fn () => !$this->record->is_verified),
 
-            Actions\DeleteAction::make(),
-            Actions\ForceDeleteAction::make(),
-            Actions\RestoreAction::make(),
+            DeleteAction::make(),
+            ForceDeleteAction::make(),
+            RestoreAction::make(),
         ];
     }
 

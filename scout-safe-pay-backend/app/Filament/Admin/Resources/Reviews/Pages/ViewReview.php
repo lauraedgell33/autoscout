@@ -31,14 +31,14 @@ class ViewReview extends ViewRecord
                 ->action(fn () => $this->record->update(['status' => 'rejected']))
                 ->visible(fn () => $this->record->status !== 'rejected'),
 
-            Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            EditAction::make(),
+            DeleteAction::make(),
         ];
     }
 
     public function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->schema([
                 Infolists\Components\Section::make('Review Details')
                     ->schema([

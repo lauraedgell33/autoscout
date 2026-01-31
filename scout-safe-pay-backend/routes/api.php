@@ -141,11 +141,18 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // Transactions (Bank Transfer Escrow Flow)
     Route::get('transactions', [TransactionController::class, 'index']);
+    Route::get('transactions/statistics', [TransactionController::class, 'statistics']);
     Route::post('transactions', [TransactionController::class, 'store']);
     Route::get('transactions/{id}', [TransactionController::class, 'show']);
     Route::post('transactions/{id}/upload-payment-proof', [TransactionController::class, 'uploadPaymentProof'])->middleware('throttle:10,60');
+    Route::post('transactions/{id}/upload-receipt', [TransactionController::class, 'uploadReceipt'])->middleware('throttle:10,60');
+    Route::post('transactions/{id}/confirm-payment', [TransactionController::class, 'confirmPayment']);
+    Route::post('transactions/{id}/schedule-inspection', [TransactionController::class, 'scheduleInspection']);
+    Route::post('transactions/{id}/complete-inspection', [TransactionController::class, 'completeInspection']);
     Route::post('transactions/{id}/verify-payment', [TransactionController::class, 'verifyPayment']);
     Route::post('transactions/{id}/release-funds', [TransactionController::class, 'releaseFunds']);
+    Route::post('transactions/{id}/raise-dispute', [TransactionController::class, 'raiseDispute']);
+    Route::post('transactions/{id}/refund', [TransactionController::class, 'refund']);
     Route::post('transactions/{id}/cancel', [TransactionController::class, 'cancel']);
     
     // Contracts
@@ -195,6 +202,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('my-disputes', [DisputeController::class, 'myDisputes']);
     
     // Messages
+    Route::get('messages', [App\Http\Controllers\API\MessageController::class, 'allMessages']);
     Route::get('messages/conversations', [App\Http\Controllers\API\MessageController::class, 'conversations']);
     Route::get('messages/unread-count', [App\Http\Controllers\API\MessageController::class, 'unreadCount']);
     Route::get('transactions/{transaction}/messages', [App\Http\Controllers\API\MessageController::class, 'index']);

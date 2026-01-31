@@ -50,14 +50,14 @@ class ViewDocument extends ViewRecord
                 ->action(fn () => $this->record->update(['status' => 'active']))
                 ->visible(fn () => $this->record->status !== 'active'),
 
-            Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            EditAction::make(),
+            DeleteAction::make(),
         ];
     }
 
     public function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->schema([
                 Infolists\Components\Section::make('Document Details')
                     ->schema([

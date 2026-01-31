@@ -114,9 +114,11 @@ export default function TransactionPage() {
 
   const handleCancelTransaction = async () => {
     if (!confirm('Are you sure you want to cancel this transaction?')) return
-    
+
+    const reason = window.prompt('Cancellation reason (optional):') || 'User cancelled'
+
     try {
-      await transactionService.cancel(params.id as string)
+      await transactionService.cancel(params.id as string, reason)
       await loadTransaction()
       alert('transaction.cancelled_success')
     } catch (err: any) {

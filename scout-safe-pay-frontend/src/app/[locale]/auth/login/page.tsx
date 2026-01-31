@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams , useParams} from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card } from '@/components/ui/card';
@@ -10,9 +10,11 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Mail, Lock, LogIn, Shield, Eye, EyeOff } from 'lucide-react';
 
-export default function LoginPage({ params }: { params: { locale: string } }) {
+export default function LoginPage() {
   const { login, loading: authLoading } = useAuth();
   const searchParams = useSearchParams();
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
   const returnUrl = searchParams.get('returnUrl');
   
   const [email, setEmail] = useState('');
@@ -52,7 +54,7 @@ export default function LoginPage({ params }: { params: { locale: string } }) {
           <p className="mt-2 text-sm text-gray-600">
             Or{' '}
             <Link
-              href={`/${params.locale}/auth/register`}
+              href={`/${locale}/auth/register`}
               className="font-medium text-orange-500 hover:text-orange-600"
             >
               create a new account
@@ -138,7 +140,7 @@ export default function LoginPage({ params }: { params: { locale: string } }) {
 
             <div className="text-sm">
               <Link
-                href={`/${params.locale}/auth/forgot-password`}
+                href={`/${locale}/auth/forgot-password`}
                 className="font-medium text-orange-500 hover:text-orange-600"
               >
                 Forgot password?

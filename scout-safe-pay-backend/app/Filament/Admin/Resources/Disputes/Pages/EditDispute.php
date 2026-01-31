@@ -33,10 +33,10 @@ class EditDispute extends EditRecord
                 ]))
                 ->visible(fn () => !in_array($this->record->status, ['resolved', 'closed'])),
 
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
-            Actions\ForceDeleteAction::make(),
-            Actions\RestoreAction::make(),
+            ViewAction::make(),
+            DeleteAction::make(),
+            ForceDeleteAction::make(),
+            RestoreAction::make(),
         ];
     }
 

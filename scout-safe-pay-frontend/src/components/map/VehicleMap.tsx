@@ -1,22 +1,9 @@
 'use client';
 
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useState, useEffect } from 'react';
-import { Loader2, MapPin } from 'lucide-react';
-import L from 'leaflet';
+import { MapPin } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import 'leaflet/dist/leaflet.css';
 import { MapSkeleton } from '../common/SkeletonCard';
-
-// Fix for default marker icons in Next.js
-if (typeof window !== 'undefined') {
-  delete (L.Icon.Default.prototype as any)._getIconUrl;
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-    iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  });
-}
 
 interface VehicleMapProps {
   latitude: number;
@@ -28,26 +15,8 @@ interface VehicleMapProps {
   zoom?: number;
 }
 
-/**
- * VehicleMap Component
- * 
- * FREE alternative to Mapbox using Leaflet + OpenStreetMap
- * - Zero cost, unlimited usage
- * - No API key required
- * - Fully functional maps with markers and popups
- * - Loading skeleton state
- * - Mobile-friendly zoom controls
- * - Accessible with ARIA labels
- * 
- * @param latitude - Vehicle latitude coordinate
- * @param longitude - Vehicle longitude coordinate
- * @param title - Vehicle title for popup
- * @param price - Vehicle price for popup
- * @param className - Additional CSS classes
- * @param height - Map height (default: 400px)
- * @param zoom - Initial zoom level (default: 13)
- */
-function VehicleMapComponent({
+// Internal map component that will be dynamically imported
+function LeafletMapInternal({
   latitude,
   longitude,
   title,
@@ -56,16 +25,36 @@ function VehicleMapComponent({
   height = '400px',
   zoom = 13,
 }: VehicleMapProps) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [mapError, setMapError] = useState(false);
+  const [mapReady, setMapReady] = useState(false);
+  const [MapComponents, setMapComponents] = useState<any>(null);
 
   useEffect(() => {
-    // Simulate map loading
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
+    // Dynamic import of react-leaflet components client-side only
+    const loadMap = async () => {
+      const leaflet = await import('leaflet');
+      const { MapContainer, TileLayer, Marker, Popup } = await import('react-leaflet');
+      
+      // Load Leaflet CSS dynamically
+      if (!document.querySelector('link[href*="leaflet.css"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        document.head.appendChild(link);
+      }
 
-    return () => clearTimeout(timer);
+      // Fix for default marker icons
+      delete (leaflet.Icon.Default.prototype as any)._getIconUrl;
+      leaflet.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+      });
+
+      setMapComponents({ MapContainer, TileLayer, Marker, Popup });
+      setMapReady(true);
+    };
+
+    loadMap();
   }, []);
 
   // Validate coordinates
@@ -83,35 +72,11 @@ function VehicleMapComponent({
     );
   }
 
-  // Show loading skeleton
-  if (isLoading) {
+  if (!mapReady || !MapComponents) {
     return <MapSkeleton height={height} />;
   }
 
-  // Show error state
-  if (mapError) {
-    return (
-      <div 
-        className={`flex flex-col items-center justify-center bg-gray-100 rounded-lg ${className}`}
-        style={{ height }}
-        role="alert"
-        aria-label="Map failed to load"
-      >
-        <MapPin className="text-[var(--color-error)] mb-2" size={48} aria-hidden="true" />
-        <p className="text-[var(--color-error)] font-medium">Failed to load map</p>
-        <button
-          onClick={() => {
-            setMapError(false);
-            setIsLoading(true);
-            setTimeout(() => setIsLoading(false), 500);
-          }}
-          className="mt-2 text-[var(--color-primary)] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded px-2 py-1"
-        >
-          Try again
-        </button>
-      </div>
-    );
-  }
+  const { MapContainer, TileLayer, Marker, Popup } = MapComponents;
 
   return (
     <div className={`relative ${className}`} role="region" aria-label="Vehicle location map">
@@ -130,7 +95,6 @@ function VehicleMapComponent({
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          errorTileUrl="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
         />
         <Marker position={[latitude, longitude]}>
           {(title || price) && (
@@ -150,12 +114,12 @@ function VehicleMapComponent({
         </Marker>
       </MapContainer>
       
-      {/* Attribution watermark - FREE usage */}
+      {/* Attribution watermark */}
       <div 
         className="absolute bottom-2 right-2 bg-white px-3 py-1.5 rounded-md text-xs text-gray-600 shadow-md z-10 border border-gray-200"
         aria-label="Map data from OpenStreetMap"
       >
-        FREE OpenStreetMap
+        OpenStreetMap
       </div>
 
       {/* Mobile-friendly zoom indicator */}
@@ -170,8 +134,8 @@ function VehicleMapComponent({
   );
 }
 
-// Export with dynamic import for better performance (lazy loading)
-export default dynamic(() => Promise.resolve(VehicleMapComponent), {
+// Export with dynamic import to ensure no SSR
+export default dynamic(() => Promise.resolve(LeafletMapInternal), {
   ssr: false,
   loading: () => <MapSkeleton height="400px" />,
 });

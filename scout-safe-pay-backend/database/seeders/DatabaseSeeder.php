@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
 
         // Call other seeders
         $this->call([
+            CategorySeeder::class,
             DealerSeeder::class,
             VehicleSeeder::class,
             LegalDocumentSeeder::class,

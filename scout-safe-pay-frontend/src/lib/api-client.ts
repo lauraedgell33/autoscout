@@ -113,7 +113,16 @@ class OptimizedAPIClient {
           requestId: config._requestId,
         });
 
-        console.error('[API Error]', errorReport);
+        // Only log in development or if debug is enabled
+        if (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_API_DEBUG === 'true') {
+          console.error('[API Error]', {
+            ...errorReport,
+            status: status,
+            url: config?.url,
+            message: error.message,
+            responseData: error.response?.data,
+          });
+        }
         return Promise.reject(error);
       }
     );

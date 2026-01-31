@@ -4,9 +4,10 @@ namespace App\Filament\Admin\Resources\ActivityLog\Pages;
 
 use App\Filament\Admin\Resources\ActivityLog\ActivityLogResource;
 use Filament\Resources\Pages\ViewRecord;
-use Filament\Schemas\Components\KeyValue;
+use Filament\Forms\Components\KeyValue;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\TextEntry;
+use Filament\Forms;
 use Filament\Schemas\Schema;
 
 class ViewActivityLog extends ViewRecord

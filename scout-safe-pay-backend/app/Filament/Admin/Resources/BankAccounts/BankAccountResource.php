@@ -6,7 +6,19 @@ use App\Filament\Admin\Resources\BankAccounts\Pages\CreateBankAccount;
 use App\Filament\Admin\Resources\BankAccounts\Pages\EditBankAccount;
 use App\Filament\Admin\Resources\BankAccounts\Pages\ListBankAccounts;
 use App\Models\BankAccount;
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms;
+use Filament\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -47,9 +59,9 @@ class BankAccountResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Section::make('Account Information')
+        return $schema
+            ->components([
+                Schemas\Components\Section::make('Account Information')
                     ->schema([
                         Forms\Components\Select::make('accountable_type')
                             ->label('Account Owner Type')
@@ -126,7 +138,7 @@ class BankAccountResource extends Resource
                             ->required(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Verification')
+                Schemas\Components\Section::make('Verification')
                     ->schema([
                         Forms\Components\Toggle::make('is_verified')
                             ->label('Verified')
@@ -295,7 +307,7 @@ class BankAccountResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\Action::make('verify')
+                Action::make('verify')
                     ->label('Verify')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
@@ -307,7 +319,7 @@ class BankAccountResource extends Resource
                     ]))
                     ->visible(fn (BankAccount $record) => !$record->is_verified),
 
-                Tables\Actions\Action::make('unverify')
+                Action::make('unverify')
                     ->label('Unverify')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
@@ -319,7 +331,7 @@ class BankAccountResource extends Resource
                     ]))
                     ->visible(fn (BankAccount $record) => $record->is_verified),
 
-                Tables\Actions\Action::make('setPrimary')
+                Action::make('setPrimary')
                     ->label('Set Primary')
                     ->icon('heroicon-o-star')
                     ->color('warning')
@@ -335,15 +347,15 @@ class BankAccountResource extends Resource
                     })
                     ->visible(fn (BankAccount $record) => !$record->is_primary),
 
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
+                ForceDeleteAction::make(),
+                RestoreAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('verify_selected')
+                BulkActionGroup::make([
+                    BulkAction::make('verify_selected')
                         ->label('Verify Selected')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
@@ -354,7 +366,7 @@ class BankAccountResource extends Resource
                             'verified_at' => now(),
                         ])),
 
-                    Tables\Actions\BulkAction::make('unverify_selected')
+                    BulkAction::make('unverify_selected')
                         ->label('Unverify Selected')
                         ->icon('heroicon-o-x-circle')
                         ->color('danger')
@@ -365,9 +377,9 @@ class BankAccountResource extends Resource
                             'verified_at' => null,
                         ])),
 
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+                    DeleteBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ])
             ->poll('30s');

@@ -34,12 +34,19 @@ return new class extends Migration
             $table->string('payment_proof_type')->nullable(); // 'screenshot', 'pdf', 'bank_statement'
             $table->timestamp('payment_proof_uploaded_at')->nullable();
             
-            // Status
+            // Status - including all order flow states
             $table->enum('status', [
                 'pending',
+                'draft',
+                'contract_generated',
+                'contract_signed',
                 'awaiting_payment',
+                'awaiting_bank_transfer',
                 'payment_submitted',
+                'payment_confirmed',
                 'payment_verified',
+                'ready_for_delivery',
+                'delivered',
                 'inspection_scheduled',
                 'inspection_passed',
                 'inspection_failed',

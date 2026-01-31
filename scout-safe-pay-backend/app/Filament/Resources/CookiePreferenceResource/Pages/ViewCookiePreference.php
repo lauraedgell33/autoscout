@@ -35,8 +35,8 @@ class ViewCookiePreference extends ViewRecord
     
     public function infolist(Schema $schema): Schema
     {
-        return $infolist
-            ->schema([
+        return $schema
+            ->components([
                 Infolists\Components\Section::make('User Information')
                     ->schema([
                         Infolists\Components\TextEntry::make('user.name')

@@ -24,6 +24,21 @@ class VehicleResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'make';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Content';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 2;
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['make', 'model', 'vin', 'registration_number', 'seller.name', 'seller.email'];
+    }
+
     public static function form(Schema $schema): Schema
     {
         return VehicleForm::configure($schema);
@@ -42,7 +57,8 @@ class VehicleResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\TransactionsRelationManager::class,
+            RelationManagers\ReviewsRelationManager::class,
         ];
     }
 

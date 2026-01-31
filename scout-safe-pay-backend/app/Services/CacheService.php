@@ -55,15 +55,22 @@ class CacheService
     }
 
     /**
-     * Forget keys by pattern (for Redis)
+     * Forget keys by pattern (for Redis, no-op for other drivers)
      */
     public function forgetByPattern(string $pattern): void
     {
         try {
-            $keys = Cache::getRedis()->keys($pattern);
-            if (!empty($keys)) {
-                Cache::getRedis()->del($keys);
+            // Only works with Redis driver
+            $store = Cache::getStore();
+            if (method_exists($store, 'getRedis')) {
+                $redis = $store->getRedis();
+                $keys = $redis->keys($pattern);
+                if (!empty($keys)) {
+                    $redis->del($keys);
+                }
             }
+            // For non-Redis drivers, pattern-based deletion is not supported
+            // Consider using cache tags instead for better support across drivers
         } catch (\Exception $e) {
             Log::error("Cache pattern forget error for pattern {$pattern}: " . $e->getMessage());
         }

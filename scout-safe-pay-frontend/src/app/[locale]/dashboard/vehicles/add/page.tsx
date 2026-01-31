@@ -120,7 +120,6 @@ export default function AddVehiclePage() {
                       id="vehicle-make"
                       name="make"
                       type="text"
-                      name="make"
                       value={formData.make}
                       onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
@@ -133,7 +132,6 @@ export default function AddVehiclePage() {
                       id="vehicle-model"
                       name="model"
                       type="text"
-                      name="model"
                       value={formData.model}
                       onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
@@ -149,7 +147,6 @@ export default function AddVehiclePage() {
                       id="vehicle-year"
                       name="year"
                       type="number"
-                      name="year"
                       value={formData.year}
                       onChange={handleChange}
                       min="1900"
@@ -164,7 +161,6 @@ export default function AddVehiclePage() {
                       id="vehicle-price"
                       name="price"
                       type="number"
-                      name="price"
                       value={formData.price}
                       onChange={handleChange}
                       min="0"

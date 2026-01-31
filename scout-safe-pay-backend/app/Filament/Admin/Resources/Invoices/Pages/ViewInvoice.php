@@ -15,51 +15,39 @@ class ViewInvoice extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\Action::make('downloadPDF')
-                ->label('Download PDF')
-                ->icon('heroicon-o-arrow-down-tray')
-                ->color('primary')
-                ->url(fn () => $this->record->pdf_url ?? '#')
-                ->openUrlInNewTab()
-                ->visible(fn () => !empty($this->record->pdf_url)),
-
-            Actions\Action::make('generatePDF')
-                ->label('Generate PDF')
-                ->icon('heroicon-o-document')
-                ->color('primary')
-                ->requiresConfirmation()
-                ->action(fn () => $this->record->update([
-                    'pdf_url' => '/storage/invoices/' . $this->record->invoice_number . '.pdf',
-                ]))
-                ->visible(fn () => empty($this->record->pdf_url)),
-
-            Actions\Action::make('sendEmail')
-                ->label('Send Email')
-                ->icon('heroicon-o-envelope')
-                ->color('success')
-                ->requiresConfirmation()
-                ->action(fn () => $this->record->update(['status' => 'sent'])),
-
-            Actions\Action::make('markPaid')
+            Actions\Action::make('mark_paid')
                 ->label('Mark as Paid')
+                ->icon('heroicon-o-banknotes')
+                ->color('info')
+                ->requiresConfirmation()
+                ->visible(fn () => $this->record->isPending())
+                ->action(fn () => $this->record->markAsPaid()),
+
+            Actions\Action::make('confirm')
+                ->label('Confirm Payment')
                 ->icon('heroicon-o-check-circle')
                 ->color('success')
                 ->requiresConfirmation()
-                ->action(fn () => $this->record->update([
-                    'status' => 'paid',
-                    'paid_date' => now(),
-                ]))
-                ->visible(fn () => $this->record->status !== 'paid'),
+                ->visible(fn () => $this->record->isPaid())
+                ->action(fn () => $this->record->markAsConfirmed(auth()->user())),
 
-            Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\Action::make('download_proof')
+                ->label('Download Payment Proof')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->color('primary')
+                ->url(fn () => $this->record->payment_proof_path ? asset('storage/' . $this->record->payment_proof_path) : '#')
+                ->openUrlInNewTab()
+                ->visible(fn () => $this->record->hasPaymentProof()),
+
+            EditAction::make(),
+            DeleteAction::make(),
         ];
     }
 
     public function infolist(Schema $schema): Schema
     {
-        return $infolist
-            ->schema([
+        return $schema
+            ->components([
                 Infolists\Components\Section::make('Invoice Details')
                     ->schema([
                         Infolists\Components\TextEntry::make('invoice_number')
@@ -68,64 +56,64 @@ class ViewInvoice extends ViewRecord
                         Infolists\Components\TextEntry::make('status')
                             ->badge()
                             ->color(fn (string $state): string => match ($state) {
-                                'draft' => 'secondary',
-                                'sent' => 'info',
-                                'viewed' => 'warning',
-                                'paid' => 'success',
-                                'overdue' => 'danger',
+                                'pending' => 'warning',
+                                'paid' => 'info',
+                                'confirmed' => 'success',
                                 'cancelled' => 'danger',
                                 default => 'gray',
                             }),
-                        Infolists\Components\TextEntry::make('transaction.id')
-                            ->label('Transaction ID'),
-                        Infolists\Components\TextEntry::make('payment.id')
-                            ->label('Payment ID')
-                            ->visible(fn ($record) => $record->payment_id !== null),
-                    ])->columns(2),
+                        Infolists\Components\TextEntry::make('transaction.transaction_code')
+                            ->label('Transaction'),
+                        Infolists\Components\TextEntry::make('buyer.name')
+                            ->label('Buyer'),
+                        Infolists\Components\TextEntry::make('seller.name')
+                            ->label('Seller'),
+                        Infolists\Components\TextEntry::make('vehicle.title')
+                            ->label('Vehicle'),
+                    ])->columns(3),
 
                 Infolists\Components\Section::make('Amounts')
                     ->schema([
                         Infolists\Components\TextEntry::make('amount')
                             ->money('EUR'),
-                        Infolists\Components\TextEntry::make('tax_amount')
-                            ->label('Tax (VAT)')
+                        Infolists\Components\TextEntry::make('vat_percentage')
+                            ->label('VAT %')
+                            ->suffix('%'),
+                        Infolists\Components\TextEntry::make('vat_amount')
+                            ->label('VAT Amount')
                             ->money('EUR'),
                         Infolists\Components\TextEntry::make('total_amount')
                             ->label('Total')
                             ->money('EUR')
                             ->weight('bold'),
-                    ])->columns(3),
+                    ])->columns(4),
 
                 Infolists\Components\Section::make('Dates')
                     ->schema([
-                        Infolists\Components\TextEntry::make('invoice_date')
-                            ->date('d M Y'),
-                        Infolists\Components\TextEntry::make('due_date')
-                            ->date('d M Y')
-                            ->color(fn ($record) => 
-                                $record->status !== 'paid' && $record->due_date->isPast() ? 'danger' : 'gray'
-                            ),
-                        Infolists\Components\TextEntry::make('paid_date')
-                            ->date('d M Y')
-                            ->visible(fn ($record) => $record->paid_date !== null),
+                        Infolists\Components\TextEntry::make('issued_at')
+                            ->dateTime(),
+                        Infolists\Components\TextEntry::make('due_at')
+                            ->dateTime(),
+                        Infolists\Components\TextEntry::make('paid_at')
+                            ->dateTime(),
                     ])->columns(3),
+
+                Infolists\Components\Section::make('Verification')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('verifier.name')
+                            ->label('Verified By'),
+                        Infolists\Components\TextEntry::make('verified_at')
+                            ->dateTime(),
+                        Infolists\Components\TextEntry::make('verification_notes'),
+                    ])->columns(3)
+                    ->visible(fn ($record) => $record->verified_at !== null),
 
                 Infolists\Components\Section::make('Notes')
                     ->schema([
                         Infolists\Components\TextEntry::make('notes')
-                            ->prose()
                             ->columnSpanFull(),
                     ])
                     ->visible(fn ($record) => !empty($record->notes)),
-
-                Infolists\Components\Section::make('Timestamps')
-                    ->schema([
-                        Infolists\Components\TextEntry::make('created_at')
-                            ->dateTime(),
-                        Infolists\Components\TextEntry::make('updated_at')
-                            ->dateTime(),
-                    ])->columns(2)
-                    ->collapsed(),
             ]);
     }
 }

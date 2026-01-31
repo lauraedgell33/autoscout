@@ -2,8 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
-export default function ForgotPasswordPage({ params }: { params: { locale: string } }) {
+export default function ForgotPasswordPage() {
+  const params = useParams<{ locale: string }>();
+  const locale = params?.locale;
+
   const [email, setEmail] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -48,7 +52,7 @@ export default function ForgotPasswordPage({ params }: { params: { locale: strin
           <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
             Remember your password?{' '}
             <Link
-              href={`/${params.locale}/auth/login`}
+              href={`/${locale}/auth/login`}
               className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
             >
               Sign in

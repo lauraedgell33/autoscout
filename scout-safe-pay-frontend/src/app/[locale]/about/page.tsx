@@ -1,8 +1,7 @@
 'use client'
 
-import Image from 'next/image'
-
 import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/routing'
 import { Users, TrendingUp, Globe, Award } from 'lucide-react'
 
 export default function AboutPage() {
@@ -63,15 +62,15 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-white mb-4">{t('pages.about.join_mission')}</h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Whether you're buying or selling, experience the safest way to trade vehicles online.
+              Whether you&apos;re buying or selling, experience the safest way to trade vehicles online.
             </p>
             <div className="flex gap-4 justify-center">
-              <a href="/marketplace" className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100">
+              <Link href="/marketplace" className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100">
                 {t('pages.about.browse_vehicles')}
-              </a>
-              <a href="/contact" className="bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 border border-blue-500">
+              </Link>
+              <Link href="/contact" className="bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 border border-blue-500">
                 {t('pages.about.contact_us')}
-              </a>
+              </Link>
             </div>
           </div>
         </div>

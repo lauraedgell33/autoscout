@@ -4,10 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\KYCVerificationResource\Pages;
 use App\Models\User;
+use Filament\Schemas;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Actions;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
@@ -30,7 +32,7 @@ class KYCVerificationResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\Section::make('User Information')
                     ->schema([
@@ -137,12 +139,12 @@ class KYCVerificationResource extends Resource
                     ]),
             ])
             ->actions([
-                Tables\Actions\Action::make('view_documents')
+                Actions\Action::make('view_documents')
                     ->label('View Docs')
                     ->icon('heroicon-o-eye')
                     ->url(fn ($record) => route('filament.admin.resources.kyc-verification.view', $record)),
                 
-                Tables\Actions\Action::make('approve')
+                Actions\Action::make('approve')
                     ->label('Approve')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
@@ -163,7 +165,7 @@ class KYCVerificationResource extends Resource
                     })
                     ->visible(fn ($record) => $record->kyc_status === 'pending'),
 
-                Tables\Actions\Action::make('reject')
+                Actions\Action::make('reject')
                     ->label('Reject')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
@@ -189,8 +191,8 @@ class KYCVerificationResource extends Resource
                     ->visible(fn ($record) => $record->kyc_status === 'pending'),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('approve_selected')
+                Actions\BulkActionGroup::make([
+                    Actions\BulkAction::make('approve_selected')
                         ->label('Approve Selected')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')

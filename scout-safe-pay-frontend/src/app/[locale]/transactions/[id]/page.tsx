@@ -9,21 +9,26 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useRealtimeEvent } from '@/lib/realtime-client';
 
-export default function TransactionDetailsPage({ params }: { params: { locale: string; id: string } }) {
+export default function TransactionDetailsPage() {
+  const routeParams = useParams<{ locale: string; id: string }>();
+  const locale = routeParams?.locale;
+  const id = routeParams?.id;
+
   const [transaction, setTransaction] = useState<Transaction | null>(null);
   const [loading, setLoading] = useState(true);
   const [uploadingReceipt, setUploadingReceipt] = useState(false);
 
   const fetchTransaction = useCallback(async () => {
+    if (!id) return;
     try {
-      const data = await transactionService.get(params.id);
+      const data = await transactionService.get(id);
       setTransaction(data);
     } catch (error) {
       console.error('Error fetching transaction:', error);
     } finally {
       setLoading(false);
     }
-  }, [params.id]);
+  }, [id]);
 
   useEffect(() => {
     fetchTransaction();
@@ -31,14 +36,14 @@ export default function TransactionDetailsPage({ params }: { params: { locale: s
 
   useRealtimeEvent('transaction.updated', (payload: any) => {
     const incomingId = payload?.id || payload?.transaction_id || payload?.transaction?.id;
-    if (incomingId && incomingId === params.id) {
+    if (id && incomingId && String(incomingId) === String(id)) {
       fetchTransaction();
     }
   });
 
   useRealtimeEvent('transaction.status_changed', (payload: any) => {
     const incomingId = payload?.id || payload?.transaction_id || payload?.transaction?.id;
-    if (incomingId && incomingId === params.id) {
+    if (id && incomingId && String(incomingId) === String(id)) {
       fetchTransaction();
     }
   });
@@ -83,7 +88,7 @@ export default function TransactionDetailsPage({ params }: { params: { locale: s
       <Card className="p-12 text-center">
         <AlertCircle className="h-16 w-16 text-gray-400 mx-auto mb-4" />
         <h3 className="text-lg font-medium mb-2">Transaction not found</h3>
-        <Link href={`/${params.locale}/buyer/transactions`}>
+        <Link href={`/${locale}/buyer/transactions`}>
           <Button>Back to Transactions</Button>
         </Link>
       </Card>
@@ -97,13 +102,13 @@ export default function TransactionDetailsPage({ params }: { params: { locale: s
     <div className="max-w-5xl mx-auto p-6 space-y-6">
       {/* Header */}
       <div className="flex items-center space-x-4">
-        <Link href={`/${params.locale}/buyer/transactions`}>
+        <Link href={`/${locale}/buyer/transactions`}>
           <Button variant="ghost" size="sm">
             <ArrowLeft className="h-4 w-4 mr-2" />Back
           </Button>
         </Link>
         <div className="flex-1">
-          <h1 className="text-2xl font-bold">Transaction #{transaction.id.slice(0, 8)}</h1>
+          <h1 className="text-2xl font-bold">Transaction #{String(transaction.id).slice(0, 8)}</h1>
           <p className="text-gray-600 dark:text-gray-400">Created {new Date(transaction.created_at).toLocaleDateString()}</p>
         </div>
         <span className={`inline-flex items-center px-3 py-1 rounded-full ${statusInfo.color}`}>
@@ -237,12 +242,16 @@ export default function TransactionDetailsPage({ params }: { params: { locale: s
           <Card className="p-6">
             <h3 className="font-semibold text-lg mb-4">Quick Actions</h3>
             <div className="space-y-2">
-              {transaction.buyer_bank_receipt && (
-                <Button variant="outline" className="w-full justify-start">
+              {transaction.payment_proof && (
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={() => window.open(String(transaction.payment_proof), '_blank')}
+                >
                   <Download className="h-4 w-4 mr-2" />Download Receipt
                 </Button>
               )}
-              <Link href={`/${params.locale}/disputes/create?transaction=${transaction.id}`}>
+              <Link href={`/${locale}/disputes/create?transaction=${transaction.id}`}>
                 <Button variant="outline" className="w-full justify-start">
                   <AlertCircle className="h-4 w-4 mr-2" />Report Issue
                 </Button>

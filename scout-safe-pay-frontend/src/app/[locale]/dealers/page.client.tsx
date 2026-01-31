@@ -380,7 +380,7 @@ export default function DealersPageClient() {
                       return (
                         <Button
                           key={page}
-                          variant={page === currentPage ? 'default' : 'outline'}
+                          variant={page === currentPage ? 'primary' : 'outline'}
                           className={`h-12 w-12 ${
                             page === currentPage 
                               ? 'bg-blue-600 hover:bg-blue-700 text-white' 

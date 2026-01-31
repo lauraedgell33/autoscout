@@ -1,13 +1,17 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { Package, TrendingUp, DollarSign, Users, Plus } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { apiClient } from '@/lib/api-client';
 
-export default function DealerDashboardPage({ params }: { params: { locale: string } }) {
+export default function DealerDashboardPage() {
+  const params = useParams<{ locale: string }>();
+  const locale = params.locale;
+
   const [stats, setStats] = useState({
     total_inventory: 0,
     active_listings: 0,
@@ -47,7 +51,7 @@ export default function DealerDashboardPage({ params }: { params: { locale: stri
           <h1 className="text-3xl font-bold">Dealer Dashboard</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">Manage your inventory and team</p>
         </div>
-        <Link href={`/${params.locale}/seller/vehicles/new`}>
+        <Link href={`/${locale}/seller/vehicles/new`}>
           <Button><Plus className="h-4 w-4 mr-2" />Add Vehicle</Button>
         </Link>
       </div>
@@ -92,21 +96,21 @@ export default function DealerDashboardPage({ params }: { params: { locale: stri
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Link href={`/${params.locale}/dealer/inventory`}>
+        <Link href={`/${locale}/dealer/inventory`}>
           <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
             <Package className="h-8 w-8 text-blue-600 mb-3" />
             <h3 className="font-semibold mb-2">Inventory Management</h3>
             <p className="text-sm text-gray-600 dark:text-gray-400">Manage your vehicle stock</p>
           </Card>
         </Link>
-        <Link href={`/${params.locale}/dealer/analytics`}>
+        <Link href={`/${locale}/dealer/analytics`}>
           <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
             <TrendingUp className="h-8 w-8 text-purple-600 mb-3" />
             <h3 className="font-semibold mb-2">Analytics</h3>
             <p className="text-sm text-gray-600 dark:text-gray-400">View detailed reports</p>
           </Card>
         </Link>
-        <Link href={`/${params.locale}/dealer/team`}>
+        <Link href={`/${locale}/dealer/team`}>
           <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
             <Users className="h-8 w-8 text-green-600 mb-3" />
             <h3 className="font-semibold mb-2">Team Management</h3>
