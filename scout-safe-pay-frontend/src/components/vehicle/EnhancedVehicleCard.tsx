@@ -11,6 +11,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import VehicleBadge, { StatusBadge, ConditionBadge, PriceBadge } from './VehicleBadges';
+import { getImageUrl } from '@/lib/utils';
 
 interface EnhancedVehicleCardProps {
   id: string;
@@ -105,7 +106,7 @@ export default function EnhancedVehicleCard({
           onMouseLeave={() => setIsImageHovered(false)}
         >
           <Image
-            src={images[currentImageIndex] || '/placeholder-car.jpg'}
+            src={getImageUrl(images[currentImageIndex])}
             alt={title}
             fill
             className="object-cover group-hover:scale-110 transition-transform duration-500"

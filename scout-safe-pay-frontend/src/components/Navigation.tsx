@@ -54,7 +54,7 @@ export default function Navigation() {
 
   return (
     <nav 
-      className="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 shadow-sm"
+      className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-sm"
       role="navigation"
       aria-label="Main navigation"
     >
@@ -84,8 +84,8 @@ export default function Navigation() {
               href="/marketplace" 
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                 isActive('/marketplace') 
-                  ? 'text-[var(--color-primary)] font-bold bg-primary-50' 
-                  : 'text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-50'
+                  ? 'text-[var(--color-primary)] font-bold bg-primary-50 dark:bg-primary-900/30' 
+                  : 'text-gray-700 dark:text-gray-200 hover:text-[var(--color-primary)] hover:bg-gray-50 dark:hover:bg-gray-800'
               }`}
               aria-current={isActive('/marketplace') ? 'page' : undefined}
             >
@@ -95,8 +95,8 @@ export default function Navigation() {
               href="/how-it-works" 
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                 isActive('/how-it-works') 
-                  ? 'text-[var(--color-primary)] font-bold bg-primary-50' 
-                  : 'text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-50'
+                  ? 'text-[var(--color-primary)] font-bold bg-primary-50 dark:bg-primary-900/30' 
+                  : 'text-gray-700 dark:text-gray-200 hover:text-[var(--color-primary)] hover:bg-gray-50 dark:hover:bg-gray-800'
               }`}
               aria-current={isActive('/how-it-works') ? 'page' : undefined}
             >
@@ -106,8 +106,8 @@ export default function Navigation() {
               href="/benefits" 
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                 isActive('/benefits') 
-                  ? 'text-[var(--color-primary)] font-bold bg-primary-50' 
-                  : 'text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-50'
+                  ? 'text-[var(--color-primary)] font-bold bg-primary-50 dark:bg-primary-900/30' 
+                  : 'text-gray-700 dark:text-gray-200 hover:text-[var(--color-primary)] hover:bg-gray-50 dark:hover:bg-gray-800'
               }`}
               aria-current={isActive('/benefits') ? 'page' : undefined}
             >
@@ -117,8 +117,8 @@ export default function Navigation() {
               href="/dealers" 
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                 isActive('/dealers') 
-                  ? 'text-[var(--color-primary)] font-bold bg-primary-50' 
-                  : 'text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-50'
+                  ? 'text-[var(--color-primary)] font-bold bg-primary-50 dark:bg-primary-900/30' 
+                  : 'text-gray-700 dark:text-gray-200 hover:text-[var(--color-primary)] hover:bg-gray-50 dark:hover:bg-gray-800'
               }`}
               aria-current={isActive('/dealers') ? 'page' : undefined}
             >
@@ -136,7 +136,7 @@ export default function Navigation() {
               <div className="relative" ref={userMenuRef}>
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-2 text-gray-700 hover:text-[var(--color-primary)] font-medium min-h-[44px] px-3 rounded-lg hover:bg-gray-50 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+                  className="flex items-center gap-2 text-gray-700 dark:text-gray-200 hover:text-[var(--color-primary)] font-medium min-h-[44px] px-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
                   aria-expanded={userMenuOpen}
                   aria-haspopup="true"
                   aria-label={`User menu for ${user?.name}`}
@@ -150,17 +150,17 @@ export default function Navigation() {
 
                 {userMenuOpen && (
                   <div 
-                    className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-[var(--z-dropdown)]"
+                    className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-[var(--z-dropdown)]"
                     role="menu"
                     aria-orientation="vertical"
                   >
-                    <div className="px-4 py-3 border-b border-gray-100">
-                      <p className="text-sm font-semibold text-gray-900">{user?.name}</p>
-                      <p className="text-xs text-gray-500 capitalize">{user?.role}</p>
+                    <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white">{user?.name}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">{user?.role}</p>
                     </div>
                     <Link
                       href={user?.role === 'seller' ? '/dashboard/seller' : '/dashboard/buyer'}
-                      className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-gray-50"
+                      className="flex items-center gap-3 px-4 py-2.5 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-gray-50 dark:focus-visible:bg-gray-700"
                       onClick={() => setUserMenuOpen(false)}
                       role="menuitem"
                     >
@@ -169,7 +169,7 @@ export default function Navigation() {
                     </Link>
                     <Link
                       href="/dashboard/profile"
-                      className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-gray-50"
+                      className="flex items-center gap-3 px-4 py-2.5 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-gray-50 dark:focus-visible:bg-gray-700"
                       onClick={() => setUserMenuOpen(false)}
                       role="menuitem"
                     >
@@ -179,7 +179,7 @@ export default function Navigation() {
                     {user?.role === 'seller' && (
                       <Link
                         href="/dashboard/vehicles"
-                        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-gray-50"
+                        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-gray-50 dark:focus-visible:bg-gray-700"
                         onClick={() => setUserMenuOpen(false)}
                         role="menuitem"
                       >
@@ -187,10 +187,10 @@ export default function Navigation() {
                         <span>My Vehicles</span>
                       </Link>
                     )}
-                    <hr className="my-2 border-gray-100" aria-hidden="true" />
+                    <hr className="my-2 border-gray-100 dark:border-gray-700" aria-hidden="true" />
                     <button
                       onClick={handleLogout}
-                      className="flex items-center gap-3 w-full text-left px-4 py-2.5 text-[var(--color-error)] hover:bg-red-50 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-red-50"
+                      className="flex items-center gap-3 w-full text-left px-4 py-2.5 text-[var(--color-error)] hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-red-50 dark:focus-visible:bg-red-900/30"
                       role="menuitem"
                     >
                       <LogOut size={18} aria-hidden="true" />
@@ -203,7 +203,7 @@ export default function Navigation() {
               <>
                 <Link 
                   href="/login" 
-                  className="text-gray-700 hover:text-[var(--color-primary)] font-medium min-h-[44px] flex items-center px-4 rounded-lg hover:bg-gray-50 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+                  className="text-gray-700 dark:text-gray-200 hover:text-[var(--color-primary)] font-medium min-h-[44px] flex items-center px-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
                 >
                   {t('nav.login')}
                 </Link>
