@@ -3,9 +3,9 @@
 namespace App\Filament\Admin\Resources\Vehicles\Schemas;
 
 use App\Models\Vehicle;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\ImageEntry;
-use Filament\Schemas\Components\TextEntry;
 use Filament\Schemas\Schema;
 
 class VehicleInfolist
