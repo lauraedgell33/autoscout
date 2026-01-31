@@ -79,18 +79,25 @@ function LeafletMapInternal({
   const { MapContainer, TileLayer, Marker, Popup } = MapComponents;
 
   return (
-    <div className={`relative ${className}`} role="region" aria-label="Vehicle location map">
+    <div 
+      className={`relative overflow-hidden rounded-lg ${className}`} 
+      style={{ height, maxHeight: height }}
+      role="region" 
+      aria-label="Vehicle location map"
+    >
       <MapContainer
         center={[latitude, longitude]}
         zoom={zoom}
         style={{ 
-          height, 
+          height: '100%', 
           width: '100%', 
-          borderRadius: '8px',
-          zIndex: 0 
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: 1 
         }}
         scrollWheelZoom={false}
-        className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+        className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] !rounded-lg"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

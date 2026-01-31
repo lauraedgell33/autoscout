@@ -534,3 +534,42 @@ button,
   user-select: none;
 }
 
+
+/* ============================================ */
+/* Leaflet Map Fixes */
+/* ============================================ */
+
+/* Ensure map container stays within bounds */
+.leaflet-container {
+  z-index: 1 !important;
+  font-family: inherit;
+}
+
+/* Fix Leaflet control z-index */
+.leaflet-control-container {
+  z-index: 2 !important;
+}
+
+/* Fix popup z-index */
+.leaflet-popup {
+  z-index: 3 !important;
+}
+
+/* Prevent map from overflowing */
+.leaflet-pane {
+  z-index: 1 !important;
+}
+
+/* Fix tile layer z-index */
+.leaflet-tile-pane {
+  z-index: 1 !important;
+}
+
+/* Ensure proper stacking of map layers */
+.leaflet-overlay-pane,
+.leaflet-shadow-pane,
+.leaflet-marker-pane,
+.leaflet-tooltip-pane,
+.leaflet-popup-pane {
+  z-index: 2 !important;
+}
