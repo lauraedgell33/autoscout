@@ -152,7 +152,7 @@ export function BankTransferPaymentForm({
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <div className="flex gap-3">
           <AlertCircle className="flex-shrink-0 text-blue-600 mt-0.5" size={20} />
-          <div className="text-sm text-blue-900">
+          <div className="text-sm text-gray-900">
             <p className="font-semibold mb-1">Bank Transfer Required</p>
             <p>
               Please complete a bank transfer to the seller's account using the details below.

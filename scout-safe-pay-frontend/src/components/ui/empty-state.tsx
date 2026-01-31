@@ -84,7 +84,7 @@ export function EmptyState({
           'mx-auto bg-gradient-to-br from-blue-50 to-orange-50 rounded-full flex items-center justify-center mb-6 animate-scale-in',
           sizes.iconBg
         )}>
-          <Icon className={cn(sizes.iconSize, 'text-blue-900')} strokeWidth={1.5} aria-hidden="true" />
+          <Icon className={cn(sizes.iconSize, 'text-gray-900')} strokeWidth={1.5} aria-hidden="true" />
         </div>
       ) : (
         <div className="flex justify-center mb-6 animate-scale-in">

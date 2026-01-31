@@ -330,7 +330,7 @@ export function BankTransferVerification({
       {/* Help Section */}
       <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
         <details className="group cursor-pointer">
-          <summary className="flex items-center gap-2 font-medium text-blue-900 hover:text-blue-800">
+          <summary className="flex items-center gap-2 font-medium text-gray-900 hover:text-blue-800">
             <span className="group-open:hidden">+</span>
             <span className="hidden group-open:inline">−</span>
             Need Help?

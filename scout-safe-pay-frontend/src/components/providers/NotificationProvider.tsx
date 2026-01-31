@@ -189,7 +189,7 @@ function NotificationToast({
     success: 'text-green-900',
     error: 'text-red-900',
     warning: 'text-yellow-900',
-    info: 'text-blue-900',
+    info: 'text-gray-900',
   };
 
   return (

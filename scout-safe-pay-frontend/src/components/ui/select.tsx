@@ -126,7 +126,7 @@ export const SelectItem = ({ children, value, className = '' }: { children: Reac
     <div
       onClick={() => onValueChange(value)}
       className={`px-4 py-2 cursor-pointer transition-colors ${
-        isSelected ? 'bg-blue-100 text-blue-900' : 'hover:bg-gray-100'
+        isSelected ? 'bg-blue-100 text-gray-900' : 'hover:bg-gray-100'
       } ${className}`}
       role="option"
       aria-selected={isSelected}
