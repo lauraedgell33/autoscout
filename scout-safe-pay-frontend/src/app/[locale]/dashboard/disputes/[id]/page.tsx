@@ -228,7 +228,7 @@ export default function DisputeDetailsPage() {
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="w-full bg-accent-500 text-white py-3 rounded-lg font-semibold hover:bg-accent-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 {sending ? 'Sending...' : 'Send Message'}
               </button>

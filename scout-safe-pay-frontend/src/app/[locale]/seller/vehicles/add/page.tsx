@@ -101,7 +101,7 @@ export default function AddVehiclePage() {
         <div className="flex gap-4 pt-4">
           <button
             type="submit"
-            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="px-6 py-2 bg-accent-500 text-white rounded-xl hover:bg-accent-600"
           >
             Add Vehicle
           </button>

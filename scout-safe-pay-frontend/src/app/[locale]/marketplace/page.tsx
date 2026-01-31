@@ -355,7 +355,7 @@ export default function MarketplacePage() {
                               onClick={() => handlePageChange(page)}
                               className={`px-4 py-2 rounded-lg ${
                                 page === pagination.current_page
-                                  ? 'bg-orange-500 text-white'
+                                  ? 'bg-accent-500 text-white'
                                   : 'border border-gray-300 hover:bg-gray-50'
                               }`}
                             >

@@ -141,7 +141,7 @@ export default function MessageThreadPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
       </div>
     )
   }
@@ -202,7 +202,7 @@ export default function MessageThreadPage() {
                 <div
                   className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm shadow-sm ${
                     msg.is_from_me
-                      ? 'bg-blue-600 text-white'
+                      ? 'bg-primary-600 text-white'
                       : 'bg-gray-100 text-gray-900'
                   }`}
                 >

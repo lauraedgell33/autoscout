@@ -90,7 +90,7 @@ export default function BuyerPaymentMethodsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
       </div>
     );
   }
@@ -181,7 +181,7 @@ export default function BuyerPaymentMethodsPage() {
             <Card key={method.id} className="p-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
-                  <div className="h-12 w-16 bg-gradient-to-r from-blue-600 to-blue-800 rounded flex items-center justify-center text-white text-2xl">
+                  <div className="h-12 w-16 bg-gradient-to-r from-primary-600 to-primary-800 rounded-lg flex items-center justify-center text-white text-2xl">
                     <CreditCard className="h-6 w-6" />
                   </div>
                   <div>

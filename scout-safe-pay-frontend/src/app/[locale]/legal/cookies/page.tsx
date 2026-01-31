@@ -204,7 +204,7 @@ export default async function CookiePolicy() {
                 <p className="text-gray-700 mb-3">
                   {t('management_panel_desc')}
                 </p>
-                <button className="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 font-semibold">
+                <button className="px-6 py-3 bg-accent-500 text-white rounded-xl hover:bg-accent-600 font-semibold">
                   {t('management_panel_button')}
                 </button>
               </div>

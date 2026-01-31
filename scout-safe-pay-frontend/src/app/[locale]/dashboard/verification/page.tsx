@@ -257,7 +257,7 @@ export default function VerificationPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-orange-500 text-white py-4 rounded-lg font-semibold hover:bg-orange-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="w-full bg-accent-500 text-white py-4 rounded-lg font-semibold hover:bg-accent-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 {submitting ? 'Submitting...' : 'Submit for Verification'}
               </button>

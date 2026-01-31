@@ -76,7 +76,7 @@ export default function BuyerDashboardPage() {
               className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition group"
             >
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-500 transition">
+                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-accent-500 transition">
                   <svg className="w-6 h-6 text-accent-500 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>

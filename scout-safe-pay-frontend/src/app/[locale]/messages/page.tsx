@@ -49,7 +49,7 @@ export default function MessagesPage() {
 
           {loading ? (
             <div className="text-center py-12">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
               <p className="mt-4 text-gray-600">{tCommon('loading')}</p>
             </div>
           ) : error ? (
@@ -83,7 +83,7 @@ export default function MessagesPage() {
                       )}
                     </div>
                     {conversation.unread_count > 0 && (
-                      <span className="bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                      <span className="bg-accent-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
                         {conversation.unread_count}
                       </span>
                     )}

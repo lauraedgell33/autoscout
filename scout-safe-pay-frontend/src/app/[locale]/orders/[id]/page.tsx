@@ -274,7 +274,7 @@ export default function OrderPage() {
               </p>
               <a
                 href="mailto:support@autoscout24-safetrade.com"
-                className="block text-center bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 transition-colors"
+                className="block text-center bg-accent-500 text-white py-2 rounded-xl hover:bg-accent-600 transition-colors"
               >
                 Contact Support
               </a>

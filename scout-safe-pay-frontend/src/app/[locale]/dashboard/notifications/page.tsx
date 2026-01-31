@@ -160,7 +160,7 @@ export default function NotificationsPage() {
               >
                 <div className="flex items-start gap-3">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    !notification.read_at ? 'bg-orange-500' : 'bg-gray-400'
+                    !notification.read_at ? 'bg-accent-500' : 'bg-gray-400'
                   }`}>
                     <Mail className="w-5 h-5 text-white" />
                   </div>

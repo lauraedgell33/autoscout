@@ -84,12 +84,12 @@ export default function AddVehiclePage() {
               {[1, 2, 3].map((s) => (
                 <div key={s} className="flex items-center flex-1">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
-                    step >= s ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-600'
+                    step >= s ? 'bg-accent-500 text-white' : 'bg-gray-200 text-gray-600'
                   }`}>
                     {s}
                   </div>
                   {s < 3 && (
-                    <div className={`flex-1 h-1 mx-2 ${step > s ? 'bg-orange-500' : 'bg-gray-200'}`} />
+                    <div className={`flex-1 h-1 mx-2 ${step > s ? 'bg-accent-500' : 'bg-gray-200'}`} />
                   )}
                 </div>
               ))}

@@ -342,7 +342,7 @@ export default function TransactionPage() {
                   <button
                     onClick={handleGenerateInvoice}
                     disabled={generatingInvoice}
-                    className="w-full flex items-center justify-between px-4 py-3 bg-orange-50 hover:bg-orange-100 rounded-lg transition"
+                    className="w-full flex items-center justify-between px-4 py-3 bg-accent-50 hover:bg-accent-100 rounded-lg transition"
                   >
                     <div className="flex items-center gap-2">
                       <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

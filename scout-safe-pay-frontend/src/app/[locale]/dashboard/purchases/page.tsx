@@ -48,7 +48,7 @@ export default function PurchasesPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mt-6">
             <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-none p-4 sm:p-6">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
                   <Shield className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-bold text-gray-900">Secure Payments</h3>
@@ -60,7 +60,7 @@ export default function PurchasesPage() {
 
             <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-none p-4 sm:p-6">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-accent-500 rounded-lg flex items-center justify-center">
                   <Clock className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-bold text-gray-900">Fast Processing</h3>

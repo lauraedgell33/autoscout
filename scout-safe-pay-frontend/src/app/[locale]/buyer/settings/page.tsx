@@ -29,7 +29,7 @@ export default function BuyerSettingsPage() {
               type="checkbox"
               checked={settings.notifications}
               onChange={(e) => setSettings({ ...settings, notifications: e.target.checked })}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
             />
           </div>
           
@@ -42,14 +42,14 @@ export default function BuyerSettingsPage() {
               type="checkbox"
               checked={settings.emailAlerts}
               onChange={(e) => setSettings({ ...settings, emailAlerts: e.target.checked })}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
             />
           </div>
           
           <div className="pt-4">
             <button
               onClick={handleSave}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="px-4 py-2 bg-accent-500 text-white rounded-xl hover:bg-accent-600"
             >
               Save Settings
             </button>

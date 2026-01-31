@@ -8,7 +8,7 @@ export default function SupportTicketsPage() {
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
         <div className="text-center py-12">
           <p className="text-gray-600 dark:text-gray-400 mb-4">No open tickets</p>
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+          <button className="px-4 py-2 bg-accent-500 text-white rounded-xl hover:bg-accent-600">
             Create New Ticket
           </button>
         </div>

@@ -168,7 +168,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       {/* Hero Section with Background */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-8 mb-8">
+      <div className="bg-gradient-to-br from-primary-900 via-primary-800 to-blue-900 text-white py-8 mb-8">
         <div className="container mx-auto px-4">
           {/* Back Button */}
           <Button
@@ -254,7 +254,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                 value="vehicles" 
                 active={activeTab === 'vehicles'}
                 onClick={() => setActiveTab('vehicles')}
-                className={`text-lg flex items-center justify-center rounded-l-xl ${activeTab === 'vehicles' ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'}`}
+                className={`text-lg flex items-center justify-center rounded-l-xl ${activeTab === 'vehicles' ? 'bg-primary-600 text-white' : 'hover:bg-gray-100'}`}
               >
                 <Car className="w-5 h-5 mr-2" />
                 {t('vehicleInventory')} ({dealer.vehicles_count || 0})
@@ -263,7 +263,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                 value="about" 
                 active={activeTab === 'about'}
                 onClick={() => setActiveTab('about')}
-                className={`text-lg flex items-center justify-center ${activeTab === 'about' ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'}`}
+                className={`text-lg flex items-center justify-center ${activeTab === 'about' ? 'bg-primary-600 text-white' : 'hover:bg-gray-100'}`}
               >
                 <Building2 className="w-5 h-5 mr-2" />
                 {t('aboutDealer')}
@@ -272,7 +272,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                 value="reviews" 
                 active={activeTab === 'reviews'}
                 onClick={() => setActiveTab('reviews')}
-                className={`text-lg flex items-center justify-center rounded-r-xl ${activeTab === 'reviews' ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'}`}
+                className={`text-lg flex items-center justify-center rounded-r-xl ${activeTab === 'reviews' ? 'bg-primary-600 text-white' : 'hover:bg-gray-100'}`}
               >
                 <Star className="w-5 h-5 mr-2" />
                 {t('reviews')} ({reviewStats?.total_reviews || 0})
@@ -367,14 +367,14 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                         )}
                         
                         {/* Price Badge */}
-                        <div className="absolute top-2 right-2 bg-gradient-to-r from-blue-600 to-blue-800 text-white px-4 py-2 rounded-full font-bold text-lg shadow-lg">
+                        <div className="absolute top-2 right-2 bg-gradient-to-r from-primary-600 to-primary-800 text-white px-4 py-2 rounded-full font-bold text-lg shadow-lg">
                           €{vehicle.price?.toLocaleString()}
                         </div>
 
                         {/* Status Badge */}
                         {vehicle.status && (
                           <Badge className={`absolute bottom-2 left-2 ${
-                            vehicle.status === 'available' ? 'bg-green-500' : 'bg-orange-500'
+                            vehicle.status === 'available' ? 'bg-green-500' : 'bg-accent-500'
                           }`}>
                             {t(vehicle.status)}
                           </Badge>
@@ -515,8 +515,8 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
 
                 {/* Sidebar - Statistics */}
                 <div className="space-y-6">
-                  <Card className="shadow-lg border-2 border-blue-100">
-                    <CardHeader className="bg-gradient-to-br from-blue-600 to-blue-800 text-white">
+                  <Card className="border-2 border-primary-200 shadow-lg">
+                    <CardHeader className="bg-gradient-to-br from-primary-600 to-primary-800 text-white">
                       <CardTitle className="flex items-center">
                         <Users className="w-5 h-5 mr-2" />
                         {t('statistics')}

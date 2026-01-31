@@ -19,7 +19,7 @@ export default function CareersPage() {
   return (
     <div className="min-h-screen flex flex-col">      
       <main className="flex-grow">
-        <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-20">
+        <div className="bg-gradient-to-br from-primary-900 via-primary-800 to-blue-900 text-white py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-5xl font-bold mb-6">{t('pages.careers.title')}</h1>
             <p className="text-xl text-blue-100 max-w-3xl mx-auto">{t('pages.careers.subtitle')}</p>
@@ -56,7 +56,7 @@ export default function CareersPage() {
                         <div className="flex items-center"><Clock className="w-4 h-4 mr-2" />{position.type}</div>
                       </div>
                     </div>
-                    <Link href="/contact" className="mt-4 md:mt-0 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 inline-block text-center">
+                    <Link href="/contact" className="mt-4 md:mt-0 bg-accent-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-accent-600 inline-block text-center">
                       {t('pages.careers.apply_now')}
                     </Link>
                   </div>
@@ -69,7 +69,7 @@ export default function CareersPage() {
               <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
                 We're always looking for talented people. Send us your CV and tell us how you could contribute to our team.
               </p>
-              <Link href="/contact" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 inline-block">
+              <Link href="/contact" className="bg-accent-500 text-white px-8 py-3 rounded-xl font-semibold hover:bg-accent-600 inline-block">
                 {t('pages.careers.send_application')}
               </Link>
             </div>

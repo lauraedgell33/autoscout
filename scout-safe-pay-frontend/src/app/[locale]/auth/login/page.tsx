@@ -65,7 +65,7 @@ export default function LoginPage() {
               <Shield className="w-3 h-3 mr-1" />
               Secure Login
             </Badge>
-            <Badge className="bg-blue-500 hover:bg-blue-600">
+            <Badge className="bg-primary-500 hover:bg-primary-600">
               SafeTrade
             </Badge>
           </div>
