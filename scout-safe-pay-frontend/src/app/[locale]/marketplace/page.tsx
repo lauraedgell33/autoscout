@@ -85,27 +85,38 @@ export default function MarketplacePage() {
   }
 
   return (
-    <>      
-      <div className="min-h-screen bg-gray-50">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-blue-50 to-orange-50 py-12 sm:py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-6 sm:mb-8">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 mb-3 sm:mb-4">
-                {t('marketplace.title')}
-              </h1>
-              <p className="text-base sm:text-lg md:text-xl text-gray-600">
-                {t('marketplace.subtitle')}
-              </p>
-              <div className="mt-4 flex flex-wrap justify-center gap-2">
-                <Badge className="bg-green-500 hover:bg-green-600">{pagination.total} Vehicles Available</Badge>
-                <Badge className="bg-blue-500 hover:bg-blue-600">SafeTrade Protected</Badge>
-              </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-blue-900 py-12 sm:py-16">
+        {/* Background decoration */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -mr-48 -mt-48" />
+          <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-white rounded-full -mb-32" />
+        </div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
+              {t('marketplace.title')}
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-blue-100 max-w-2xl mx-auto">
+              {t('marketplace.subtitle')}
+            </p>
+            <div className="mt-4 flex flex-wrap justify-center gap-2">
+              <Badge className="bg-white/20 text-white border border-white/30 hover:bg-white/30">
+                {pagination.total} Vehicles Available
+              </Badge>
+              <Badge className="bg-green-500/80 text-white border border-green-400/50 hover:bg-green-500">
+                ✓ SafeTrade Protected
+              </Badge>
             </div>
+          </div>
 
-            {/* Search Bar */}
-            <form onSubmit={handleSearch} className="max-w-3xl mx-auto">
-              <div className="flex flex-col sm:flex-row gap-2">
+          {/* Search Bar */}
+          <form onSubmit={handleSearch} className="max-w-3xl mx-auto">
+            <div className="flex flex-col sm:flex-row gap-2 p-2 bg-white rounded-2xl shadow-xl">
+              <div className="flex-1 flex items-center gap-3 px-4">
+                <Search className="w-5 h-5 text-gray-400 flex-shrink-0" />
                 <input
                   id="marketplace-search"
                   name="search"
@@ -113,39 +124,39 @@ export default function MarketplacePage() {
                   placeholder={t('marketplace.search_placeholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-base sm:text-lg"
+                  className="flex-1 py-3 sm:py-4 focus:outline-none text-base sm:text-lg bg-transparent"
                   autoComplete="off"
                 />
-                <Button
-                  type="submit"
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-3 sm:py-4 font-semibold text-base sm:text-lg w-full sm:w-auto"
-                >
-                  <Search className="w-5 h-5 mr-2" />
-                  {t('marketplace.search_button')}
-                </Button>
               </div>
-            </form>
-
-            {/* Advanced Filters Toggle */}
-            <div className="mt-4 text-center">
               <Button
-                onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-                variant="outline"
-                className="bg-white"
+                type="submit"
+                className="bg-accent-500 hover:bg-accent-600 text-white px-6 sm:px-8 py-3 sm:py-4 font-semibold text-base sm:text-lg rounded-xl"
               >
-                <SlidersHorizontal className="w-4 h-4 mr-2" />
-                {showAdvancedFilters ? 'Hide Advanced Filters' : 'Show Advanced Filters'}
+                {t('marketplace.search_button')}
               </Button>
             </div>
+          </form>
+
+          {/* Advanced Filters Toggle */}
+          <div className="mt-4 text-center">
+            <Button
+              onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+              variant="ghost"
+              className="text-blue-100 hover:text-white hover:bg-white/10"
+            >
+              <SlidersHorizontal className="w-4 h-4 mr-2" />
+              {showAdvancedFilters ? 'Hide Advanced Filters' : 'Show Advanced Filters'}
+            </Button>
           </div>
-        </section>
+        </div>
+      </section>
 
       {/* Filters & Results */}
       <section className="py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Advanced Filters */}
           {showAdvancedFilters && (
-            <Card className="mb-6 p-4 sm:p-6">
+            <div className="mb-6 p-4 sm:p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
               <AdvancedFilters
                 onApplyFilters={(appliedFilters) => {
                   setFilters({ ...filters, ...appliedFilters, page: 1 })
@@ -157,26 +168,28 @@ export default function MarketplacePage() {
                 }}
                 isLoading={loading}
               />
-            </Card>
+            </div>
           )}
 
           <div className="grid lg:grid-cols-4 gap-6 sm:gap-8">
             {/* Sidebar Filters */}
             <div className="lg:col-span-1">
-              <Card className="p-4 sm:p-6 sticky top-20">
-                <h3 className="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
-                  <SlidersHorizontal className="w-5 h-5 text-orange-500" />
+              <div className="bg-white rounded-2xl border border-gray-100 p-5 sticky top-20 shadow-sm">
+                <h3 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
+                  <div className="p-2 bg-primary-50 rounded-lg">
+                    <SlidersHorizontal className="w-4 h-4 text-primary-900" />
+                  </div>
                   {t('filters.title')}
                 </h3>
                 
-                <div className="space-y-4">
+                <div className="space-y-5">
                   {/* Sort */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">{t('filters.sort_by')}</label>
                     <select
                       value={filters.sort_by}
                       onChange={(e) => handleFilterChange('sort_by', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm transition-all"
                     >
                       <option value="created_at">{t('sort.newest')}</option>
                       <option value="price">{t('sort.price_low')}</option>
@@ -192,7 +205,7 @@ export default function MarketplacePage() {
                     <select
                       value={filters.category || ''}
                       onChange={(e) => handleFilterChange('category', e.target.value || undefined)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm transition-all"
                     >
                       <option value="">{t('categories.all')}</option>
                       <option value="car">🚗 {t('categories.car')}</option>
@@ -217,7 +230,7 @@ export default function MarketplacePage() {
                     <select
                       value={filters.status || ''}
                       onChange={(e) => handleFilterChange('status', e.target.value || undefined)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm transition-all"
                     >
                       <option value="">{t('status.all')}</option>
                       <option value="available">{t('status.available')}</option>
@@ -237,7 +250,7 @@ export default function MarketplacePage() {
                         placeholder={tCommon('from')}
                         value={filters.price_min || ''}
                         onChange={(e) => handleFilterChange('price_min', e.target.value ? parseInt(e.target.value) : undefined)}
-                        className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        className="px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm transition-all"
                         autoComplete="off"
                       />
                       <input
@@ -247,7 +260,7 @@ export default function MarketplacePage() {
                         placeholder={tCommon('to')}
                         value={filters.price_max || ''}
                         onChange={(e) => handleFilterChange('price_max', e.target.value ? parseInt(e.target.value) : undefined)}
-                        className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        className="px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm transition-all"
                         autoComplete="off"
                       />
                     </div>
@@ -260,12 +273,12 @@ export default function MarketplacePage() {
                       setSearchQuery('')
                     }}
                     variant="outline"
-                    className="w-full"
+                    className="w-full mt-2"
                   >
                     {t('filters.clear_all')}
                   </Button>
                 </div>
-              </Card>
+              </div>
             </div>
 
             {/* Vehicle Grid */}
@@ -368,6 +381,6 @@ export default function MarketplacePage() {
           </div>
         </div>
       </section>
-      </div>    </>
+    </div>
   )
 }

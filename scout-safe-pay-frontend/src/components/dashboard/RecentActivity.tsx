@@ -1,10 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Clock, Car, CheckCircle, AlertCircle, ArrowRight } from 'lucide-react';
+import { Clock, Car, CheckCircle, AlertCircle, ArrowRight, ShoppingCart, Tag } from 'lucide-react';
 import Link from 'next/link';
 
 interface Activity {
@@ -58,105 +56,123 @@ export default function RecentActivity({ activities = mockActivities }: RecentAc
   const [showAll, setShowAll] = useState(false);
   const displayedActivities = showAll ? activities : activities.slice(0, 5);
 
-  const getStatusColor = (status: Activity['status']) => {
+  const getStatusStyles = (status: Activity['status']) => {
     switch (status) {
       case 'completed':
-        return 'bg-green-100 text-green-800 border-green-300';
+        return { bg: 'bg-green-50', text: 'text-green-700', dot: 'bg-green-500' };
       case 'pending':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-300';
+        return { bg: 'bg-amber-50', text: 'text-amber-700', dot: 'bg-amber-500' };
       case 'in-progress':
-        return 'bg-blue-100 text-blue-800 border-blue-300';
+        return { bg: 'bg-blue-50', text: 'text-blue-700', dot: 'bg-blue-500' };
       case 'failed':
-        return 'bg-red-100 text-red-800 border-red-300';
-    }
-  };
-
-  const getStatusIcon = (status: Activity['status']) => {
-    switch (status) {
-      case 'completed':
-        return <CheckCircle className="h-4 w-4" />;
-      case 'pending':
-      case 'in-progress':
-        return <Clock className="h-4 w-4" />;
-      case 'failed':
-        return <AlertCircle className="h-4 w-4" />;
+        return { bg: 'bg-red-50', text: 'text-red-700', dot: 'bg-red-500' };
     }
   };
 
   const getTypeIcon = (type: Activity['type']) => {
-    return <Car className="h-5 w-5" />;
+    switch (type) {
+      case 'purchase':
+        return <ShoppingCart className="w-4 h-4" />;
+      case 'sale':
+        return <Tag className="w-4 h-4" />;
+      default:
+        return <Car className="w-4 h-4" />;
+    }
   };
 
-  return (
-    <Card className="p-6">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white">Recent Activity</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Your latest transactions and updates</p>
+  const getTypeColor = (type: Activity['type']) => {
+    switch (type) {
+      case 'purchase':
+        return 'bg-purple-100 text-purple-600';
+      case 'sale':
+        return 'bg-green-100 text-green-600';
+      default:
+        return 'bg-blue-100 text-blue-600';
+    }
+  };
+
+  if (activities.length === 0) {
+    return (
+      <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center">
+        <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <Clock className="w-6 h-6 text-gray-400" />
         </div>
+        <p className="text-gray-500">No recent activity</p>
+        <p className="text-sm text-gray-400 mt-1">Your transactions will appear here</p>
       </div>
+    );
+  }
 
-      <div className="space-y-4">
-        {displayedActivities.map((activity) => (
-          <div
-            key={activity.id}
-            className="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-md transition-all group"
-          >
-            <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-              {getTypeIcon(activity.type)}
-            </div>
+  return (
+    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+      <div className="divide-y divide-gray-50">
+        {displayedActivities.map((activity) => {
+          const statusStyles = getStatusStyles(activity.status);
+          
+          return (
+            <div
+              key={activity.id}
+              className="flex items-center gap-4 p-4 hover:bg-gray-50/50 transition-colors group"
+            >
+              {/* Type Icon */}
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${getTypeColor(activity.type)}`}>
+                {getTypeIcon(activity.type)}
+              </div>
 
-            <div className="flex-1 min-w-0">
-              <div className="flex items-start justify-between gap-2 mb-1">
-                <h4 className="font-semibold text-gray-900 dark:text-white truncate">
-                  {activity.title}
-                </h4>
+              {/* Content */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-0.5">
+                  <h4 className="font-semibold text-gray-900 truncate text-sm">
+                    {activity.title}
+                  </h4>
+                </div>
+                <p className="text-sm text-gray-500 truncate">
+                  {activity.description}
+                </p>
+              </div>
+
+              {/* Status & Amount */}
+              <div className="flex items-center gap-3 flex-shrink-0">
                 {activity.amount && (
-                  <span className="font-bold text-blue-600 dark:text-blue-400 whitespace-nowrap">
+                  <span className="font-bold text-gray-900 text-sm">
                     €{activity.amount.toLocaleString()}
                   </span>
                 )}
-              </div>
-
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                {activity.description}
-              </p>
-
-              <div className="flex items-center gap-3 flex-wrap">
-                <Badge variant="default" className={`${getStatusColor(activity.status)} text-xs font-semibold border`}>
-                  <span className="flex items-center gap-1">
-                    {getStatusIcon(activity.status)}
-                    {activity.status.replace('-', ' ')}
-                  </span>
-                </Badge>
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+                
+                <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${statusStyles.bg} ${statusStyles.text}`}>
+                  <div className={`w-1.5 h-1.5 rounded-full ${statusStyles.dot}`} />
+                  <span className="capitalize">{activity.status.replace('-', ' ')}</span>
+                </div>
+                
+                <span className="text-xs text-gray-400 hidden sm:block">
                   {activity.timestamp}
                 </span>
               </div>
-            </div>
 
-            {activity.link && (
-              <Link href={activity.link}>
-                <Button variant="ghost" size="sm" className="flex-shrink-0">
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-            )}
-          </div>
-        ))}
+              {/* Arrow */}
+              {activity.link && (
+                <Link href={activity.link} className="flex-shrink-0">
+                  <div className="p-2 rounded-lg text-gray-400 hover:text-primary-600 hover:bg-primary-50 transition-colors">
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </Link>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {activities.length > 5 && (
-        <div className="mt-6">
+        <div className="p-4 border-t border-gray-100">
           <Button
-            variant="outline"
-            className="w-full"
+            variant="ghost"
+            className="w-full text-primary-600 hover:text-primary-700 hover:bg-primary-50"
             onClick={() => setShowAll(!showAll)}
           >
-            {showAll ? 'Show Less' : `View All Activities (${activities.length})`}
+            {showAll ? 'Show Less' : `View All (${activities.length})`}
           </Button>
         </div>
       )}
-    </Card>
+    </div>
   );
 }

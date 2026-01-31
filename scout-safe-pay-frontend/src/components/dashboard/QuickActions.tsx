@@ -1,55 +1,73 @@
 'use client';
 
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Plus, Wallet, Car, FileText, TrendingUp, Settings } from 'lucide-react';
+import { Plus, Car, Receipt, FileText, TrendingUp, Settings, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { LucideIcon } from 'lucide-react';
 
 interface QuickActionProps {
-  icon: React.ReactNode;
+  icon: LucideIcon;
   title: string;
   description: string;
   href: string;
   variant?: 'primary' | 'secondary';
 }
 
-function QuickActionCard({ icon, title, description, href, variant = 'secondary' }: QuickActionProps) {
+function QuickActionCard({ icon: Icon, title, description, href, variant = 'secondary' }: QuickActionProps) {
+  const isPrimary = variant === 'primary';
+  
   return (
-    <Link href={href} className="group">
-      <Card className={`
-        p-6 h-full hover:shadow-xl transition-all cursor-pointer border-2
-        ${variant === 'primary' 
-          ? 'bg-gradient-to-br from-blue-600 to-indigo-600 border-blue-600 hover:from-blue-700 hover:to-indigo-700' 
-          : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-blue-500'
+    <Link 
+      href={href} 
+      className={`
+        group relative overflow-hidden rounded-2xl p-6
+        transition-all duration-300 hover:-translate-y-1
+        ${isPrimary 
+          ? 'bg-gradient-to-br from-primary-900 via-primary-800 to-blue-900 text-white shadow-lg shadow-primary-900/30 hover:shadow-xl hover:shadow-primary-900/40' 
+          : 'bg-white border border-gray-100 hover:border-primary-200 hover:shadow-lg'
         }
-      `}>
-        <div className="flex flex-col items-center text-center space-y-3">
-          <div className={`
-            w-14 h-14 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform
-            ${variant === 'primary' 
-              ? 'bg-white/20' 
-              : 'bg-blue-100 dark:bg-blue-900'
-            }
-          `}>
-            <div className={variant === 'primary' ? 'text-white' : 'text-blue-600 dark:text-blue-400'}>
-              {icon}
-            </div>
-          </div>
-          
-          <div>
-            <h3 className={`font-bold text-lg mb-1 ${
-              variant === 'primary' ? 'text-white' : 'text-gray-900 dark:text-white'
-            }`}>
-              {title}
-            </h3>
-            <p className={`text-sm ${
-              variant === 'primary' ? 'text-blue-100' : 'text-gray-600 dark:text-gray-400'
-            }`}>
-              {description}
-            </p>
-          </div>
+      `}
+    >
+      {/* Background Pattern */}
+      {isPrimary && (
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-40 h-40 bg-white rounded-full -mr-20 -mt-20" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-white rounded-full -ml-16 -mb-16" />
         </div>
-      </Card>
+      )}
+      
+      <div className="relative flex flex-col h-full">
+        {/* Icon */}
+        <div className={`
+          w-12 h-12 rounded-xl flex items-center justify-center mb-4
+          transition-transform duration-300 group-hover:scale-110
+          ${isPrimary 
+            ? 'bg-white/20' 
+            : 'bg-primary-50'
+          }
+        `}>
+          <Icon className={`w-6 h-6 ${isPrimary ? 'text-white' : 'text-primary-900'}`} />
+        </div>
+        
+        {/* Content */}
+        <div className="flex-1">
+          <h3 className={`font-bold text-lg mb-1 ${isPrimary ? 'text-white' : 'text-gray-900'}`}>
+            {title}
+          </h3>
+          <p className={`text-sm ${isPrimary ? 'text-blue-100' : 'text-gray-500'}`}>
+            {description}
+          </p>
+        </div>
+        
+        {/* Arrow indicator */}
+        <div className={`
+          mt-4 flex items-center gap-1 text-sm font-medium
+          transition-transform duration-300 group-hover:translate-x-1
+          ${isPrimary ? 'text-blue-100' : 'text-primary-600'}
+        `}>
+          <span>Get started</span>
+          <ArrowRight className="w-4 h-4" />
+        </div>
+      </div>
     </Link>
   );
 }
@@ -57,49 +75,31 @@ function QuickActionCard({ icon, title, description, href, variant = 'secondary'
 export default function QuickActions() {
   const actions: QuickActionProps[] = [
     {
-      icon: <Plus className="h-7 w-7" />,
+      icon: Plus,
       title: 'Sell Vehicle',
       description: 'List your vehicle for sale',
       href: '/dashboard/vehicles/add',
       variant: 'primary',
     },
     {
-      icon: <Car className="h-7 w-7" />,
+      icon: Car,
       title: 'Browse Vehicles',
       description: 'Find your next car',
       href: '/marketplace',
     },
     {
-      icon: <Wallet className="h-7 w-7" />,
+      icon: Receipt,
       title: 'Transactions',
       description: 'View all transactions',
       href: '/transactions',
     },
-    {
-      icon: <FileText className="h-7 w-7" />,
-      title: 'My Listings',
-      description: 'Manage your vehicles',
-      href: '/dashboard/vehicles',
-    },
-    {
-      icon: <TrendingUp className="h-7 w-7" />,
-      title: 'Analytics',
-      description: 'View your statistics',
-      href: '/dashboard/analytics',
-    },
-    {
-      icon: <Settings className="h-7 w-7" />,
-      title: 'Settings',
-      description: 'Account preferences',
-      href: '/dashboard/profile',
-    },
   ];
 
   return (
-    <Card className="p-6">
+    <div>
       <div className="mb-6">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white">Quick Actions</h3>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Get started with common tasks</p>
+        <h2 className="text-xl font-bold text-gray-900">Get Started</h2>
+        <p className="text-sm text-gray-500 mt-1">Common tasks to help you get started</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -107,6 +107,6 @@ export default function QuickActions() {
           <QuickActionCard key={index} {...action} />
         ))}
       </div>
-    </Card>
+    </div>
   );
 }
