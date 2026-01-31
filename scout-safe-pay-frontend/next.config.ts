@@ -50,6 +50,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.autoscout24.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.unsplash.com',
+      },
       // Allow localhost only in development
       ...(process.env.NODE_ENV !== 'production' ? [{
         protocol: 'http' as const,
