@@ -10,82 +10,119 @@
   color-scheme: light dark;
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-  }
-  
-  html {
-    background-color: rgb(17 24 39);
-  }
-}
-
+/* Base styles */
 body {
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  @apply bg-white text-gray-900;
+  @apply dark:bg-gray-900 dark:text-gray-100;
 }
 
-/* Light mode defaults */
-@media (prefers-color-scheme: light) {
-  body {
-    background-color: white;
-    color: rgb(17 24 39);
-  }
+/* ============================================ */
+/* Dark Mode Overrides (class-based via next-themes) */
+/* ============================================ */
+
+/* Card backgrounds */
+.dark .bg-white {
+  background-color: rgb(31 41 55) !important;
 }
 
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: rgb(17 24 39);
-    color: rgb(243 244 246);
-  }
-  
-  /* Override common backgrounds for dark mode */
-  .bg-white {
-    background-color: rgb(31 41 55) !important;
-  }
-  
-  .bg-gray-50 {
-    background-color: rgb(17 24 39) !important;
-  }
-  
-  .bg-gray-100 {
-    background-color: rgb(31 41 55) !important;
-  }
-  
-  /* Text colors */
-  .text-gray-900 {
-    color: rgb(243 244 246) !important;
-  }
-  
-  .text-gray-800 {
-    color: rgb(229 231 235) !important;
-  }
-  
-  .text-gray-700 {
-    color: rgb(209 213 219) !important;
-  }
-  
-  .text-gray-600 {
-    color: rgb(156 163 175) !important;
-  }
-  
-  /* Borders */
-  .border-gray-100,
-  .border-gray-200 {
-    border-color: rgb(55 65 81) !important;
-  }
-  
-  /* Cards and shadows */
-  .shadow-sm,
-  .shadow,
-  .shadow-lg {
-    --tw-shadow-color: rgba(0, 0, 0, 0.3);
-  }
+.dark .bg-gray-50 {
+  background-color: rgb(17 24 39) !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: rgb(31 41 55) !important;
+}
+
+/* Text colors for dark mode */
+.dark .text-gray-900 {
+  color: rgb(243 244 246) !important;
+}
+
+.dark .text-gray-800 {
+  color: rgb(229 231 235) !important;
+}
+
+.dark .text-gray-700 {
+  color: rgb(209 213 219) !important;
+}
+
+.dark .text-gray-600 {
+  color: rgb(156 163 175) !important;
+}
+
+/* Borders for dark mode */
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-gray-300 {
+  border-color: rgb(55 65 81) !important;
+}
+
+/* Shadows for dark mode */
+.dark .shadow-sm,
+.dark .shadow,
+.dark .shadow-lg,
+.dark .shadow-xl {
+  --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Form inputs */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: rgb(31 41 55);
+  border-color: rgb(55 65 81);
+  color: rgb(243 244 246);
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: rgb(156 163 175);
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: rgb(59 130 246);
+  outline-color: rgb(59 130 246);
+}
+
+/* Hero gradients work in both modes */
+.dark .from-primary-900 {
+  --tw-gradient-from: #002060;
+}
+
+/* Specific component fixes */
+.dark .bg-blue-50 {
+  background-color: rgba(30, 58, 138, 0.3) !important;
+}
+
+.dark .bg-green-50 {
+  background-color: rgba(20, 83, 45, 0.3) !important;
+}
+
+.dark .bg-orange-50,
+.dark .bg-accent-50 {
+  background-color: rgba(154, 52, 18, 0.3) !important;
+}
+
+.dark .bg-purple-50 {
+  background-color: rgba(88, 28, 135, 0.3) !important;
+}
+
+.dark .bg-red-50 {
+  background-color: rgba(127, 29, 29, 0.3) !important;
+}
+
+.dark .bg-yellow-50 {
+  background-color: rgba(120, 53, 15, 0.3) !important;
+}
+
+.dark .bg-primary-50 {
+  background-color: rgba(0, 50, 129, 0.2) !important;
 }
 
 /* ============================================ */

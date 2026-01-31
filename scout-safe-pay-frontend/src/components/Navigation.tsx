@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useTranslations } from 'next-intl'
 import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
+import { ThemeToggle } from './ui/ThemeToggle'
 import { MobileNav, MobileNavLink, MobileNavSection, MobileNavDivider } from './mobile/MobileNav'
 import { ChevronDown, User, Settings, LogOut, LayoutDashboard, Car } from 'lucide-react'
 
@@ -124,8 +125,9 @@ export default function Navigation() {
               {t('nav.dealers')}
             </Link>
 
-            {/* Language and Currency Switchers */}
+            {/* Language, Currency, and Theme Switchers */}
             <div className="flex items-center gap-2 ml-2">
+              <ThemeToggle />
               <CurrencySwitcher />
               <LanguageSwitcher />
             </div>
@@ -217,6 +219,7 @@ export default function Navigation() {
 
           {/* Mobile Navigation */}
           <div className="md:hidden flex items-center gap-2">
+            <ThemeToggle />
             <CurrencySwitcher />
             <LanguageSwitcher />
             <MobileNav
