@@ -43,7 +43,7 @@ export default function OrderStatusTracker({
                 item.status === 'completed'
                   ? 'bg-green-600'
                   : item.status === 'active'
-                  ? 'bg-blue-600'
+                  ? 'bg-primary-600'
                   : 'bg-gray-300'
               }`}
             >

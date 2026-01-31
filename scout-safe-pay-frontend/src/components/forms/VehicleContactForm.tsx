@@ -116,7 +116,7 @@ export default function VehicleContactForm({
 
   return (
     <Card className="overflow-hidden">
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
+      <div className="bg-gradient-to-r from-primary-900 via-primary-800 to-blue-900 p-6 text-white">
         <h3 className="text-2xl font-bold mb-2">Contact Seller</h3>
         <p className="text-blue-100">{vehicleTitle}</p>
         <div className="mt-4 flex items-center gap-4">
@@ -237,7 +237,7 @@ export default function VehicleContactForm({
           type="submit"
           size="lg"
           disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-lg h-14"
+          className="w-full bg-accent-500 hover:bg-accent-600 text-lg h-14"
         >
           {loading ? (
             <>

@@ -60,7 +60,7 @@ export default function CookieBanner() {
             </button>
             <button
               onClick={handleAccept}
-              className="flex-1 sm:flex-none px-4 py-2 bg-blue-600 text-white rounded font-medium hover:bg-blue-700 transition-colors"
+              className="flex-1 sm:flex-none px-4 py-2 bg-primary-600 text-white rounded font-medium hover:bg-blue-700 transition-colors"
               aria-label="Accept cookies"
             >
               Accept All

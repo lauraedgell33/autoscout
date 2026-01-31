@@ -103,7 +103,7 @@ export const VehicleGrid: React.FC = () => {
             <div className="flex gap-2 mt-4">
               <button
                 onClick={() => handleAddToCart(vehicle)}
-                className="flex-1 bg-blue-600 text-white py-2 rounded-md font-medium hover:bg-blue-700 transition-colors"
+                className="flex-1 bg-primary-600 text-white py-2 rounded-md font-medium hover:bg-primary-700 transition-colors"
               >
                 Add to Cart
               </button>

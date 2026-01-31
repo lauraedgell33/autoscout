@@ -213,7 +213,7 @@ export function BankTransferVerification({
                     item.completed
                       ? 'bg-green-600 text-white'
                       : index === timeline.findIndex(t => !t.completed)
-                      ? 'bg-blue-600 text-white'
+                      ? 'bg-primary-600 text-white'
                       : 'bg-gray-200 text-gray-600'
                   }`}
                 >

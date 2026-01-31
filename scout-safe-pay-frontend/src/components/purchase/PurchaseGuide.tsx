@@ -165,7 +165,7 @@ export default function PurchaseGuide() {
         <div className="p-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
                 <Shield className="h-6 w-6 text-white" />
               </div>
               <div>
@@ -237,7 +237,7 @@ export default function PurchaseGuide() {
                       <div className={`
                         w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0
                         ${isActive 
-                          ? 'bg-blue-600' 
+                          ? 'bg-primary-600' 
                           : 'bg-gray-200 dark:bg-gray-700'
                         }
                       `}>
@@ -334,7 +334,7 @@ export default function PurchaseGuide() {
                       {activeStep < 6 && (
                         <Button
                           onClick={() => setActiveStep(activeStep + 1)}
-                          className="flex-1 bg-blue-600 hover:bg-blue-700"
+                          className="flex-1 bg-accent-500 hover:bg-accent-600"
                         >
                           Next Step
                           <ChevronRight className="ml-2 h-4 w-4" />
@@ -389,7 +389,7 @@ export default function PurchaseGuide() {
       </div>
 
       {/* CTA */}
-      <Card className="bg-gradient-to-r from-blue-600 to-indigo-600 border-none">
+      <Card className="bg-gradient-to-r from-primary-900 via-primary-800 to-blue-900 border-none">
         <div className="p-12 text-center text-white space-y-6">
           <h2 className="text-3xl font-bold">
             Ready to Find Your Perfect Vehicle?

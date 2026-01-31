@@ -130,7 +130,7 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
                 variant="default"
                 className={`cursor-pointer transition-all ${
                   filters.make === make
-                    ? 'bg-blue-600 hover:bg-blue-700'
+                    ? 'bg-accent-500 hover:bg-accent-600'
                     : 'hover:bg-blue-50 hover:border-blue-300'
                 }`}
                 onClick={() => handleFilterChange('make', filters.make === make ? '' : make)}
@@ -333,7 +333,7 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
         <Button
           onClick={handleApply}
           disabled={isLoading}
-          className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8"
+          className="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-8"
         >
           {isLoading ? (
             <>

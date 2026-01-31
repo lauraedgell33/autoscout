@@ -338,7 +338,7 @@ export const PaymentHistory: React.FC<PaymentHistoryProps> = ({
                 <div className="p-4 flex gap-3 border-t border-gray-200">
                   <button
                     onClick={() => handleDownloadReceipt(payment.id)}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                    className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-blue-700 transition"
                   >
                     <Download className="w-4 h-4" />
                     Download Receipt
