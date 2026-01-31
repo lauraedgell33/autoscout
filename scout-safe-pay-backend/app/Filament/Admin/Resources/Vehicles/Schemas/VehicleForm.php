@@ -2,16 +2,57 @@
 
 namespace App\Filament\Admin\Resources\Vehicles\Schemas;
 
+use Closure;
 use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Section;
 use Filament\Forms;
 use Filament\Schemas\Schema;
+use Filament\Forms\Get;
 
 class VehicleForm
 {
+    // Categories that use operating hours instead of mileage (km)
+    private static array $hoursCategories = [
+        'agricultural_machinery',
+        'construction_machinery',
+        'forklift',
+        'boat',
+    ];
+
+    // Categories that typically have doors/seats
+    private static array $passengerCategories = [
+        'car',
+        'van',
+        'motorhome',
+        'caravan',
+    ];
+
+    // Categories that have engine/fuel
+    private static array $motorizedCategories = [
+        'car',
+        'motorcycle',
+        'van',
+        'truck',
+        'motorhome',
+        'caravan',
+        'agricultural_machinery',
+        'construction_machinery',
+        'forklift',
+        'boat',
+        'atv',
+        'quad',
+    ];
+
+    // Categories that don't have VIN
+    private static array $noVinCategories = [
+        'trailer',
+        'boat',
+    ];
+
     public static function configure(Schema $schema): Schema
     {
         return $schema
@@ -20,24 +61,25 @@ class VehicleForm
                     Select::make('category')
                         ->label('Category')
                         ->options([
-                            'car' => 'Car',
-                            'motorcycle' => 'Motorcycle',
-                            'van' => 'Van',
-                            'truck' => 'Truck',
-                            'trailer' => 'Trailer',
-                            'caravan' => 'Caravan',
-                            'motorhome' => 'Motorhome',
-                            'construction_machinery' => 'Construction Machinery',
-                            'agricultural_machinery' => 'Agricultural Machinery',
-                            'forklift' => 'Forklift',
-                            'boat' => 'Boat',
-                            'atv' => 'ATV',
-                            'quad' => 'Quad',
+                            'car' => '🚗 Car',
+                            'motorcycle' => '🏍️ Motorcycle',
+                            'van' => '🚐 Van',
+                            'truck' => '🚚 Truck',
+                            'trailer' => '🚛 Trailer',
+                            'caravan' => '🚙 Caravan',
+                            'motorhome' => '🏕️ Motorhome',
+                            'construction_machinery' => '🏗️ Construction Machinery',
+                            'agricultural_machinery' => '🚜 Agricultural Machinery',
+                            'forklift' => '🔧 Forklift',
+                            'boat' => '⛵ Boat',
+                            'atv' => '🛞 ATV',
+                            'quad' => '🏁 Quad',
                         ])
                         ->required()
                         ->default('car')
                         ->native(false)
-                        ->searchable(),
+                        ->searchable()
+                        ->live(),
                     
                     Select::make('status')
                         ->label('Status')
@@ -94,7 +136,8 @@ class VehicleForm
                         ->maxLength(17)
                         ->unique(ignoreRecord: true)
                         ->placeholder('17 characters')
-                        ->helperText('Vehicle Identification Number'),
+                        ->helperText('Vehicle Identification Number')
+                        ->visible(fn (Get $get): bool => !in_array($get('category'), self::$noVinCategories)),
                     
                     TextInput::make('color')
                         ->label('Color')
@@ -102,84 +145,155 @@ class VehicleForm
                         ->placeholder('e.g. Black, White, Red'),
                 ]),
 
-                Grid::make(3)->schema([
-                    Select::make('fuel_type')
-                        ->label('Fuel Type')
-                        ->options([
-                            'petrol' => 'Petrol',
-                            'diesel' => 'Diesel',
-                            'electric' => 'Electric',
-                            'hybrid' => 'Hybrid',
-                            'plugin_hybrid' => 'Plug-in Hybrid',
-                            'lpg' => 'LPG',
-                            'cng' => 'CNG',
-                            'hydrogen' => 'Hydrogen',
-                        ])
-                        ->native(false),
-                    
-                    Select::make('transmission')
-                        ->label('Transmission')
-                        ->options([
-                            'manual' => 'Manual',
-                            'automatic' => 'Automatic',
-                            'semi_automatic' => 'Semi-Automatic',
-                        ])
-                        ->native(false),
-                    
-                    TextInput::make('mileage')
-                        ->label('Mileage')
-                        ->numeric()
-                        ->suffix('km')
-                        ->minValue(0)
-                        ->placeholder('0'),
-                ]),
-                
-                Grid::make(3)->schema([
-                    TextInput::make('engine_size')
-                        ->label('Engine Size')
-                        ->numeric()
-                        ->suffix('cc')
-                        ->minValue(0)
-                        ->placeholder('2000'),
-                    
-                    TextInput::make('power_hp')
-                        ->label('Power')
-                        ->numeric()
-                        ->suffix('HP')
-                        ->minValue(0)
-                        ->placeholder('150'),
-                    
-                    Select::make('body_type')
-                        ->label('Body Type')
-                        ->options([
-                            'sedan' => 'Sedan',
-                            'hatchback' => 'Hatchback',
-                            'suv' => 'SUV',
-                            'coupe' => 'Coupe',
-                            'convertible' => 'Convertible',
-                            'wagon' => 'Wagon',
-                            'van' => 'Van',
-                            'truck' => 'Truck',
-                            'minivan' => 'Minivan',
-                        ])
-                        ->native(false),
-                ]),
-                
-                Grid::make(2)->schema([
-                    TextInput::make('doors')
-                        ->label('Doors')
-                        ->numeric()
-                        ->minValue(2)
-                        ->maxValue(5)
-                        ->placeholder('4'),
-                    
-                    TextInput::make('seats')
-                        ->label('Seats')
-                        ->numeric()
-                        ->minValue(1)
-                        ->maxValue(9)
-                        ->placeholder('5'),
-                ]),
+                // Technical Details Section - Dynamic based on category
+                Section::make('Technical Details')
+                    ->description(fn (Get $get): string => match($get('category')) {
+                        'agricultural_machinery' => 'Specifications for agricultural machinery',
+                        'construction_machinery' => 'Specifications for construction equipment',
+                        'boat' => 'Specifications for watercraft',
+                        'trailer' => 'Specifications for trailer',
+                        default => 'Vehicle technical specifications',
+                    })
+                    ->schema([
+                        Grid::make(3)->schema([
+                            Select::make('fuel_type')
+                                ->label('Fuel Type')
+                                ->options([
+                                    'petrol' => 'Petrol',
+                                    'diesel' => 'Diesel',
+                                    'electric' => 'Electric',
+                                    'hybrid' => 'Hybrid',
+                                    'plugin_hybrid' => 'Plug-in Hybrid',
+                                    'lpg' => 'LPG',
+                                    'cng' => 'CNG',
+                                    'hydrogen' => 'Hydrogen',
+                                ])
+                                ->native(false)
+                                ->visible(fn (Get $get): bool => in_array($get('category'), self::$motorizedCategories)),
+                            
+                            Select::make('transmission')
+                                ->label('Transmission')
+                                ->options([
+                                    'manual' => 'Manual',
+                                    'automatic' => 'Automatic',
+                                    'semi_automatic' => 'Semi-Automatic',
+                                ])
+                                ->native(false)
+                                ->visible(fn (Get $get): bool => in_array($get('category'), ['car', 'van', 'truck', 'motorcycle', 'atv', 'quad'])),
+                            
+                            // Dynamic mileage/hours field
+                            TextInput::make('mileage')
+                                ->label(fn (Get $get): string => in_array($get('category'), self::$hoursCategories) ? 'Operating Hours' : 'Mileage')
+                                ->numeric()
+                                ->suffix(fn (Get $get): string => in_array($get('category'), self::$hoursCategories) ? 'hours' : 'km')
+                                ->minValue(0)
+                                ->placeholder(fn (Get $get): string => in_array($get('category'), self::$hoursCategories) ? '500' : '50000')
+                                ->helperText(fn (Get $get): string => in_array($get('category'), self::$hoursCategories) 
+                                    ? 'Total operating hours' 
+                                    : 'Odometer reading in kilometers'),
+                        ]),
+                        
+                        Grid::make(3)->schema([
+                            TextInput::make('engine_size')
+                                ->label(fn (Get $get): string => $get('category') === 'boat' ? 'Engine Displacement' : 'Engine Size')
+                                ->numeric()
+                                ->suffix('cc')
+                                ->minValue(0)
+                                ->placeholder('2000')
+                                ->visible(fn (Get $get): bool => in_array($get('category'), self::$motorizedCategories) && $get('category') !== 'trailer'),
+                            
+                            TextInput::make('power_hp')
+                                ->label(fn (Get $get): string => $get('category') === 'boat' ? 'Engine Power' : 'Power')
+                                ->numeric()
+                                ->suffix('HP')
+                                ->minValue(0)
+                                ->placeholder('150')
+                                ->visible(fn (Get $get): bool => in_array($get('category'), self::$motorizedCategories) && $get('category') !== 'trailer'),
+                            
+                            Select::make('body_type')
+                                ->label('Body Type')
+                                ->options(fn (Get $get): array => match($get('category')) {
+                                    'car' => [
+                                        'sedan' => 'Sedan',
+                                        'hatchback' => 'Hatchback',
+                                        'suv' => 'SUV',
+                                        'coupe' => 'Coupe',
+                                        'convertible' => 'Convertible',
+                                        'wagon' => 'Wagon',
+                                        'minivan' => 'Minivan',
+                                    ],
+                                    'truck' => [
+                                        'pickup' => 'Pickup',
+                                        'flatbed' => 'Flatbed',
+                                        'box_truck' => 'Box Truck',
+                                        'semi' => 'Semi Truck',
+                                    ],
+                                    'van' => [
+                                        'cargo' => 'Cargo Van',
+                                        'passenger' => 'Passenger Van',
+                                        'minivan' => 'Minivan',
+                                    ],
+                                    'boat' => [
+                                        'motorboat' => 'Motorboat',
+                                        'sailboat' => 'Sailboat',
+                                        'yacht' => 'Yacht',
+                                        'fishing' => 'Fishing Boat',
+                                        'pontoon' => 'Pontoon',
+                                    ],
+                                    'trailer' => [
+                                        'enclosed' => 'Enclosed',
+                                        'open' => 'Open/Flatbed',
+                                        'car_hauler' => 'Car Hauler',
+                                        'utility' => 'Utility',
+                                    ],
+                                    default => [
+                                        'standard' => 'Standard',
+                                    ],
+                                })
+                                ->native(false)
+                                ->visible(fn (Get $get): bool => in_array($get('category'), ['car', 'truck', 'van', 'boat', 'trailer'])),
+                        ]),
+                        
+                        // Doors/Seats - only for passenger vehicles
+                        Grid::make(2)->schema([
+                            TextInput::make('doors')
+                                ->label('Doors')
+                                ->numeric()
+                                ->minValue(2)
+                                ->maxValue(5)
+                                ->placeholder('4')
+                                ->visible(fn (Get $get): bool => in_array($get('category'), self::$passengerCategories)),
+                            
+                            TextInput::make('seats')
+                                ->label('Seats')
+                                ->numeric()
+                                ->minValue(1)
+                                ->maxValue(50)
+                                ->placeholder('5')
+                                ->visible(fn (Get $get): bool => in_array($get('category'), self::$passengerCategories)),
+                        ]),
+                        
+                        // Special fields for specific categories
+                        Grid::make(2)->schema([
+                            TextInput::make('lifting_capacity')
+                                ->label('Lifting Capacity')
+                                ->numeric()
+                                ->suffix('kg')
+                                ->minValue(0)
+                                ->placeholder('3000')
+                                ->helperText('Maximum lifting capacity in kilograms')
+                                ->visible(fn (Get $get): bool => in_array($get('category'), ['forklift', 'construction_machinery'])),
+                            
+                            TextInput::make('working_width')
+                                ->label('Working Width')
+                                ->numeric()
+                                ->suffix('m')
+                                ->minValue(0)
+                                ->placeholder('3.5')
+                                ->helperText('For harvesters, plows, etc.')
+                                ->visible(fn (Get $get): bool => $get('category') === 'agricultural_machinery'),
+                        ]),
+                    ]),
 
                 Grid::make(3)->schema([
                     TextInput::make('price')

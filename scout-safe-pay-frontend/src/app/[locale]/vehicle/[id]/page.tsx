@@ -390,7 +390,7 @@ export default function VehicleDetailsPage() {
                         <span className="text-xs text-gray-600 font-medium">Rating</span>
                         <div className="flex items-center gap-1">
                           <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                          <span className="font-bold text-blue-900">{(vehicle.dealer.review_stats.average_rating || 0).toFixed(1)}</span>
+                          <span className="font-bold text-blue-900">{(vehicle.dealer.review_stats?.average_rating ?? 0).toFixed(1)}</span>
                           <span className="text-gray-500">/5</span>
                         </div>
                       </div>

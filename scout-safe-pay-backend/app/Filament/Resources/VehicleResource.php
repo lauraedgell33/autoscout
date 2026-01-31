@@ -20,6 +20,38 @@ class VehicleResource extends Resource
     protected static ?string $navigationLabel = 'Vehicles';
     protected static ?int $navigationSort = 4;
 
+    // Categories that use operating hours instead of mileage (km)
+    private static array $hoursCategories = [
+        'agricultural_machinery',
+        'construction_machinery',
+        'forklift',
+        'boat',
+    ];
+
+    // Categories that typically have doors/seats
+    private static array $passengerCategories = [
+        'car',
+        'van',
+        'motorhome',
+        'caravan',
+    ];
+
+    // Categories that have engine/fuel
+    private static array $motorizedCategories = [
+        'car',
+        'motorcycle',
+        'van',
+        'truck',
+        'motorhome',
+        'caravan',
+        'agricultural_machinery',
+        'construction_machinery',
+        'forklift',
+        'boat',
+        'atv',
+        'quad',
+    ];
+
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -43,7 +75,8 @@ class VehicleResource extends Resource
                                 'quad' => '🏁 Quad',
                             ])
                             ->required()
-                            ->searchable(),
+                            ->searchable()
+                            ->live(),
 
                         Forms\Components\TextInput::make('make')
                             ->required()
@@ -62,7 +95,8 @@ class VehicleResource extends Resource
                         Forms\Components\TextInput::make('vin')
                             ->label('VIN')
                             ->maxLength(17)
-                            ->unique(ignoreRecord: true),
+                            ->unique(ignoreRecord: true)
+                            ->visible(fn (Forms\Get $get): bool => !in_array($get('category'), ['trailer', 'boat'])),
                     ])->columns(2),
 
                 Forms\Components\Section::make('Pricing')
@@ -84,11 +118,22 @@ class VehicleResource extends Resource
                     ])->columns(2),
 
                 Forms\Components\Section::make('Technical Details')
+                    ->description(fn (Forms\Get $get): string => match($get('category')) {
+                        'agricultural_machinery' => 'Specifications for agricultural machinery',
+                        'construction_machinery' => 'Specifications for construction equipment',
+                        'boat' => 'Specifications for watercraft',
+                        'trailer' => 'Specifications for trailer',
+                        default => 'Vehicle technical specifications',
+                    })
                     ->schema([
                         Forms\Components\TextInput::make('mileage')
+                            ->label(fn (Forms\Get $get): string => in_array($get('category'), self::$hoursCategories) ? 'Operating Hours' : 'Mileage')
                             ->numeric()
-                            ->suffix('km')
-                            ->minValue(0),
+                            ->suffix(fn (Forms\Get $get): string => in_array($get('category'), self::$hoursCategories) ? 'hours' : 'km')
+                            ->minValue(0)
+                            ->helperText(fn (Forms\Get $get): string => in_array($get('category'), self::$hoursCategories) 
+                                ? 'Total operating hours' 
+                                : 'Odometer reading in kilometers'),
 
                         Forms\Components\Select::make('fuel_type')
                             ->options([
@@ -99,7 +144,8 @@ class VehicleResource extends Resource
                                 'lpg' => 'LPG',
                                 'cng' => 'CNG',
                             ])
-                            ->searchable(),
+                            ->searchable()
+                            ->visible(fn (Forms\Get $get): bool => in_array($get('category'), self::$motorizedCategories)),
 
                         Forms\Components\Select::make('transmission')
                             ->options([
@@ -107,7 +153,8 @@ class VehicleResource extends Resource
                                 'automatic' => 'Automatic',
                                 'semi-automatic' => 'Semi-Automatic',
                             ])
-                            ->searchable(),
+                            ->searchable()
+                            ->visible(fn (Forms\Get $get): bool => in_array($get('category'), ['car', 'van', 'truck', 'motorcycle', 'atv', 'quad'])),
 
                         Forms\Components\TextInput::make('color')
                             ->maxLength(50),
@@ -115,37 +162,53 @@ class VehicleResource extends Resource
                         Forms\Components\TextInput::make('doors')
                             ->numeric()
                             ->minValue(1)
-                            ->maxValue(10),
+                            ->maxValue(10)
+                            ->visible(fn (Forms\Get $get): bool => in_array($get('category'), self::$passengerCategories)),
 
                         Forms\Components\TextInput::make('seats')
                             ->numeric()
                             ->minValue(1)
-                            ->maxValue(100),
+                            ->maxValue(100)
+                            ->visible(fn (Forms\Get $get): bool => in_array($get('category'), self::$passengerCategories)),
 
                         Forms\Components\Select::make('body_type')
-                            ->options([
-                                'sedan' => 'Sedan',
-                                'suv' => 'SUV',
-                                'hatchback' => 'Hatchback',
-                                'coupe' => 'Coupe',
-                                'convertible' => 'Convertible',
-                                'wagon' => 'Wagon',
-                                'van' => 'Van',
-                                'pickup' => 'Pickup',
-                                'truck' => 'Truck',
-                            ])
-                            ->searchable(),
+                            ->options(fn (Forms\Get $get): array => match($get('category')) {
+                                'car' => [
+                                    'sedan' => 'Sedan',
+                                    'hatchback' => 'Hatchback',
+                                    'suv' => 'SUV',
+                                    'coupe' => 'Coupe',
+                                    'convertible' => 'Convertible',
+                                    'wagon' => 'Wagon',
+                                ],
+                                'truck' => [
+                                    'pickup' => 'Pickup',
+                                    'flatbed' => 'Flatbed',
+                                    'box_truck' => 'Box Truck',
+                                ],
+                                'van' => [
+                                    'cargo' => 'Cargo Van',
+                                    'passenger' => 'Passenger Van',
+                                ],
+                                default => [
+                                    'standard' => 'Standard',
+                                ],
+                            })
+                            ->searchable()
+                            ->visible(fn (Forms\Get $get): bool => in_array($get('category'), ['car', 'truck', 'van'])),
 
                         Forms\Components\TextInput::make('engine_size')
                             ->numeric()
                             ->suffix('cc')
-                            ->minValue(0),
+                            ->minValue(0)
+                            ->visible(fn (Forms\Get $get): bool => in_array($get('category'), self::$motorizedCategories) && $get('category') !== 'trailer'),
 
                         Forms\Components\TextInput::make('power_hp')
                             ->label('Power (HP)')
                             ->numeric()
                             ->suffix('HP')
-                            ->minValue(0),
+                            ->minValue(0)
+                            ->visible(fn (Forms\Get $get): bool => in_array($get('category'), self::$motorizedCategories) && $get('category') !== 'trailer'),
                     ])->columns(3),
 
                 Forms\Components\Section::make('Description')

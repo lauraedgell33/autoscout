@@ -82,13 +82,14 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
     }
   }, [sortBy, dealer])
 
-  const renderStars = (rating: number, size: 'sm' | 'md' = 'sm') => {
+  const renderStars = (rating: number | undefined | null, size: 'sm' | 'md' = 'sm') => {
+    const safeRating = rating ?? 0
     const starSize = size === 'sm' ? 'w-4 h-4' : 'w-5 h-5'
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
         className={`${starSize} ${
-          i < Math.floor(rating)
+          i < Math.floor(safeRating)
             ? 'text-yellow-400 fill-current'
             : 'text-gray-300'
         }`}
@@ -216,7 +217,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                       {renderStars(reviewStats.average_rating, 'md')}
                     </div>
                     <span className="text-2xl font-bold">
-                      {reviewStats.average_rating.toFixed(1)}
+                      {(reviewStats?.average_rating ?? 0).toFixed(1)}
                     </span>
                     <span className="text-blue-100">
                       ({reviewStats.total_reviews} {t('reviews')})
@@ -248,23 +249,38 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
       <div className="container mx-auto px-4 pb-12">
           {/* Tabs Navigation */}
           <Tabs className="mb-8">
-            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 h-14 bg-white border-2 border-blue-200 rounded-xl">
-              <TabsTrigger value="vehicles" className="text-lg data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 h-14 bg-white border-2 border-blue-200 rounded-xl overflow-hidden">
+              <TabsTrigger 
+                value="vehicles" 
+                active={activeTab === 'vehicles'}
+                onClick={() => setActiveTab('vehicles')}
+                className={`text-lg flex items-center justify-center rounded-l-xl ${activeTab === 'vehicles' ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'}`}
+              >
                 <Car className="w-5 h-5 mr-2" />
                 {t('vehicleInventory')} ({dealer.vehicles_count || 0})
               </TabsTrigger>
-              <TabsTrigger value="about" className="text-lg data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+              <TabsTrigger 
+                value="about" 
+                active={activeTab === 'about'}
+                onClick={() => setActiveTab('about')}
+                className={`text-lg flex items-center justify-center ${activeTab === 'about' ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'}`}
+              >
                 <Building2 className="w-5 h-5 mr-2" />
                 {t('aboutDealer')}
               </TabsTrigger>
-              <TabsTrigger value="reviews" className="text-lg data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+              <TabsTrigger 
+                value="reviews" 
+                active={activeTab === 'reviews'}
+                onClick={() => setActiveTab('reviews')}
+                className={`text-lg flex items-center justify-center rounded-r-xl ${activeTab === 'reviews' ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'}`}
+              >
                 <Star className="w-5 h-5 mr-2" />
                 {t('reviews')} ({reviewStats?.total_reviews || 0})
               </TabsTrigger>
             </TabsList>
 
             {/* Vehicles Tab */}
-            <TabsContent value="vehicles" className="mt-8">
+            <TabsContent value="vehicles" active={activeTab === 'vehicles'} className="mt-8">
               {/* Filters and Sort Bar */}
               <Card className="mb-6 shadow-lg border-2 border-blue-100">
                 <CardContent className="p-6">
@@ -438,7 +454,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
             </TabsContent>
 
             {/* About Tab */}
-            <TabsContent value="about" className="mt-8">
+            <TabsContent value="about" active={activeTab === 'about'} className="mt-8">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Main Content */}
                 <div className="lg:col-span-2 space-y-6">
@@ -562,7 +578,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
             </TabsContent>
 
             {/* Reviews Tab */}
-            <TabsContent value="reviews" className="mt-8">
+            <TabsContent value="reviews" active={activeTab === 'reviews'} className="mt-8">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Reviews List */}
                 <div className="lg:col-span-2">

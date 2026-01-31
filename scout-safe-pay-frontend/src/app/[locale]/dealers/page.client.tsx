@@ -300,7 +300,7 @@ export default function DealersPageClient() {
                               {renderStars(dealer.review_stats.average_rating)}
                             </div>
                             <span className="text-2xl font-bold text-orange-600">
-                              {dealer.review_stats.average_rating.toFixed(1)}
+                              {(dealer.review_stats.average_rating ?? 0).toFixed(1)}
                             </span>
                           </div>
                           <div className="text-sm text-gray-600 text-center">
