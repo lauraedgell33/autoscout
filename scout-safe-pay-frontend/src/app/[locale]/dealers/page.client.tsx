@@ -77,64 +77,68 @@ export default function DealersPageClient() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-gray-50">
+    <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white">
-        <div className="container mx-auto px-4 py-16">
+      <div className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-blue-900 text-white">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -mr-48 -mt-48" />
+          <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-white rounded-full -mb-32" />
+        </div>
+        <div className="relative container mx-auto px-4 py-12 sm:py-16">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-4">
-              <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-3">
-                <Building2 className="w-8 h-8" />
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/20">
+                <Building2 className="w-6 h-6" />
               </div>
-              <h1 className="text-5xl font-bold">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
                 {t('title')}
               </h1>
             </div>
-            <p className="text-xl text-blue-100 mb-6">{t('description')}</p>
+            <p className="text-base sm:text-lg text-blue-100 mb-6">{t('description')}</p>
             
             {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-4 mt-8">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
-                <div className="text-3xl font-bold">{(dealers || []).length}+</div>
-                <div className="text-sm text-blue-100">{t('verifiedDealers')}</div>
+            <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center border border-white/20">
+                <div className="text-xl sm:text-2xl font-bold">{(dealers || []).length}+</div>
+                <div className="text-xs sm:text-sm text-blue-200">{t('verifiedDealers')}</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
-                <div className="text-3xl font-bold">100%</div>
-                <div className="text-sm text-blue-100">{t('qualityChecked')}</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center border border-white/20">
+                <div className="text-xl sm:text-2xl font-bold">100%</div>
+                <div className="text-xs sm:text-sm text-blue-200">{t('qualityChecked')}</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
-                <div className="text-3xl font-bold">24/7</div>
-                <div className="text-sm text-blue-100">{t('support')}</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center border border-white/20">
+                <div className="text-xl sm:text-2xl font-bold">24/7</div>
+                <div className="text-xs sm:text-sm text-blue-200">{t('support')}</div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-8 sm:py-12">
         {/* Enhanced Filters */}
-        <Card className="shadow-xl border-2 border-blue-100 mb-12 -mt-8 relative z-10 bg-white">
-          <CardContent className="p-8">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+        <Card className="shadow-lg border border-gray-100 mb-8 sm:mb-12 -mt-6 relative z-10 bg-white rounded-2xl">
+          <CardContent className="p-4 sm:p-6">
+            <div className="mb-4 sm:mb-6">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-1">
                 {t('findYourDealer')}
               </h2>
-              <p className="text-gray-600">{t('filterResults')}</p>
+              <p className="text-sm text-gray-600">{t('filterResults')}</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               <div className="relative">
-                <Search className="absolute left-4 top-4 h-5 w-5 text-blue-600" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
                   placeholder={t('searchPlaceholder')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-12 h-14 text-lg border-2 border-gray-300 focus:border-blue-500"
+                  className="pl-10 h-12 text-sm bg-gray-50 border-gray-200 rounded-xl focus:ring-primary-500"
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                 />
               </div>
 
               <Select value={selectedType} onValueChange={setSelectedType}>
-                <SelectTrigger className="h-14 text-lg border-2 border-gray-300 focus:border-blue-500">
+                <SelectTrigger className="h-12 text-sm bg-gray-50 border-gray-200 rounded-xl">
                   <SelectValue placeholder={t('selectType')} />
                 </SelectTrigger>
                 <SelectContent>
@@ -146,7 +150,7 @@ export default function DealersPageClient() {
               </Select>
 
               <Select value={selectedCity} onValueChange={setSelectedCity}>
-                <SelectTrigger className="h-14 text-lg border-2 border-gray-300 focus:border-blue-500">
+                <SelectTrigger className="h-12 text-sm bg-gray-50 border-gray-200 rounded-xl">
                   <SelectValue placeholder={t('selectCity')} />
                 </SelectTrigger>
                 <SelectContent>
@@ -159,8 +163,8 @@ export default function DealersPageClient() {
                 </SelectContent>
               </Select>
 
-              <Button onClick={handleSearch} className="h-14 text-lg bg-blue-600 hover:bg-blue-700">
-                <Search className="w-5 h-5 mr-2" />
+              <Button onClick={handleSearch} className="h-12 text-sm bg-primary-900 hover:bg-primary-950 rounded-xl">
+                <Search className="w-4 h-4 mr-2" />
                 {t('search')}
               </Button>
             </div>
@@ -169,18 +173,18 @@ export default function DealersPageClient() {
 
         {/* Results Count */}
         {!loading && (
-          <div className="mb-8 flex justify-between items-center">
-            <div className="text-lg font-semibold text-gray-900">
+          <div className="mb-6 flex justify-between items-center">
+            <div className="text-sm font-medium text-gray-900">
               {(dealers || []).length > 0 ? (
                 <>
-                  <span className="text-blue-600">{(dealers || []).length}</span> {t('dealersFound')}
+                  <span className="text-primary-900 font-semibold">{(dealers || []).length}</span> {t('dealersFound')}
                 </>
               ) : (
                 <span>{t('noDealersFound')}</span>
               )}
             </div>
             {(dealers || []).length > 0 && (
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-gray-500">
                 {t('page')} {currentPage} {t('of')} {totalPages}
               </div>
             )}
@@ -189,17 +193,17 @@ export default function DealersPageClient() {
 
         {/* Dealers Grid */}
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: 6 }).map((_, i) => (
-              <Card key={i} className="shadow-lg">
-                <CardHeader>
-                  <Skeleton className="h-8 w-3/4 mb-2" />
-                  <Skeleton className="h-5 w-1/2" />
+              <Card key={i} className="rounded-2xl border border-gray-100">
+                <CardHeader className="p-4">
+                  <Skeleton className="h-6 w-3/4 mb-2" />
+                  <Skeleton className="h-4 w-1/2" />
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-4 pt-0">
                   <div className="space-y-3">
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-2/3" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-2/3" />
                     <Skeleton className="h-10 w-full" />
                   </div>
                 </CardContent>
@@ -207,14 +211,14 @@ export default function DealersPageClient() {
             ))}
           </div>
         ) : dealers.length === 0 ? (
-          <div className="text-center py-20 bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl border-2 border-dashed border-blue-300">
-            <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-blue-100 mb-6">
-              <Building2 className="w-12 h-12 text-blue-600" />
+          <div className="text-center py-16 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary-50 mb-4">
+              <Building2 className="w-8 h-8 text-primary-900" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
               {t('noDealersFound')}
             </h3>
-            <p className="text-gray-600 text-lg mb-6">{t('tryDifferentFilters')}</p>
+            <p className="text-sm text-gray-600 mb-4">{t('tryDifferentFilters')}</p>
             <Button 
               onClick={() => {
                 setSearchTerm('')
@@ -222,28 +226,28 @@ export default function DealersPageClient() {
                 setSelectedType('')
                 fetchDealers(1)
               }}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-primary-900 hover:bg-primary-950 rounded-xl"
             >
               {t('clearFilters')}
             </Button>
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {dealers.map((dealer) => (
                 <Card
                   key={dealer.id}
-                  className="group hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-gray-100 hover:border-blue-300 overflow-hidden"
+                  className="group hover:shadow-lg transition-all duration-300 cursor-pointer border border-gray-100 hover:border-primary-200 rounded-2xl overflow-hidden"
                   onClick={() => router.push(`/dealers/${dealer.id}`)}
                 >
                   {/* Header with gradient */}
-                  <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-6 text-white relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+                  <div className="bg-gradient-to-br from-primary-900 via-primary-800 to-blue-900 p-4 text-white relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12"></div>
                     <div className="relative z-10">
-                      <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-start justify-between mb-2">
                         <div className="flex-1">
                           {dealer.logo_url ? (
-                            <div className="w-16 h-16 bg-white rounded-xl p-2 mb-3">
+                            <div className="w-12 h-12 bg-white rounded-xl p-1.5 mb-2">
                               <img
                                 src={dealer.logo_url}
                                 alt={dealer.company_name}
@@ -251,16 +255,16 @@ export default function DealersPageClient() {
                               />
                             </div>
                           ) : (
-                            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-3">
-                              <Building2 className="w-8 h-8" />
+                            <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center mb-2 border border-white/20">
+                              <Building2 className="w-6 h-6" />
                             </div>
                           )}
-                          <h3 className="font-bold text-xl mb-1 group-hover:text-blue-100 transition-colors">
+                          <h3 className="font-semibold text-base">
                             {dealer.company_name}
                           </h3>
                         </div>
                         {dealer.is_verified && (
-                          <Badge className="bg-green-500 hover:bg-green-600 text-white border-0">
+                          <Badge className="bg-green-500 hover:bg-green-600 text-white border-0 text-xs">
                             ✓ {t('verified')}
                           </Badge>
                         )}
@@ -268,62 +272,62 @@ export default function DealersPageClient() {
                     </div>
                   </div>
 
-                  <CardContent className="p-6">
-                    <div className="space-y-4">
+                  <CardContent className="p-4">
+                    <div className="space-y-3">
                       {/* Location */}
                       <div className="flex items-center text-gray-700">
-                        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mr-3">
-                          <MapPin className="w-5 h-5 text-blue-600" />
+                        <div className="w-8 h-8 rounded-lg bg-primary-50 flex items-center justify-center mr-2">
+                          <MapPin className="w-4 h-4 text-primary-900" />
                         </div>
                         <div>
-                          <div className="font-medium">{dealer.city}</div>
-                          <div className="text-sm text-gray-500">{dealer.country}</div>
+                          <div className="text-sm font-medium">{dealer.city}</div>
+                          <div className="text-xs text-gray-500">{dealer.country}</div>
                         </div>
                       </div>
 
                       {/* Type */}
                       <div className="flex items-center text-gray-700">
-                        <div className="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center mr-3">
-                          <Building2 className="w-5 h-5 text-purple-600" />
+                        <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center mr-2">
+                          <Building2 className="w-4 h-4 text-purple-600" />
                         </div>
                         <div>
-                          <div className="font-medium capitalize">{t(dealer.type)}</div>
-                          <div className="text-sm text-gray-500">{t('dealerType')}</div>
+                          <div className="text-sm font-medium capitalize">{t(dealer.type)}</div>
+                          <div className="text-xs text-gray-500">{t('dealerType')}</div>
                         </div>
                       </div>
 
                       {/* Rating */}
                       {dealer.review_stats && dealer.review_stats.total_reviews > 0 && (
-                        <div className="p-4 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center gap-1">
+                        <div className="p-3 bg-accent-50 rounded-xl">
+                          <div className="flex items-center justify-between mb-1">
+                            <div className="flex items-center gap-0.5">
                               {renderStars(dealer.review_stats.average_rating)}
                             </div>
-                            <span className="text-2xl font-bold text-orange-600">
+                            <span className="text-lg font-bold text-accent-600">
                               {(dealer.review_stats.average_rating ?? 0).toFixed(1)}
                             </span>
                           </div>
-                          <div className="text-sm text-gray-600 text-center">
+                          <div className="text-xs text-gray-600 text-center">
                             {dealer.review_stats.total_reviews} {t('customerReviews')}
                           </div>
                         </div>
                       )}
 
                       {/* Vehicles Count */}
-                      <div className="flex items-center justify-between p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg">
+                      <div className="flex items-center justify-between p-3 bg-green-50 rounded-xl">
                         <div className="flex items-center gap-2 text-green-700">
-                          <Car className="w-5 h-5" />
-                          <span className="font-medium">{t('activeListings')}</span>
+                          <Car className="w-4 h-4" />
+                          <span className="text-sm font-medium">{t('activeListings')}</span>
                         </div>
-                        <span className="text-2xl font-bold text-green-600">
+                        <span className="text-lg font-bold text-green-600">
                           {dealer.vehicles_count || 0}
                         </span>
                       </div>
 
                       {/* Actions */}
-                      <div className="pt-4 border-t border-gray-200 space-y-2">
+                      <div className="pt-3 border-t border-gray-100 space-y-2">
                         <Button
-                          className="w-full bg-blue-600 hover:bg-blue-700 h-12 text-lg"
+                          className="w-full bg-primary-900 hover:bg-primary-950 h-10 text-sm rounded-xl"
                           onClick={(e) => {
                             e.stopPropagation()
                             router.push(`/dealers/${dealer.id}`)
@@ -334,7 +338,7 @@ export default function DealersPageClient() {
                         {dealer.website && (
                           <Button
                             variant="outline"
-                            className="w-full h-10 border-2 border-blue-200 hover:bg-blue-50"
+                            className="w-full h-9 text-sm border border-gray-200 hover:bg-gray-50 rounded-xl"
                             onClick={(e) => {
                               e.stopPropagation()
                               window.open(dealer.website!, '_blank')
@@ -352,18 +356,18 @@ export default function DealersPageClient() {
 
             {/* Enhanced Pagination */}
             {totalPages > 1 && (
-              <div className="flex justify-center items-center space-x-3 bg-white rounded-xl p-6 shadow-lg border-2 border-blue-100">
+              <div className="flex justify-center items-center space-x-2 bg-white rounded-xl p-4 shadow-sm border border-gray-100">
                 <Button
                   variant="outline"
-                  className="h-12 px-6 border-2 border-blue-200 hover:bg-blue-50"
+                  className="h-10 px-4 text-sm border border-gray-200 hover:bg-gray-50 rounded-xl"
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
                 >
-                  <ChevronLeft className="w-5 h-5 mr-2" />
+                  <ChevronLeft className="w-4 h-4 mr-1" />
                   {t('previous')}
                 </Button>
 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-1">
                   {Array.from({ length: totalPages }, (_, i) => i + 1)
                     .filter(page => {
                       const distance = Math.abs(page - currentPage)
@@ -372,7 +376,7 @@ export default function DealersPageClient() {
                     .map((page, index, array) => {
                       if (index > 0 && page - array[index - 1] > 1) {
                         return (
-                          <span key={`ellipsis-${page}`} className="px-3 py-2 text-gray-400 font-bold">
+                          <span key={`ellipsis-${page}`} className="px-2 text-gray-400">
                             ...
                           </span>
                         )
@@ -381,10 +385,10 @@ export default function DealersPageClient() {
                         <Button
                           key={page}
                           variant={page === currentPage ? 'primary' : 'outline'}
-                          className={`h-12 w-12 ${
+                          className={`h-10 w-10 text-sm rounded-xl ${
                             page === currentPage 
-                              ? 'bg-blue-600 hover:bg-blue-700 text-white' 
-                              : 'border-2 border-blue-200 hover:bg-blue-50'
+                              ? 'bg-primary-900 hover:bg-primary-950 text-white' 
+                              : 'border border-gray-200 hover:bg-gray-50'
                           }`}
                           onClick={() => handlePageChange(page)}
                         >
@@ -396,12 +400,12 @@ export default function DealersPageClient() {
 
                 <Button
                   variant="outline"
-                  className="h-12 px-6 border-2 border-blue-200 hover:bg-blue-50"
+                  className="h-10 px-4 text-sm border border-gray-200 hover:bg-gray-50 rounded-xl"
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
                 >
                   {t('next')}
-                  <ChevronRight className="w-5 h-5 ml-2" />
+                  <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
               </div>
             )}

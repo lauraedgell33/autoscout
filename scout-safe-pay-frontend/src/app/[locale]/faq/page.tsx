@@ -43,53 +43,53 @@ export default function FAQPage() {
   ];
 
   return (
-    <>      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h1>
-          <p className="text-lg text-gray-600 mb-12">
-            Find answers to common questions about our platform and services.
-          </p>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Frequently Asked Questions</h1>
+        <p className="text-sm sm:text-base text-gray-600 mb-8">
+          Find answers to common questions about our platform and services.
+        </p>
 
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <Card 
-                key={index}
-                className="cursor-pointer hover:shadow-md transition-shadow"
-                onClick={() => setExpanded(expanded === index ? null : index)}
-              >
-                <div className="flex items-center justify-between p-6">
-                  <CardTitle className="text-lg">{faq.question}</CardTitle>
-                  <ChevronDown 
-                    className={`transition-transform ${expanded === index ? 'rotate-180' : ''}`}
-                    size={20}
-                  />
-                </div>
-                {expanded === index && (
-                  <CardContent className="pt-0">
-                    <p className="text-gray-600">{faq.answer}</p>
-                  </CardContent>
-                )}
-              </Card>
-            ))}
-          </div>
-
-          <Card className="mt-12 bg-blue-50 border-blue-200">
-            <CardHeader>
-              <CardTitle>Still have questions?</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 mb-4">
-                Our support team is here to help. Contact us anytime.
-              </p>
-              <Link 
-                href="/contact"
-                className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Contact Support
-              </Link>
-            </CardContent>
-          </Card>
+        <div className="space-y-3">
+          {faqs.map((faq, index) => (
+            <Card 
+              key={index}
+              className="cursor-pointer hover:shadow-md transition-all rounded-2xl border border-gray-100"
+              onClick={() => setExpanded(expanded === index ? null : index)}
+            >
+              <div className="flex items-center justify-between p-4 sm:p-5">
+                <CardTitle className="text-sm sm:text-base font-semibold pr-4">{faq.question}</CardTitle>
+                <ChevronDown 
+                  className={`flex-shrink-0 text-gray-400 transition-transform ${expanded === index ? 'rotate-180' : ''}`}
+                  size={18}
+                />
+              </div>
+              {expanded === index && (
+                <CardContent className="pt-0 pb-4 sm:pb-5 px-4 sm:px-5">
+                  <p className="text-sm text-gray-600">{faq.answer}</p>
+                </CardContent>
+              )}
+            </Card>
+          ))}
         </div>
-      </div>    </>
+
+        <Card className="mt-8 bg-primary-50 border-primary-100 rounded-2xl">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base sm:text-lg">Still have questions?</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-gray-700 mb-4">
+              Our support team is here to help. Contact us anytime.
+            </p>
+            <Link 
+              href="/contact"
+              className="inline-block px-5 py-2.5 bg-primary-900 hover:bg-primary-950 text-white text-sm font-semibold rounded-xl transition"
+            >
+              Contact Support
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }
