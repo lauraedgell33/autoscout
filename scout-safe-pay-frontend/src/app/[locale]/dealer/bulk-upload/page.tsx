@@ -89,7 +89,7 @@ export default function DealerBulkUploadPage() {
         </Card>
       )}
 
-      <Card className="p-6 bg-blue-50 dark:bg-blue-900/20">
+      <Card className="p-6 bg-primary-50 dark:bg-blue-900/20">
         <h4 className="font-medium mb-2">CSV Format Requirements</h4>
         <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1 list-disc list-inside">
           <li>First row must contain headers</li>

@@ -167,7 +167,7 @@ export default function AllBankAccountsPage() {
       {/* Buyer Accounts */}
       <div>
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-          <CreditCard className="h-5 w-5 mr-2 text-blue-600" />
+          <CreditCard className="h-5 w-5 mr-2 text-primary-600" />
           Buyer Accounts (Refunds)
         </h2>
         {buyerAccounts.length === 0 ? (

@@ -186,7 +186,7 @@ export default function MessageThreadPage() {
               <div className="flex items-center gap-2 text-sm text-gray-500">
                 <Circle className={`h-2 w-2 ${otherOnline ? 'text-green-500 fill-green-500' : 'text-gray-400 fill-gray-400'}`} />
                 {otherOnline === null ? 'Status unknown' : otherOnline ? 'Online' : 'Offline'}
-                {otherTyping && <span className="text-blue-600">• typing...</span>}
+                {otherTyping && <span className="text-primary-600">• typing...</span>}
               </div>
             </div>
           </div>

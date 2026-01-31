@@ -374,8 +374,8 @@ export default function AddVehiclePage() {
                   )}
                 </div>
 
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <p className="text-sm text-blue-800">
+                <div className="bg-primary-50 border border-blue-200 rounded-lg p-4">
+                  <p className="text-sm text-primary-700">
                     <strong>Note:</strong> Your vehicle will be listed immediately after submission. You can add images later from the edit page.
                   </p>
                 </div>

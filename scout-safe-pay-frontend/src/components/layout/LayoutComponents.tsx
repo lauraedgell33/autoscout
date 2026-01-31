@@ -138,7 +138,7 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ stats, className = '' }) =
           className="bg-white rounded-lg shadow p-6 border border-gray-200 hover:shadow-md transition-shadow"
         >
           {stat.icon && (
-            <div className="mb-4 text-blue-600">{stat.icon}</div>
+            <div className="mb-4 text-primary-600">{stat.icon}</div>
           )}
           <div className="text-3xl font-bold text-gray-900 mb-2">
             {stat.value}

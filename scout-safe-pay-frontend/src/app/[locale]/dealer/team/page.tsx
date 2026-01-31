@@ -144,7 +144,7 @@ export default function DealerTeamPage() {
                     <td className="px-6 py-4 text-sm font-medium">{member.name}</td>
                     <td className="px-6 py-4 text-sm">{member.email}</td>
                     <td className="px-6 py-4">
-                      <span className="inline-flex items-center px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
+                      <span className="inline-flex items-center px-2 py-1 text-xs bg-blue-100 text-primary-700 rounded-full">
                         <Shield className="h-3 w-3 mr-1" />{member.role}
                       </span>
                     </td>

@@ -205,7 +205,7 @@ export default function EnhancedVehicleCard({
         <div className="p-5 space-y-4">
           {/* Title & Price */}
           <div className="space-y-2">
-            <h3 className="font-bold text-xl text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors line-clamp-1">
+            <h3 className="font-bold text-xl text-gray-900 dark:text-white group-hover:text-primary-600 transition-colors line-clamp-1">
               {title}
             </h3>
             <PriceBadge
@@ -268,7 +268,7 @@ export default function EnhancedVehicleCard({
               <Button
                 size="sm"
                 variant="ghost"
-                className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                className="text-primary-600 hover:text-blue-700 hover:bg-primary-50"
               >
                 View Details →
               </Button>

@@ -78,7 +78,7 @@ export default function BuyerDashboardPage() {
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
       pending_payment: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-      payment_received: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+      payment_received: 'bg-blue-100 text-primary-700 dark:bg-blue-900 dark:text-blue-200',
       inspection_scheduled: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
       inspection_completed: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
       funds_released: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
@@ -124,7 +124,7 @@ export default function BuyerDashboardPage() {
                 {stats.total_purchases}
               </p>
             </div>
-            <Package className="h-10 w-10 text-blue-600" />
+            <Package className="h-10 w-10 text-primary-600" />
           </div>
         </Card>
 
@@ -245,7 +245,7 @@ export default function BuyerDashboardPage() {
 
         <Link href={`/${locale}/buyer/payment-methods`}>
           <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
-            <CreditCard className="h-8 w-8 text-blue-600 mb-3" />
+            <CreditCard className="h-8 w-8 text-primary-600 mb-3" />
             <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
               Payment Methods
             </h3>

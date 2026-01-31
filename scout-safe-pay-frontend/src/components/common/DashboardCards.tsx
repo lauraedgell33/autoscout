@@ -33,8 +33,8 @@ export function DashboardStatCard({
   const colorClasses = {
     blue: {
       bg: 'from-blue-500 to-blue-600',
-      text: 'text-blue-600',
-      icon: 'text-blue-600',
+      text: 'text-primary-600',
+      icon: 'text-primary-600',
       badge: 'bg-blue-100',
     },
     orange: {

@@ -15,7 +15,7 @@ export default function SellerDashboardPage() {
       <DashboardLayout>
         <div className="max-w-7xl mx-auto">
           {/* Welcome Section */}
-          <div className="bg-gradient-to-br from-blue-50 to-orange-50 rounded-xl p-8 mb-6">
+          <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-8 mb-6">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               {t("welcome", {name: user?.name || 'User'})}
             </h1>
@@ -29,7 +29,7 @@ export default function SellerDashboardPage() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
                   </svg>

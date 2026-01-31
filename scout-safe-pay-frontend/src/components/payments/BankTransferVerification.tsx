@@ -67,9 +67,9 @@ export function BankTransferVerification({
       label: 'Awaiting Seller Confirmation',
       description: 'Payment proof received. Waiting for seller to confirm receipt.',
       icon: <AlertCircle size={24} />,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50',
-      textColor: 'text-blue-800',
+      color: 'text-primary-600',
+      bgColor: 'bg-primary-50',
+      textColor: 'text-primary-700',
     },
     confirmed: {
       label: 'Payment Confirmed',
@@ -245,7 +245,7 @@ export function BankTransferVerification({
                     item.completed
                       ? 'text-green-600'
                       : index === timeline.findIndex(t => !t.completed)
-                      ? 'text-blue-600'
+                      ? 'text-primary-600'
                       : 'text-gray-600'
                   }`}
                 >
@@ -328,14 +328,14 @@ export function BankTransferVerification({
       </button>
 
       {/* Help Section */}
-      <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+      <div className="bg-primary-50 rounded-lg p-4 border border-blue-200">
         <details className="group cursor-pointer">
-          <summary className="flex items-center gap-2 font-medium text-gray-900 hover:text-blue-800">
+          <summary className="flex items-center gap-2 font-medium text-gray-900 hover:text-primary-700">
             <span className="group-open:hidden">+</span>
             <span className="hidden group-open:inline">−</span>
             Need Help?
           </summary>
-          <div className="mt-3 text-sm text-blue-800 space-y-2">
+          <div className="mt-3 text-sm text-primary-700 space-y-2">
             <p>
               <strong>Awaiting Seller Confirmation?</strong> The seller has 48 hours to confirm
               receipt of your payment. If they don't confirm, the funds will be automatically

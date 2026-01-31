@@ -31,7 +31,7 @@ export default function DisputesPage() {
       case 'open':
         return 'bg-yellow-100 text-yellow-800'
       case 'investigating':
-        return 'bg-blue-100 text-blue-800'
+        return 'bg-blue-100 text-primary-700'
       case 'resolved':
         return 'bg-green-100 text-green-800'
       case 'closed':
@@ -43,7 +43,7 @@ export default function DisputesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 py-12">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white py-12">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">Loading...</div>
         </div>
@@ -52,7 +52,7 @@ export default function DisputesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white py-12">
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
@@ -161,7 +161,7 @@ export default function DisputesPage() {
         )}
 
         {/* Help Section */}
-        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
+        <div className="mt-8 bg-primary-50 border border-blue-200 rounded-lg p-6">
           <div className="flex gap-4">
             <span className="text-3xl">💬</span>
             <div>

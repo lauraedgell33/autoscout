@@ -149,7 +149,7 @@ export default function PurchaseGuide() {
     <div className="max-w-7xl mx-auto px-4 py-12 space-y-12">
       {/* Header */}
       <div className="text-center space-y-4">
-        <Badge className="bg-blue-100 text-blue-800 border-blue-300 px-4 py-2 text-sm font-semibold">
+        <Badge className="bg-blue-100 text-primary-700 border-blue-300 px-4 py-2 text-sm font-semibold">
           Buyer's Guide
         </Badge>
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
@@ -226,7 +226,7 @@ export default function PurchaseGuide() {
                   className={`
                     cursor-pointer transition-all duration-300
                     ${isActive 
-                      ? 'bg-blue-50 dark:bg-blue-900 border-2 border-blue-500 shadow-lg scale-105' 
+                      ? 'bg-primary-50 dark:bg-blue-900 border-2 border-blue-500 shadow-lg scale-105' 
                       : 'hover:bg-gray-50 dark:hover:bg-gray-800 border border-gray-200'
                     }
                   `}
@@ -250,7 +250,7 @@ export default function PurchaseGuide() {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <Icon className={`h-5 w-5 ${isActive ? 'text-blue-600' : 'text-gray-400'}`} />
+                          <Icon className={`h-5 w-5 ${isActive ? 'text-primary-600' : 'text-gray-400'}`} />
                           <h3 className="font-bold text-gray-900 dark:text-white">
                             {step.title}
                           </h3>
@@ -259,7 +259,7 @@ export default function PurchaseGuide() {
                           {step.description}
                         </p>
                       </div>
-                      <ChevronRight className={`h-5 w-5 ${isActive ? 'text-blue-600' : 'text-gray-400'}`} />
+                      <ChevronRight className={`h-5 w-5 ${isActive ? 'text-primary-600' : 'text-gray-400'}`} />
                     </div>
                   </div>
                 </Card>
@@ -400,7 +400,7 @@ export default function PurchaseGuide() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
-              className="bg-white text-blue-600 hover:bg-gray-100 px-8"
+              className="bg-white text-primary-600 hover:bg-gray-100 px-8"
             >
               <Search className="mr-2 h-5 w-5" />
               Start Shopping

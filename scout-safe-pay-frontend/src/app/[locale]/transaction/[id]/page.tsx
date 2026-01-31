@@ -130,7 +130,7 @@ export default function TransactionPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-500 mx-auto mb-4"></div>
           <p className="text-gray-600">{tCommon('loading')}</p>
         </div>
       </div>
@@ -142,7 +142,7 @@ export default function TransactionPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <p className="text-red-600 mb-4">{error || tCommon('error')}</p>
-          <Link href="/dashboard" className="text-blue-600 hover:underline">{tCommon('back')}</Link>
+          <Link href="/dashboard" className="text-primary-600 hover:underline">{tCommon('back')}</Link>
         </div>
       </div>
     )
@@ -150,7 +150,7 @@ export default function TransactionPage() {
 
   const statusColors: Record<string, string> = {
     pending: 'bg-yellow-100 text-yellow-800 border-yellow-300',
-    awaiting_payment: 'bg-blue-100 text-blue-800 border-blue-300',
+    awaiting_payment: 'bg-blue-100 text-primary-700 border-blue-300',
     payment_received: 'bg-green-100 text-green-800 border-green-300',
     completed: 'bg-green-100 text-green-800 border-green-300',
     cancelled: 'bg-red-100 text-red-800 border-red-300',
@@ -162,7 +162,7 @@ export default function TransactionPage() {
     <>      <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-6xl mx-auto px-4">
           <div className="mb-6">
-            <Link href="/dashboard" className="text-blue-600 hover:underline">← {tCommon('back')}</Link>
+            <Link href="/dashboard" className="text-primary-600 hover:underline">← {tCommon('back')}</Link>
           </div>
 
           {/* Header */}
@@ -194,7 +194,7 @@ export default function TransactionPage() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
                       <h3 className="text-xl font-bold">{vehicle.make} {vehicle.model}</h3>
-                      <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                      <span className="text-xs px-2 py-1 bg-blue-100 text-primary-700 rounded">
                         {(vehicle as any).category && getCategoryLabel((vehicle as any).category).icon} {(vehicle as any).category && getCategoryLabel((vehicle as any).category).label}
                       </span>
                     </div>
@@ -317,21 +317,21 @@ export default function TransactionPage() {
                   <button
                     onClick={handleGenerateContract}
                     disabled={generatingContract}
-                    className="w-full flex items-center justify-between px-4 py-3 bg-blue-50 hover:bg-blue-100 rounded-lg transition"
+                    className="w-full flex items-center justify-between px-4 py-3 bg-primary-50 hover:bg-blue-100 rounded-lg transition"
                   >
                     <div className="flex items-center gap-2">
-                      <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                       <span className="font-medium text-gray-900">{t('documents.contract')}</span>
                     </div>
-                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
                   </button>
                   <button
                     onClick={handleDownloadContract}
-                    className="w-full mt-2 text-sm text-blue-600 hover:underline"
+                    className="w-full mt-2 text-sm text-primary-600 hover:underline"
                   >
                     {t('transaction.download_invoice')}
                   </button>
@@ -378,10 +378,10 @@ export default function TransactionPage() {
             )}
 
             {/* Support */}
-            <div className="bg-blue-50 rounded-xl p-6">
+            <div className="bg-primary-50 rounded-xl p-6">
               <h3 className="font-bold text-gray-900 mb-2">{t('transaction.contact_support')}</h3>
               <p className="text-sm text-gray-600 mb-4">{t('transaction.support_message')}</p>
-              <a href="mailto:support@autoscout24-safetrade.de" className="text-sm text-blue-600 hover:underline">
+              <a href="mailto:support@autoscout24-safetrade.de" className="text-sm text-primary-600 hover:underline">
                 support@autoscout24-safetrade.de
               </a>
             </div>

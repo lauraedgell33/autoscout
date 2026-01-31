@@ -107,7 +107,7 @@ export function NotificationCenter({
               className={`relative p-4 rounded-lg border transition ${
                 notification.read
                   ? 'bg-white border-gray-200'
-                  : 'bg-blue-50 border-blue-200'
+                  : 'bg-primary-50 border-blue-200'
               }`}
             >
               <div className="flex items-start gap-4">

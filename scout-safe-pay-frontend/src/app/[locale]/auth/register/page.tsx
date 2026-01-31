@@ -62,7 +62,7 @@ export default function RegisterPage() {
             Or{' '}
             <Link
               href={`/${locale}/auth/login`}
-              className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
+              className="font-medium text-primary-600 hover:text-blue-500 dark:text-blue-400"
             >
               sign in to your existing account
             </Link>
@@ -176,11 +176,11 @@ export default function RegisterPage() {
 
           <p className="mt-2 text-center text-xs text-gray-600 dark:text-gray-400">
             By signing up, you agree to our{' '}
-            <Link href={`/${locale}/legal/terms`} className="text-blue-600 hover:text-blue-500">
+            <Link href={`/${locale}/legal/terms`} className="text-primary-600 hover:text-blue-500">
               Terms of Service
             </Link>{' '}
             and{' '}
-            <Link href={`/${locale}/legal/privacy`} className="text-blue-600 hover:text-blue-500">
+            <Link href={`/${locale}/legal/privacy`} className="text-primary-600 hover:text-blue-500">
               Privacy Policy
             </Link>
           </p>

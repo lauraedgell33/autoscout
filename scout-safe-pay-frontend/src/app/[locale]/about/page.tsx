@@ -85,7 +85,7 @@ export default function AboutPage() {
                     <CheckCircle className="w-4 h-4" />
                     SSL Encrypted
                   </div>
-                  <div className="flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
+                  <div className="flex items-center gap-2 bg-primary-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
                     <Shield className="w-4 h-4" />
                     Bank-level Security
                   </div>

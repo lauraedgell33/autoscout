@@ -136,7 +136,7 @@ export default function BuyerFavoritesPage() {
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                   {favorite.vehicle.make} {favorite.vehicle.model}
                 </h3>
-                <p className="text-2xl font-bold text-blue-600 mb-3">
+                <p className="text-2xl font-bold text-primary-600 mb-3">
                   €{parseFloat(favorite.vehicle.price).toLocaleString()}
                 </p>
                 

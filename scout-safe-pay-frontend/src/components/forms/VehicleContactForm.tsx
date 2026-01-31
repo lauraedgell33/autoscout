@@ -253,9 +253,9 @@ export default function VehicleContactForm({
         </Button>
 
         {/* Privacy Note */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <div className="bg-primary-50 border border-blue-200 rounded-lg p-4">
           <p className="text-xs text-blue-700 leading-relaxed">
-            <Badge variant="default" className="bg-blue-100 text-blue-800 mb-2">
+            <Badge variant="default" className="bg-blue-100 text-primary-700 mb-2">
               Privacy Protected
             </Badge>
             <br />

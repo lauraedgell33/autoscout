@@ -63,7 +63,7 @@ export default function DealerDashboardPage() {
               <p className="text-sm text-gray-600 dark:text-gray-400">Total Inventory</p>
               <p className="text-2xl font-bold mt-1">{stats.total_inventory}</p>
             </div>
-            <Package className="h-10 w-10 text-blue-600" />
+            <Package className="h-10 w-10 text-primary-600" />
           </div>
         </Card>
         <Card className="p-6">
@@ -98,7 +98,7 @@ export default function DealerDashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Link href={`/${locale}/dealer/inventory`}>
           <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
-            <Package className="h-8 w-8 text-blue-600 mb-3" />
+            <Package className="h-8 w-8 text-primary-600 mb-3" />
             <h3 className="font-semibold mb-2">Inventory Management</h3>
             <p className="text-sm text-gray-600 dark:text-gray-400">Manage your vehicle stock</p>
           </Card>

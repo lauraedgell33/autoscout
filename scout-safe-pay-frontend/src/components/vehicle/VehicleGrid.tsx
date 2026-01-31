@@ -81,7 +81,7 @@ export const VehicleGrid: React.FC = () => {
             <h3 className="font-semibold text-gray-900">{vehicle.make} {vehicle.model}</h3>
 
             <div className="flex items-center justify-between mt-2">
-              <span className="text-2xl font-bold text-blue-600">€{vehicle.price.toLocaleString()}</span>
+              <span className="text-2xl font-bold text-primary-600">€{vehicle.price.toLocaleString()}</span>
               <span className="text-sm text-yellow-500">★★★★★</span>
             </div>
 

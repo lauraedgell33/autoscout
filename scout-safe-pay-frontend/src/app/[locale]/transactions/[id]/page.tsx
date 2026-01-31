@@ -66,7 +66,7 @@ export default function TransactionDetailsPage() {
   const getStatusInfo = (status: string) => {
     const statusMap: Record<string, { label: string; color: string; icon: any }> = {
       pending_payment: { label: 'Pending Payment', color: 'bg-yellow-100 text-yellow-800', icon: Clock },
-      payment_received: { label: 'Payment Received', color: 'bg-blue-100 text-blue-800', icon: CheckCircle },
+      payment_received: { label: 'Payment Received', color: 'bg-blue-100 text-primary-700', icon: CheckCircle },
       inspection_scheduled: { label: 'Inspection Scheduled', color: 'bg-purple-100 text-purple-800', icon: Clock },
       inspection_completed: { label: 'Inspection Completed', color: 'bg-indigo-100 text-indigo-800', icon: CheckCircle },
       funds_released: { label: 'Completed', color: 'bg-green-100 text-green-800', icon: CheckCircle },
@@ -134,7 +134,7 @@ export default function TransactionDetailsPage() {
                   {transaction.vehicle?.make} {transaction.vehicle?.model}
                 </h4>
                 <p className="text-gray-600 dark:text-gray-400 mt-1">Year: {transaction.vehicle?.year}</p>
-                <p className="text-2xl font-bold text-blue-600 mt-2">
+                <p className="text-2xl font-bold text-primary-600 mt-2">
                   €{parseFloat(transaction.amount).toLocaleString()}
                 </p>
               </div>
@@ -158,7 +158,7 @@ export default function TransactionDetailsPage() {
               {transaction.status !== 'pending_payment' && (
                 <div className="flex items-start">
                   <div className="flex-shrink-0 h-10 w-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mr-4">
-                    <CheckCircle className="h-5 w-5 text-blue-600" />
+                    <CheckCircle className="h-5 w-5 text-primary-600" />
                   </div>
                   <div className="flex-1">
                     <p className="font-medium">Payment Received</p>

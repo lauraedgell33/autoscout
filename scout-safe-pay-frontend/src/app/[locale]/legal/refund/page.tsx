@@ -15,14 +15,25 @@ export default async function RefundPolicy() {
   const tCommon = await getTranslations('common')
   
   return (
-    <>      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-orange-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('title')}</h1>
-          <p className="text-gray-600 mb-8">{t('last_updated')}: January 15, 2026</p>
+    <>      
+      {/* Hero */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-blue-900 text-white py-16">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -mr-48 -mt-48" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full -ml-32 -mb-32" />
+        </div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-4">{t('title')}</h1>
+          <p className="text-blue-100">{t('last_updated')}: January 15, 2026</p>
+        </div>
+      </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-8 space-y-8">
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div className="bg-white rounded-2xl shadow-lg p-8 space-y-8">
           {/* Introduction */}
-          <div className="p-6 bg-blue-50 rounded-lg border-l-4 border-blue-900">
+          <div className="p-6 bg-primary-50 rounded-lg border-l-4 border-primary-600">
             <p className="text-gray-700">
               {t('intro')}
             </p>
@@ -46,7 +57,7 @@ export default async function RefundPolicy() {
             <div className="space-y-6">
               {/* Pre-Inspection */}
               <div className="p-4 bg-green-50 rounded-lg">
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section2_1_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section2_1_title')}</h3>
                 <p className="text-gray-700 mb-3"><strong>{t('section2_1_timeframe_label')}</strong> {t('section2_1_timeframe_value')}</p>
                 <p className="text-gray-700 mb-3"><strong>{t('section2_1_refund_label')}</strong> {t('section2_1_refund_value')}</p>
                 <p className="text-gray-700 mb-3"><strong>{t('section2_1_conditions_label')}</strong></p>
@@ -59,8 +70,8 @@ export default async function RefundPolicy() {
               </div>
 
               {/* Vehicle Misrepresentation */}
-              <div className="p-4 bg-orange-50 rounded-lg">
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section2_2_title')}</h3>
+              <div className="p-4 bg-accent-50 rounded-lg">
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section2_2_title')}</h3>
                 <p className="text-gray-700 mb-3"><strong>{t('section2_2_timeframe_label')}</strong> {t('section2_2_timeframe_value')}</p>
                 <p className="text-gray-700 mb-3"><strong>{t('section2_2_refund_label')}</strong> {t('section2_2_refund_value')}</p>
                 <p className="text-gray-700 mb-3"><strong>{t('section2_2_eligible_label')}</strong></p>
@@ -83,7 +94,7 @@ export default async function RefundPolicy() {
 
               {/* Seller Cancellation */}
               <div className="p-4 bg-purple-50 rounded-lg">
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section2_3_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section2_3_title')}</h3>
                 <p className="text-gray-700 mb-3"><strong>{t('section2_3_timeframe_label')}</strong> {t('section2_3_timeframe_value')}</p>
                 <p className="text-gray-700 mb-3"><strong>{t('section2_3_refund_label')}</strong> {t('section2_3_refund_value')}</p>
                 <p className="text-gray-700 mb-3"><strong>{t('section2_3_auto_label')}</strong> {t('section2_3_auto_value')}</p>
@@ -92,7 +103,7 @@ export default async function RefundPolicy() {
 
               {/* Failed Inspection */}
               <div className="p-4 bg-red-50 rounded-lg">
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section2_4_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section2_4_title')}</h3>
                 <p className="text-gray-700 mb-3"><strong>{t('section2_4_timeframe_label')}</strong> {t('section2_4_timeframe_value')}</p>
                 <p className="text-gray-700 mb-3"><strong>{t('section2_4_refund_label')}</strong> {t('section2_4_refund_value')}</p>
                 <p className="text-gray-700 mb-3"><strong>{t('section2_4_conditions_label')}</strong></p>
@@ -130,7 +141,7 @@ export default async function RefundPolicy() {
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">{t('section4_buyer_title')}</h3>
+                <h3 className="text-lg font-semibold text-primary-700">{t('section4_buyer_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4 mt-2">
                   <li><strong>{t('section4_buyer_refunded_label')}</strong> {t('section4_buyer_refunded_value')}</li>
                   <li><strong>{t('section4_buyer_not_label')}</strong> {t('section4_buyer_not_value')}</li>
@@ -138,7 +149,7 @@ export default async function RefundPolicy() {
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">{t('section4_seller_title')}</h3>
+                <h3 className="text-lg font-semibold text-primary-700">{t('section4_seller_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4 mt-2">
                   <li><strong>{t('section4_seller_refunded_label')}</strong> {t('section4_seller_refunded_value')}</li>
                   <li><strong>{t('section4_seller_not_label')}</strong> {t('section4_seller_not_value')}</li>
@@ -153,7 +164,7 @@ export default async function RefundPolicy() {
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section5_step1_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section5_step1_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
                   <li>{t('section5_step1_item1')}</li>
                   <li>{t('section5_step1_item2')}</li>
@@ -164,7 +175,7 @@ export default async function RefundPolicy() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section5_step2_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section5_step2_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
                   <li>{t('section5_step2_item1')}</li>
                   <li>{t('section5_step2_item2')}</li>
@@ -174,7 +185,7 @@ export default async function RefundPolicy() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section5_step3_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section5_step3_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
                   <li>{t('section5_step3_item1')}</li>
                   <li>{t('section5_step3_item2')}</li>
@@ -185,7 +196,7 @@ export default async function RefundPolicy() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section5_step4_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section5_step4_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
                   <li>{t('section5_step4_item1')}</li>
                   <li>{t('section5_step4_item2')}</li>
@@ -216,21 +227,21 @@ export default async function RefundPolicy() {
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">{t('section7_fraud_title')}</h3>
+                <h3 className="text-lg font-semibold text-primary-700">{t('section7_fraud_title')}</h3>
                 <p className="text-gray-700">
                   {t('section7_fraud_content')}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">{t('section7_stolen_title')}</h3>
+                <h3 className="text-lg font-semibold text-primary-700">{t('section7_stolen_title')}</h3>
                 <p className="text-gray-700">
                   {t('section7_stolen_content')}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">{t('section7_force_title')}</h3>
+                <h3 className="text-lg font-semibold text-primary-700">{t('section7_force_title')}</h3>
                 <p className="text-gray-700">
                   {t('section7_force_content')}
                 </p>
@@ -295,7 +306,7 @@ export default async function RefundPolicy() {
           </section>
 
           {/* Important Notice */}
-          <div className="mt-8 p-6 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+          <div className="mt-8 p-6 bg-accent-50 rounded-lg border-l-4 border-accent-500">
             <p className="text-gray-700 font-semibold mb-2">
               {t('notice_title')}
             </p>
@@ -305,7 +316,7 @@ export default async function RefundPolicy() {
           </div>
 
           {/* Contact */}
-          <div className="mt-12 p-6 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+          <div className="mt-12 p-6 bg-accent-50 rounded-lg border-l-4 border-accent-500">
             <p className="text-gray-700 font-semibold mb-3">
               {t('contact_title')}
             </p>

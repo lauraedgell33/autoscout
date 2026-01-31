@@ -59,7 +59,7 @@ export default function BuyerPurchasesPage() {
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
       pending: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-      processing: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+      processing: 'bg-blue-100 text-primary-700 dark:bg-blue-900 dark:text-blue-200',
       completed: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
       cancelled: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
     };
@@ -132,7 +132,7 @@ export default function BuyerPurchasesPage() {
                       Year: {purchase.vehicle.year} • VIN: {purchase.vehicle.vin}
                     </p>
                     <div className="flex items-center space-x-4 mt-2">
-                      <span className="text-lg font-bold text-blue-600">
+                      <span className="text-lg font-bold text-primary-600">
                         €{parseFloat(purchase.amount).toLocaleString()}
                       </span>
                       <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(purchase.status)}`}>

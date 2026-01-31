@@ -15,14 +15,25 @@ export default async function TermsOfService() {
   const tCommon = await getTranslations('common')
   
   return (
-    <>      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-orange-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('title')}</h1>
-          <p className="text-gray-600 mb-8">{t('last_updated')}: January 15, 2026</p>
+    <>      
+      {/* Hero */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-blue-900 text-white py-16">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -mr-48 -mt-48" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full -ml-32 -mb-32" />
+        </div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-4">{t('title')}</h1>
+          <p className="text-blue-100">{t('last_updated')}: January 15, 2026</p>
+        </div>
+      </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-8 space-y-8">
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div className="bg-white rounded-2xl shadow-lg p-8 space-y-8">
           {/* Introduction */}
-          <div className="p-6 bg-blue-50 rounded-lg border-l-4 border-blue-900">
+          <div className="p-6 bg-primary-50 rounded-xl border-l-4 border-primary-600">
             <p className="text-gray-700 font-semibold">
               {t('intro')}
             </p>
@@ -202,7 +213,7 @@ export default async function TermsOfService() {
           </section>
 
           {/* Acceptance */}
-          <div className="mt-12 p-6 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+          <div className="mt-12 p-6 bg-accent-50 rounded-lg border-l-4 border-accent-500">
             <p className="text-gray-700 font-semibold">
               {t('acceptance')}
             </p>

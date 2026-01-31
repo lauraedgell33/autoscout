@@ -26,7 +26,7 @@ export const TabsTrigger = ({
   <button
     onClick={onClick}
     className={`px-4 py-2 border-b-2 font-medium transition-colors ${
-      active ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-600 hover:text-gray-900'
+      active ? 'border-blue-600 text-primary-600' : 'border-transparent text-gray-600 hover:text-gray-900'
     } ${className}`}
   >
     {children}

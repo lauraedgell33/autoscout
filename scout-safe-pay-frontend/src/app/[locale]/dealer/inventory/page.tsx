@@ -41,7 +41,7 @@ export default function DealerInventoryPage() {
     const colors = {
       active: 'bg-green-100 text-green-800',
       draft: 'bg-gray-100 text-gray-800',
-      sold: 'bg-blue-100 text-blue-800',
+      sold: 'bg-blue-100 text-primary-700',
       reserved: 'bg-yellow-100 text-yellow-800',
       removed: 'bg-red-100 text-red-800',
     };

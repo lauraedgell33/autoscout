@@ -62,7 +62,7 @@ export default function ContactPage() {
 
                 <a href="mailto:support@autoscout24.com" className="flex items-start p-3 rounded-xl hover:bg-gray-50 transition group">
                   <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">
-                    <Mail className="w-5 h-5 text-blue-600" />
+                    <Mail className="w-5 h-5 text-primary-600" />
                   </div>
                   <div className="ml-4">
                     <p className="text-sm font-semibold text-gray-900">{t('pages.contact.email')}</p>

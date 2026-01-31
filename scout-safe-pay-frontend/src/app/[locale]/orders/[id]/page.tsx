@@ -267,7 +267,7 @@ export default function OrderPage() {
             </div>
 
             {/* Support */}
-            <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
+            <div className="bg-accent-50 border border-accent-200 rounded-lg p-6">
               <h3 className="font-semibold text-orange-900 mb-2">Need Help?</h3>
               <p className="text-sm text-orange-800 mb-3">
                 Our support team is here to assist you

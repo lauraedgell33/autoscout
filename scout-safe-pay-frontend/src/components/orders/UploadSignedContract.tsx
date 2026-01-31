@@ -26,7 +26,7 @@ export default function UploadSignedContract({
         className="hidden"
         id="contract-upload"
       />
-      <label htmlFor="contract-upload" className="cursor-pointer text-blue-600 hover:text-blue-800">
+      <label htmlFor="contract-upload" className="cursor-pointer text-primary-600 hover:text-primary-700">
         Click to upload or drag and drop
       </label>
       {file && <p className="mt-4 text-green-600">✓ {file.name}</p>}

@@ -21,7 +21,7 @@ export default function AdminReviewsPage() {
             onClick={() => setActiveTab('pending')}
             className={`px-4 py-2 font-medium border-b-2 transition-colors ${
               activeTab === 'pending'
-                ? 'border-blue-500 text-blue-600'
+                ? 'border-blue-500 text-primary-600'
                 : 'border-transparent text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -31,7 +31,7 @@ export default function AdminReviewsPage() {
             onClick={() => setActiveTab('flagged')}
             className={`px-4 py-2 font-medium border-b-2 transition-colors ${
               activeTab === 'flagged'
-                ? 'border-blue-500 text-blue-600'
+                ? 'border-blue-500 text-primary-600'
                 : 'border-transparent text-gray-600 hover:text-gray-900'
             }`}
           >

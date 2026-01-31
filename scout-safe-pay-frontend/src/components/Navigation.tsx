@@ -83,7 +83,7 @@ export default function Navigation() {
               href="/marketplace" 
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                 isActive('/marketplace') 
-                  ? 'text-[var(--color-primary)] font-bold bg-blue-50' 
+                  ? 'text-[var(--color-primary)] font-bold bg-primary-50' 
                   : 'text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-50'
               }`}
               aria-current={isActive('/marketplace') ? 'page' : undefined}
@@ -94,7 +94,7 @@ export default function Navigation() {
               href="/how-it-works" 
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                 isActive('/how-it-works') 
-                  ? 'text-[var(--color-primary)] font-bold bg-blue-50' 
+                  ? 'text-[var(--color-primary)] font-bold bg-primary-50' 
                   : 'text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-50'
               }`}
               aria-current={isActive('/how-it-works') ? 'page' : undefined}
@@ -105,7 +105,7 @@ export default function Navigation() {
               href="/benefits" 
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                 isActive('/benefits') 
-                  ? 'text-[var(--color-primary)] font-bold bg-blue-50' 
+                  ? 'text-[var(--color-primary)] font-bold bg-primary-50' 
                   : 'text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-50'
               }`}
               aria-current={isActive('/benefits') ? 'page' : undefined}
@@ -116,7 +116,7 @@ export default function Navigation() {
               href="/dealers" 
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                 isActive('/dealers') 
-                  ? 'text-[var(--color-primary)] font-bold bg-blue-50' 
+                  ? 'text-[var(--color-primary)] font-bold bg-primary-50' 
                   : 'text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-50'
               }`}
               aria-current={isActive('/dealers') ? 'page' : undefined}
@@ -242,7 +242,7 @@ export default function Navigation() {
               {isAuthenticated ? (
                 <>
                   <MobileNavDivider />
-                  <div className="px-4 py-3 bg-blue-50 rounded-lg mb-4">
+                  <div className="px-4 py-3 bg-primary-50 rounded-lg mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white font-bold">
                         {user?.name?.charAt(0).toUpperCase()}

@@ -7,16 +7,27 @@ export default function ImprintPage() {
   const t = useTranslations()
 
   return (
-    <div className="min-h-screen flex flex-col">      
-      <main className="flex-grow bg-gray-50 py-16">
+    <div className="min-h-screen flex flex-col">
+      {/* Hero */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-blue-900 text-white py-16">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -mr-48 -mt-48" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full -ml-32 -mb-32" />
+        </div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-4">{t('pages.imprint.title')}</h1>
+          <p className="text-blue-100">Legal information about AutoScout24 SafeTrade</p>
+        </div>
+      </div>
+
+      <main className="flex-grow bg-gray-50 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-8">{t('pages.imprint.title')}</h1>
             
             <div className="space-y-8 text-gray-700">
               <section>
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
-                  <Building2 className="w-6 h-6 mr-3 text-blue-600" />
+                  <Building2 className="w-6 h-6 mr-3 text-primary-600" />
                   {t('pages.imprint.company_info')}
                 </h2>
                 <div className="ml-9 space-y-2">
@@ -38,7 +49,7 @@ export default function ImprintPage() {
 
               <section>
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
-                  <Mail className="w-6 h-6 mr-3 text-blue-600" />
+                  <Mail className="w-6 h-6 mr-3 text-primary-600" />
                   {t('pages.imprint.contact_info')}
                 </h2>
                 <div className="ml-9 space-y-3">

@@ -24,7 +24,7 @@ export default function BuyerNotificationsPage() {
         {notifications.map((notif) => (
           <div
             key={notif.id}
-            className={`p-4 rounded-lg border ${notif.read ? 'bg-white dark:bg-gray-800' : 'bg-blue-50 dark:bg-blue-900/20'}`}
+            className={`p-4 rounded-lg border ${notif.read ? 'bg-white dark:bg-gray-800' : 'bg-primary-50 dark:bg-blue-900/20'}`}
           >
             <h3 className="font-medium text-gray-900 dark:text-white">{notif.title}</h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{notif.message}</p>

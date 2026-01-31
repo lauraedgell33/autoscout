@@ -83,7 +83,7 @@ export default function VerificationPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 py-12">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white py-12">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center">Loading...</div>
         </div>
@@ -92,7 +92,7 @@ export default function VerificationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white py-12">
       <div className="max-w-4xl mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
@@ -241,9 +241,9 @@ export default function VerificationPage() {
               </div>
 
               {/* Security Notice */}
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="bg-primary-50 border border-blue-200 rounded-lg p-4">
                 <div className="flex gap-3">
-                  <span className="text-blue-600 text-xl">🔒</span>
+                  <span className="text-primary-600 text-xl">🔒</span>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">Your Data is Protected</h4>
                     <p className="text-sm text-blue-700">

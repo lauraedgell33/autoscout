@@ -15,14 +15,25 @@ export default async function PrivacyPolicy() {
   const tCommon = await getTranslations('common')
   
   return (
-    <>      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-orange-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('title')}</h1>
-          <p className="text-gray-600 mb-8">{t('last_updated')}: January 15, 2026</p>
+    <>      
+      {/* Hero */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-blue-900 text-white py-16">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -mr-48 -mt-48" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full -ml-32 -mb-32" />
+        </div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-4">{t('title')}</h1>
+          <p className="text-blue-100">{t('last_updated')}: January 15, 2026</p>
+        </div>
+      </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-8 space-y-8">
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div className="bg-white rounded-2xl shadow-lg p-8 space-y-8">
           {/* Introduction */}
-          <div className="p-6 bg-blue-50 rounded-lg border-l-4 border-blue-900">
+          <div className="p-6 bg-primary-50 rounded-xl border-l-4 border-primary-600">
             <p className="text-gray-700">
               {t('intro')}
             </p>
@@ -46,7 +57,7 @@ export default async function PrivacyPolicy() {
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section2_1_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section2_1_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
                   <li>{t('section2_1_item1')}</li>
                   <li>{t('section2_1_item2')}</li>
@@ -55,7 +66,7 @@ export default async function PrivacyPolicy() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section2_2_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section2_2_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
                   <li>{t('section2_2_item1')}</li>
                   <li>{t('section2_2_item2')}</li>
@@ -64,7 +75,7 @@ export default async function PrivacyPolicy() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section2_3_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section2_3_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
                   <li>{t('section2_3_item1')}</li>
                   <li>{t('section2_3_item2')}</li>
@@ -73,7 +84,7 @@ export default async function PrivacyPolicy() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section2_4_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section2_4_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
                   <li>{t('section2_4_item1')}</li>
                   <li>{t('section2_4_item2')}</li>
@@ -83,7 +94,7 @@ export default async function PrivacyPolicy() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section2_5_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section2_5_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
                   <li>{t('section2_5_item1')}</li>
                   <li>{t('section2_5_item2')}</li>
@@ -100,7 +111,7 @@ export default async function PrivacyPolicy() {
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section3_1_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section3_1_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
                   <li>{t('section3_1_item1')}</li>
                   <li>{t('section3_1_item2')}</li>
@@ -112,7 +123,7 @@ export default async function PrivacyPolicy() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section3_2_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section3_2_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
                   <li>{t('section3_2_item1')}</li>
                   <li>{t('section3_2_item2')}</li>
@@ -123,7 +134,7 @@ export default async function PrivacyPolicy() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section3_3_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section3_3_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
                   <li>{t('section3_3_item1')}</li>
                   <li>{t('section3_3_item2')}</li>
@@ -151,14 +162,14 @@ export default async function PrivacyPolicy() {
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section5_1_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section5_1_title')}</h3>
                 <p className="text-gray-700">
                   {t('section5_1_content')}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section5_2_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section5_2_title')}</h3>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
                   <li>{t('section5_2_item1')}</li>
                   <li>{t('section5_2_item2')}</li>
@@ -169,7 +180,7 @@ export default async function PrivacyPolicy() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-blue-800 mb-3">{t('section5_3_title')}</h3>
+                <h3 className="text-xl font-semibold text-primary-700 mb-3">{t('section5_3_title')}</h3>
                 <p className="text-gray-700">{t('section5_3_content')}</p>
               </div>
             </div>
@@ -193,32 +204,32 @@ export default async function PrivacyPolicy() {
             
             <div className="space-y-3">
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">{t('section7_1_title')}</h3>
+                <h3 className="text-lg font-semibold text-primary-700">{t('section7_1_title')}</h3>
                 <p className="text-gray-700">{t('section7_1_content')}</p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">{t('section7_2_title')}</h3>
+                <h3 className="text-lg font-semibold text-primary-700">{t('section7_2_title')}</h3>
                 <p className="text-gray-700">{t('section7_2_content')}</p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">{t('section7_3_title')}</h3>
+                <h3 className="text-lg font-semibold text-primary-700">{t('section7_3_title')}</h3>
                 <p className="text-gray-700">{t('section7_3_content')}</p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">{t('section7_4_title')}</h3>
+                <h3 className="text-lg font-semibold text-primary-700">{t('section7_4_title')}</h3>
                 <p className="text-gray-700">{t('section7_4_content')}</p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">{t('section7_5_title')}</h3>
+                <h3 className="text-lg font-semibold text-primary-700">{t('section7_5_title')}</h3>
                 <p className="text-gray-700">{t('section7_5_content')}</p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-blue-800">{t('section7_6_title')}</h3>
+                <h3 className="text-lg font-semibold text-primary-700">{t('section7_6_title')}</h3>
                 <p className="text-gray-700">{t('section7_6_content')}</p>
               </div>
             </div>
@@ -276,7 +287,7 @@ export default async function PrivacyPolicy() {
           </section>
 
           {/* Acceptance */}
-          <div className="mt-12 p-6 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+          <div className="mt-12 p-6 bg-accent-50 rounded-lg border-l-4 border-accent-500">
             <p className="text-gray-700 font-semibold">
               {t('acceptance')}
             </p>

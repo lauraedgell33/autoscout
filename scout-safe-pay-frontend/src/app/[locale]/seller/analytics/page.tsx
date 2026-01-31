@@ -8,7 +8,7 @@ export default function SellerAnalyticsPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
           <h3 className="text-lg font-medium text-gray-900 dark:text-white">Total Sales</h3>
-          <p className="text-3xl font-bold text-blue-600 mt-2">€12,450</p>
+          <p className="text-3xl font-bold text-primary-600 mt-2">€12,450</p>
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
           <h3 className="text-lg font-medium text-gray-900 dark:text-white">Vehicles Sold</h3>

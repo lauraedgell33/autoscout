@@ -81,7 +81,7 @@ export function EmptyState({
       {/* Icon */}
       {variant === 'default' ? (
         <div className={cn(
-          'mx-auto bg-gradient-to-br from-blue-50 to-orange-50 rounded-full flex items-center justify-center mb-6 animate-scale-in',
+          'mx-auto bg-gradient-to-br from-gray-50 to-white rounded-full flex items-center justify-center mb-6 animate-scale-in',
           sizes.iconBg
         )}>
           <Icon className={cn(sizes.iconSize, 'text-gray-900')} strokeWidth={1.5} aria-hidden="true" />

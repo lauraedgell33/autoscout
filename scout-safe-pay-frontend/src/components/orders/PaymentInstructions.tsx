@@ -13,7 +13,7 @@ export default function PaymentInstructions({
   onPaymentProofUpload,
 }: PaymentInstructionsProps) {
   return (
-    <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+    <div className="bg-primary-50 border border-blue-200 rounded-lg p-6">
       <h3 className="font-bold text-lg mb-4">Payment Instructions</h3>
       <ol className="list-decimal list-inside space-y-2 text-gray-700">
         <li>Review your order details</li>

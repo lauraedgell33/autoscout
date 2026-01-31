@@ -53,7 +53,7 @@ export default function ForgotPasswordPage() {
             Remember your password?{' '}
             <Link
               href={`/${locale}/auth/login`}
-              className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
+              className="font-medium text-primary-600 hover:text-blue-500 dark:text-blue-400"
             >
               Sign in
             </Link>

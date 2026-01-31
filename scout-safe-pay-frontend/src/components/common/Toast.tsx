@@ -57,9 +57,9 @@ function Toast({ toast, onClose }: ToastProps) {
     },
     info: {
       icon: Info,
-      bgColor: 'bg-blue-50',
+      bgColor: 'bg-primary-50',
       borderColor: 'border-blue-200',
-      textColor: 'text-blue-800',
+      textColor: 'text-primary-700',
       iconColor: 'text-blue-500',
     },
   }

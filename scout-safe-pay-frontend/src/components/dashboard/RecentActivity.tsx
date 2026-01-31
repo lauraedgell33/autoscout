@@ -63,7 +63,7 @@ export default function RecentActivity({ activities = mockActivities }: RecentAc
       case 'pending':
         return { bg: 'bg-amber-50', text: 'text-amber-700', dot: 'bg-amber-500' };
       case 'in-progress':
-        return { bg: 'bg-blue-50', text: 'text-blue-700', dot: 'bg-blue-500' };
+        return { bg: 'bg-primary-50', text: 'text-blue-700', dot: 'bg-primary-500' };
       case 'failed':
         return { bg: 'bg-red-50', text: 'text-red-700', dot: 'bg-red-500' };
     }
@@ -87,7 +87,7 @@ export default function RecentActivity({ activities = mockActivities }: RecentAc
       case 'sale':
         return 'bg-green-100 text-green-600';
       default:
-        return 'bg-blue-100 text-blue-600';
+        return 'bg-blue-100 text-primary-600';
     }
   };
 

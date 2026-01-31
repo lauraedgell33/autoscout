@@ -112,7 +112,7 @@ export default function SellerDashboardPage() {
                 {stats.active_listings}
               </p>
             </div>
-            <Package className="h-10 w-10 text-blue-600" />
+            <Package className="h-10 w-10 text-primary-600" />
           </div>
         </Card>
 
@@ -222,7 +222,7 @@ export default function SellerDashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Link href={`/${locale}/seller/vehicles`}>
           <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
-            <Package className="h-8 w-8 text-blue-600 mb-3" />
+            <Package className="h-8 w-8 text-primary-600 mb-3" />
             <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
               My Vehicles
             </h3>

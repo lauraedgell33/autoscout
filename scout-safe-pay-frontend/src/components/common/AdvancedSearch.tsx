@@ -42,7 +42,7 @@ export function AdvancedSearch({
         >
           {/* Search Icon */}
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Search className={`w-5 h-5 transition-colors ${isFocused ? 'text-blue-600' : 'text-gray-400'}`} />
+            <Search className={`w-5 h-5 transition-colors ${isFocused ? 'text-primary-600' : 'text-gray-400'}`} />
           </div>
 
           {/* Input */}
@@ -94,7 +94,7 @@ export function AdvancedSearch({
           <button
             type="button"
             onClick={onFilterToggle}
-            className="px-4 py-4 border-2 border-gray-200 hover:border-blue-500 bg-white text-gray-700 hover:text-blue-600 rounded-xl transition-all duration-200 hover:shadow-md"
+            className="px-4 py-4 border-2 border-gray-200 hover:border-blue-500 bg-white text-gray-700 hover:text-primary-600 rounded-xl transition-all duration-200 hover:shadow-md"
             title="Toggle Filters"
           >
             <SlidersHorizontal className="w-5 h-5" />
@@ -114,7 +114,7 @@ export function AdvancedSearch({
                 setQuery(suggestion)
                 onSearch(suggestion)
               }}
-              className="px-3 py-1 bg-gray-100 hover:bg-blue-50 text-gray-700 hover:text-blue-600 rounded-lg text-sm font-medium transition-colors"
+              className="px-3 py-1 bg-gray-100 hover:bg-primary-50 text-gray-700 hover:text-primary-600 rounded-lg text-sm font-medium transition-colors"
             >
               {suggestion}
             </button>

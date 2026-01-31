@@ -48,7 +48,7 @@ export default function DisputesPage() {
   const getStatusColor = (status: string) => {
     const colors = {
       open: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-      in_review: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+      in_review: 'bg-blue-100 text-primary-700 dark:bg-blue-900 dark:text-blue-200',
       resolved: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
       closed: 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200',
     };
@@ -133,9 +133,9 @@ export default function DisputesPage() {
       )}
 
       {/* Info Card */}
-      <Card className="p-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+      <Card className="p-6 bg-primary-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
         <div className="flex items-start space-x-3">
-          <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5" />
+          <AlertCircle className="h-5 w-5 text-primary-600 mt-0.5" />
           <div>
             <h4 className="font-medium text-gray-900 dark:text-white mb-1">Dispute Resolution Process</h4>
             <p className="text-sm text-gray-600 dark:text-gray-400">

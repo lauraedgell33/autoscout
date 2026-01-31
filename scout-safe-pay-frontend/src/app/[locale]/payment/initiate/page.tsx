@@ -75,9 +75,9 @@ export default function PaymentInitiatePage() {
           <Card className="p-6">
             <h3 className="font-semibold text-lg mb-4">Select Payment Method</h3>
             <div className="space-y-3">
-              <label htmlFor="payment-bank-transfer" className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${paymentMethod === 'bank_transfer' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-300'}`}>
+              <label htmlFor="payment-bank-transfer" className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${paymentMethod === 'bank_transfer' ? 'border-blue-600 bg-primary-50 dark:bg-blue-900/20' : 'border-gray-300'}`}>
                 <input id="payment-bank-transfer" type="radio" name="payment" value="bank_transfer" checked={paymentMethod === 'bank_transfer'} onChange={(e) => setPaymentMethod(e.target.value)} className="mr-4" />
-                <Building2 className="h-6 w-6 mr-3 text-blue-600" />
+                <Building2 className="h-6 w-6 mr-3 text-primary-600" />
                 <div className="flex-1">
                   <div className="font-medium">Bank Transfer</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Secure bank-to-bank transfer</div>
@@ -137,7 +137,7 @@ export default function PaymentInitiatePage() {
                 </div>
                 <div className="flex justify-between pt-2 border-t">
                   <span className="font-semibold">Total</span>
-                  <span className="text-xl font-bold text-blue-600">€{parseFloat(vehicle.price).toLocaleString()}</span>
+                  <span className="text-xl font-bold text-primary-600">€{parseFloat(vehicle.price).toLocaleString()}</span>
                 </div>
               </div>
             </div>

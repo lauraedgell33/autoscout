@@ -185,7 +185,7 @@ export default function NotificationsPage() {
       case 'warning':
         return <Clock className="text-amber-600" size={20} />;
       default:
-        return <Bell className="text-blue-600" size={20} />;
+        return <Bell className="text-primary-600" size={20} />;
     }
   };
 

@@ -43,7 +43,7 @@ export default function FavoritesPage() {
           </Card>
 
           {/* Tips */}
-          <Card className="mt-6 bg-gradient-to-br from-blue-50 to-orange-50 border-none p-4 sm:p-6">
+          <Card className="mt-6 bg-gradient-to-br from-gray-50 to-white border-none p-4 sm:p-6">
             <div className="flex items-start gap-3 sm:gap-4">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-900 rounded-lg flex items-center justify-center flex-shrink-0">
                 <Info className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />

@@ -19,7 +19,7 @@ export const ToastContainer: React.FC = () => {
       case 'warning':
         return <AlertCircle className="text-yellow-600" size={20} />;
       case 'info':
-        return <Info className="text-blue-600" size={20} />;
+        return <Info className="text-primary-600" size={20} />;
       default:
         return null;
     }
@@ -34,7 +34,7 @@ export const ToastContainer: React.FC = () => {
       case 'warning':
         return 'bg-yellow-50 border-yellow-200';
       case 'info':
-        return 'bg-blue-50 border-blue-200';
+        return 'bg-primary-50 border-blue-200';
       default:
         return 'bg-gray-50 border-gray-200';
     }

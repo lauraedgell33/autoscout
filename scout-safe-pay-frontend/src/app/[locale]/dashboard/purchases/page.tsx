@@ -29,7 +29,7 @@ export default function PurchasesPage() {
           <Card className="p-8 sm:p-12">
             <div className="text-center">
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                <ShoppingCart className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600" />
+                <ShoppingCart className="w-8 h-8 sm:w-10 sm:h-10 text-primary-600" />
               </div>
               <h2 className="text-xl font-bold text-gray-900 mb-2">No purchases yet</h2>
               <p className="text-gray-600 mb-6">

@@ -67,10 +67,10 @@ export default function DealerAnalyticsPage() {
         <Card className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold">Vehicles Sold</h3>
-            <Package className="h-6 w-6 text-blue-600" />
+            <Package className="h-6 w-6 text-primary-600" />
           </div>
           <p className="text-3xl font-bold">47</p>
-          <p className="text-sm text-blue-600 mt-2">+8 from last period</p>
+          <p className="text-sm text-primary-600 mt-2">+8 from last period</p>
         </Card>
         <Card className="p-6">
           <div className="flex items-center justify-between mb-4">

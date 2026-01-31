@@ -51,7 +51,7 @@ export default function VehiclesPage() {
                       
                       {/* Dealer Information */}
                       {vehicle.dealer && (
-                        <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                        <div className="bg-primary-50 rounded-lg p-3 border border-blue-200">
                           <div className="flex items-center justify-between gap-2">
                             <div className="flex items-center gap-2 flex-1 min-w-0">
                               {vehicle.dealer.logo_url && (
@@ -102,7 +102,7 @@ export default function VehiclesPage() {
                       )}
                       
                       <div className="flex justify-between items-center pt-4 border-t">
-                        <span className="text-2xl font-bold text-blue-600">
+                        <span className="text-2xl font-bold text-primary-600">
                           €{vehicle.price.toLocaleString()}
                         </span>
                         <Link href={`/vehicle/${vehicle.id}`}>

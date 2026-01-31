@@ -80,7 +80,7 @@ export default function ResetPasswordPage() {
               <div className="mt-4">
                 <Link
                   href={`/${locale}/auth/forgot-password`}
-                  className="font-medium text-blue-600 hover:text-blue-500"
+                  className="font-medium text-primary-600 hover:text-blue-500"
                 >
                   Request new reset link
                 </Link>

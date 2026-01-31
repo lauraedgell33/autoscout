@@ -56,7 +56,7 @@ export function Pagination({
         <button
           onClick={() => onPageChange(1)}
           disabled={currentPage === 1}
-          className="p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:bg-transparent transition-all duration-200"
+          className="p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-primary-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:bg-transparent transition-all duration-200"
           title="First Page"
         >
           <ChevronsLeft className="w-5 h-5" />
@@ -67,7 +67,7 @@ export function Pagination({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:bg-transparent transition-all duration-200"
+        className="p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-primary-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:bg-transparent transition-all duration-200"
         title="Previous Page"
       >
         <ChevronLeft className="w-5 h-5" />
@@ -96,7 +96,7 @@ export function Pagination({
                 transition-all duration-200
                 ${isActive
                   ? 'bg-gradient-to-r from-orange-400 to-orange-500 text-white shadow-lg scale-110'
-                  : 'border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 text-gray-700 hover:text-blue-600'
+                  : 'border-2 border-gray-200 hover:border-blue-500 hover:bg-primary-50 text-gray-700 hover:text-primary-600'
                 }
               `}
             >
@@ -110,7 +110,7 @@ export function Pagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:bg-transparent transition-all duration-200"
+        className="p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-primary-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:bg-transparent transition-all duration-200"
         title="Next Page"
       >
         <ChevronRight className="w-5 h-5" />
@@ -121,7 +121,7 @@ export function Pagination({
         <button
           onClick={() => onPageChange(totalPages)}
           disabled={currentPage === totalPages}
-          className="p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:bg-transparent transition-all duration-200"
+          className="p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-primary-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:bg-transparent transition-all duration-200"
           title="Last Page"
         >
           <ChevronsRight className="w-5 h-5" />

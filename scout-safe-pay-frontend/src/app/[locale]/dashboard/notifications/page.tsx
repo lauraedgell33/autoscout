@@ -140,7 +140,7 @@ export default function NotificationsPage() {
         {/* Notifications List */}
         {loading ? (
           <Card className="p-12 text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mb-4"></div>
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-accent-500 mb-4"></div>
             <p className="text-gray-600">Loading notifications...</p>
           </Card>
         ) : notifications.length === 0 ? (
@@ -155,7 +155,7 @@ export default function NotificationsPage() {
               <Card
                 key={notification.id}
                 className={`p-4 transition-all hover:shadow-md ${
-                  !notification.read_at ? 'bg-blue-50 border-blue-200' : ''
+                  !notification.read_at ? 'bg-primary-50 border-blue-200' : ''
                 }`}
               >
                 <div className="flex items-start gap-3">

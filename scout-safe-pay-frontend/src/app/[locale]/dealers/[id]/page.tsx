@@ -139,7 +139,7 @@ export default function DealerPage() {
                   </div>
                   <div className="p-4">
                     <h3 className="font-semibold text-lg">{vehicle.make} {vehicle.model}</h3>
-                    <p className="text-2xl font-bold text-blue-600 mb-2">€{parseFloat(vehicle.price).toLocaleString()}</p>
+                    <p className="text-2xl font-bold text-primary-600 mb-2">€{parseFloat(vehicle.price).toLocaleString()}</p>
                     <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
                       <div>Year: {vehicle.year}</div>
                       <div>Mileage: {vehicle.mileage?.toLocaleString()} km</div>

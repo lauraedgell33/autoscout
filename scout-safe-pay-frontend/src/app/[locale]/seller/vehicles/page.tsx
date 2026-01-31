@@ -45,7 +45,7 @@ export default function SellerVehiclesPage() {
     const colors = {
       active: 'bg-green-100 text-green-800',
       draft: 'bg-gray-100 text-gray-800',
-      sold: 'bg-blue-100 text-blue-800',
+      sold: 'bg-blue-100 text-primary-700',
       reserved: 'bg-yellow-100 text-yellow-800',
       removed: 'bg-red-100 text-red-800',
     };
@@ -101,7 +101,7 @@ export default function SellerVehiclesPage() {
                     {vehicle.status.toUpperCase()}
                   </span>
                 </div>
-                <p className="text-2xl font-bold text-blue-600 mb-3">€{parseFloat(vehicle.price).toLocaleString()}</p>
+                <p className="text-2xl font-bold text-primary-600 mb-3">€{parseFloat(vehicle.price).toLocaleString()}</p>
                 <div className="space-y-1 text-sm text-gray-600 dark:text-gray-400 mb-4">
                   <div className="flex justify-between"><span>Year:</span><span>{vehicle.year}</span></div>
                   <div className="flex justify-between"><span>Mileage:</span><span>{vehicle.mileage?.toLocaleString()} km</span></div>

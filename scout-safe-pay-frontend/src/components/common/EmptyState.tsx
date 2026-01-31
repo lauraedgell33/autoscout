@@ -21,7 +21,7 @@ export function EmptyState({
   return (
     <div className="text-center py-16 px-4 animate-fade-in">
       {/* Icon */}
-      <div className="mx-auto w-24 h-24 bg-gradient-to-br from-blue-50 to-orange-50 rounded-full flex items-center justify-center mb-6 animate-scale-in">
+      <div className="mx-auto w-24 h-24 bg-gradient-to-br from-gray-50 to-white rounded-full flex items-center justify-center mb-6 animate-scale-in">
         <Icon className="w-12 h-12 text-gray-900" strokeWidth={1.5} />
       </div>
 

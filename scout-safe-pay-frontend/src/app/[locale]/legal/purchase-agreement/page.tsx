@@ -20,7 +20,7 @@ export default async function PurchaseAgreement({ params }: Props) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'legal.purchase' })
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-orange-50">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Navigation */}
       <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,7 +43,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
         <div className="bg-white rounded-lg shadow-sm p-8 space-y-8">
           {/* Introduction */}
-          <div className="p-6 bg-blue-50 rounded-lg border-l-4 border-blue-900">
+          <div className="p-6 bg-primary-50 rounded-lg border-l-4 border-primary-600">
             <p className="text-gray-700">
               {t('intro')}
             </p>
@@ -297,7 +297,7 @@ export default async function PurchaseAgreement({ params }: Props) {
           </section>
 
           {/* Important Notice */}
-          <div className="mt-8 p-6 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+          <div className="mt-8 p-6 bg-accent-50 rounded-lg border-l-4 border-accent-500">
             <p className="text-gray-700 font-semibold mb-2">
               {t('notice_title')}
             </p>

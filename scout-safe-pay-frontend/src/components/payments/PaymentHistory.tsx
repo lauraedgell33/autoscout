@@ -29,7 +29,7 @@ const formatAmount = (amount: number, currency: string = 'EUR') => {
 const getStatusColor = (status: string) => {
   const colors: Record<string, string> = {
     succeeded: 'text-green-600',
-    processing: 'text-blue-600',
+    processing: 'text-primary-600',
     failed: 'text-red-600',
     refunded: 'text-yellow-600',
     bank_transfer_pending: 'text-orange-600',
@@ -148,7 +148,7 @@ export const PaymentHistory: React.FC<PaymentHistoryProps> = ({
   const getStatusBadge = (status: string) => {
     const colors: Record<string, { bg: string; text: string }> = {
       succeeded: { bg: 'bg-green-100', text: 'text-green-800' },
-      processing: { bg: 'bg-blue-100', text: 'text-blue-800' },
+      processing: { bg: 'bg-blue-100', text: 'text-primary-700' },
       failed: { bg: 'bg-red-100', text: 'text-red-800' },
       refunded: { bg: 'bg-yellow-100', text: 'text-yellow-800' },
     };
@@ -167,7 +167,7 @@ export const PaymentHistory: React.FC<PaymentHistoryProps> = ({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <Loader className="w-8 h-8 animate-spin text-blue-600" />
+        <Loader className="w-8 h-8 animate-spin text-primary-600" />
       </div>
     );
   }
@@ -346,7 +346,7 @@ export const PaymentHistory: React.FC<PaymentHistoryProps> = ({
                   {onPaymentClick && (
                     <button
                       onClick={() => onPaymentClick(payment)}
-                      className="flex-1 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition"
+                      className="flex-1 px-4 py-2 border border-blue-600 text-primary-600 rounded-lg hover:bg-primary-50 transition"
                     >
                       View Details
                     </button>

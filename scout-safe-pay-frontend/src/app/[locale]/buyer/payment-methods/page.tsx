@@ -228,9 +228,9 @@ export default function BuyerPaymentMethodsPage() {
       )}
 
       {/* Info Card */}
-      <Card className="p-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+      <Card className="p-6 bg-primary-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
         <div className="flex items-start space-x-3">
-          <CreditCard className="h-5 w-5 text-blue-600 mt-0.5" />
+          <CreditCard className="h-5 w-5 text-primary-600 mt-0.5" />
           <div>
             <h4 className="font-medium text-gray-900 dark:text-white mb-1">
               Secure Payment Processing

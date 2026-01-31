@@ -76,7 +76,7 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
   };
 
   return (
-    <Card className="bg-white dark:bg-gray-800 border-2 border-blue-100 dark:border-blue-900 shadow-xl">
+    <Card className="bg-white dark:bg-gray-800 border-2 border-blue-100 dark:border-primary-600 shadow-xl">
       {/* Header */}
       <div className="p-6 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between">
@@ -97,7 +97,7 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
             variant="ghost"
             size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="text-blue-600 hover:text-blue-700"
+            className="text-primary-600 hover:text-blue-700"
           >
             {isExpanded ? 'Show Less' : 'Show More'}
             <ChevronDown className={`ml-2 h-4 w-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
@@ -131,7 +131,7 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
                 className={`cursor-pointer transition-all ${
                   filters.make === make
                     ? 'bg-accent-500 hover:bg-accent-600'
-                    : 'hover:bg-blue-50 hover:border-blue-300'
+                    : 'hover:bg-primary-50 hover:border-blue-300'
                 }`}
                 onClick={() => handleFilterChange('make', filters.make === make ? '' : make)}
               >

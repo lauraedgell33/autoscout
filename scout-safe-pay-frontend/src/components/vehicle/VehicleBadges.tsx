@@ -25,8 +25,8 @@ const badgeConfig = {
   new: {
     icon: Zap,
     label: 'New Arrival',
-    colors: 'bg-blue-100 text-blue-800 border-blue-300',
-    iconColor: 'text-blue-600',
+    colors: 'bg-blue-100 text-primary-700 border-blue-300',
+    iconColor: 'text-primary-600',
   },
   hot: {
     icon: TrendingUp,
@@ -117,7 +117,7 @@ export function StatusBadge({ status, className = '' }: StatusBadgeProps) {
     },
     pending: {
       label: 'Pending',
-      colors: 'bg-blue-100 text-blue-800 border-blue-300',
+      colors: 'bg-blue-100 text-primary-700 border-blue-300',
     },
     draft: {
       label: 'Draft',
@@ -161,7 +161,7 @@ export function ConditionBadge({ condition, className = '' }: ConditionBadgeProp
     },
     good: {
       label: 'Good',
-      colors: 'bg-blue-100 text-blue-800 border-blue-300',
+      colors: 'bg-blue-100 text-primary-700 border-blue-300',
       icon: '👍',
     },
     fair: {

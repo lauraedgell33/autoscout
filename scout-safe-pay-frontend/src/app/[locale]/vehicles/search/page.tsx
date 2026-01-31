@@ -212,7 +212,7 @@ export default function VehicleSearchPage() {
                   onClick={() => setViewMode('grid')}
                   className={`px-3 py-1 rounded transition ${
                     viewMode === 'grid'
-                      ? 'bg-blue-500 text-white'
+                      ? 'bg-primary-500 text-white'
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
@@ -222,7 +222,7 @@ export default function VehicleSearchPage() {
                   onClick={() => setViewMode('map')}
                   className={`px-3 py-1 rounded transition flex items-center gap-1 ${
                     viewMode === 'map'
-                      ? 'bg-blue-500 text-white'
+                      ? 'bg-primary-500 text-white'
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
@@ -254,7 +254,7 @@ export default function VehicleSearchPage() {
                       <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-2">
                         {vehicle.make} {vehicle.model}
                       </h3>
-                      <p className="text-2xl font-bold text-blue-600 mb-3">
+                      <p className="text-2xl font-bold text-primary-600 mb-3">
                         €{parseFloat(vehicle.price).toLocaleString()}
                       </p>
                       <div className="grid grid-cols-2 gap-2 text-sm text-gray-600 dark:text-gray-400">

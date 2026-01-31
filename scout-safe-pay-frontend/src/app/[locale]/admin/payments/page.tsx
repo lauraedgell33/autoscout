@@ -44,7 +44,7 @@ export default function AdminPaymentsPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-500"></div>
       </div>
     );
   }
@@ -57,7 +57,7 @@ export default function AdminPaymentsPage() {
     <div className="min-h-screen bg-gray-50">
       <Suspense fallback={
         <div className="flex items-center justify-center h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-500"></div>
         </div>
       }>
         <PaymentConfirmationPanel />

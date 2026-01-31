@@ -144,7 +144,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
         <div className="max-w-md mx-auto text-center">
           <div className="mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-100 mb-4">
-              <Building2 className="w-10 h-10 text-blue-600" />
+              <Building2 className="w-10 h-10 text-primary-600" />
             </div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               {t('dealerNotFound')}
@@ -193,7 +193,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                   />
                 ) : (
                   <div className="w-24 h-24 bg-blue-100 rounded-xl flex items-center justify-center">
-                    <Building2 className="w-12 h-12 text-blue-600" />
+                    <Building2 className="w-12 h-12 text-primary-600" />
                   </div>
                 )}
               </div>
@@ -384,7 +384,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                       {/* Vehicle Details */}
                       <CardContent className={`p-6 ${viewMode === 'list' ? 'flex-1' : ''}`}>
                         <div className="mb-3">
-                          <h3 className="font-bold text-xl mb-1 text-gray-900 group-hover:text-blue-600 transition-colors">
+                          <h3 className="font-bold text-xl mb-1 text-gray-900 group-hover:text-primary-600 transition-colors">
                             {vehicle.make} {vehicle.model}
                           </h3>
                           <p className="text-sm text-gray-600">
@@ -396,7 +396,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                         <div className="grid grid-cols-2 gap-3 mb-4 text-sm">
                           {vehicle.fuel_type && (
                             <div className="flex items-center gap-2 text-gray-700">
-                              <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+                              <div className="w-8 h-8 rounded-lg bg-primary-50 flex items-center justify-center">
                                 ⛽
                               </div>
                               <span>{vehicle.fuel_type}</span>
@@ -420,7 +420,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                           )}
                           {vehicle.color && (
                             <div className="flex items-center gap-2 text-gray-700">
-                              <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
+                              <div className="w-8 h-8 rounded-lg bg-accent-50 flex items-center justify-center">
                                 🎨
                               </div>
                               <span>{vehicle.color}</span>
@@ -476,7 +476,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                         </a>
 
                         <a href={`mailto:${dealer.email}`} className="block">
-                          <Button variant="outline" className="w-full h-14 border-2 border-blue-300 hover:bg-blue-50 text-lg">
+                          <Button variant="outline" className="w-full h-14 border-2 border-blue-300 hover:bg-primary-50 text-lg">
                             <Mail className="w-5 h-5 mr-2" />
                             {t('sendMessage')}
                           </Button>
@@ -484,7 +484,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
 
                         {dealer.website && (
                           <a href={dealer.website} target="_blank" rel="noopener noreferrer" className="block md:col-span-2">
-                            <Button variant="outline" className="w-full h-14 border-2 border-blue-300 hover:bg-blue-50">
+                            <Button variant="outline" className="w-full h-14 border-2 border-blue-300 hover:bg-primary-50">
                               <Globe className="w-5 h-5 mr-2" />
                               {(() => {
                                 try {
@@ -498,9 +498,9 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                         )}
                       </div>
 
-                      <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                      <div className="mt-6 p-4 bg-primary-50 rounded-lg">
                         <div className="flex items-start gap-3">
-                          <MapPin className="w-5 h-5 text-blue-600 mt-0.5" />
+                          <MapPin className="w-5 h-5 text-primary-600 mt-0.5" />
                           <div>
                             <p className="font-semibold text-gray-900">{t('visitUs')}</p>
                             <p className="text-gray-700">{dealer.address}</p>

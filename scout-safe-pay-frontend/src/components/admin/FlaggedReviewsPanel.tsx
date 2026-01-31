@@ -214,7 +214,7 @@ export default function FlaggedReviewsPanel({ initialPage = 1 }: FlaggedReviewsP
                 return (
                   <div
                     key={review.id}
-                    className="border-2 border-orange-200 bg-orange-50/30 rounded-lg p-4 hover:border-orange-300 transition-colors"
+                    className="border-2 border-accent-200 bg-accent-50/30 rounded-lg p-4 hover:border-orange-300 transition-colors"
                   >
                     {/* Header with Flag Count */}
                     <div className="flex items-start justify-between gap-4 mb-3">
