@@ -170,6 +170,7 @@
     },
     "safetrade_protected": "SafeTrade Protected",
     "safetrade_protection": "SafeTrade Protection",
+    "location": "Location",
     "benefits": {
       "escrow": "Secure escrow payment",
       "verified": "Verified seller",

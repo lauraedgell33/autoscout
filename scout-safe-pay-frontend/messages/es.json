@@ -169,7 +169,8 @@
       "pickup": "Levantar"
     },
     "safetrade_protected": "Comercio seguro protegido",
-    "safetrade_protection": "Protección del comercio seguro",
+    "safetrade_protection": "Protección SafeTrade",
+    "location": "Ubicación",
     "benefits": {
       "escrow": "Pago seguro en custodia",
       "verified": "Vendedor verificado",

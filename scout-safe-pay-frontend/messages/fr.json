@@ -169,7 +169,8 @@
       "pickup": "Ramasser"
     },
     "safetrade_protected": "SafeTrade Protégé",
-    "safetrade_protection": "Protection du commerce sécurisé",
+    "safetrade_protection": "Protection SafeTrade",
+    "location": "Emplacement",
     "benefits": {
       "escrow": "Paiement séquestre sécurisé",
       "verified": "Vendeur vérifié",

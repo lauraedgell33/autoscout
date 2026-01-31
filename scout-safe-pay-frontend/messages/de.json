@@ -170,6 +170,7 @@
     },
     "safetrade_protected": "SafeTrade Geschützt",
     "safetrade_protection": "SafeTrade Schutz",
+    "location": "Standort",
     "benefits": {
       "escrow": "Sichere Treuhandzahlung",
       "verified": "Verifizierter Verkäufer",

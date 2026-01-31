@@ -169,7 +169,8 @@
       "pickup": "Raccolta"
     },
     "safetrade_protected": "SafeTrade protetto",
-    "safetrade_protection": "Protezione del commercio sicuro",
+    "safetrade_protection": "Protezione SafeTrade",
+    "location": "Posizione",
     "benefits": {
       "escrow": "Pagamento sicuro in garanzia",
       "verified": "Venditore verificato",

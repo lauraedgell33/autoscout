@@ -169,7 +169,8 @@
       "pickup": "Ophalen"
     },
     "safetrade_protected": "SafeTrade beschermd",
-    "safetrade_protection": "SafeTrade-bescherming",
+    "safetrade_protection": "SafeTrade Bescherming",
+    "location": "Locatie",
     "benefits": {
       "escrow": "Veilige escrow-betaling",
       "verified": "Geverifieerde verkoper",
