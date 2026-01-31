@@ -112,7 +112,13 @@
       "sold": "Verkocht"
     },
     "no_image": "Geen afbeelding",
-    "category_label": "Categorie"
+    "category_label": "Categorie",
+    "vehicles_available": "{count} Voertuigen Beschikbaar",
+    "safetrade_badge": "✓ SafeTrade Beschermd",
+    "show_filters": "Toon Geavanceerde Filters",
+    "hide_filters": "Verberg Geavanceerde Filters",
+    "no_results_desc": "Probeer je filters of zoekopdracht aan te passen om meer voertuigen te vinden.",
+    "clear_filters_btn": "Filters Wissen"
   },
   "vehicle": {
     "details": "Voertuiggegevens",

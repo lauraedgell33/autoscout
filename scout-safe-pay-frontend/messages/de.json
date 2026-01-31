@@ -112,7 +112,13 @@
       "sold": "Verkauft"
     },
     "no_image": "Kein Bild",
-    "category_label": "Kategorie"
+    "category_label": "Kategorie",
+    "vehicles_available": "{count} Fahrzeuge verfügbar",
+    "safetrade_badge": "✓ SafeTrade Geschützt",
+    "show_filters": "Erweiterte Filter anzeigen",
+    "hide_filters": "Erweiterte Filter ausblenden",
+    "no_results_desc": "Versuchen Sie, Ihre Filter oder Suchanfrage anzupassen, um mehr Fahrzeuge zu finden.",
+    "clear_filters_btn": "Filter zurücksetzen"
   },
   "vehicle": {
     "details": "Fahrzeugdetails",

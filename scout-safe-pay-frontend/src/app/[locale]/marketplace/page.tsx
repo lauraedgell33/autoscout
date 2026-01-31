@@ -104,10 +104,10 @@ export default function MarketplacePage() {
             </p>
             <div className="mt-4 flex flex-wrap justify-center gap-2">
               <Badge className="bg-white/20 text-white border border-white/30 hover:bg-white/30">
-                {pagination.total} Vehicles Available
+                {t('marketplace.vehicles_available', { count: pagination.total })}
               </Badge>
               <Badge className="bg-green-500/80 text-white border border-green-400/50 hover:bg-green-500">
-                ✓ SafeTrade Protected
+                {t('marketplace.safetrade_badge')}
               </Badge>
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function MarketplacePage() {
               className="text-blue-100 hover:text-white hover:bg-white/10"
             >
               <SlidersHorizontal className="w-4 h-4 mr-2" />
-              {showAdvancedFilters ? 'Hide Advanced Filters' : 'Show Advanced Filters'}
+              {showAdvancedFilters ? t('marketplace.hide_filters') : t('marketplace.show_filters')}
             </Button>
           </div>
         </div>
@@ -296,11 +296,11 @@ export default function MarketplacePage() {
                   ))}
                 </div>
               ) : (!vehicles || vehicles.length === 0) ? (
-                <EmptyState
+              <EmptyState
                   icon={ShoppingCart}
                   title={t('marketplace.no_results')}
-                  description="Try adjusting your filters or search query to find more vehicles."
-                  actionLabel="Clear Filters"
+                  description={t('marketplace.no_results_desc')}
+                  actionLabel={t('marketplace.clear_filters_btn')}
                   actionOnClick={() => {
                     setFilters({ sort_by: 'created_at', sort_order: 'desc', per_page: 12 })
                     setSearchQuery('')

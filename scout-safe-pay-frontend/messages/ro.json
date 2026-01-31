@@ -112,7 +112,13 @@
       "sold": "Vândut"
     },
     "no_image": "Fără Imagine",
-    "category_label": "Categorie"
+    "category_label": "Categorie",
+    "vehicles_available": "{count} Vehicule Disponibile",
+    "safetrade_badge": "✓ Protejat SafeTrade",
+    "show_filters": "Arată Filtre Avansate",
+    "hide_filters": "Ascunde Filtre Avansate",
+    "no_results_desc": "Încearcă să ajustezi filtrele sau căutarea pentru a găsi mai multe vehicule.",
+    "clear_filters_btn": "Șterge Filtrele"
   },
   "vehicle": {
     "details": "Detalii Vehicul",
