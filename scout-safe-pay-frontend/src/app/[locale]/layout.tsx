@@ -11,15 +11,6 @@ import Footer from '@/components/Footer';
 import CookieBanner from '@/components/CookieBanner';
 import { SkipLink } from '@/components/common/SkipLink';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import '../globals.css';
-
-// Optimize font loading
-const inter = Inter({ 
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter'
-});
 
 export async function generateMetadata({
   params
@@ -136,8 +127,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={inter.variable} data-scroll-behavior="smooth">
-      <body className="font-sans antialiased">
+    <>
         <ErrorBoundary>
           <SkipLink />
           <NextIntlClientProvider locale={locale} messages={messages}>
@@ -154,7 +144,6 @@ export default async function LocaleLayout({
             </CurrencyProvider>
           </NextIntlClientProvider>
         </ErrorBoundary>
-      </body>
-    </html>
+    </>
   );
 }

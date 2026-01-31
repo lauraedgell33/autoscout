@@ -7,15 +7,85 @@
 :root {
   --as24-blue: #003281;
   --as24-orange: #FFA500;
+  color-scheme: light dark;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+  
+  html {
+    background-color: rgb(17 24 39);
+  }
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: white;
-  color: rgb(17 24 39);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Light mode defaults */
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: white;
+    color: rgb(17 24 39);
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(17 24 39);
+    color: rgb(243 244 246);
+  }
+  
+  /* Override common backgrounds for dark mode */
+  .bg-white {
+    background-color: rgb(31 41 55) !important;
+  }
+  
+  .bg-gray-50 {
+    background-color: rgb(17 24 39) !important;
+  }
+  
+  .bg-gray-100 {
+    background-color: rgb(31 41 55) !important;
+  }
+  
+  /* Text colors */
+  .text-gray-900 {
+    color: rgb(243 244 246) !important;
+  }
+  
+  .text-gray-800 {
+    color: rgb(229 231 235) !important;
+  }
+  
+  .text-gray-700 {
+    color: rgb(209 213 219) !important;
+  }
+  
+  .text-gray-600 {
+    color: rgb(156 163 175) !important;
+  }
+  
+  /* Borders */
+  .border-gray-100,
+  .border-gray-200 {
+    border-color: rgb(55 65 81) !important;
+  }
+  
+  /* Cards and shadows */
+  .shadow-sm,
+  .shadow,
+  .shadow-lg {
+    --tw-shadow-color: rgba(0, 0, 0, 0.3);
+  }
 }
 
 /* ============================================ */
