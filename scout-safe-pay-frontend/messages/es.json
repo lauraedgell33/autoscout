@@ -1334,6 +1334,19 @@
       "retry": "Reintentar"
     }
   },
+  "sidebar": {
+    "overview": "Resumen",
+    "my_purchases": "Mis Compras",
+    "my_vehicles": "Mis Vehículos",
+    "add_vehicle": "Añadir Vehículo",
+    "favorites": "Favoritos",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "transactions": "Transacciones",
+    "disputes": "Disputas",
+    "messages": "Mensajes",
+    "notifications": "Notificaciones"
+  },
   "filters": {
     "title": "Filtros",
     "sort_by": "Ordenar por",

@@ -1334,6 +1334,19 @@
       "retry": "Opnieuw proberen"
     }
   },
+  "sidebar": {
+    "overview": "Overzicht",
+    "my_purchases": "Mijn Aankopen",
+    "my_vehicles": "Mijn Voertuigen",
+    "add_vehicle": "Voertuig Toevoegen",
+    "favorites": "Favorieten",
+    "profile": "Profiel",
+    "settings": "Instellingen",
+    "transactions": "Transacties",
+    "disputes": "Geschillen",
+    "messages": "Berichten",
+    "notifications": "Meldingen"
+  },
   "filters": {
     "title": "Filters",
     "sort_by": "Sorteer op",

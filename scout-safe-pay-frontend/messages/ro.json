@@ -1326,6 +1326,19 @@
       "retry": "Încearcă din nou"
     }
   },
+  "sidebar": {
+    "overview": "Prezentare Generală",
+    "my_purchases": "Achizițiile Mele",
+    "my_vehicles": "Vehiculele Mele",
+    "add_vehicle": "Adaugă Vehicul",
+    "favorites": "Favorite",
+    "profile": "Profil",
+    "settings": "Setări",
+    "transactions": "Tranzacții",
+    "disputes": "Dispute",
+    "messages": "Mesaje",
+    "notifications": "Notificări"
+  },
   "filters": {
     "title": "Filtre",
     "sort_by": "Sortează după",

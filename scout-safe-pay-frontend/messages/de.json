@@ -1340,6 +1340,19 @@
       "retry": "Erneut versuchen"
     }
   },
+  "sidebar": {
+    "overview": "Übersicht",
+    "my_purchases": "Meine Käufe",
+    "my_vehicles": "Meine Fahrzeuge",
+    "add_vehicle": "Fahrzeug hinzufügen",
+    "favorites": "Favoriten",
+    "profile": "Profil",
+    "settings": "Einstellungen",
+    "transactions": "Transaktionen",
+    "disputes": "Streitigkeiten",
+    "messages": "Nachrichten",
+    "notifications": "Benachrichtigungen"
+  },
   "filters": {
     "title": "Filter",
     "sort_by": "Sortieren nach",
