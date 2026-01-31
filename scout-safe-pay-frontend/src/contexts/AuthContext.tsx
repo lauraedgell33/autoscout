@@ -52,7 +52,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await authStore.login(email, password)
       
-      const { user } = authStore
+      // Get fresh state from store after login completes
+      const state = useAuthStore.getState()
+      const user = state.user
       
       if (!user) {
         throw new Error('Login failed - no user returned')
@@ -79,7 +81,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await authStore.register(data)
       
-      const { user } = authStore
+      // Get fresh state from store after register completes
+      const state = useAuthStore.getState()
+      const user = state.user
       
       if (!user) {
         throw new Error('Registration failed - no user returned')
