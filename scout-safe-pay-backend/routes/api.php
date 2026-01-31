@@ -24,6 +24,7 @@ use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\ErrorLogController;
 use App\Http\Controllers\API\FavoritesController;
 use App\Http\Controllers\API\Admin\ReviewModerationController;
+use App\Http\Controllers\Api\VehicleDataController;
 use Illuminate\Support\Facades\Route;
 
 // Health check endpoint
@@ -75,6 +76,15 @@ Route::get('/vehicles-statistics', [VehicleController::class, 'statistics']);
 // Public category routes
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/categories/{slug}', [CategoryController::class, 'show']);
+
+// Vehicle data routes (makes and models)
+Route::prefix('vehicle-data')->group(function () {
+    Route::get('/categories', [VehicleDataController::class, 'categories']);
+    Route::get('/makes/{category}', [VehicleDataController::class, 'makes']);
+    Route::get('/models/{category}/{makeId}', [VehicleDataController::class, 'models']);
+    Route::get('/category/{category}', [VehicleDataController::class, 'categoryData']);
+    Route::get('/search/makes', [VehicleDataController::class, 'searchMakes']);
+});
 
 // Search routes (public) - with rate limiting
 Route::middleware('rate.limit.ip:30,1')->prefix('search')->group(function () {

@@ -73,7 +73,9 @@
       "fuel_type": "Kraftstoffart",
       "transmission": "Getriebe",
       "body_type": "Karosserietyp",
-      "sort_by": "Sortieren nach"
+      "sort_by": "Sortieren nach",
+      "all_makes": "Alle Marken",
+      "all_models": "Alle Modelle"
     },
     "sort": {
       "newest": "Neueste zuerst",

@@ -73,7 +73,9 @@
       "fuel_type": "Fuel Type",
       "transmission": "Transmission",
       "body_type": "Body Type",
-      "sort_by": "Sort By"
+      "sort_by": "Sort By",
+      "all_makes": "All Makes",
+      "all_models": "All Models"
     },
     "sort": {
       "newest": "Newest First",

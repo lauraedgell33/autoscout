@@ -78,7 +78,9 @@
       "fuel_type": "Tip Combustibil",
       "transmission": "Transmisie",
       "body_type": "Tip Caroserie",
-      "sort_by": "Sortează După"
+      "sort_by": "Sortează După",
+      "all_makes": "Toate Mărcile",
+      "all_models": "Toate Modelele"
     },
     "sort": {
       "newest": "Cele Mai Noi",

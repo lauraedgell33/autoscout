@@ -73,7 +73,9 @@
       "fuel_type": "Brandstoftype",
       "transmission": "Overdragen",
       "body_type": "Lichaamstype",
-      "sort_by": "Sorteer op"
+      "sort_by": "Sorteer op",
+      "all_makes": "Alle merken",
+      "all_models": "Alle modellen"
     },
     "sort": {
       "newest": "Nieuwste eerst",

@@ -73,7 +73,9 @@
       "fuel_type": "Tipo di carburante",
       "transmission": "Trasmissione",
       "body_type": "Tipo di corporatura",
-      "sort_by": "Ordina per"
+      "sort_by": "Ordina per",
+      "all_makes": "Tutte le marche",
+      "all_models": "Tutti i modelli"
     },
     "sort": {
       "newest": "Prima il più recente",

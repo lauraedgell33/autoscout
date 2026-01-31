@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { Link } from '@/i18n/routing'
 import { useRouter } from '@/i18n/routing'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import { useCurrency } from '@/contexts/CurrencyContext'
 import { Star, MapPin, ExternalLink, ShoppingCart, Search, SlidersHorizontal } from 'lucide-react'
@@ -16,6 +16,7 @@ import { VehicleCardSkeleton } from '@/components/common/SkeletonCard'
 import { EmptyState } from '@/components/common/EmptyState'
 import AdvancedFilters from '@/components/filters/AdvancedFilters'
 import EnhancedVehicleCard from '@/components/vehicle/EnhancedVehicleCard'
+import { getMakesByCategory, getModelsByMake, VehicleMake } from '@/lib/data/vehicleData'
 
 export default function MarketplacePage() {
   const t = useTranslations()
@@ -204,7 +205,16 @@ export default function MarketplacePage() {
                     <label className="block text-sm font-medium text-gray-700 mb-2">{t('marketplace.category_label')}</label>
                     <select
                       value={filters.category || ''}
-                      onChange={(e) => handleFilterChange('category', e.target.value || undefined)}
+                      onChange={(e) => {
+                        const newCategory = e.target.value || undefined
+                        setFilters(prev => ({
+                          ...prev,
+                          category: newCategory,
+                          make: undefined,
+                          model: undefined,
+                          page: 1
+                        }))
+                      }}
                       className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm transition-all"
                     >
                       <option value="">{t('categories.all')}</option>
@@ -223,6 +233,46 @@ export default function MarketplacePage() {
                       <option value="quad">🏁 {t('categories.quad')}</option>
                     </select>
                   </div>
+
+                  {/* Make */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{tVehicle('fields.make')}</label>
+                    <select
+                      value={filters.make || ''}
+                      onChange={(e) => {
+                        const newMake = e.target.value || undefined
+                        setFilters(prev => ({
+                          ...prev,
+                          make: newMake,
+                          model: undefined,
+                          page: 1
+                        }))
+                      }}
+                      className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm transition-all"
+                    >
+                      <option value="">{t('marketplace.filters.all_makes')}</option>
+                      {filters.category && getMakesByCategory(filters.category).map((make) => (
+                        <option key={make.id} value={make.name}>{make.name}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Model */}
+                  {filters.make && filters.category && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{tVehicle('fields.model')}</label>
+                      <select
+                        value={filters.model || ''}
+                        onChange={(e) => handleFilterChange('model', e.target.value || undefined)}
+                        className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm transition-all"
+                      >
+                        <option value="">{t('marketplace.filters.all_models')}</option>
+                        {getModelsByMake(filters.category, filters.make).map((model) => (
+                          <option key={model.name} value={model.name}>{model.name}</option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
 
                   {/* Status */}
                   <div>

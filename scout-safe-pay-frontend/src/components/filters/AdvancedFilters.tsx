@@ -1,14 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { 
   Search, SlidersHorizontal, X, ChevronDown, Calendar, 
-  DollarSign, MapPin, Fuel, Gauge, Settings 
+  Coins, MapPin, Fuel, Gauge, Settings, Car, Bike, Truck 
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { getMakesByCategory, getModelsByMake } from '@/lib/data/vehicleData';
+import { VEHICLE_CATEGORIES } from '@/lib/constants/categories';
+import { useCurrency } from '@/contexts/CurrencyContext';
 
 interface AdvancedFiltersProps {
   onApplyFilters: (filters: VehicleFilters) => void;
@@ -18,6 +21,7 @@ interface AdvancedFiltersProps {
 
 export interface VehicleFilters {
   search?: string;
+  category?: string;
   make?: string;
   model?: string;
   priceMin?: number;
@@ -35,19 +39,150 @@ export interface VehicleFilters {
   dealer?: boolean;
 }
 
-const MAKES = ['BMW', 'Mercedes-Benz', 'Audi', 'Volkswagen', 'Toyota', 'Ford', 'Opel', 'Renault'];
-const FUEL_TYPES = ['Petrol', 'Diesel', 'Electric', 'Hybrid', 'Plug-in Hybrid'];
-const TRANSMISSIONS = ['Manual', 'Automatic', 'Semi-automatic'];
-const BODY_TYPES = ['Sedan', 'SUV', 'Hatchback', 'Coupe', 'Van', 'Truck', 'Wagon'];
-const FEATURES = ['GPS', 'Leather Seats', 'Sunroof', 'Parking Sensors', 'Cruise Control', 'Bluetooth'];
+// Category icons and emojis
+const CATEGORY_ICONS: Record<string, string> = {
+  car: '🚗',
+  motorcycle: '🏍️',
+  truck: '🚚',
+  van: '🚐',
+  trailer: '🚛',
+  caravan: '🚙',
+  motorhome: '🏕️',
+  construction: '🏗️',
+  agricultural: '🚜',
+  forklift: '🔧',
+  boat: '⛵',
+  atv: '🏁',
+  quad: '🏁',
+};
+
+// Category-specific filter options
+const FUEL_TYPES_BY_CATEGORY: Record<string, string[]> = {
+  car: ['Petrol', 'Diesel', 'Electric', 'Hybrid', 'Plug-in Hybrid', 'LPG', 'CNG'],
+  motorcycle: ['Petrol', 'Electric'],
+  truck: ['Diesel', 'Petrol', 'LPG', 'CNG', 'Electric'],
+  van: ['Diesel', 'Petrol', 'Electric', 'Hybrid', 'LPG'],
+  trailer: [],
+  caravan: [],
+  motorhome: ['Diesel', 'Petrol', 'LPG'],
+  construction: ['Diesel', 'Electric'],
+  agricultural: ['Diesel', 'Electric'],
+  forklift: ['Diesel', 'Electric', 'LPG'],
+  boat: ['Diesel', 'Petrol', 'Electric'],
+  atv: ['Petrol', 'Electric'],
+  quad: ['Petrol', 'Electric'],
+};
+
+const TRANSMISSIONS_BY_CATEGORY: Record<string, string[]> = {
+  car: ['Manual', 'Automatic', 'Semi-automatic', 'CVT'],
+  motorcycle: ['Manual', 'Automatic', 'Semi-automatic'],
+  truck: ['Manual', 'Automatic', 'Semi-automatic'],
+  van: ['Manual', 'Automatic'],
+  trailer: [],
+  caravan: [],
+  motorhome: ['Manual', 'Automatic'],
+  construction: ['Manual', 'Automatic', 'Hydrostatic'],
+  agricultural: ['Manual', 'Automatic', 'CVT', 'Powershift'],
+  forklift: ['Automatic', 'Hydrostatic'],
+  boat: ['Manual', 'Automatic'],
+  atv: ['Manual', 'Automatic', 'CVT'],
+  quad: ['Manual', 'Automatic', 'CVT'],
+};
+
+const BODY_TYPES_BY_CATEGORY: Record<string, string[]> = {
+  car: ['Sedan', 'SUV', 'Hatchback', 'Coupe', 'Convertible', 'Wagon', 'Pickup', 'Minivan'],
+  motorcycle: ['Sport', 'Touring', 'Cruiser', 'Naked', 'Adventure', 'Scooter', 'Chopper', 'Enduro'],
+  truck: ['Box', 'Flatbed', 'Tipper', 'Tanker', 'Refrigerated', 'Curtainsider', 'Chassis'],
+  van: ['Panel Van', 'Minibus', 'Combi', 'Box Van', 'Chassis Cab'],
+  trailer: ['Flatbed', 'Box', 'Tipper', 'Lowloader', 'Curtainsider', 'Refrigerated', 'Tanker'],
+  caravan: ['Touring', 'Static', 'Folding', 'Fifth Wheel'],
+  motorhome: ['Integrated', 'Semi-integrated', 'Alcove', 'Van Conversion', 'Low Profile'],
+  construction: ['Excavator', 'Loader', 'Bulldozer', 'Crane', 'Roller', 'Grader', 'Dump Truck'],
+  agricultural: ['Tractor', 'Combine', 'Harvester', 'Sprayer', 'Loader', 'Telehandler'],
+  forklift: ['Counterbalance', 'Reach', 'Pallet', 'Rough Terrain', 'Sideloader'],
+  boat: ['Speedboat', 'Sailboat', 'Yacht', 'Fishing', 'Pontoon', 'Inflatable', 'Jet Ski'],
+  atv: ['Utility', 'Sport', 'Youth', 'Side-by-Side'],
+  quad: ['Utility', 'Sport', 'Youth', 'Racing'],
+};
+
+const FEATURES_BY_CATEGORY: Record<string, string[]> = {
+  car: ['GPS', 'Leather Seats', 'Sunroof', 'Parking Sensors', 'Cruise Control', 'Bluetooth', 'Apple CarPlay', 'Android Auto', 'Heated Seats', '360 Camera', 'Lane Assist', 'Blind Spot Monitor'],
+  motorcycle: ['ABS', 'Traction Control', 'Heated Grips', 'Cruise Control', 'Quick Shifter', 'Riding Modes', 'LED Lights', 'USB Charging'],
+  truck: ['GPS', 'Air Conditioning', 'Cruise Control', 'Sleeper Cab', 'Retarder', 'ABS', 'Parking Sensors', 'Refrigeration Unit'],
+  van: ['GPS', 'Air Conditioning', 'Parking Sensors', 'Bluetooth', 'Cargo Barrier', 'Roof Rack', 'Tow Bar'],
+  trailer: ['ABS', 'Hydraulic Ramp', 'Refrigeration', 'Tail Lift', 'Tracking System'],
+  caravan: ['Air Conditioning', 'Heating', 'Solar Panel', 'Awning', 'TV', 'Shower', 'Oven', 'Fridge'],
+  motorhome: ['Air Conditioning', 'Heating', 'Solar Panel', 'Awning', 'TV', 'Shower', 'Kitchen', 'Generator', 'Satellite Dish'],
+  construction: ['Air Conditioning', 'Cab Protection', 'GPS', 'Camera System', 'Quick Coupler', 'Hydraulic Hammer'],
+  agricultural: ['Air Conditioning', 'GPS Guidance', 'Auto Steer', 'Front Loader', 'PTO', 'Four-Wheel Drive', 'Cab Suspension'],
+  forklift: ['Side Shift', 'Fork Positioner', 'Cabin', 'Four-Wheel Drive', 'Camera', 'Blue Light'],
+  boat: ['GPS', 'Fish Finder', 'Trolling Motor', 'Bimini Top', 'Anchor', 'VHF Radio', 'Swim Platform'],
+  atv: ['Winch', 'Four-Wheel Drive', 'Power Steering', 'Roof', 'Windshield', 'Storage'],
+  quad: ['Winch', 'Four-Wheel Drive', 'Power Steering', 'Roof', 'Windshield', 'Storage'],
+};
+
+// Default fallbacks
+const DEFAULT_FUEL_TYPES = ['Petrol', 'Diesel', 'Electric'];
+const DEFAULT_TRANSMISSIONS = ['Manual', 'Automatic'];
+const DEFAULT_BODY_TYPES = ['Standard'];
+const DEFAULT_FEATURES = ['GPS', 'Air Conditioning'];
 
 export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: AdvancedFiltersProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [filters, setFilters] = useState<VehicleFilters>({});
+  const [filters, setFilters] = useState<VehicleFilters>({ category: 'car' });
   const [activeFilterCount, setActiveFilterCount] = useState(0);
+  const { currency, getCurrencyInfo } = useCurrency();
+  
+  // Get current currency info
+  const currencyInfo = getCurrencyInfo(currency);
+
+  // Get makes for selected category
+  const availableMakes = useMemo(() => {
+    if (!filters.category) return [];
+    return getMakesByCategory(filters.category);
+  }, [filters.category]);
+
+  // Get models for selected make
+  const availableModels = useMemo(() => {
+    if (!filters.category || !filters.make) return [];
+    // Find the make ID from the make name
+    const make = availableMakes.find(m => m.name === filters.make);
+    if (!make) return [];
+    return getModelsByMake(filters.category, make.id);
+  }, [filters.category, filters.make, availableMakes]);
+
+  // Popular makes for quick selection (top 8 for current category)
+  const popularMakes = useMemo(() => {
+    return availableMakes.slice(0, 8);
+  }, [availableMakes]);
+
+  // Category-specific options
+  const fuelTypes = useMemo(() => {
+    return FUEL_TYPES_BY_CATEGORY[filters.category || 'car'] || DEFAULT_FUEL_TYPES;
+  }, [filters.category]);
+
+  const transmissions = useMemo(() => {
+    return TRANSMISSIONS_BY_CATEGORY[filters.category || 'car'] || DEFAULT_TRANSMISSIONS;
+  }, [filters.category]);
+
+  const bodyTypes = useMemo(() => {
+    return BODY_TYPES_BY_CATEGORY[filters.category || 'car'] || DEFAULT_BODY_TYPES;
+  }, [filters.category]);
+
+  const features = useMemo(() => {
+    return FEATURES_BY_CATEGORY[filters.category || 'car'] || DEFAULT_FEATURES;
+  }, [filters.category]);
 
   const handleFilterChange = (key: keyof VehicleFilters, value: any) => {
-    const newFilters = { ...filters, [key]: value };
+    let newFilters = { ...filters, [key]: value };
+    
+    // Reset dependent filters when parent changes
+    if (key === 'category') {
+      newFilters = { ...newFilters, make: undefined, model: undefined };
+    } else if (key === 'make') {
+      newFilters = { ...newFilters, model: undefined };
+    }
+    
     setFilters(newFilters);
     
     // Count active filters
@@ -66,7 +201,7 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
   };
 
   const handleReset = () => {
-    setFilters({});
+    setFilters({ category: 'car' });
     setActiveFilterCount(0);
     onReset();
   };
@@ -118,28 +253,89 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
           />
         </div>
 
-        {/* Popular Makes */}
+        {/* Category Selection */}
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Popular Makes
+            Category
           </label>
-          <div className="flex flex-wrap gap-2">
-            {MAKES.map((make) => (
-              <Badge
-                key={make}
-                variant="default"
-                className={`cursor-pointer transition-all ${
-                  filters.make === make
-                    ? 'bg-accent-500 hover:bg-accent-600'
-                    : 'hover:bg-primary-50 hover:border-blue-300'
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-2">
+            {VEHICLE_CATEGORIES.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => handleFilterChange('category', cat.id)}
+                className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all ${
+                  filters.category === cat.id
+                    ? 'border-accent-500 bg-accent-50 dark:bg-accent-900/30'
+                    : 'border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600'
                 }`}
-                onClick={() => handleFilterChange('make', filters.make === make ? '' : make)}
               >
-                {make}
-              </Badge>
+                <span className="text-2xl mb-1">{CATEGORY_ICONS[cat.id] || '🚗'}</span>
+                <span className={`text-xs font-medium ${
+                  filters.category === cat.id
+                    ? 'text-accent-700 dark:text-accent-300'
+                    : 'text-gray-600 dark:text-gray-400'
+                }`}>
+                  {cat.name}
+                </span>
+              </button>
             ))}
           </div>
         </div>
+
+        {/* Make Selection */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Make
+          </label>
+          <select
+            value={filters.make || ''}
+            onChange={(e) => handleFilterChange('make', e.target.value || undefined)}
+            className="w-full h-12 px-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
+          >
+            <option value="">All Makes ({availableMakes.length} available)</option>
+            {availableMakes.map((make) => (
+              <option key={make.id} value={make.name}>{make.name}</option>
+            ))}
+          </select>
+          
+          {/* Popular Makes Quick Select */}
+          {popularMakes.length > 0 && !filters.make && (
+            <div className="mt-2">
+              <span className="text-xs text-gray-500 dark:text-gray-400 mr-2">Popular:</span>
+              <div className="inline-flex flex-wrap gap-1">
+                {popularMakes.map((make) => (
+                  <Badge
+                    key={make.id}
+                    variant="default"
+                    className="cursor-pointer text-xs hover:bg-accent-500 hover:text-white transition-all"
+                    onClick={() => handleFilterChange('make', make.name)}
+                  >
+                    {make.name}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Model Selection */}
+        {filters.make && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Model
+            </label>
+            <select
+              value={filters.model || ''}
+              onChange={(e) => handleFilterChange('model', e.target.value || undefined)}
+              className="w-full h-12 px-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
+            >
+              <option value="">All Models ({availableModels.length} available)</option>
+              {availableModels.map((model) => (
+                <option key={model.name} value={model.name}>{model.name}</option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
       {/* Expanded Filters */}
@@ -149,29 +345,39 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                <DollarSign className="h-4 w-4" />
-                Min Price (€)
+                <Coins className="h-4 w-4" />
+                Min Price ({currencyInfo?.symbol || currency})
               </label>
-              <Input
-                type="number"
-                placeholder="5,000"
-                value={filters.priceMin || ''}
-                onChange={(e) => handleFilterChange('priceMin', e.target.value ? Number(e.target.value) : undefined)}
-                className="h-10"
-              />
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">
+                  {currencyInfo?.symbol || currency}
+                </span>
+                <Input
+                  type="number"
+                  placeholder="5,000"
+                  value={filters.priceMin || ''}
+                  onChange={(e) => handleFilterChange('priceMin', e.target.value ? Number(e.target.value) : undefined)}
+                  className="h-10 pl-10"
+                />
+              </div>
             </div>
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                <DollarSign className="h-4 w-4" />
-                Max Price (€)
+                <Coins className="h-4 w-4" />
+                Max Price ({currencyInfo?.symbol || currency})
               </label>
-              <Input
-                type="number"
-                placeholder="50,000"
-                value={filters.priceMax || ''}
-                onChange={(e) => handleFilterChange('priceMax', e.target.value ? Number(e.target.value) : undefined)}
-                className="h-10"
-              />
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">
+                  {currencyInfo?.symbol || currency}
+                </span>
+                <Input
+                  type="number"
+                  placeholder="50,000"
+                  value={filters.priceMax || ''}
+                  onChange={(e) => handleFilterChange('priceMax', e.target.value ? Number(e.target.value) : undefined)}
+                  className="h-10 pl-10"
+                />
+              </div>
             </div>
           </div>
 
@@ -235,87 +441,105 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
             </div>
           </div>
 
-          {/* Fuel Type */}
-          <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              <Fuel className="h-4 w-4" />
-              Fuel Type
-            </label>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
-              {FUEL_TYPES.map((fuel) => (
-                <Button
-                  key={fuel}
-                  variant={filters.fuelType === fuel ? 'primary' : 'outline'}
-                  size="sm"
-                  onClick={() => handleFilterChange('fuelType', filters.fuelType === fuel ? '' : fuel)}
-                  className="justify-start"
-                >
-                  {fuel}
-                </Button>
-              ))}
+          {/* Fuel Type - only show if category has fuel types */}
+          {fuelTypes.length > 0 && (
+            <div>
+              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <Fuel className="h-4 w-4" />
+                Fuel Type
+              </label>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                {fuelTypes.map((fuel) => (
+                  <Button
+                    key={fuel}
+                    variant={filters.fuelType === fuel ? 'primary' : 'outline'}
+                    size="sm"
+                    onClick={() => handleFilterChange('fuelType', filters.fuelType === fuel ? '' : fuel)}
+                    className="justify-start"
+                  >
+                    {fuel}
+                  </Button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Transmission */}
-          <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              <Settings className="h-4 w-4" />
-              Transmission
-            </label>
-            <div className="grid grid-cols-3 gap-2">
-              {TRANSMISSIONS.map((trans) => (
-                <Button
-                  key={trans}
-                  variant={filters.transmission === trans ? 'primary' : 'outline'}
-                  size="sm"
-                  onClick={() => handleFilterChange('transmission', filters.transmission === trans ? '' : trans)}
-                >
-                  {trans}
-                </Button>
-              ))}
+          {/* Transmission - only show if category has transmissions */}
+          {transmissions.length > 0 && (
+            <div>
+              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <Settings className="h-4 w-4" />
+                Transmission
+              </label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {transmissions.map((trans) => (
+                  <Button
+                    key={trans}
+                    variant={filters.transmission === trans ? 'primary' : 'outline'}
+                    size="sm"
+                    onClick={() => handleFilterChange('transmission', filters.transmission === trans ? '' : trans)}
+                  >
+                    {trans}
+                  </Button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Body Type */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Body Type
-            </label>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              {BODY_TYPES.map((type) => (
-                <Button
-                  key={type}
-                  variant={filters.bodyType === type ? 'primary' : 'outline'}
-                  size="sm"
-                  onClick={() => handleFilterChange('bodyType', filters.bodyType === type ? '' : type)}
-                >
-                  {type}
-                </Button>
-              ))}
+          {bodyTypes.length > 0 && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                {filters.category === 'motorcycle' ? 'Motorcycle Type' :
+                 filters.category === 'truck' ? 'Truck Type' :
+                 filters.category === 'boat' ? 'Boat Type' :
+                 filters.category === 'construction' ? 'Equipment Type' :
+                 filters.category === 'agricultural' ? 'Equipment Type' :
+                 filters.category === 'forklift' ? 'Forklift Type' :
+                 'Body Type'}
+              </label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {bodyTypes.map((type) => (
+                  <Button
+                    key={type}
+                    variant={filters.bodyType === type ? 'primary' : 'outline'}
+                    size="sm"
+                    onClick={() => handleFilterChange('bodyType', filters.bodyType === type ? '' : type)}
+                  >
+                    {type}
+                  </Button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Features */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Features & Options
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {FEATURES.map((feature) => (
-                <Badge
-                  key={feature}
-                  variant="default"
-                  className="cursor-pointer"
-                  onClick={() => toggleFeature(feature)}
-                >
-                  {feature}
-                  {(filters.features || []).includes(feature) && (
-                    <X className="ml-1 h-3 w-3" />
-                  )}
-                </Badge>
-              ))}
+          {features.length > 0 && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Features & Options
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {features.map((feature) => (
+                  <Badge
+                    key={feature}
+                    variant="default"
+                    className={`cursor-pointer transition-all ${
+                      (filters.features || []).includes(feature)
+                        ? 'bg-accent-500 text-white'
+                        : 'hover:bg-primary-100 dark:hover:bg-primary-900'
+                    }`}
+                    onClick={() => toggleFeature(feature)}
+                  >
+                    {feature}
+                    {(filters.features || []).includes(feature) && (
+                      <X className="ml-1 h-3 w-3" />
+                    )}
+                  </Badge>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
 
