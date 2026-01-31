@@ -58,7 +58,7 @@ export default function DealerPage() {
 
   if (loading) {
     return <div className="flex items-center justify-center min-h-screen">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
     </div>;
   }
 
@@ -88,7 +88,7 @@ export default function DealerPage() {
             <div className="flex items-center space-x-4 text-gray-600 dark:text-gray-400 mb-4">
               <div className="flex items-center">
                 <Star className="h-5 w-5 text-yellow-500 mr-1" />
-                <span>{dealer.rating.toFixed(1)}</span>
+                <span>{(dealer.rating ?? 0).toFixed(1)}</span>
               </div>
               <div className="flex items-center">
                 <MapPin className="h-4 w-4 mr-1" />

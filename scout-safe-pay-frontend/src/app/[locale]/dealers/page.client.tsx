@@ -237,8 +237,7 @@ export default function DealersPageClient() {
               {dealers.map((dealer) => (
                 <Card
                   key={dealer.id}
-                  className="group hover:shadow-lg transition-all duration-300 cursor-pointer border border-gray-100 hover:border-primary-200 rounded-2xl overflow-hidden"
-                  onClick={() => router.push(`/dealers/${dealer.id}`)}
+                  className="group hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-primary-200 rounded-2xl overflow-hidden"
                 >
                   {/* Header with gradient */}
                   <div className="bg-gradient-to-br from-primary-900 via-primary-800 to-blue-900 p-4 text-white relative overflow-hidden">
@@ -328,10 +327,7 @@ export default function DealersPageClient() {
                       <div className="pt-3 border-t border-gray-100 space-y-2">
                         <Button
                           className="w-full bg-primary-900 hover:bg-primary-950 h-10 text-sm rounded-xl"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            router.push(`/dealers/${dealer.id}`)
-                          }}
+                          onClick={() => router.push(`/dealers/${dealer.id}`)}
                         >
                           {t('viewProfile')} →
                         </Button>
@@ -339,10 +335,7 @@ export default function DealersPageClient() {
                           <Button
                             variant="outline"
                             className="w-full h-9 text-sm border border-gray-200 hover:bg-gray-50 rounded-xl"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              window.open(dealer.website!, '_blank')
-                            }}
+                            onClick={() => window.open(dealer.website!, '_blank')}
                           >
                             {t('visitWebsite')}
                           </Button>
