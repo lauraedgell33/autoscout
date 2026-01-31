@@ -1294,7 +1294,45 @@
     "recent_activities": "Uw laatste betalingsactiviteiten",
     "view_all": "Bekijk alle transacties",
     "in_escrow": "In borg",
-    "transaction_number": "Transactie #"
+    "transaction_number": "Transactie #",
+    "buyer": {
+      "welcome": "Welkom terug, {name}! 👋",
+      "subtitle": "Klaar om je perfecte voertuig te vinden met SafeTrade-bescherming?",
+      "my_purchases": "Mijn Aankopen",
+      "favorites": "Favorieten",
+      "active_deals": "Actieve Deals",
+      "browse_vehicles": "Voertuigen Bekijken",
+      "browse_vehicles_desc": "Vind je perfecte auto met SafeTrade-bescherming",
+      "how_it_works": "Hoe Het Werkt",
+      "how_it_works_desc": "Leer over ons veilige aankoopproces",
+      "recent_activity": "Recente Activiteit",
+      "no_activity": "Nog geen activiteit",
+      "start_browsing": "Begin Met Bladeren"
+    },
+    "seller": {
+      "welcome": "Welkom terug, {name}! 👋",
+      "subtitle": "Beheer je voertuigadvertenties en volg je verkopen",
+      "active_listings": "Actieve Advertenties",
+      "sold": "Verkocht",
+      "total_views": "Totaal Weergaven",
+      "total_earnings": "Totaal Inkomsten",
+      "add_new_vehicle": "Nieuw Voertuig Toevoegen",
+      "add_new_vehicle_desc": "Plaats een voertuig te koop",
+      "my_vehicles": "Mijn Voertuigen",
+      "my_vehicles_desc": "Bekijk en beheer advertenties",
+      "selling_guide": "Verkoopgids",
+      "selling_guide_desc": "Leer veilig verkopen",
+      "view_all": "Bekijk Alles →",
+      "no_vehicles": "Je hebt nog geen voertuigen geplaatst",
+      "add_first_vehicle": "Voeg Je Eerste Voertuig Toe"
+    },
+    "common": {
+      "quick_stats": "Snelle Statistieken",
+      "quick_actions": "Snelle Acties",
+      "loading": "Laden...",
+      "error": "Er is een fout opgetreden",
+      "retry": "Opnieuw proberen"
+    }
   },
   "filters": {
     "title": "Filters",

@@ -15,71 +15,71 @@ export default function SellerDashboardPage() {
       <DashboardLayout>
         <div className="max-w-7xl mx-auto">
           {/* Welcome Section */}
-          <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-8 mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              {t("welcome", {name: user?.name || 'User'})}
+          <div className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-xl p-8 mb-6">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              {t('welcome', { name: user?.name || 'User' })}
             </h1>
-            <p className="text-gray-600">
-              {t("subtitle")}
+            <p className="text-gray-600 dark:text-gray-300">
+              {t('subtitle')}
             </p>
           </div>
 
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
                   <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Active Listings</p>
-                  <p className="text-2xl font-bold text-gray-900">0</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{t('active_listings')}</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">0</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
                   <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Sold</p>
-                  <p className="text-2xl font-bold text-gray-900">0</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{t('sold')}</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">0</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center">
                   <svg className="w-6 h-6 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Total Views</p>
-                  <p className="text-2xl font-bold text-gray-900">0</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{t('total_views')}</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">0</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
                   <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Total Earnings</p>
-                  <p className="text-2xl font-bold text-gray-900">€0</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{t('total_earnings')}</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">€0</p>
                 </div>
               </div>
             </div>
@@ -98,64 +98,64 @@ export default function SellerDashboardPage() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-bold mb-1">Add New Vehicle</h3>
-                  <p className="text-sm text-white text-opacity-90">List a vehicle for sale</p>
+                  <h3 className="font-bold mb-1">{t('add_new_vehicle')}</h3>
+                  <p className="text-sm text-white text-opacity-90">{t('add_new_vehicle_desc')}</p>
                 </div>
               </div>
             </Link>
 
             <Link
               href="/dashboard/vehicles"
-              className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition group"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-lg transition group"
             >
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-900 transition">
-                  <svg className="w-6 h-6 text-gray-900 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center group-hover:bg-blue-900 transition">
+                  <svg className="w-6 h-6 text-primary-900 dark:text-blue-400 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900 mb-1">My Vehicles</h3>
-                  <p className="text-sm text-gray-600">View and manage listings</p>
+                  <h3 className="font-bold text-gray-900 dark:text-white mb-1">{t('my_vehicles')}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{t('my_vehicles_desc')}</p>
                 </div>
               </div>
             </Link>
 
             <Link
               href="/how-it-works"
-              className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition group"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-lg transition group"
             >
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-600 transition">
+                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center group-hover:bg-green-600 transition">
                   <svg className="w-6 h-6 text-green-600 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900 mb-1">Selling Guide</h3>
-                  <p className="text-sm text-gray-600">Learn how to sell safely</p>
+                  <h3 className="font-bold text-gray-900 dark:text-white mb-1">{t('selling_guide')}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{t('selling_guide_desc')}</p>
                 </div>
               </div>
             </Link>
           </div>
 
           {/* My Vehicles */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-900">My Vehicles</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('my_vehicles')}</h2>
               <Link
                 href="/dashboard/vehicles"
                 className="text-accent-500 hover:text-orange-600 font-semibold text-sm"
               >
-                View All →
+                {t('view_all')} →
               </Link>
             </div>
             <div className="text-center py-12">
-              <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
               </svg>
-              <p className="text-gray-600 mb-4">You haven't listed any vehicles yet</p>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">{t('no_vehicles')}</p>
               <Link
                 href="/dashboard/vehicles/add"
                 className="inline-flex items-center gap-2 bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 rounded-lg font-semibold transition"
@@ -163,7 +163,7 @@ export default function SellerDashboardPage() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
-                Add Your First Vehicle
+                {t('add_first_vehicle')}
               </Link>
             </div>
           </div>

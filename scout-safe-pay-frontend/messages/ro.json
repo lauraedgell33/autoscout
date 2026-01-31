@@ -1286,7 +1286,45 @@
     "recent_activities": "Ultimele tale activități de plată",
     "view_all": "Vezi Toate Tranzacțiile",
     "in_escrow": "În Escrow",
-    "transaction_number": "Tranzacție #"
+    "transaction_number": "Tranzacție #",
+    "buyer": {
+      "welcome": "Bine ai revenit, {name}! 👋",
+      "subtitle": "Gata să găsești vehiculul perfect cu protecție SafeTrade?",
+      "my_purchases": "Achizițiile Mele",
+      "favorites": "Favorite",
+      "active_deals": "Tranzacții Active",
+      "browse_vehicles": "Răsfoiește Vehiculele",
+      "browse_vehicles_desc": "Găsește mașina perfectă cu protecție SafeTrade",
+      "how_it_works": "Cum Funcționează",
+      "how_it_works_desc": "Află despre procesul nostru de cumpărare sigur",
+      "recent_activity": "Activitate Recentă",
+      "no_activity": "Nicio activitate încă",
+      "start_browsing": "Începe să Răsfoiești"
+    },
+    "seller": {
+      "welcome": "Bine ai revenit, {name}! 👋",
+      "subtitle": "Gestionează anunțurile tale și urmărește vânzările",
+      "active_listings": "Anunțuri Active",
+      "sold": "Vândute",
+      "total_views": "Total Vizualizări",
+      "total_earnings": "Total Câștiguri",
+      "add_new_vehicle": "Adaugă Vehicul Nou",
+      "add_new_vehicle_desc": "Listează un vehicul pentru vânzare",
+      "my_vehicles": "Vehiculele Mele",
+      "my_vehicles_desc": "Vezi și gestionează anunțurile",
+      "selling_guide": "Ghid de Vânzare",
+      "selling_guide_desc": "Învață cum să vinzi în siguranță",
+      "view_all": "Vezi Tot →",
+      "no_vehicles": "Nu ai listat încă niciun vehicul",
+      "add_first_vehicle": "Adaugă Primul Vehicul"
+    },
+    "common": {
+      "quick_stats": "Statistici Rapide",
+      "quick_actions": "Acțiuni Rapide",
+      "loading": "Se încarcă...",
+      "error": "A apărut o eroare",
+      "retry": "Încearcă din nou"
+    }
   },
   "filters": {
     "title": "Filtre",

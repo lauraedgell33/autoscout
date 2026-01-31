@@ -1300,7 +1300,45 @@
     "recent_activities": "Ihre neuesten Zahlungsaktivitäten",
     "view_all": "Alle Transaktionen anzeigen",
     "in_escrow": "Im Treuhand",
-    "transaction_number": "Transaktion #"
+    "transaction_number": "Transaktion #",
+    "buyer": {
+      "welcome": "Willkommen zurück, {name}! 👋",
+      "subtitle": "Bereit, Ihr perfektes Fahrzeug mit SafeTrade-Schutz zu finden?",
+      "my_purchases": "Meine Käufe",
+      "favorites": "Favoriten",
+      "active_deals": "Aktive Deals",
+      "browse_vehicles": "Fahrzeuge durchsuchen",
+      "browse_vehicles_desc": "Finden Sie Ihr perfektes Auto mit SafeTrade-Schutz",
+      "how_it_works": "So funktioniert es",
+      "how_it_works_desc": "Erfahren Sie mehr über unseren sicheren Kaufprozess",
+      "recent_activity": "Letzte Aktivität",
+      "no_activity": "Noch keine Aktivität",
+      "start_browsing": "Jetzt durchsuchen"
+    },
+    "seller": {
+      "welcome": "Willkommen zurück, {name}! 👋",
+      "subtitle": "Verwalten Sie Ihre Fahrzeuganzeigen und verfolgen Sie Ihre Verkäufe",
+      "active_listings": "Aktive Anzeigen",
+      "sold": "Verkauft",
+      "total_views": "Gesamtaufrufe",
+      "total_earnings": "Gesamteinnahmen",
+      "add_new_vehicle": "Neues Fahrzeug hinzufügen",
+      "add_new_vehicle_desc": "Fahrzeug zum Verkauf anbieten",
+      "my_vehicles": "Meine Fahrzeuge",
+      "my_vehicles_desc": "Anzeigen verwalten",
+      "selling_guide": "Verkaufsleitfaden",
+      "selling_guide_desc": "Lernen Sie sicher zu verkaufen",
+      "view_all": "Alle anzeigen →",
+      "no_vehicles": "Sie haben noch keine Fahrzeuge eingestellt",
+      "add_first_vehicle": "Erstes Fahrzeug hinzufügen"
+    },
+    "common": {
+      "quick_stats": "Schnellstatistik",
+      "quick_actions": "Schnellaktionen",
+      "loading": "Wird geladen...",
+      "error": "Ein Fehler ist aufgetreten",
+      "retry": "Erneut versuchen"
+    }
   },
   "filters": {
     "title": "Filter",

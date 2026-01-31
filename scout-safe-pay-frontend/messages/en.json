@@ -1300,7 +1300,45 @@
     "recent_activities": "Your latest payment activities",
     "view_all": "View All Transactions",
     "in_escrow": "In Escrow",
-    "transaction_number": "Transaction #"
+    "transaction_number": "Transaction #",
+    "buyer": {
+      "welcome": "Welcome back, {name}! 👋",
+      "subtitle": "Ready to find your perfect vehicle with SafeTrade protection?",
+      "my_purchases": "My Purchases",
+      "favorites": "Favorites",
+      "active_deals": "Active Deals",
+      "browse_vehicles": "Browse Vehicles",
+      "browse_vehicles_desc": "Find your perfect car with SafeTrade protection",
+      "how_it_works": "How It Works",
+      "how_it_works_desc": "Learn about our secure buying process",
+      "recent_activity": "Recent Activity",
+      "no_activity": "No activity yet",
+      "start_browsing": "Start Browsing"
+    },
+    "seller": {
+      "welcome": "Welcome back, {name}! 👋",
+      "subtitle": "Manage your vehicle listings and track your sales",
+      "active_listings": "Active Listings",
+      "sold": "Sold",
+      "total_views": "Total Views",
+      "total_earnings": "Total Earnings",
+      "add_vehicle": "Add New Vehicle",
+      "add_vehicle_desc": "List a vehicle for sale",
+      "my_vehicles": "My Vehicles",
+      "my_vehicles_desc": "View and manage listings",
+      "selling_guide": "Selling Guide",
+      "selling_guide_desc": "Learn how to sell safely",
+      "view_all": "View All →",
+      "no_vehicles": "You haven't listed any vehicles yet",
+      "add_first_vehicle": "Add Your First Vehicle"
+    },
+    "common": {
+      "quick_stats": "Quick Stats",
+      "quick_actions": "Quick Actions",
+      "loading": "Loading...",
+      "error": "An error occurred",
+      "retry": "Try Again"
+    }
   },
   "filters": {
     "title": "Filters",

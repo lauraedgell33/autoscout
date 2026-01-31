@@ -1294,7 +1294,45 @@
     "recent_activities": "Vos dernières activités de paiement",
     "view_all": "Afficher toutes les transactions",
     "in_escrow": "En dépôt",
-    "transaction_number": "N° de transaction"
+    "transaction_number": "N° de transaction",
+    "buyer": {
+      "welcome": "Bon retour, {name} ! 👋",
+      "subtitle": "Prêt à trouver votre véhicule parfait avec la protection SafeTrade ?",
+      "my_purchases": "Mes Achats",
+      "favorites": "Favoris",
+      "active_deals": "Offres Actives",
+      "browse_vehicles": "Parcourir les Véhicules",
+      "browse_vehicles_desc": "Trouvez votre voiture parfaite avec la protection SafeTrade",
+      "how_it_works": "Comment ça marche",
+      "how_it_works_desc": "Découvrez notre processus d'achat sécurisé",
+      "recent_activity": "Activité Récente",
+      "no_activity": "Aucune activité pour le moment",
+      "start_browsing": "Commencer à Parcourir"
+    },
+    "seller": {
+      "welcome": "Bon retour, {name} ! 👋",
+      "subtitle": "Gérez vos annonces de véhicules et suivez vos ventes",
+      "active_listings": "Annonces Actives",
+      "sold": "Vendu",
+      "total_views": "Vues Totales",
+      "total_earnings": "Gains Totaux",
+      "add_new_vehicle": "Ajouter un Nouveau Véhicule",
+      "add_new_vehicle_desc": "Mettre un véhicule en vente",
+      "my_vehicles": "Mes Véhicules",
+      "my_vehicles_desc": "Voir et gérer les annonces",
+      "selling_guide": "Guide de Vente",
+      "selling_guide_desc": "Apprenez à vendre en toute sécurité",
+      "view_all": "Voir Tout →",
+      "no_vehicles": "Vous n'avez pas encore listé de véhicules",
+      "add_first_vehicle": "Ajouter Votre Premier Véhicule"
+    },
+    "common": {
+      "quick_stats": "Statistiques Rapides",
+      "quick_actions": "Actions Rapides",
+      "loading": "Chargement...",
+      "error": "Une erreur s'est produite",
+      "retry": "Réessayer"
+    }
   },
   "filters": {
     "title": "Filtres",
