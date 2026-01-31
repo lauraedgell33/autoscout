@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\Vehicles\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -250,6 +251,12 @@ class VehiclesTable
                     ->label('Record Status'),
             ])
             ->recordActions([
+                Action::make('viewOnFrontend')
+                    ->label('View on Site')
+                    ->icon('heroicon-o-globe-alt')
+                    ->color('info')
+                    ->url(fn ($record) => config('app.frontend_url', 'http://localhost:3000') . '/en/vehicle/' . $record->id)
+                    ->openUrlInNewTab(),
                 ViewAction::make()
                     ->label('View'),
                 EditAction::make()
