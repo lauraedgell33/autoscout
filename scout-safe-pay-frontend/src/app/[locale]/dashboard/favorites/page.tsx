@@ -16,8 +16,8 @@ export default function FavoritesPage() {
       <DashboardLayout>
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="mb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold text-blue-900 mb-2 flex items-center gap-2">
-              <Heart className="w-7 h-7 sm:w-8 sm:h-8 text-orange-500" />
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+              <Heart className="w-7 h-7 sm:w-8 sm:h-8 text-accent-500" />
               My Favorites
             </h1>
             <p className="text-gray-600">Vehicles you've saved for later</p>
@@ -27,14 +27,14 @@ export default function FavoritesPage() {
           <Card className="p-8 sm:p-12">
             <div className="text-center">
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500" />
+                <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-accent-500" />
               </div>
               <h2 className="text-xl font-bold text-gray-900 mb-2">No favorites yet</h2>
               <p className="text-gray-600 mb-6">
                 Save vehicles you like to easily find them later
               </p>
               <Link href="/marketplace">
-                <Button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold">
+                <Button className="bg-accent-500 hover:bg-accent-600 text-white font-semibold">
                   <Search className="w-4 h-4 mr-2" />
                   Browse Vehicles
                 </Button>
@@ -49,7 +49,7 @@ export default function FavoritesPage() {
                 <Info className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />
               </div>
               <div>
-                <h3 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
+                <h3 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
                   How to save favorites
                 </h3>
                 <ul className="text-sm text-gray-700 space-y-2">
@@ -58,11 +58,11 @@ export default function FavoritesPage() {
                     <span>Browse vehicles in the marketplace</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <Heart className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
+                    <Heart className="w-4 h-4 text-accent-500 flex-shrink-0 mt-0.5" />
                     <span>Click the heart icon on any vehicle card</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <Heart className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
+                    <Heart className="w-4 h-4 text-accent-500 flex-shrink-0 mt-0.5" />
                     <span>Access your saved vehicles anytime from this page</span>
                   </li>
                   <li className="flex items-start gap-2">

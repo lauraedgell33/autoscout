@@ -76,7 +76,7 @@ export default function AddVehiclePage() {
     <ProtectedRoute allowedRoles={['seller']}>
       <DashboardLayout>
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold text-blue-900 mb-8">Add New Vehicle</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">Add New Vehicle</h1>
 
           {/* Progress Steps */}
           <div className="mb-8">
@@ -95,9 +95,9 @@ export default function AddVehiclePage() {
               ))}
             </div>
             <div className="flex justify-between mt-2 text-sm">
-              <span className={step >= 1 ? 'text-orange-500 font-semibold' : 'text-gray-600'}>Basic Info</span>
-              <span className={step >= 2 ? 'text-orange-500 font-semibold' : 'text-gray-600'}>Details</span>
-              <span className={step >= 3 ? 'text-orange-500 font-semibold' : 'text-gray-600'}>Review</span>
+              <span className={step >= 1 ? 'text-accent-500 font-semibold' : 'text-gray-600'}>Basic Info</span>
+              <span className={step >= 2 ? 'text-accent-500 font-semibold' : 'text-gray-600'}>Details</span>
+              <span className={step >= 3 ? 'text-accent-500 font-semibold' : 'text-gray-600'}>Review</span>
             </div>
           </div>
 
@@ -111,7 +111,7 @@ export default function AddVehiclePage() {
             {/* Step 1: Basic Info */}
             {step === 1 && (
               <div className="space-y-4">
-                <h2 className="text-xl font-bold text-blue-900 mb-4">Basic Information</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Basic Information</h2>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -122,7 +122,7 @@ export default function AddVehiclePage() {
                       type="text"
                       value={formData.make}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                       required
                     />
                   </div>
@@ -134,7 +134,7 @@ export default function AddVehiclePage() {
                       type="text"
                       value={formData.model}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                       required
                     />
                   </div>
@@ -151,7 +151,7 @@ export default function AddVehiclePage() {
                       onChange={handleChange}
                       min="1900"
                       max={new Date().getFullYear() + 1}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                       required
                     />
                   </div>
@@ -165,7 +165,7 @@ export default function AddVehiclePage() {
                       onChange={handleChange}
                       min="0"
                       step="0.01"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                       required
                     />
                   </div>
@@ -178,7 +178,7 @@ export default function AddVehiclePage() {
                     name="color"
                     value={formData.color}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                   />
                 </div>
               </div>
@@ -187,7 +187,7 @@ export default function AddVehiclePage() {
             {/* Step 2: Details */}
             {step === 2 && (
               <div className="space-y-4">
-                <h2 className="text-xl font-bold text-blue-900 mb-4">Vehicle Details</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Vehicle Details</h2>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -198,7 +198,7 @@ export default function AddVehiclePage() {
                       value={formData.mileage}
                       onChange={handleChange}
                       min="0"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                       required
                     />
                   </div>
@@ -210,7 +210,7 @@ export default function AddVehiclePage() {
                       value={formData.engine_size}
                       onChange={handleChange}
                       min="0"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
                 </div>
@@ -222,7 +222,7 @@ export default function AddVehiclePage() {
                       name="fuel_type"
                       value={formData.fuel_type}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                       required
                     >
                       <option value="petrol">Petrol</option>
@@ -237,7 +237,7 @@ export default function AddVehiclePage() {
                       name="transmission"
                       value={formData.transmission}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                       required
                     >
                       <option value="manual">Manual</option>
@@ -253,7 +253,7 @@ export default function AddVehiclePage() {
                       name="body_type"
                       value={formData.body_type}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                     >
                       <option value="sedan">Sedan</option>
                       <option value="suv">SUV</option>
@@ -272,7 +272,7 @@ export default function AddVehiclePage() {
                       onChange={handleChange}
                       min="2"
                       max="5"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
                   <div>
@@ -284,7 +284,7 @@ export default function AddVehiclePage() {
                       onChange={handleChange}
                       min="2"
                       max="9"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
                 </div>
@@ -296,7 +296,7 @@ export default function AddVehiclePage() {
                     value={formData.description}
                     onChange={handleChange}
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                     placeholder="Describe your vehicle..."
                   />
                 </div>
@@ -309,7 +309,7 @@ export default function AddVehiclePage() {
                       name="location_city"
                       value={formData.location_city}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
                   <div>
@@ -319,7 +319,7 @@ export default function AddVehiclePage() {
                       name="location_country"
                       value={formData.location_country}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
                 </div>
@@ -329,7 +329,7 @@ export default function AddVehiclePage() {
             {/* Step 3: Review */}
             {step === 3 && (
               <div className="space-y-4">
-                <h2 className="text-xl font-bold text-blue-900 mb-4">Review & Submit</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Review & Submit</h2>
                 
                 <div className="bg-gray-50 rounded-lg p-4 space-y-3">
                   <div className="grid grid-cols-2 gap-4 text-sm">
@@ -347,7 +347,7 @@ export default function AddVehiclePage() {
                     </div>
                     <div>
                       <span className="text-gray-600">Price:</span>
-                      <span className="ml-2 font-semibold text-orange-500">€{formData.price}</span>
+                      <span className="ml-2 font-semibold text-accent-500">€{formData.price}</span>
                     </div>
                     <div>
                       <span className="text-gray-600">Mileage:</span>
@@ -398,7 +398,7 @@ export default function AddVehiclePage() {
                   type="button"
                   onClick={handleNext}
                   disabled={step === 1 && !isStep1Valid || step === 2 && !isStep2Valid}
-                  className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-3 bg-accent-500 hover:bg-accent-600 text-white rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Next
                 </button>
@@ -406,7 +406,7 @@ export default function AddVehiclePage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-6 py-3 bg-accent-500 hover:bg-accent-600 text-white rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   {loading ? (
                     <>

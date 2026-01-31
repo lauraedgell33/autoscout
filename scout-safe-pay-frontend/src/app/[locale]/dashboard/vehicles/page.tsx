@@ -74,7 +74,7 @@ export default function MyVehiclesPage() {
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-blue-900">My Vehicles</h1>
+              <h1 className="text-3xl font-bold text-gray-900">My Vehicles</h1>
               <p className="text-gray-600 mt-1">{(vehicles || []).length} vehicles listed</p>
             </div>
             <div className="flex items-center gap-4">
@@ -98,7 +98,7 @@ export default function MyVehiclesPage() {
               </div>
               <Link
                 href="/dashboard/vehicles/add"
-                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition flex items-center gap-2"
+                className="bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 rounded-lg font-semibold transition flex items-center gap-2"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -121,11 +121,11 @@ export default function MyVehiclesPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
               </svg>
-              <h3 className="text-xl font-bold text-blue-900 mb-2">No Vehicles Yet</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">No Vehicles Yet</h3>
               <p className="text-gray-600 mb-6">Start selling by adding your first vehicle</p>
               <Link
                 href="/dashboard/vehicles/add"
-                className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition"
+                className="inline-flex items-center gap-2 bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 rounded-lg font-semibold transition"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -158,10 +158,10 @@ export default function MyVehiclesPage() {
 
                   {/* Vehicle Info */}
                   <div className="p-5">
-                    <h3 className="font-bold text-lg text-blue-900 mb-2">
+                    <h3 className="font-bold text-lg text-gray-900 mb-2">
                       {vehicle.make} {vehicle.model}
                     </h3>
-                    <p className="text-2xl font-bold text-orange-500 mb-3">
+                    <p className="text-2xl font-bold text-accent-500 mb-3">
                       {vehicleService.formatPrice(vehicle.price, vehicle.currency)}
                     </p>
                     <div className="grid grid-cols-2 gap-2 text-sm text-gray-600 mb-4">
@@ -203,7 +203,7 @@ export default function MyVehiclesPage() {
         {deleteModal.open && deleteModal.vehicle && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
-              <h3 className="text-xl font-bold text-blue-900 mb-4">Delete Vehicle?</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Delete Vehicle?</h3>
               <p className="text-gray-600 mb-6">
                 Are you sure you want to delete <strong>{deleteModal.vehicle.make} {deleteModal.vehicle.model}</strong>? This action cannot be undone.
               </p>

@@ -17,7 +17,7 @@ export default async function TermsOfService() {
   return (
     <>      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-orange-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h1 className="text-4xl font-bold text-blue-900 mb-4">{t('title')}</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('title')}</h1>
           <p className="text-gray-600 mb-8">{t('last_updated')}: January 15, 2026</p>
 
         <div className="bg-white rounded-lg shadow-sm p-8 space-y-8">
@@ -30,7 +30,7 @@ export default async function TermsOfService() {
 
           {/* 1. Acceptance of Terms */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section1_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section1_title')}</h2>
             <p className="text-gray-700 mb-4">
               {t('section1_para1')}
             </p>
@@ -41,7 +41,7 @@ export default async function TermsOfService() {
 
           {/* 2. Definitions */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section2_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section2_title')}</h2>
             <ul className="space-y-3 text-gray-700">
               <li><strong>{t('section2_def1_label')}</strong> - {t('section2_def1_value')}</li>
               <li><strong>{t('section2_def2_label')}</strong> - {t('section2_def2_value')}</li>
@@ -55,7 +55,7 @@ export default async function TermsOfService() {
 
           {/* 3. User Registration */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section3_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section3_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section3_1_title_label')}</strong> {t('section3_1_title_value')}</p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
               <li>{t('section3_1_item1')}</li>
@@ -69,7 +69,7 @@ export default async function TermsOfService() {
 
           {/* 4. Services Provided */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section4_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section4_title')}</h2>
             <ul className="space-y-3 text-gray-700">
               <li><strong>{t('section4_item1_label')}</strong> {t('section4_item1_value')}</li>
               <li><strong>{t('section4_item2_label')}</strong> {t('section4_item2_value')}</li>
@@ -80,7 +80,7 @@ export default async function TermsOfService() {
 
           {/* 5. Payment Terms */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section5_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section5_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section5_1_title_label')}</strong> {t('section5_1_title_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section5_2_title_label')}</strong></p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
@@ -100,7 +100,7 @@ export default async function TermsOfService() {
 
           {/* 6. Seller Obligations */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section6_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section6_title')}</h2>
             <p className="text-gray-700 mb-4">{t('section6_intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
               <li>{t('section6_item1')}</li>
@@ -115,7 +115,7 @@ export default async function TermsOfService() {
 
           {/* 7. Buyer Obligations */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section7_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section7_title')}</h2>
             <p className="text-gray-700 mb-4">{t('section7_intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
               <li>{t('section7_item1')}</li>
@@ -129,7 +129,7 @@ export default async function TermsOfService() {
 
           {/* 8. Transaction Process */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section8_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section8_title')}</h2>
             <ul className="space-y-3 text-gray-700">
               <li><strong>{t('section8_item1_label')}</strong> {t('section8_item1_value')}</li>
               <li><strong>{t('section8_item2_label')}</strong> {t('section8_item2_value')}</li>
@@ -141,7 +141,7 @@ export default async function TermsOfService() {
 
           {/* 9. Cancellation and Refunds */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section9_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section9_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section9_buyer_title_label')}</strong></p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
               <li>{t('section9_buyer_item1')}</li>
@@ -158,7 +158,7 @@ export default async function TermsOfService() {
 
           {/* 10. Prohibited Activities */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section10_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section10_title')}</h2>
             <p className="text-gray-700 mb-4">{t('section10_intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
               <li>{t('section10_item1')}</li>
@@ -173,7 +173,7 @@ export default async function TermsOfService() {
 
           {/* 11. Liability */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section11_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section11_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section11_platform_label')}</strong> {t('section11_platform_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section11_limitation_label')}</strong> {t('section11_limitation_value')}</p>
             <p className="text-gray-700"><strong>{t('section11_warranty_label')}</strong> {t('section11_warranty_value')}</p>
@@ -181,7 +181,7 @@ export default async function TermsOfService() {
 
           {/* 12. Governing Law */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section12_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section12_title')}</h2>
             <p className="text-gray-700 mb-4">
               {t('section12_para1')}
             </p>
@@ -192,7 +192,7 @@ export default async function TermsOfService() {
 
           {/* Contact */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section13_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section13_title')}</h2>
             <p className="text-gray-700 mb-4">{t('section13_intro')}</p>
             <ul className="space-y-2 text-gray-700">
               <li><strong>{t('section13_email_label')}</strong> {t('section13_email_value')}</li>

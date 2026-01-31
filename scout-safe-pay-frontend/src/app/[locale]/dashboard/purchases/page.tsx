@@ -18,8 +18,8 @@ export default function PurchasesPage() {
       <DashboardLayout>
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="mb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold text-blue-900 mb-2 flex items-center gap-2">
-              <ShoppingCart className="w-7 h-7 sm:w-8 sm:h-8 text-orange-500" />
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+              <ShoppingCart className="w-7 h-7 sm:w-8 sm:h-8 text-accent-500" />
               My Purchases
             </h1>
             <p className="text-gray-600">Track your vehicle purchases and transactions</p>
@@ -36,7 +36,7 @@ export default function PurchasesPage() {
                 Start browsing our marketplace to find your perfect vehicle
               </p>
               <Link href="/marketplace">
-                <Button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold">
+                <Button className="bg-accent-500 hover:bg-accent-600 text-white font-semibold">
                   <Search className="w-4 h-4 mr-2" />
                   Browse Vehicles
                 </Button>
@@ -51,7 +51,7 @@ export default function PurchasesPage() {
                 <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
                   <Shield className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="font-bold text-blue-900">Secure Payments</h3>
+                <h3 className="font-bold text-gray-900">Secure Payments</h3>
               </div>
               <p className="text-sm text-gray-700">
                 All transactions protected with SafeTrade escrow service
@@ -63,7 +63,7 @@ export default function PurchasesPage() {
                 <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
                   <Clock className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="font-bold text-blue-900">Fast Processing</h3>
+                <h3 className="font-bold text-gray-900">Fast Processing</h3>
               </div>
               <p className="text-sm text-gray-700">
                 Quick verification and approval process for all purchases
@@ -75,7 +75,7 @@ export default function PurchasesPage() {
                 <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
                   <Headphones className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="font-bold text-blue-900">Full Support</h3>
+                <h3 className="font-bold text-gray-900">Full Support</h3>
               </div>
               <p className="text-sm text-gray-700">
                 24/7 customer support for all your purchase queries

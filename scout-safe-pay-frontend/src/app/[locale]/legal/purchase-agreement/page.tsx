@@ -27,9 +27,9 @@ export default async function PurchaseAgreement({ params }: Props) {
           <div className="flex justify-between items-center h-16">
             <Link href={`/${locale}`} className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-900 to-orange-500 rounded-lg"></div>
-              <span className="text-xl font-bold text-blue-900">AutoScout24 SafeTrade</span>
+              <span className="text-xl font-bold text-gray-900">AutoScout24 SafeTrade</span>
             </Link>
-            <Link href={`/${locale}`} className="text-sm text-gray-600 hover:text-blue-900">
+            <Link href={`/${locale}`} className="text-sm text-gray-600 hover:text-gray-900">
               {t('nav_back')}
             </Link>
           </div>
@@ -38,7 +38,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-4xl font-bold text-blue-900 mb-4">{t('title')}</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('title')}</h1>
         <p className="text-gray-600 mb-8">{t('subtitle')}</p>
 
         <div className="bg-white rounded-lg shadow-sm p-8 space-y-8">
@@ -51,7 +51,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* Agreement Header */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('header_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('header_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('header_intro_label')}</strong> {t('header_intro_value')}</p>
             <div className="grid grid-cols-2 gap-6 p-4 bg-gray-50 rounded-lg">
               <div>
@@ -73,7 +73,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 1. Vehicle Description */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section1_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section1_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section1_intro_label')}</strong> {t('section1_intro_value')}</p>
             <div className="p-4 bg-gray-50 rounded-lg space-y-2 text-gray-700">
               <div className="grid grid-cols-2 gap-4">
@@ -115,7 +115,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 2. Purchase Price */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section2_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section2_title')}</h2>
             <div className="p-4 bg-gray-50 rounded-lg space-y-3">
               <div className="flex justify-between border-b pb-2">
                 <span className="text-gray-700">{t('price_vehicle')}</span>
@@ -130,8 +130,8 @@ export default async function PurchaseAgreement({ params }: Props) {
                 <span className="font-semibold text-gray-900">[Fee] EUR</span>
               </div>
               <div className="flex justify-between pt-2">
-                <span className="text-lg font-bold text-blue-900">{t('price_total_buyer')}</span>
-                <span className="text-lg font-bold text-blue-900">[Total] EUR</span>
+                <span className="text-lg font-bold text-gray-900">{t('price_total_buyer')}</span>
+                <span className="text-lg font-bold text-gray-900">[Total] EUR</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-lg font-bold text-orange-600">{t('price_amount_seller')}</span>
@@ -142,7 +142,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 3. Payment Terms */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section3_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section3_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section3_1_label')}</strong> {t('section3_1_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section3_2_label')}</strong> {t('section3_2_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section3_3_label')}</strong> {t('section3_3_value')}</p>
@@ -151,7 +151,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 4. Seller Representations */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section4_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section4_title')}</h2>
             <p className="text-gray-700 mb-4">
               {t('section4_intro')}
             </p>
@@ -169,7 +169,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 5. Buyer Obligations */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section5_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section5_title')}</h2>
             <p className="text-gray-700 mb-4">
               {t('section5_intro')}
             </p>
@@ -186,7 +186,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 6. Inspection Period */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section6_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section6_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section6_1_label')}</strong> {t('section6_1_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section6_2_label')}</strong> {t('section6_2_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section6_3_label')}</strong> {t('section6_3_value')}</p>
@@ -195,7 +195,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 7. Acceptance or Rejection */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section7_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section7_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section7_1_label')}</strong> {t('section7_1_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section7_2_label')}</strong> {t('section7_2_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section7_3_label')}</strong> {t('section7_3_value')}</p>
@@ -204,7 +204,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 8. Transfer of Ownership */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section8_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section8_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section8_1_title_label')}</strong></p>
             <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
               <li>{t('section8_1_item1')}</li>
@@ -219,7 +219,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 9. Vehicle Delivery */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section9_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section9_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section9_1_label')}</strong> {t('section9_1_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section9_2_label')}</strong> {t('section9_2_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section9_3_label')}</strong> {t('section9_3_value')}</p>
@@ -228,7 +228,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 10. "As-Is" Sale */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section10_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section10_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section10_1_label')}</strong> {t('section10_1_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section10_2_label')}</strong> {t('section10_2_value')}</p>
             <p className="text-gray-700"><strong>{t('section10_3_label')}</strong> {t('section10_3_value')}</p>
@@ -236,7 +236,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 11. Cancellation */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section11_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section11_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section11_1_label')}</strong> {t('section11_1_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section11_2_label')}</strong> {t('section11_2_value')}</p>
             <p className="text-gray-700"><strong>{t('section11_3_label')}</strong> {t('section11_3_value')}</p>
@@ -244,7 +244,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 12. Dispute Resolution */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section12_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section12_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section12_1_label')}</strong> {t('section12_1_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section12_2_label')}</strong> {t('section12_2_value')}</p>
             <p className="text-gray-700"><strong>{t('section12_3_label')}</strong> {t('section12_3_value')}</p>
@@ -252,7 +252,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 13. Platform Role */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section13_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section13_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section13_1_label')}</strong> {t('section13_1_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section13_2_label')}</strong> {t('section13_2_value')}</p>
             <p className="text-gray-700"><strong>{t('section13_3_label')}</strong> {t('section13_3_value')}</p>
@@ -260,7 +260,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* 14. Additional Terms */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section14_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section14_title')}</h2>
             <p className="text-gray-700 mb-4"><strong>{t('section14_1_label')}</strong> {t('section14_1_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section14_2_label')}</strong> {t('section14_2_value')}</p>
             <p className="text-gray-700 mb-4"><strong>{t('section14_3_label')}</strong> {t('section14_3_value')}</p>
@@ -269,7 +269,7 @@ export default async function PurchaseAgreement({ params }: Props) {
 
           {/* Signatures */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section15_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section15_title')}</h2>
             <p className="text-gray-700 mb-6">
               {t('section15_intro')}
             </p>

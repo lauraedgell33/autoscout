@@ -96,7 +96,7 @@ export default function DisputeDetailsPage() {
             <h2 className="text-2xl font-bold text-red-600 mb-4">Dispute Not Found</h2>
             <button
               onClick={() => router.push('/dashboard/disputes')}
-              className="text-blue-900 hover:text-blue-700"
+              className="text-gray-900 hover:text-blue-700"
             >
               ← Back to Disputes
             </button>
@@ -113,13 +113,13 @@ export default function DisputeDetailsPage() {
         <div className="mb-8">
           <button
             onClick={() => router.push('/dashboard/disputes')}
-            className="text-blue-900 hover:text-blue-700 mb-4 flex items-center gap-2"
+            className="text-gray-900 hover:text-blue-700 mb-4 flex items-center gap-2"
           >
             ← Back to Disputes
           </button>
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-blue-900 mb-2">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
                 Dispute #{dispute.id.slice(0, 8)}
               </h1>
               <p className="text-gray-600">Transaction ID: {dispute.transaction_id.slice(0, 8)}</p>
@@ -148,7 +148,7 @@ export default function DisputeDetailsPage() {
 
         {/* Dispute Details */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-bold text-blue-900 mb-4">Dispute Details</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Dispute Details</h2>
 
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             <div>
@@ -186,7 +186,7 @@ export default function DisputeDetailsPage() {
         {/* Add Message Form */}
         {dispute.status !== 'closed' && dispute.status !== 'resolved' && (
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-bold text-blue-900 mb-4">Add Message</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Add Message</h2>
 
             <form onSubmit={handleSendMessage} className="space-y-4">
               <div>
@@ -241,20 +241,20 @@ export default function DisputeDetailsPage() {
           <div className="flex gap-4">
             <span className="text-3xl">🎧</span>
             <div>
-              <h3 className="font-bold text-blue-900 mb-2">Need Immediate Assistance?</h3>
+              <h3 className="font-bold text-gray-900 mb-2">Need Immediate Assistance?</h3>
               <p className="text-sm text-blue-700 mb-3">
                 Our dispute resolution team is here to help you resolve this issue quickly and fairly.
               </p>
               <div className="space-y-2">
                 <a
                   href="mailto:disputes@autoscout24-safetrade.com"
-                  className="block text-sm text-blue-900 font-semibold hover:text-blue-700"
+                  className="block text-sm text-gray-900 font-semibold hover:text-blue-700"
                 >
                   📧 disputes@autoscout24-safetrade.com
                 </a>
                 <a
                   href="tel:+1234567890"
-                  className="block text-sm text-blue-900 font-semibold hover:text-blue-700"
+                  className="block text-sm text-gray-900 font-semibold hover:text-blue-700"
                 >
                   📞 +1 (234) 567-890 (24/7 Support)
                 </a>

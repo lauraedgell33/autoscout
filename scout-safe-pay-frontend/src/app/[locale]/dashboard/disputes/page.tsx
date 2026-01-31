@@ -58,13 +58,13 @@ export default function DisputesPage() {
         <div className="mb-8">
           <button
             onClick={() => router.back()}
-            className="text-blue-900 hover:text-blue-700 mb-4 flex items-center gap-2"
+            className="text-gray-900 hover:text-blue-700 mb-4 flex items-center gap-2"
           >
             ← Back to Dashboard
           </button>
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-blue-900 mb-2">My Disputes</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">My Disputes</h1>
               <p className="text-gray-600">Manage and track your transaction disputes</p>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function DisputesPage() {
         {disputes.length === 0 ? (
           <div className="bg-white rounded-lg shadow-lg p-12 text-center">
             <div className="text-6xl mb-4">✓</div>
-            <h3 className="text-2xl font-bold text-blue-900 mb-2">No Disputes</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">No Disputes</h3>
             <p className="text-gray-600 mb-6">
               You have no active disputes. All your transactions are proceeding smoothly!
             </p>
@@ -101,7 +101,7 @@ export default function DisputesPage() {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-bold text-blue-900">
+                      <h3 className="text-xl font-bold text-gray-900">
                         Dispute #{dispute.id.slice(0, 8)}
                       </h3>
                       <span
@@ -165,20 +165,20 @@ export default function DisputesPage() {
           <div className="flex gap-4">
             <span className="text-3xl">💬</span>
             <div>
-              <h3 className="font-bold text-blue-900 mb-2">Need Help with a Dispute?</h3>
+              <h3 className="font-bold text-gray-900 mb-2">Need Help with a Dispute?</h3>
               <p className="text-sm text-blue-700 mb-4">
                 Our support team is available 24/7 to assist you with any transaction issues.
               </p>
               <div className="flex gap-4">
                 <a
                   href="mailto:disputes@autoscout24-safetrade.com"
-                  className="text-sm text-blue-900 font-semibold hover:text-blue-700"
+                  className="text-sm text-gray-900 font-semibold hover:text-blue-700"
                 >
                   📧 disputes@autoscout24-safetrade.com
                 </a>
                 <a
                   href="tel:+1234567890"
-                  className="text-sm text-blue-900 font-semibold hover:text-blue-700"
+                  className="text-sm text-gray-900 font-semibold hover:text-blue-700"
                 >
                   📞 +1 (234) 567-890
                 </a>

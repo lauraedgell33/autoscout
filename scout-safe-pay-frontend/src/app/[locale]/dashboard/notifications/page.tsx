@@ -80,14 +80,14 @@ export default function NotificationsPage() {
         <Card className="p-4 sm:p-6 mb-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-blue-900 flex items-center gap-2">
-                <Bell className="w-6 h-6 sm:w-8 sm:h-8 text-orange-500" />
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center gap-2">
+                <Bell className="w-6 h-6 sm:w-8 sm:h-8 text-accent-500" />
                 Notifications
               </h1>
               <p className="text-gray-600 mt-1 flex items-center gap-2">
                 {unreadCount > 0 ? (
                   <>
-                    <Badge className="bg-orange-500 hover:bg-orange-600">{unreadCount}</Badge>
+                    <Badge className="bg-accent-500 hover:bg-accent-600">{unreadCount}</Badge>
                     <span>unread notifications</span>
                   </>
                 ) : (
@@ -167,11 +167,11 @@ export default function NotificationsPage() {
                   
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2 mb-1">
-                      <h3 className="font-semibold text-blue-900 text-sm sm:text-base">
+                      <h3 className="font-semibold text-gray-900 text-sm sm:text-base">
                         {notificationService.getNotificationTitle(notification.data?.type || notification.type)}
                       </h3>
                       {!notification.read_at && (
-                        <Badge className="bg-orange-500 hover:bg-orange-600 text-xs flex-shrink-0">
+                        <Badge className="bg-accent-500 hover:bg-accent-600 text-xs flex-shrink-0">
                           New
                         </Badge>
                       )}

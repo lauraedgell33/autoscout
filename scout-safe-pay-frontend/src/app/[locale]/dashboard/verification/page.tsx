@@ -98,11 +98,11 @@ export default function VerificationPage() {
         <div className="mb-8">
           <button
             onClick={() => router.back()}
-            className="text-blue-900 hover:text-blue-700 mb-4 flex items-center gap-2"
+            className="text-gray-900 hover:text-blue-700 mb-4 flex items-center gap-2"
           >
             ← Back
           </button>
-          <h1 className="text-3xl font-bold text-blue-900 mb-2">Identity Verification (KYC)</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Identity Verification (KYC)</h1>
           <p className="text-gray-600">
             Verify your identity to unlock full access to buying and selling vehicles
           </p>
@@ -140,7 +140,7 @@ export default function VerificationPage() {
         {/* Verification Form */}
         {(!kycStatus || kycStatus.status === 'rejected') && (
           <div className="bg-white rounded-lg shadow-lg p-8">
-            <h2 className="text-2xl font-bold text-blue-900 mb-6">Submit Verification Documents</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Submit Verification Documents</h2>
 
             {error && (
               <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700">
@@ -245,7 +245,7 @@ export default function VerificationPage() {
                 <div className="flex gap-3">
                   <span className="text-blue-600 text-xl">🔒</span>
                   <div>
-                    <h4 className="font-semibold text-blue-900 mb-1">Your Data is Protected</h4>
+                    <h4 className="font-semibold text-gray-900 mb-1">Your Data is Protected</h4>
                     <p className="text-sm text-blue-700">
                       All documents are encrypted and stored securely. We comply with GDPR and only use your data for verification purposes.
                     </p>
@@ -269,21 +269,21 @@ export default function VerificationPage() {
         <div className="mt-8 grid md:grid-cols-3 gap-6">
           <div className="bg-white p-6 rounded-lg shadow">
             <div className="text-3xl mb-3">✓</div>
-            <h3 className="font-bold text-blue-900 mb-2">Trusted Buyer</h3>
+            <h3 className="font-bold text-gray-900 mb-2">Trusted Buyer</h3>
             <p className="text-sm text-gray-600">
               Verified buyers get priority access to premium vehicles
             </p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow">
             <div className="text-3xl mb-3">🛡️</div>
-            <h3 className="font-bold text-blue-900 mb-2">Secure Transactions</h3>
+            <h3 className="font-bold text-gray-900 mb-2">Secure Transactions</h3>
             <p className="text-sm text-gray-600">
               KYC verification protects both buyers and sellers from fraud
             </p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow">
             <div className="text-3xl mb-3">⚡</div>
-            <h3 className="font-bold text-blue-900 mb-2">Faster Process</h3>
+            <h3 className="font-bold text-gray-900 mb-2">Faster Process</h3>
             <p className="text-sm text-gray-600">
               Pre-verified users complete purchases up to 3x faster
             </p>

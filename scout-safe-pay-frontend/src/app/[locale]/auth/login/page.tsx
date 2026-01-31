@@ -55,7 +55,7 @@ export default function LoginPage() {
             Or{' '}
             <Link
               href={`/${locale}/auth/register`}
-              className="font-medium text-orange-500 hover:text-orange-600"
+              className="font-medium text-accent-500 hover:text-orange-600"
             >
               create a new account
             </Link>
@@ -131,7 +131,7 @@ export default function LoginPage() {
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
+                className="h-4 w-4 text-accent-500 focus:ring-primary-500 border-gray-300 rounded"
               />
               <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                 Remember me
@@ -141,7 +141,7 @@ export default function LoginPage() {
             <div className="text-sm">
               <Link
                 href={`/${locale}/auth/forgot-password`}
-                className="font-medium text-orange-500 hover:text-orange-600"
+                className="font-medium text-accent-500 hover:text-orange-600"
               >
                 Forgot password?
               </Link>
@@ -151,7 +151,7 @@ export default function LoginPage() {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3"
+            className="w-full bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3"
           >
             {loading ? (
               <>

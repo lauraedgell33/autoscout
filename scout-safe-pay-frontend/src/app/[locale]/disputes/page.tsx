@@ -103,7 +103,7 @@ export default function DisputesPage() {
                   </p>
                   
                   <div className="flex items-start space-x-2 mb-3">
-                    <AlertCircle className="h-5 w-5 text-orange-500 flex-shrink-0 mt-0.5" />
+                    <AlertCircle className="h-5 w-5 text-accent-500 flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-gray-700 dark:text-gray-300">
                       <span className="font-medium">Reason:</span> {dispute.reason}
                     </p>

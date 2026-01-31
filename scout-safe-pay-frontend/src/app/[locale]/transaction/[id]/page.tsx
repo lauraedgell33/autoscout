@@ -169,7 +169,7 @@ export default function TransactionPage() {
           <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
             <div className="flex items-start justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-blue-900 mb-2">{t('transaction.title')} #{transaction.id}</h1>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('transaction.title')} #{transaction.id}</h1>
                 <p className="text-gray-600">{t('transaction.created')}: {new Date(transaction.created_at).toLocaleDateString()}</p>
               </div>
             <div>
@@ -185,7 +185,7 @@ export default function TransactionPage() {
           <div className="lg:col-span-2 space-y-6">
             {/* Vehicle Info */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-blue-900 mb-4">{t('transaction.vehicle')}</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('transaction.vehicle')}</h2>
               {vehicle && (
                 <div className="flex gap-4">
                   {(vehicle as any).images?.[0] && (
@@ -211,7 +211,7 @@ export default function TransactionPage() {
 
             {/* Transaction Timeline */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-blue-900 mb-4">{t('transaction.status')}</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('transaction.status')}</h2>
               <div className="space-y-4">
                 {transaction.status === 'pending_payment' && (
                   <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
@@ -266,7 +266,7 @@ export default function TransactionPage() {
             {/* Payment Proof Upload */}
             {transaction.status === 'pending_payment' && (
               <div className="bg-white rounded-xl shadow-sm p-6">
-                <h2 className="text-xl font-bold text-blue-900 mb-4">{t('transaction.payment_method')}</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">{t('transaction.payment_method')}</h2>
                 <p className="text-gray-600 mb-4">{t('transaction.payment_instructions')}</p>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                   <input
@@ -293,7 +293,7 @@ export default function TransactionPage() {
             {/* Amount Card */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h3 className="text-sm font-medium text-gray-600 mb-2">{t('transaction.amount')}</h3>
-              <div className="text-3xl font-bold text-orange-500 mb-4">
+              <div className="text-3xl font-bold text-accent-500 mb-4">
                 {formatPrice(Number(transaction.amount) * 1.19)}
               </div>
               <div className="text-sm text-gray-600 space-y-1">
@@ -310,7 +310,7 @@ export default function TransactionPage() {
 
             {/* Documents */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h3 className="font-bold text-blue-900 mb-4">{t('transaction.download_invoice')}</h3>
+              <h3 className="font-bold text-gray-900 mb-4">{t('transaction.download_invoice')}</h3>
               <div className="space-y-3">
                 {/* Contract */}
                 <div>
@@ -323,7 +323,7 @@ export default function TransactionPage() {
                       <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
-                      <span className="font-medium text-blue-900">{t('documents.contract')}</span>
+                      <span className="font-medium text-gray-900">{t('documents.contract')}</span>
                     </div>
                     <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -367,7 +367,7 @@ export default function TransactionPage() {
             {/* Actions */}
             {transaction.status === 'pending_payment' && (
               <div className="bg-white rounded-xl shadow-sm p-6">
-                <h3 className="font-bold text-blue-900 mb-4">{t('transaction.actions')}</h3>
+                <h3 className="font-bold text-gray-900 mb-4">{t('transaction.actions')}</h3>
                 <button
                   onClick={handleCancelTransaction}
                   className="w-full px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-medium transition"
@@ -379,7 +379,7 @@ export default function TransactionPage() {
 
             {/* Support */}
             <div className="bg-blue-50 rounded-xl p-6">
-              <h3 className="font-bold text-blue-900 mb-2">{t('transaction.contact_support')}</h3>
+              <h3 className="font-bold text-gray-900 mb-2">{t('transaction.contact_support')}</h3>
               <p className="text-sm text-gray-600 mb-4">{t('transaction.support_message')}</p>
               <a href="mailto:support@autoscout24-safetrade.de" className="text-sm text-blue-600 hover:underline">
                 support@autoscout24-safetrade.de

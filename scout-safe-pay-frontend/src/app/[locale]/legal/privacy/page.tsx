@@ -17,7 +17,7 @@ export default async function PrivacyPolicy() {
   return (
     <>      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-orange-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h1 className="text-4xl font-bold text-blue-900 mb-4">{t('title')}</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('title')}</h1>
           <p className="text-gray-600 mb-8">{t('last_updated')}: January 15, 2026</p>
 
         <div className="bg-white rounded-lg shadow-sm p-8 space-y-8">
@@ -30,7 +30,7 @@ export default async function PrivacyPolicy() {
 
           {/* 1. Data Controller */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section1_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section1_title')}</h2>
             <p className="text-gray-700 mb-4">{t('section1_intro')}</p>
             <ul className="space-y-2 text-gray-700">
               <li><strong>{t('section1_company_label')}:</strong> {t('section1_company_value')}</li>
@@ -42,7 +42,7 @@ export default async function PrivacyPolicy() {
 
           {/* 2. Information We Collect */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section2_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section2_title')}</h2>
             
             <div className="space-y-4">
               <div>
@@ -96,7 +96,7 @@ export default async function PrivacyPolicy() {
 
           {/* 3. How We Use Your Information */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section3_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section3_title')}</h2>
             
             <div className="space-y-4">
               <div>
@@ -136,7 +136,7 @@ export default async function PrivacyPolicy() {
 
           {/* 4. Legal Basis (GDPR) */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section4_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section4_title')}</h2>
             <ul className="space-y-3 text-gray-700">
               <li><strong>{t('section4_item1_label')}:</strong> {t('section4_item1_value')}</li>
               <li><strong>{t('section4_item2_label')}:</strong> {t('section4_item2_value')}</li>
@@ -147,7 +147,7 @@ export default async function PrivacyPolicy() {
 
           {/* 5. Data Sharing */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section5_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section5_title')}</h2>
             
             <div className="space-y-4">
               <div>
@@ -177,7 +177,7 @@ export default async function PrivacyPolicy() {
 
           {/* 6. Data Retention */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section6_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section6_title')}</h2>
             <ul className="space-y-2 text-gray-700">
               <li><strong>{t('section6_item1_label')}:</strong> {t('section6_item1_value')}</li>
               <li><strong>{t('section6_item2_label')}:</strong> {t('section6_item2_value')}</li>
@@ -189,7 +189,7 @@ export default async function PrivacyPolicy() {
 
           {/* 7. Your Rights */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section7_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section7_title')}</h2>
             
             <div className="space-y-3">
               <div>
@@ -230,7 +230,7 @@ export default async function PrivacyPolicy() {
 
           {/* 8. Data Security */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section8_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section8_title')}</h2>
             <ul className="space-y-2 text-gray-700">
               <li><strong>{t('section8_item1_label')}:</strong> {t('section8_item1_value')}</li>
               <li><strong>{t('section8_item2_label')}:</strong> {t('section8_item2_value')}</li>
@@ -245,7 +245,7 @@ export default async function PrivacyPolicy() {
 
           {/* 9. Cookies */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section9_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section9_title')}</h2>
             <ul className="space-y-2 text-gray-700">
               <li><strong>{t('section9_item1_label')}:</strong> {t('section9_item1_value')}</li>
               <li><strong>{t('section9_item2_label')}:</strong> {t('section9_item2_value')}</li>
@@ -259,7 +259,7 @@ export default async function PrivacyPolicy() {
 
           {/* 10. Children's Privacy */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section10_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section10_title')}</h2>
             <p className="text-gray-700">
               {t('section10_content')}
             </p>
@@ -267,7 +267,7 @@ export default async function PrivacyPolicy() {
 
           {/* 11. Contact */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section11_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section11_title')}</h2>
             <ul className="space-y-2 text-gray-700">
               <li><strong>{t('section11_email_label')}:</strong> {t('section11_email_value')}</li>
               <li><strong>{t('section11_dpo_label')}:</strong> {t('section11_dpo_value')}</li>

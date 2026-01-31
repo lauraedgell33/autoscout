@@ -75,7 +75,7 @@ export default function PaymentFailedPage() {
             <div className="flex gap-4 pt-4">
               <Button
                 onClick={() => router.back()}
-                className="flex-1 h-14 bg-blue-600 hover:bg-blue-700 text-lg"
+                className="flex-1 h-14 bg-primary-900 hover:bg-primary-950 text-lg"
               >
                 <ArrowLeft className="w-5 h-5 mr-2" />
                 Try Again

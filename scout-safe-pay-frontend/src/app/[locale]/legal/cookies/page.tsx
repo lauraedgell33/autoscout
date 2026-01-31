@@ -17,13 +17,13 @@ export default async function CookiePolicy() {
   return (
     <>      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-orange-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h1 className="text-4xl font-bold text-blue-900 mb-4">{t('title')}</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('title')}</h1>
           <p className="text-gray-600 mb-8">{t('last_updated')}: January 15, 2026</p>
 
         <div className="bg-white rounded-lg shadow-sm p-8 space-y-8">
           {/* Introduction */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('intro_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('intro_title')}</h2>
             <p className="text-gray-700 mb-4">
               {t('intro_para1')}
             </p>
@@ -34,7 +34,7 @@ export default async function CookiePolicy() {
 
           {/* Types of Cookies */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('types_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('types_title')}</h2>
             
             {/* Essential Cookies */}
             <div className="mb-6 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-900">
@@ -183,7 +183,7 @@ export default async function CookiePolicy() {
 
           {/* Third-Party Cookies */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('third_party_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('third_party_title')}</h2>
             <p className="text-gray-700 mb-4">
               {t('third_party_intro')}
             </p>
@@ -196,7 +196,7 @@ export default async function CookiePolicy() {
 
           {/* Cookie Management */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('management_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('management_title')}</h2>
             
             <div className="space-y-4">
               <div>
@@ -241,7 +241,7 @@ export default async function CookiePolicy() {
 
           {/* Cookie Consent */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('consent_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('consent_title')}</h2>
             <p className="text-gray-700 mb-4">
               {t('consent_intro')}
             </p>
@@ -257,7 +257,7 @@ export default async function CookiePolicy() {
 
           {/* Updates */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('updates_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('updates_title')}</h2>
             <p className="text-gray-700">
               {t('updates_content')}
             </p>
@@ -265,7 +265,7 @@ export default async function CookiePolicy() {
 
           {/* Contact */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('contact_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('contact_title')}</h2>
             <p className="text-gray-700 mb-4">
               {t('contact_intro')}
             </p>

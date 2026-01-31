@@ -16,7 +16,7 @@ export default function BuyerDashboardPage() {
         <div className="max-w-7xl mx-auto">
           {/* Welcome Section */}
           <div className="bg-gradient-to-br from-blue-50 to-orange-50 rounded-xl p-8 mb-6">
-            <h1 className="text-3xl font-bold text-blue-900 mb-2">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
               Welcome back, {user?.name}! 👋
             </h1>
             <p className="text-gray-600">
@@ -35,7 +35,7 @@ export default function BuyerDashboardPage() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">My Purchases</p>
-                  <p className="text-2xl font-bold text-blue-900">0</p>
+                  <p className="text-2xl font-bold text-gray-900">0</p>
                 </div>
               </div>
             </div>
@@ -43,13 +43,13 @@ export default function BuyerDashboardPage() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                  <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Favorites</p>
-                  <p className="text-2xl font-bold text-blue-900">0</p>
+                  <p className="text-2xl font-bold text-gray-900">0</p>
                 </div>
               </div>
             </div>
@@ -63,7 +63,7 @@ export default function BuyerDashboardPage() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Active Deals</p>
-                  <p className="text-2xl font-bold text-blue-900">0</p>
+                  <p className="text-2xl font-bold text-gray-900">0</p>
                 </div>
               </div>
             </div>
@@ -77,12 +77,12 @@ export default function BuyerDashboardPage() {
             >
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-500 transition">
-                  <svg className="w-6 h-6 text-orange-500 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-accent-500 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-bold text-blue-900 mb-1">Browse Vehicles</h3>
+                  <h3 className="font-bold text-gray-900 mb-1">Browse Vehicles</h3>
                   <p className="text-sm text-gray-600">Find your perfect car with SafeTrade protection</p>
                 </div>
               </div>
@@ -94,12 +94,12 @@ export default function BuyerDashboardPage() {
             >
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-900 transition">
-                  <svg className="w-6 h-6 text-blue-900 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-gray-900 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-bold text-blue-900 mb-1">How It Works</h3>
+                  <h3 className="font-bold text-gray-900 mb-1">How It Works</h3>
                   <p className="text-sm text-gray-600">Learn about our secure buying process</p>
                 </div>
               </div>
@@ -108,7 +108,7 @@ export default function BuyerDashboardPage() {
 
           {/* Recent Activity */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 className="text-xl font-bold text-blue-900 mb-4">Recent Activity</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Activity</h2>
             <div className="text-center py-12">
               <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -116,7 +116,7 @@ export default function BuyerDashboardPage() {
               <p className="text-gray-600 mb-4">No activity yet</p>
               <Link
                 href="/marketplace"
-                className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition"
+                className="inline-flex items-center gap-2 bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 rounded-lg font-semibold transition"
               >
                 Start Browsing
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

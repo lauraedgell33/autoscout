@@ -17,7 +17,7 @@ export default async function RefundPolicy() {
   return (
     <>      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-orange-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h1 className="text-4xl font-bold text-blue-900 mb-4">{t('title')}</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('title')}</h1>
           <p className="text-gray-600 mb-8">{t('last_updated')}: January 15, 2026</p>
 
         <div className="bg-white rounded-lg shadow-sm p-8 space-y-8">
@@ -30,7 +30,7 @@ export default async function RefundPolicy() {
 
           {/* 1. Overview */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section1_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section1_title')}</h2>
             <p className="text-gray-700 mb-4">
               {t('section1_para1')}
             </p>
@@ -41,7 +41,7 @@ export default async function RefundPolicy() {
 
           {/* 2. Buyer Refund Rights */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section2_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section2_title')}</h2>
             
             <div className="space-y-6">
               {/* Pre-Inspection */}
@@ -109,7 +109,7 @@ export default async function RefundPolicy() {
 
           {/* 3. Non-Refundable Situations */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section3_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section3_title')}</h2>
             <p className="text-gray-700 mb-4">
               {t('section3_intro')}
             </p>
@@ -126,7 +126,7 @@ export default async function RefundPolicy() {
 
           {/* 4. Service Fee Refunds */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section4_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section4_title')}</h2>
             
             <div className="space-y-4">
               <div>
@@ -149,7 +149,7 @@ export default async function RefundPolicy() {
 
           {/* 5. Refund Process */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section5_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section5_title')}</h2>
             
             <div className="space-y-4">
               <div>
@@ -198,7 +198,7 @@ export default async function RefundPolicy() {
 
           {/* 6. Dispute Resolution */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section6_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section6_title')}</h2>
             <p className="text-gray-700 mb-4">
               {t('section6_intro')}
             </p>
@@ -212,7 +212,7 @@ export default async function RefundPolicy() {
 
           {/* 7. Special Circumstances */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section7_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section7_title')}</h2>
             
             <div className="space-y-4">
               <div>
@@ -240,7 +240,7 @@ export default async function RefundPolicy() {
 
           {/* 8. Refund Timeline Summary */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section8_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section8_title')}</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">
                 <thead className="bg-blue-900 text-white">
@@ -283,7 +283,7 @@ export default async function RefundPolicy() {
 
           {/* Contact */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('section9_title')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('section9_title')}</h2>
             <p className="text-gray-700 mb-4">
               {t('section9_intro')}
             </p>

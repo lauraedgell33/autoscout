@@ -43,7 +43,7 @@ export default function MessagesPage() {
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-blue-900">{t('messages.title')}</h1>
+            <h1 className="text-3xl font-bold text-gray-900">{t('messages.title')}</h1>
             <p className="text-gray-600 mt-2">{t('messages.subtitle')}</p>
           </div>
 
@@ -70,7 +70,7 @@ export default function MessagesPage() {
                 >
                   <div className="flex items-start gap-4">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-blue-900">
+                      <h3 className="font-semibold text-gray-900">
                         {conversation.other_party.name}
                       </h3>
                       <p className="text-sm text-gray-600">

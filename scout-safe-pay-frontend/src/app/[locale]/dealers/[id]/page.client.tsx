@@ -155,7 +155,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
           </div>
           <Button 
             onClick={() => router.push('/dealers')}
-            className="bg-blue-600 hover:bg-blue-700"
+            className="bg-primary-900 hover:bg-primary-950"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             {t('backToDealers')}
@@ -430,7 +430,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
 
                         {/* CTA Button */}
                         <Button 
-                          className="w-full bg-blue-600 hover:bg-blue-700 h-12 text-lg font-semibold"
+                          className="w-full bg-primary-900 hover:bg-primary-950 h-12 text-lg font-semibold"
                           onClick={(e) => {
                             e.stopPropagation()
                             router.push(`/vehicle/${vehicle.id}`)
@@ -461,7 +461,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                   {/* Contact Card */}
                   <Card className="border-2 border-blue-200 shadow-lg">
                     <CardHeader className="bg-gradient-to-r from-blue-50 to-white">
-                      <CardTitle className="flex items-center text-blue-900">
+                      <CardTitle className="flex items-center text-gray-900">
                         <Phone className="w-5 h-5 mr-2" />
                         {t('contactInfo')}
                       </CardTitle>
@@ -469,7 +469,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                     <CardContent className="pt-6">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <a href={`tel:${dealer.phone}`} className="block">
-                          <Button className="w-full h-14 bg-blue-600 hover:bg-blue-700 text-lg">
+                          <Button className="w-full h-14 bg-primary-900 hover:bg-primary-950 text-lg">
                             <Phone className="w-5 h-5 mr-2" />
                             {dealer.phone}
                           </Button>
@@ -502,7 +502,7 @@ export default function DealerPageClient({ dealerId }: DealerPageClientProps) {
                         <div className="flex items-start gap-3">
                           <MapPin className="w-5 h-5 text-blue-600 mt-0.5" />
                           <div>
-                            <p className="font-semibold text-blue-900">{t('visitUs')}</p>
+                            <p className="font-semibold text-gray-900">{t('visitUs')}</p>
                             <p className="text-gray-700">{dealer.address}</p>
                             <p className="text-gray-700">{dealer.postal_code} {dealer.city}</p>
                             <p className="text-gray-700">{dealer.country}</p>
