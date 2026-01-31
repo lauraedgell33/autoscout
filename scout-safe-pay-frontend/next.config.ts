@@ -111,13 +111,13 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com",
               process.env.NODE_ENV === 'production' 
-                ? "connect-src 'self' https://*.vapor-farm-x1.com https://*.cloudfront.net https://*.vercel.app https://adminautoscout.dev https://www.autoscout24safetrade.com"
-                : "connect-src 'self' http://localhost:8000 http://localhost:8002 https://*.vapor-farm-x1.com https://*.cloudfront.net",
+                ? "connect-src 'self' https://*.vapor-farm-x1.com https://*.cloudfront.net https://*.vercel.app https://adminautoscout.dev https://www.autoscout24safetrade.com https://*.tile.openstreetmap.org"
+                : "connect-src 'self' http://localhost:8000 http://localhost:8002 https://*.vapor-farm-x1.com https://*.cloudfront.net https://*.tile.openstreetmap.org",
               "frame-ancestors 'self'",
               "base-uri 'self'",
               "form-action 'self'",
