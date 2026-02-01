@@ -11,7 +11,6 @@ import { invoiceService } from '@/lib/api/invoices'
 import { getCategoryLabel } from '@/lib/utils/categoryHelpers'
 import { useRealtimeEvent } from '@/lib/realtime-client'
 import ProtectedRoute from '@/components/ProtectedRoute';
-import ProtectedRoute from '@/components/ProtectedRoute';
 
 function TransactionPageContent() {
   const t = useTranslations('transaction')

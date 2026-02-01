@@ -12,7 +12,6 @@ import { transactionService } from '@/lib/api/transactions'
 import { kycService } from '@/lib/api/kyc'
 import { logger } from '@/utils/logger'
 import ProtectedRoute from '@/components/ProtectedRoute';
-import ProtectedRoute from '@/components/ProtectedRoute';
 
 function CheckoutPageContent() {
   const t = useTranslations('checkout')

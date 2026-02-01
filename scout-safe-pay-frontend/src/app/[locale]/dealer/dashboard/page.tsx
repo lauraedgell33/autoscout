@@ -10,7 +10,6 @@ import { apiClient } from '@/lib/api-client';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import toast from 'react-hot-toast';
 import { DashboardStatsGridSkeleton } from '@/components/skeletons/DashboardSkeletons';
-import ProtectedRoute from '@/components/ProtectedRoute';
 
 function DealerDashboardContent() {
   const params = useParams<{ locale: string }>();
