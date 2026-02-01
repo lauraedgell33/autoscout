@@ -44,7 +44,7 @@ export default function VerifyEmailPage() {
         );
 
         setStatus('success');
-        setMessage(response.data?.message || 'Email verified successfully!');
+        setMessage(response.message || 'Email verified successfully!');
         
         // Redirect to dashboard after 3 seconds
         setTimeout(() => {
