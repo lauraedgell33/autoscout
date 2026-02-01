@@ -72,21 +72,32 @@ IMPORTANT: Please include the reference number in your transfer!
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6">
-      <Card className="p-8 text-center">
-        <div className="flex justify-center mb-4">
-          <div className="h-16 w-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-            <CheckCircle className="h-10 w-10 text-green-600" />
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-br from-green-700 via-green-600 to-green-800 py-8 sm:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center">
+            <div className="text-center">
+              <div className="flex justify-center mb-4">
+                <div className="h-16 w-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                  <CheckCircle className="h-10 w-10 text-white" />
+                </div>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                Purchase Initiated Successfully!
+              </h1>
+              <p className="text-green-100 text-sm sm:text-base">
+                Complete your bank transfer to secure the vehicle
+              </p>
+            </div>
           </div>
         </div>
-        <h1 className="text-3xl font-bold mb-2">Purchase Initiated!</h1>
-        <p className="text-gray-600 dark:text-gray-400">
-          Complete your bank transfer to secure the vehicle
-        </p>
-      </Card>
+      </div>
+      
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
 
       {/* Bank Transfer Details */}
-      <Card className="p-6">
+      <Card className="p-4 sm:p-6 rounded-2xl border border-gray-100 shadow-sm">
         <h3 className="font-semibold text-lg mb-4">Bank Transfer Instructions</h3>
         <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 space-y-3">
           <div className="grid grid-cols-2 gap-4">
@@ -123,13 +134,17 @@ IMPORTANT: Please include the reference number in your transfer!
           </p>
         </div>
 
-        <Button onClick={downloadInstructions} variant="outline" className="w-full mt-4">
+        <Button 
+          onClick={downloadInstructions} 
+          variant="outline" 
+          className="w-full mt-4 rounded-xl border-2"
+        >
           <Download className="h-4 w-4 mr-2" />Download Instructions
         </Button>
       </Card>
 
       {/* Next Steps */}
-      <Card className="p-6">
+      <Card className="p-4 sm:p-6 rounded-2xl border border-gray-100 shadow-sm">
         <h3 className="font-semibold text-lg mb-4">What Happens Next?</h3>
         <ol className="space-y-3">
           <li className="flex items-start">
@@ -166,15 +181,16 @@ IMPORTANT: Please include the reference number in your transfer!
       {/* Actions */}
       <div className="flex flex-col sm:flex-row gap-4">
         <Link href={`/${locale}/transaction/${transaction?.id}`} className="flex-1">
-          <Button variant="outline" className="w-full">
+          <Button variant="outline" className="w-full rounded-xl border-2">
             <Eye className="h-4 w-4 mr-2" />View Transaction
           </Button>
         </Link>
         <Link href={`/${locale}/marketplace`} className="flex-1">
-          <Button variant="outline" className="w-full">
+          <Button variant="outline" className="w-full rounded-xl border-2">
             <Home className="h-4 w-4 mr-2" />Back to Marketplace
           </Button>
         </Link>
+      </div>
       </div>
     </div>
   );

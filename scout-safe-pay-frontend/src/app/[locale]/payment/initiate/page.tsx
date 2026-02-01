@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { CreditCard, Building2, ArrowRight, Lock } from 'lucide-react';
+import { CreditCard, Building2, ArrowRight, Lock, Shield } from 'lucide-react';
 import { transactionService } from '@/lib/api/transactions';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import toast from 'react-hot-toast';
 
 export default function PaymentInitiatePage() {
   const router = useRouter();
@@ -47,10 +49,11 @@ export default function PaymentInitiatePage() {
       });
 
       // Navigate to success page with transaction details
+      toast.success('Payment initiated successfully!');
       router.push(`/${params.locale}/payment/success?transaction_id=${response.transaction.id}`);
     } catch (error) {
       console.error('Error initiating payment:', error);
-      alert('Failed to initiate payment. Please try again.');
+      toast.error('Failed to initiate payment. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -63,16 +66,34 @@ export default function PaymentInitiatePage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">Complete Your Purchase</h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-1">Choose your payment method</p>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-br from-primary-900 via-primary-800 to-blue-900 py-8 sm:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                Complete Your Purchase
+              </h1>
+              <p className="text-blue-100 text-sm sm:text-base flex items-center gap-2">
+                <Shield className="w-4 h-4" />
+                Protected by AutoScout24 SafeTrade Escrow
+              </p>
+            </div>
+            <Badge className="hidden md:flex bg-white/20 text-white border border-white/30">
+              <Lock className="w-3 h-3 mr-1" />
+              Secure Payment
+            </Badge>
+          </div>
+        </div>
       </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           {/* Payment Methods */}
-          <Card className="p-6">
+          <Card className="p-4 sm:p-6 rounded-2xl border border-gray-100 shadow-sm">
             <h3 className="font-semibold text-lg mb-4">Select Payment Method</h3>
             <div className="space-y-3">
               <label htmlFor="payment-bank-transfer" className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${paymentMethod === 'bank_transfer' ? 'border-blue-600 bg-primary-50 dark:bg-blue-900/20' : 'border-gray-300'}`}>
@@ -96,7 +117,7 @@ export default function PaymentInitiatePage() {
           </Card>
 
           {/* Security Info */}
-          <Card className="p-6 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
+          <Card className="p-4 sm:p-6 rounded-2xl bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
             <div className="flex items-start space-x-3">
               <Lock className="h-5 w-5 text-green-600 mt-0.5" />
               <div>
@@ -111,7 +132,7 @@ export default function PaymentInitiatePage() {
 
         {/* Order Summary */}
         <div>
-          <Card className="p-6 sticky top-6">
+          <Card className="p-4 sm:p-6 rounded-2xl border border-gray-100 shadow-sm sticky top-6">
             <h3 className="font-semibold text-lg mb-4">Order Summary</h3>
             
             <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-4">
@@ -142,7 +163,12 @@ export default function PaymentInitiatePage() {
               </div>
             </div>
 
-            <Button onClick={initiatePayment} disabled={loading} className="w-full" size="lg">
+            <Button 
+              onClick={initiatePayment} 
+              disabled={loading} 
+              className="w-full bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-xl" 
+              size="lg"
+            >
               {loading ? 'Processing...' : 'Proceed to Payment'}
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
@@ -152,6 +178,7 @@ export default function PaymentInitiatePage() {
             </p>
           </Card>
         </div>
+      </div>
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ export default function PaymentFailedPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-50 to-white flex items-center justify-center p-4">
-      <Card className="max-w-2xl w-full shadow-2xl border-2 border-red-200">
+      <Card className="max-w-2xl w-full shadow-2xl border-2 border-red-200 rounded-2xl">
         <CardHeader className="text-center bg-gradient-to-r from-red-500 to-red-600 text-white py-8">
           <div className="flex justify-center mb-4">
             <div className="bg-white/20 p-4 rounded-full">
@@ -75,7 +75,7 @@ export default function PaymentFailedPage() {
             <div className="flex gap-4 pt-4">
               <Button
                 onClick={() => router.back()}
-                className="flex-1 h-14 bg-primary-900 hover:bg-primary-950 text-lg"
+                className="flex-1 h-14 bg-accent-500 hover:bg-accent-600 text-white rounded-xl text-lg font-semibold"
               >
                 <ArrowLeft className="w-5 h-5 mr-2" />
                 Try Again
@@ -83,7 +83,7 @@ export default function PaymentFailedPage() {
               <Button
                 variant="outline"
                 onClick={() => router.push(`/${locale}/support/help`)}
-                className="flex-1 h-14 border-2 text-lg"
+                className="flex-1 h-14 border-2 rounded-xl text-lg"
               >
                 <HelpCircle className="w-5 h-5 mr-2" />
                 Get Help

@@ -11,6 +11,7 @@ import { invoiceService } from '@/lib/api/invoices'
 import { getCategoryLabel } from '@/lib/utils/categoryHelpers'
 import { useRealtimeEvent } from '@/lib/realtime-client'
 import ProtectedRoute from '@/components/ProtectedRoute';
+import toast from 'react-hot-toast';
 
 function TransactionPageContent() {
   const t = useTranslations('transaction')
@@ -63,9 +64,9 @@ function TransactionPageContent() {
       const file = e.target.files[0]
       // await transactionService.uploadPaymentProof(params.id as string, file)
       await loadTransaction()
-      alert('Payment proof uploaded successfully! Awaiting verification.')
+      toast.success('Payment proof uploaded successfully! Awaiting verification.')
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Failed to upload payment proof')
+      toast.error(err.response?.data?.message || 'Failed to upload payment proof')
     } finally {
       setUploadingProof(false)
     }
@@ -75,10 +76,10 @@ function TransactionPageContent() {
     try {
       setGeneratingContract(true)
       await contractService.generate(Number(params.id))
-      alert('transaction.contract_generated')
+      toast.success(t('contract_generated'))
       await loadTransaction()
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Failed to generate contract')
+      toast.error(err.response?.data?.message || 'Failed to generate contract')
     } finally {
       setGeneratingContract(false)
     }
@@ -88,7 +89,7 @@ function TransactionPageContent() {
     try {
       await contractService.download(Number(params.id))
     } catch (err: any) {
-      alert('transaction.contract_download_failed')
+      toast.error(t('contract_download_failed'))
     }
   }
 
@@ -96,10 +97,10 @@ function TransactionPageContent() {
     try {
       setGeneratingInvoice(true)
       await invoiceService.generate(Number(params.id))
-      alert('transaction.invoice_generated')
+      toast.success(t('invoice_generated'))
       await loadTransaction()
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Failed to generate invoice')
+      toast.error(err.response?.data?.message || 'Failed to generate invoice')
     } finally {
       setGeneratingInvoice(false)
     }
@@ -109,7 +110,7 @@ function TransactionPageContent() {
     try {
       await invoiceService.download(Number(params.id))
     } catch (err: any) {
-      alert('transaction.invoice_download_failed')
+      toast.error(t('invoice_download_failed'))
     }
   }
 
@@ -121,9 +122,9 @@ function TransactionPageContent() {
     try {
       await transactionService.cancel(params.id as string, reason)
       await loadTransaction()
-      alert('transaction.cancelled_success')
+      toast.success(t('cancelled_success'))
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Failed to cancel transaction')
+      toast.error(err.response?.data?.message || 'Failed to cancel transaction')
     }
   }
 
