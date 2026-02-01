@@ -19,6 +19,16 @@ class User extends Authenticatable implements FilamentUser
     use HasFactory, Notifiable, HasApiTokens, HasRoles;
 
     /**
+     * Get the entity's notifications.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function notifications()
+    {
+        return $this->morphMany(DatabaseNotification::class, 'notifiable')->latest();
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
