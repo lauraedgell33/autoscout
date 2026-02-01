@@ -94,23 +94,139 @@ function CheckoutPageContent() {
     }))
   }
 
-  const handleIdImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Helper function to compress image
+  const compressImage = async (file: File, maxSizeKB: number = 500): Promise<File> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = (event) => {
+        const img = new window.Image()
+        img.src = event.target?.result as string
+        img.onload = () => {
+          const canvas = document.createElement('canvas')
+          let width = img.width
+          let height = img.height
+          
+          // Calculate new dimensions (max 1920x1080)
+          const maxWidth = 1920
+          const maxHeight = 1080
+          if (width > height) {
+            if (width > maxWidth) {
+              height *= maxWidth / width
+              width = maxWidth
+            }
+          } else {
+            if (height > maxHeight) {
+              width *= maxHeight / height
+              height = maxHeight
+            }
+          }
+          
+          canvas.width = width
+          canvas.height = height
+          const ctx = canvas.getContext('2d')
+          ctx?.drawImage(img, 0, 0, width, height)
+          
+          // Start with quality 0.8 and reduce if needed
+          let quality = 0.8
+          const tryCompress = () => {
+            canvas.toBlob(
+              (blob) => {
+                if (!blob) {
+                  reject(new Error('Compression failed'))
+                  return
+                }
+                
+                // If still too large and quality can be reduced
+                if (blob.size > maxSizeKB * 1024 && quality > 0.3) {
+                  quality -= 0.1
+                  tryCompress()
+                } else {
+                  const compressedFile = new File([blob], file.name, {
+                    type: 'image/jpeg',
+                    lastModified: Date.now(),
+                  })
+                  resolve(compressedFile)
+                }
+              },
+              'image/jpeg',
+              quality
+            )
+          }
+          
+          tryCompress()
+        }
+        img.onerror = () => reject(new Error('Failed to load image'))
+      }
+      reader.onerror = () => reject(new Error('Failed to read file'))
+    })
+  }
+
+  const handleIdImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0]
-      setFormData(prev => ({ ...prev, idImage: file }))
-      const reader = new FileReader()
-      reader.onloadend = () => setIdImagePreview(reader.result as string)
-      reader.readAsDataURL(file)
+      
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please upload an image file')
+        return
+      }
+      
+      // Validate file size (max 10MB original)
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error('File is too large. Maximum size is 10MB')
+        return
+      }
+      
+      try {
+        toast.loading('Compressing image...')
+        const compressedFile = await compressImage(file, 500) // Max 500KB
+        toast.dismiss()
+        toast.success(`Image compressed from ${(file.size / 1024).toFixed(0)}KB to ${(compressedFile.size / 1024).toFixed(0)}KB`)
+        
+        setFormData(prev => ({ ...prev, idImage: compressedFile }))
+        const reader = new FileReader()
+        reader.onloadend = () => setIdImagePreview(reader.result as string)
+        reader.readAsDataURL(compressedFile)
+      } catch (error) {
+        toast.dismiss()
+        toast.error('Failed to compress image')
+        console.error('Compression error:', error)
+      }
     }
   }
 
-  const handleSelfieChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelfieChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0]
-      setFormData(prev => ({ ...prev, selfieImage: file }))
-      const reader = new FileReader()
-      reader.onloadend = () => setSelfiePreview(reader.result as string)
-      reader.readAsDataURL(file)
+      
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please upload an image file')
+        return
+      }
+      
+      // Validate file size (max 10MB original)
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error('File is too large. Maximum size is 10MB')
+        return
+      }
+      
+      try {
+        toast.loading('Compressing image...')
+        const compressedFile = await compressImage(file, 500) // Max 500KB
+        toast.dismiss()
+        toast.success(`Image compressed from ${(file.size / 1024).toFixed(0)}KB to ${(compressedFile.size / 1024).toFixed(0)}KB`)
+        
+        setFormData(prev => ({ ...prev, selfieImage: compressedFile }))
+        const reader = new FileReader()
+        reader.onloadend = () => setSelfiePreview(reader.result as string)
+        reader.readAsDataURL(compressedFile)
+      } catch (error) {
+        toast.dismiss()
+        toast.error('Failed to compress image')
+        console.error('Compression error:', error)
+      }
     }
   }
 
