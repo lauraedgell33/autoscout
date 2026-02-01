@@ -26,6 +26,10 @@ class UserConsentResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-shield-check';
 
+    protected static ?string $modelLabel = 'User Consent';
+
+    protected static ?string $pluralModelLabel = 'User Consents';
+
     public static function getNavigationGroup(): ?string
     {
         return 'Settings';
@@ -33,7 +37,7 @@ class UserConsentResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return 6;
+        return 3;
     }
 
     public static function getGloballySearchableAttributes(): array

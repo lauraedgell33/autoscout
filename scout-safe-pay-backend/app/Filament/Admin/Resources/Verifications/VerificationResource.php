@@ -41,6 +41,10 @@ class VerificationResource extends Resource
 
     protected static ?string $navigationLabel = 'KYC Verifications';
 
+    protected static ?string $modelLabel = 'Verification';
+
+    protected static ?string $pluralModelLabel = 'Verifications';
+
     public static function getNavigationGroup(): ?string
     {
         return 'Management';
@@ -48,7 +52,7 @@ class VerificationResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return 5;
+        return 2;
     }
 
     public static function getNavigationBadge(): ?string

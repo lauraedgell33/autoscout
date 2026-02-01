@@ -22,14 +22,18 @@ class FavoriteResource extends Resource
 
     protected static ?string $navigationLabel = 'Favorites';
 
+    protected static ?string $modelLabel = 'Favorite';
+
+    protected static ?string $pluralModelLabel = 'Favorites';
+
     public static function getNavigationGroup(): ?string
     {
-        return 'Content';
+        return 'Marketplace';
     }
 
     public static function getNavigationSort(): ?int
     {
-        return 5;
+        return 3;
     }
 
     public static function getGloballySearchableAttributes(): array

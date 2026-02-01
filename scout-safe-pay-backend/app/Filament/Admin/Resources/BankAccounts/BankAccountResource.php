@@ -20,9 +20,33 @@ class BankAccountResource extends Resource
 {
     protected static ?string $model = BankAccount::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingLibrary;
 
-    protected static ?string $recordTitleAttribute = 'account_number';
+    protected static ?string $recordTitleAttribute = 'account_holder_name';
+
+    protected static ?string $modelLabel = 'Bank Account';
+
+    protected static ?string $pluralModelLabel = 'Bank Accounts';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Financial';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 2;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('is_verified', false)->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'danger';
+    }
 
     public static function form(Schema $schema): Schema
     {

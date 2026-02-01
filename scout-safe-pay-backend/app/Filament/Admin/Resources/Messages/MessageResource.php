@@ -30,14 +30,28 @@ class MessageResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'message';
 
+    protected static ?string $modelLabel = 'Message';
+
+    protected static ?string $pluralModelLabel = 'Messages';
+
     public static function getNavigationGroup(): ?string
     {
-        return 'Communication';
+        return 'Support';
     }
 
     public static function getNavigationSort(): ?int
     {
-        return 1;
+        return 2;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('is_read', false)->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'info';
     }
 
     public static function getGloballySearchableAttributes(): array

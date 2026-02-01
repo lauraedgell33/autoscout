@@ -21,15 +21,29 @@ class PaymentResource extends Resource
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-credit-card';
     
     protected static ?string $recordTitleAttribute = 'payment_reference';
+
+    protected static ?string $modelLabel = 'Payment';
+
+    protected static ?string $pluralModelLabel = 'Payments';
     
     public static function getNavigationGroup(): ?string
     {
-        return 'Transactions';
+        return 'Financial';
     }
     
     public static function getNavigationSort(): ?int
     {
-        return 2;
+        return 3;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', 'pending')->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
     }
     
     public static function getGloballySearchableAttributes(): array

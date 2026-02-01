@@ -57,96 +57,108 @@ class VehicleForm
     {
         return $schema
             ->components([
-                Grid::make(3)->schema([
-                    Select::make('category')
-                        ->label('Category')
-                        ->options([
-                            'car' => '🚗 Car',
-                            'motorcycle' => '🏍️ Motorcycle',
-                            'van' => '🚐 Van',
-                            'truck' => '🚚 Truck',
-                            'trailer' => '🚛 Trailer',
-                            'caravan' => '🚙 Caravan',
-                            'motorhome' => '🏕️ Motorhome',
-                            'construction_machinery' => '🏗️ Construction Machinery',
-                            'agricultural_machinery' => '🚜 Agricultural Machinery',
-                            'forklift' => '🔧 Forklift',
-                            'boat' => '⛵ Boat',
-                            'atv' => '🛞 ATV',
-                            'quad' => '🏁 Quad',
-                        ])
-                        ->required()
-                        ->default('car')
-                        ->native(false)
-                        ->searchable()
-                        ->live(),
-                    
-                    Select::make('status')
-                        ->label('Status')
-                        ->options([
-                            'draft' => 'Draft',
-                            'active' => 'Active',
-                            'pending' => 'Pending',
-                            'sold' => 'Sold',
-                            'reserved' => 'Reserved',
-                        ])
-                        ->required()
-                        ->default('draft')
-                        ->native(false),
-                    
-                    Select::make('dealer_id')
-                        ->label('Dealer')
-                        ->relationship('dealer', 'name')
-                        ->searchable()
-                        ->preload(),
-                ]),
-                
-                Select::make('seller_id')
-                    ->label('Seller')
-                    ->relationship('seller', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                // Basic Information Section
+                Section::make('Basic Information')
+                    ->icon('heroicon-o-information-circle')
+                    ->schema([
+                        Grid::make(4)->schema([
+                            Select::make('category')
+                                ->label('Category')
+                                ->options([
+                                    'car' => '🚗 Car',
+                                    'motorcycle' => '🏍️ Motorcycle',
+                                    'van' => '🚐 Van',
+                                    'truck' => '🚚 Truck',
+                                    'trailer' => '🚛 Trailer',
+                                    'caravan' => '🚙 Caravan',
+                                    'motorhome' => '🏕️ Motorhome',
+                                    'construction_machinery' => '🏗️ Construction Machinery',
+                                    'agricultural_machinery' => '🚜 Agricultural Machinery',
+                                    'forklift' => '🔧 Forklift',
+                                    'boat' => '⛵ Boat',
+                                    'atv' => '🛞 ATV',
+                                    'quad' => '🏁 Quad',
+                                ])
+                                ->required()
+                                ->default('car')
+                                ->native(false)
+                                ->searchable()
+                                ->live(),
+                            
+                            Select::make('status')
+                                ->label('Status')
+                                ->options([
+                                    'draft' => '📝 Draft',
+                                    'active' => '✅ Active',
+                                    'pending' => '⏳ Pending',
+                                    'sold' => '💰 Sold',
+                                    'reserved' => '🔒 Reserved',
+                                ])
+                                ->required()
+                                ->default('draft')
+                                ->native(false),
+                            
+                            Select::make('seller_id')
+                                ->label('Seller')
+                                ->relationship('seller', 'name')
+                                ->searchable()
+                                ->preload()
+                                ->required(),
+                            
+                            Select::make('dealer_id')
+                                ->label('Dealer')
+                                ->relationship('dealer', 'name')
+                                ->searchable()
+                                ->preload(),
+                        ]),
+                    ])
+                    ->columnSpanFull(),
 
-                Grid::make(3)->schema([
-                    TextInput::make('make')
-                        ->label('Make')
-                        ->required()
-                        ->maxLength(100)
-                        ->placeholder('e.g. BMW, Audi, Mercedes'),
-                    
-                    TextInput::make('model')
-                        ->label('Model')
-                        ->required()
-                        ->maxLength(100)
-                        ->placeholder('e.g. X5, A4, C-Class'),
-                    
-                    TextInput::make('year')
-                        ->label('Year')
-                        ->required()
-                        ->numeric()
-                        ->minValue(1900)
-                        ->maxValue(date('Y') + 1)
-                        ->placeholder(date('Y')),
-                ]),
-                
-                Grid::make(2)->schema([
-                    TextInput::make('vin')
-                        ->label('VIN')
-                        ->maxLength(17)
-                        ->unique(ignoreRecord: true)
-                        ->placeholder('17 characters')
-                        ->helperText('Vehicle Identification Number')
-                        ->visible(fn (Get $get): bool => !in_array($get('category'), self::$noVinCategories)),
-                    
-                    TextInput::make('color')
-                        ->label('Color')
-                        ->maxLength(50)
-                        ->placeholder('e.g. Black, White, Red'),
-                ]),
+                // Vehicle Details Section
+                Section::make('Vehicle Details')
+                    ->icon('heroicon-o-truck')
+                    ->schema([
+                        Grid::make(4)->schema([
+                            TextInput::make('make')
+                                ->label('Make')
+                                ->required()
+                                ->maxLength(100)
+                                ->placeholder('e.g. BMW, Audi, Mercedes'),
+                            
+                            TextInput::make('model')
+                                ->label('Model')
+                                ->required()
+                                ->maxLength(100)
+                                ->placeholder('e.g. X5, A4, C-Class'),
+                            
+                            TextInput::make('year')
+                                ->label('Year')
+                                ->required()
+                                ->numeric()
+                                ->minValue(1900)
+                                ->maxValue(date('Y') + 1)
+                                ->placeholder(date('Y')),
+                            
+                            TextInput::make('color')
+                                ->label('Color')
+                                ->maxLength(50)
+                                ->placeholder('e.g. Black, White, Red'),
+                        ]),
+                        Grid::make(2)->schema([
+                            TextInput::make('vin')
+                                ->label('VIN')
+                                ->maxLength(17)
+                                ->unique(ignoreRecord: true)
+                                ->placeholder('17 characters')
+                                ->helperText('Vehicle Identification Number')
+                                ->visible(fn (Get $get): bool => !in_array($get('category'), self::$noVinCategories)),
+                        ]),
+                    ])
+                    ->columnSpanFull(),
 
                 // Technical Details Section - Dynamic based on category
                 Section::make('Technical Details')
+                    ->icon('heroicon-o-cog-6-tooth')
                     ->description(fn (Get $get): string => match($get('category')) {
                         'agricultural_machinery' => 'Specifications for agricultural machinery',
                         'construction_machinery' => 'Specifications for construction equipment',
@@ -155,18 +167,18 @@ class VehicleForm
                         default => 'Vehicle technical specifications',
                     })
                     ->schema([
-                        Grid::make(3)->schema([
+                        Grid::make(4)->schema([
                             Select::make('fuel_type')
                                 ->label('Fuel Type')
                                 ->options([
-                                    'petrol' => 'Petrol',
-                                    'diesel' => 'Diesel',
-                                    'electric' => 'Electric',
-                                    'hybrid' => 'Hybrid',
-                                    'plugin_hybrid' => 'Plug-in Hybrid',
-                                    'lpg' => 'LPG',
-                                    'cng' => 'CNG',
-                                    'hydrogen' => 'Hydrogen',
+                                    'petrol' => '⛽ Petrol',
+                                    'diesel' => '🛢️ Diesel',
+                                    'electric' => '⚡ Electric',
+                                    'hybrid' => '🔋 Hybrid',
+                                    'plugin_hybrid' => '🔌 Plug-in Hybrid',
+                                    'lpg' => '💨 LPG',
+                                    'cng' => '💨 CNG',
+                                    'hydrogen' => '💧 Hydrogen',
                                 ])
                                 ->native(false)
                                 ->visible(fn (Get $get): bool => in_array($get('category'), self::$motorizedCategories)),
@@ -174,9 +186,9 @@ class VehicleForm
                             Select::make('transmission')
                                 ->label('Transmission')
                                 ->options([
-                                    'manual' => 'Manual',
-                                    'automatic' => 'Automatic',
-                                    'semi_automatic' => 'Semi-Automatic',
+                                    'manual' => '🔧 Manual',
+                                    'automatic' => '🅰️ Automatic',
+                                    'semi_automatic' => '⚙️ Semi-Automatic',
                                 ])
                                 ->native(false)
                                 ->visible(fn (Get $get): bool => in_array($get('category'), ['car', 'van', 'truck', 'motorcycle', 'atv', 'quad'])),
@@ -191,24 +203,6 @@ class VehicleForm
                                 ->helperText(fn (Get $get): string => in_array($get('category'), self::$hoursCategories) 
                                     ? 'Total operating hours' 
                                     : 'Odometer reading in kilometers'),
-                        ]),
-                        
-                        Grid::make(3)->schema([
-                            TextInput::make('engine_size')
-                                ->label(fn (Get $get): string => $get('category') === 'boat' ? 'Engine Displacement' : 'Engine Size')
-                                ->numeric()
-                                ->suffix('cc')
-                                ->minValue(0)
-                                ->placeholder('2000')
-                                ->visible(fn (Get $get): bool => in_array($get('category'), self::$motorizedCategories) && $get('category') !== 'trailer'),
-                            
-                            TextInput::make('power_hp')
-                                ->label(fn (Get $get): string => $get('category') === 'boat' ? 'Engine Power' : 'Power')
-                                ->numeric()
-                                ->suffix('HP')
-                                ->minValue(0)
-                                ->placeholder('150')
-                                ->visible(fn (Get $get): bool => in_array($get('category'), self::$motorizedCategories) && $get('category') !== 'trailer'),
                             
                             Select::make('body_type')
                                 ->label('Body Type')
@@ -254,8 +248,23 @@ class VehicleForm
                                 ->visible(fn (Get $get): bool => in_array($get('category'), ['car', 'truck', 'van', 'boat', 'trailer'])),
                         ]),
                         
-                        // Doors/Seats - only for passenger vehicles
-                        Grid::make(2)->schema([
+                        Grid::make(4)->schema([
+                            TextInput::make('engine_size')
+                                ->label(fn (Get $get): string => $get('category') === 'boat' ? 'Engine Displacement' : 'Engine Size')
+                                ->numeric()
+                                ->suffix('cc')
+                                ->minValue(0)
+                                ->placeholder('2000')
+                                ->visible(fn (Get $get): bool => in_array($get('category'), self::$motorizedCategories) && $get('category') !== 'trailer'),
+                            
+                            TextInput::make('power_hp')
+                                ->label(fn (Get $get): string => $get('category') === 'boat' ? 'Engine Power' : 'Power')
+                                ->numeric()
+                                ->suffix('HP')
+                                ->minValue(0)
+                                ->placeholder('150')
+                                ->visible(fn (Get $get): bool => in_array($get('category'), self::$motorizedCategories) && $get('category') !== 'trailer'),
+                            
                             TextInput::make('doors')
                                 ->label('Doors')
                                 ->numeric()
@@ -274,7 +283,7 @@ class VehicleForm
                         ]),
                         
                         // Special fields for specific categories
-                        Grid::make(2)->schema([
+                        Grid::make(4)->schema([
                             TextInput::make('lifting_capacity')
                                 ->label('Lifting Capacity')
                                 ->numeric()
@@ -293,87 +302,117 @@ class VehicleForm
                                 ->helperText('For harvesters, plows, etc.')
                                 ->visible(fn (Get $get): bool => $get('category') === 'agricultural_machinery'),
                         ]),
-                    ]),
-
-                Grid::make(3)->schema([
-                    TextInput::make('price')
-                        ->label('Price')
-                        ->required()
-                        ->numeric()
-                        ->minValue(0)
-                        ->prefix('€')
-                        ->placeholder('25000'),
-                    
-                    Select::make('currency')
-                        ->label('Currency')
-                        ->options([
-                            'EUR' => 'EUR (€)',
-                            'USD' => 'USD ($)',
-                            'GBP' => 'GBP (£)',
-                            'RON' => 'RON',
-                        ])
-                        ->required()
-                        ->default('EUR')
-                        ->native(false),
-                    
-                    TextInput::make('location_city')
-                        ->label('City')
-                        ->maxLength(100)
-                        ->placeholder('e.g. Berlin'),
-                ]),
-                
-                TextInput::make('location_country')
-                    ->label('Country')
-                    ->required()
-                    ->default('DE')
-                    ->maxLength(2)
-                    ->placeholder('Country code (DE, US, etc.)'),
-
-                Textarea::make('description')
-                    ->label('Description')
-                    ->rows(4)
-                    ->columnSpanFull()
-                    ->placeholder('Detailed vehicle description...'),
-                
-                FileUpload::make('primary_image')
-                    ->label('Primary Image')
-                    ->image()
-                    ->imageEditor()
-                    ->imageEditorAspectRatios([
-                        '16:9',
-                        '4:3',
-                        '1:1',
                     ])
-                    ->disk('public')
-                    ->maxSize(5120)
-                    ->directory('vehicles/primary')
-                    ->visibility('public')
-                    ->columnSpanFull(),
-                
-                FileUpload::make('images')
-                    ->label('Image Gallery')
-                    ->image()
-                    ->multiple()
-                    ->reorderable()
-                    ->disk('public')
-                    ->maxFiles(20)
-                    ->maxSize(5120)
-                    ->directory('vehicles/gallery')
-                    ->visibility('public')
                     ->columnSpanFull()
-                    ->helperText('You can add up to 20 images'),
+                    ->collapsible(),
 
-                Grid::make(2)->schema([
-                    TextInput::make('autoscout_listing_id')
-                        ->label('AutoScout24 Listing ID')
-                        ->maxLength(100)
-                        ->placeholder('AutoScout24 listing ID'),
-                    
-                    Textarea::make('autoscout_data')
-                        ->label('AutoScout24 Data (JSON)')
-                        ->rows(3)
-                        ->placeholder('Additional data in JSON format'),
-                ]),
+                // Pricing & Location Section
+                Section::make('Pricing & Location')
+                    ->icon('heroicon-o-currency-euro')
+                    ->schema([
+                        Grid::make(4)->schema([
+                            TextInput::make('price')
+                                ->label('Price')
+                                ->required()
+                                ->numeric()
+                                ->minValue(0)
+                                ->prefix('€')
+                                ->placeholder('25000'),
+                            
+                            Select::make('currency')
+                                ->label('Currency')
+                                ->options([
+                                    'EUR' => '🇪🇺 EUR (€)',
+                                    'USD' => '🇺🇸 USD ($)',
+                                    'GBP' => '🇬🇧 GBP (£)',
+                                    'RON' => '🇷🇴 RON',
+                                    'CHF' => '🇨🇭 CHF',
+                                    'PLN' => '🇵🇱 PLN',
+                                ])
+                                ->required()
+                                ->default('EUR')
+                                ->native(false),
+                            
+                            TextInput::make('location_city')
+                                ->label('City')
+                                ->maxLength(100)
+                                ->placeholder('e.g. Berlin'),
+                            
+                            TextInput::make('location_country')
+                                ->label('Country')
+                                ->required()
+                                ->default('DE')
+                                ->maxLength(2)
+                                ->placeholder('Country code (DE, US, etc.)'),
+                        ]),
+                    ])
+                    ->columnSpanFull(),
+
+                // Description Section
+                Section::make('Description')
+                    ->icon('heroicon-o-document-text')
+                    ->schema([
+                        Textarea::make('description')
+                            ->label('Vehicle Description')
+                            ->rows(4)
+                            ->placeholder('Detailed vehicle description...'),
+                    ])
+                    ->columnSpanFull(),
+
+                // Images Section
+                Section::make('Images')
+                    ->icon('heroicon-o-photo')
+                    ->schema([
+                        Grid::make(2)->schema([
+                            FileUpload::make('primary_image')
+                                ->label('Primary Image')
+                                ->image()
+                                ->imageEditor()
+                                ->imageEditorAspectRatios([
+                                    '16:9',
+                                    '4:3',
+                                    '1:1',
+                                ])
+                                ->disk('public')
+                                ->maxSize(5120)
+                                ->directory('vehicles/primary')
+                                ->visibility('public'),
+                            
+                            FileUpload::make('images')
+                                ->label('Image Gallery')
+                                ->image()
+                                ->multiple()
+                                ->reorderable()
+                                ->disk('public')
+                                ->maxFiles(20)
+                                ->maxSize(5120)
+                                ->directory('vehicles/gallery')
+                                ->visibility('public')
+                                ->helperText('You can add up to 20 images'),
+                        ]),
+                    ])
+                    ->columnSpanFull()
+                    ->collapsible(),
+
+                // External Data Section
+                Section::make('External Data')
+                    ->icon('heroicon-o-link')
+                    ->schema([
+                        Grid::make(2)->schema([
+                            TextInput::make('autoscout_listing_id')
+                                ->label('AutoScout24 Listing ID')
+                                ->maxLength(100)
+                                ->placeholder('AutoScout24 listing ID'),
+                            
+                            Textarea::make('autoscout_data')
+                                ->label('AutoScout24 Data (JSON)')
+                                ->rows(3)
+                                ->placeholder('Additional data in JSON format'),
+                        ]),
+                    ])
+                    ->columnSpanFull()
+                    ->collapsible()
+                    ->collapsed(),
             ]);
     }
 }

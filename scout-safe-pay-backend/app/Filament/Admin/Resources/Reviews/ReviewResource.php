@@ -36,14 +36,18 @@ class ReviewResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'id';
 
+    protected static ?string $modelLabel = 'Review';
+
+    protected static ?string $pluralModelLabel = 'Reviews';
+
     public static function getNavigationGroup(): ?string
     {
-        return 'Content';
+        return 'Marketplace';
     }
 
     public static function getNavigationSort(): ?int
     {
-        return 3;
+        return 2;
     }
 
     public static function getNavigationBadge(): ?string
@@ -65,83 +69,94 @@ class ReviewResource extends Resource
     {
         return $schema
             ->components([
+                // Review Details Section
                 Schemas\Components\Section::make('Review Details')
+                    ->icon('heroicon-o-star')
                     ->schema([
-                        Forms\Components\Select::make('reviewer_id')
-                            ->label('Reviewer')
-                            ->relationship('reviewer', 'name')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
+                        Schemas\Components\Grid::make(4)->schema([
+                            Forms\Components\Select::make('reviewer_id')
+                                ->label('Reviewer')
+                                ->relationship('reviewer', 'name')
+                                ->searchable()
+                                ->preload()
+                                ->required(),
 
-                        Forms\Components\Select::make('reviewee_id')
-                            ->label('Reviewee')
-                            ->relationship('reviewee', 'name')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
+                            Forms\Components\Select::make('reviewee_id')
+                                ->label('Reviewee')
+                                ->relationship('reviewee', 'name')
+                                ->searchable()
+                                ->preload()
+                                ->required(),
 
-                        Forms\Components\Select::make('transaction_id')
-                            ->label('Transaction')
-                            ->relationship('transaction', 'transaction_code')
-                            ->searchable()
-                            ->preload(),
+                            Forms\Components\Select::make('transaction_id')
+                                ->label('Transaction')
+                                ->relationship('transaction', 'transaction_code')
+                                ->searchable()
+                                ->preload(),
 
-                        Forms\Components\Select::make('vehicle_id')
-                            ->label('Vehicle')
-                            ->relationship('vehicle', 'id')
-                            ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->make} {$record->model} ({$record->year})")
-                            ->searchable()
-                            ->preload(),
+                            Forms\Components\Select::make('vehicle_id')
+                                ->label('Vehicle')
+                                ->relationship('vehicle', 'id')
+                                ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->make} {$record->model} ({$record->year})")
+                                ->searchable()
+                                ->preload(),
+                        ]),
+                        Schemas\Components\Grid::make(4)->schema([
+                            Forms\Components\Select::make('review_type')
+                                ->options([
+                                    'buyer' => '💳 Buyer Review',
+                                    'seller' => '🏠 Seller Review',
+                                    'vehicle' => '🚗 Vehicle Review',
+                                ])
+                                ->required()
+                                ->native(false),
 
-                        Forms\Components\Select::make('review_type')
-                            ->options([
-                                'buyer' => 'Buyer Review',
-                                'seller' => 'Seller Review',
-                                'vehicle' => 'Vehicle Review',
-                            ])
-                            ->required(),
-
-                        Forms\Components\Select::make('rating')
-                            ->options([
-                                1 => '1 Star',
-                                2 => '2 Stars',
-                                3 => '3 Stars',
-                                4 => '4 Stars',
-                                5 => '5 Stars',
-                            ])
-                            ->required(),
-
+                            Forms\Components\Select::make('rating')
+                                ->options([
+                                    1 => '⭐ 1 Star',
+                                    2 => '⭐⭐ 2 Stars',
+                                    3 => '⭐⭐⭐ 3 Stars',
+                                    4 => '⭐⭐⭐⭐ 4 Stars',
+                                    5 => '⭐⭐⭐⭐⭐ 5 Stars',
+                                ])
+                                ->required()
+                                ->native(false),
+                        ]),
                         Forms\Components\Textarea::make('comment')
-                            ->rows(4)
-                            ->maxLength(1000)
-                            ->columnSpanFull(),
+                            ->rows(3)
+                            ->maxLength(1000),
                     ])
-                    ->columns(2),
+                    ->columnSpanFull(),
 
+                // Moderation Section
                 Schemas\Components\Section::make('Moderation')
+                    ->icon('heroicon-o-shield-check')
                     ->schema([
-                        Forms\Components\Select::make('moderation_status')
-                            ->options([
-                                'pending' => 'Pending',
-                                'approved' => 'Approved',
-                                'rejected' => 'Rejected',
-                            ])
-                            ->default('pending')
-                            ->required(),
+                        Schemas\Components\Grid::make(4)->schema([
+                            Forms\Components\Select::make('moderation_status')
+                                ->options([
+                                    'pending' => '⏳ Pending',
+                                    'approved' => '✅ Approved',
+                                    'rejected' => '❌ Rejected',
+                                ])
+                                ->default('pending')
+                                ->required()
+                                ->native(false),
 
-                        Forms\Components\Toggle::make('verified')
-                            ->label('Verified Purchase'),
+                            Forms\Components\Toggle::make('verified')
+                                ->label('Verified Purchase')
+                                ->onColor('success'),
 
-                        Forms\Components\Toggle::make('flagged')
-                            ->label('Flagged for Review'),
-
+                            Forms\Components\Toggle::make('flagged')
+                                ->label('Flagged for Review')
+                                ->onColor('danger'),
+                        ]),
                         Forms\Components\Textarea::make('moderation_notes')
                             ->label('Admin Notes')
-                            ->rows(2)
-                            ->columnSpanFull(),
+                            ->rows(2),
                     ])
-                    ->columns(3),
+                    ->columnSpanFull()
+                    ->collapsible(),
             ]);
     }
 

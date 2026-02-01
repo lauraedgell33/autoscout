@@ -21,6 +21,8 @@ class ActivityLogResource extends Resource
     protected static ?string $navigationLabel = 'Activity Log';
     
     protected static ?string $modelLabel = 'Activity';
+
+    protected static ?string $pluralModelLabel = 'Activity Log';
     
     public static function getNavigationGroup(): ?string
     {
@@ -29,7 +31,7 @@ class ActivityLogResource extends Resource
     
     public static function getNavigationSort(): ?int
     {
-        return 99;
+        return 1;
     }
 
     public static function table(Table $table): Table

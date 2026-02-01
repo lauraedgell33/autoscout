@@ -20,9 +20,33 @@ class TransactionResource extends Resource
 {
     protected static ?string $model = Transaction::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
 
-    protected static ?string $recordTitleAttribute = 'id';
+    protected static ?string $recordTitleAttribute = 'transaction_code';
+
+    protected static ?string $modelLabel = 'Transaction';
+
+    protected static ?string $pluralModelLabel = 'Transactions';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Financial';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 1;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::whereIn('status', ['pending', 'payment_pending', 'payment_uploaded'])->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
+    }
 
     public static function form(Schema $schema): Schema
     {

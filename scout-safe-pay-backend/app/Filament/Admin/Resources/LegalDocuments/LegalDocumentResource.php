@@ -40,6 +40,10 @@ class LegalDocumentResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    protected static ?string $modelLabel = 'Legal Document';
+
+    protected static ?string $pluralModelLabel = 'Legal Documents';
+
     public static function getNavigationGroup(): ?string
     {
         return 'Settings';
@@ -47,7 +51,7 @@ class LegalDocumentResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return 5;
+        return 2;
     }
 
     public static function getGloballySearchableAttributes(): array
@@ -59,51 +63,61 @@ class LegalDocumentResource extends Resource
     {
         return $schema
             ->components([
+                // Document Information Section
                 Section::make('Document Information')
+                    ->icon('heroicon-o-scale')
                     ->schema([
-                        Select::make('type')
-                            ->options([
-                                LegalDocument::TYPE_TERMS_OF_SERVICE => 'Terms of Service',
-                                LegalDocument::TYPE_PRIVACY_POLICY => 'Privacy Policy',
-                                LegalDocument::TYPE_COOKIE_POLICY => 'Cookie Policy',
-                                LegalDocument::TYPE_PURCHASE_AGREEMENT => 'Purchase Agreement',
-                                LegalDocument::TYPE_REFUND_POLICY => 'Refund Policy',
-                            ])
-                            ->required(),
+                        Schemas\Components\Grid::make(4)->schema([
+                            Select::make('type')
+                                ->options([
+                                    LegalDocument::TYPE_TERMS_OF_SERVICE => '📄 Terms of Service',
+                                    LegalDocument::TYPE_PRIVACY_POLICY => '🔒 Privacy Policy',
+                                    LegalDocument::TYPE_COOKIE_POLICY => '🍪 Cookie Policy',
+                                    LegalDocument::TYPE_PURCHASE_AGREEMENT => '📝 Purchase Agreement',
+                                    LegalDocument::TYPE_REFUND_POLICY => '💰 Refund Policy',
+                                ])
+                                ->required()
+                                ->native(false),
 
-                        TextInput::make('title')
-                            ->required()
-                            ->maxLength(255),
+                            TextInput::make('title')
+                                ->required()
+                                ->maxLength(255),
 
-                        TextInput::make('version')
-                            ->required()
-                            ->default('1.0'),
+                            TextInput::make('version')
+                                ->required()
+                                ->default('1.0'),
 
-                        Select::make('language')
-                            ->options([
-                                'en' => 'English',
-                                'de' => 'German',
-                                'ro' => 'Romanian',
-                                'fr' => 'French',
-                            ])
-                            ->default('en')
-                            ->required(),
+                            Select::make('language')
+                                ->options([
+                                    'en' => '🇬🇧 English',
+                                    'de' => '🇩🇪 German',
+                                    'ro' => '🇷🇴 Romanian',
+                                    'fr' => '🇫🇷 French',
+                                ])
+                                ->default('en')
+                                ->required()
+                                ->native(false),
+                        ]),
+                        Schemas\Components\Grid::make(4)->schema([
+                            Toggle::make('is_active')
+                                ->label('Active')
+                                ->default(false)
+                                ->onColor('success'),
 
-                        Toggle::make('is_active')
-                            ->label('Active')
-                            ->default(false),
-
-                        DateTimePicker::make('effective_date')
-                            ->default(now()),
+                            DateTimePicker::make('effective_date')
+                                ->default(now()),
+                        ]),
                     ])
-                    ->columns(2),
+                    ->columnSpanFull(),
 
+                // Content Section
                 Section::make('Content')
+                    ->icon('heroicon-o-document-text')
                     ->schema([
                         RichEditor::make('content')
-                            ->required()
-                            ->columnSpanFull(),
-                    ]),
+                            ->required(),
+                    ])
+                    ->columnSpanFull(),
             ]);
     }
 

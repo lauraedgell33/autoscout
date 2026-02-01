@@ -36,9 +36,13 @@ class DisputeResource extends Resource
     
     protected static ?string $recordTitleAttribute = 'dispute_code';
     
+    protected static ?string $modelLabel = 'Dispute';
+
+    protected static ?string $pluralModelLabel = 'Disputes';
+
     public static function getNavigationGroup(): ?string
     {
-        return 'Support & Resolution';
+        return 'Support';
     }
     
     public static function getNavigationSort(): ?int
@@ -61,55 +65,64 @@ class DisputeResource extends Resource
     {
         return $schema
             ->schema([
+                // Dispute Information Section
                 Schemas\Components\Section::make('Dispute Information')
+                    ->icon('heroicon-o-shield-exclamation')
                     ->schema([
-                        Forms\Components\TextInput::make('dispute_code')
-                            ->label('Dispute Code')
-                            ->default(fn () => 'DSP-' . strtoupper(substr(md5(time() . rand()), 0, 8)))
-                            ->required()
-                            ->unique(ignoreRecord: true)
-                            ->maxLength(50),
+                        Schemas\Components\Grid::make(4)->schema([
+                            Forms\Components\TextInput::make('dispute_code')
+                                ->label('Dispute Code')
+                                ->default(fn () => 'DSP-' . strtoupper(substr(md5(time() . rand()), 0, 8)))
+                                ->required()
+                                ->unique(ignoreRecord: true)
+                                ->maxLength(50),
 
-                        Forms\Components\Select::make('transaction_id')
-                            ->label('Transaction')
-                            ->relationship('transaction', 'id')
-                            ->searchable()
-                            ->required()
-                            ->helperText('The transaction this dispute is about'),
+                            Forms\Components\Select::make('transaction_id')
+                                ->label('Transaction')
+                                ->relationship('transaction', 'id')
+                                ->searchable()
+                                ->required()
+                                ->helperText('The transaction this dispute is about'),
 
-                        Forms\Components\Select::make('raised_by_user_id')
-                            ->label('Raised By')
-                            ->relationship('raisedBy', 'name')
-                            ->searchable()
-                            ->required(),
+                            Forms\Components\Select::make('raised_by_user_id')
+                                ->label('Raised By')
+                                ->relationship('raisedBy', 'name')
+                                ->searchable()
+                                ->required(),
 
-                        Forms\Components\Select::make('type')
-                            ->label('Dispute Type')
-                            ->options([
-                                'payment' => 'Payment Issue',
-                                'delivery' => 'Delivery Issue',
-                                'vehicle_condition' => 'Vehicle Condition',
-                                'documentation' => 'Documentation Issue',
-                                'fraud' => 'Suspected Fraud',
-                                'other' => 'Other',
-                            ])
-                            ->required()
-                            ->reactive(),
+                            Forms\Components\Select::make('type')
+                                ->label('Dispute Type')
+                                ->options([
+                                    'payment' => '💳 Payment Issue',
+                                    'delivery' => '🚚 Delivery Issue',
+                                    'vehicle_condition' => '🚗 Vehicle Condition',
+                                    'documentation' => '📄 Documentation Issue',
+                                    'fraud' => '⚠️ Suspected Fraud',
+                                    'other' => '❓ Other',
+                                ])
+                                ->required()
+                                ->reactive()
+                                ->native(false),
+                        ]),
+                        Schemas\Components\Grid::make(2)->schema([
+                            Forms\Components\Textarea::make('reason')
+                                ->label('Reason')
+                                ->required()
+                                ->rows(2)
+                                ->maxLength(255),
 
-                        Forms\Components\Textarea::make('reason')
-                            ->label('Reason')
-                            ->required()
-                            ->rows(2)
-                            ->maxLength(255),
+                            Forms\Components\Textarea::make('description')
+                                ->label('Detailed Description')
+                                ->required()
+                                ->rows(2)
+                                ->maxLength(2000),
+                        ]),
+                    ])
+                    ->columnSpanFull(),
 
-                        Forms\Components\Textarea::make('description')
-                            ->label('Detailed Description')
-                            ->required()
-                            ->rows(4)
-                            ->maxLength(2000),
-                    ])->columns(2),
-
+                // Evidence Section
                 Schemas\Components\Section::make('Evidence')
+                    ->icon('heroicon-o-paper-clip')
                     ->schema([
                         Forms\Components\FileUpload::make('evidence_urls')
                             ->label('Evidence Files')
@@ -122,76 +135,94 @@ class DisputeResource extends Resource
                             ->downloadable()
                             ->openable()
                             ->previewable(),
-                    ]),
+                    ])
+                    ->columnSpanFull()
+                    ->collapsible(),
 
+                // Resolution Section
                 Schemas\Components\Section::make('Resolution')
+                    ->icon('heroicon-o-check-circle')
                     ->schema([
-                        Forms\Components\Select::make('status')
-                            ->label('Status')
-                            ->options([
-                                'open' => 'Open',
-                                'investigating' => 'Investigating',
-                                'awaiting_response' => 'Awaiting Response',
-                                'resolved' => 'Resolved',
-                                'closed' => 'Closed',
-                                'escalated' => 'Escalated',
-                            ])
-                            ->default('open')
-                            ->required()
-                            ->reactive(),
+                        Schemas\Components\Grid::make(4)->schema([
+                            Forms\Components\Select::make('status')
+                                ->label('Status')
+                                ->options([
+                                    'open' => '🟢 Open',
+                                    'investigating' => '🔍 Investigating',
+                                    'awaiting_response' => '⏳ Awaiting Response',
+                                    'resolved' => '✅ Resolved',
+                                    'closed' => '🔒 Closed',
+                                    'escalated' => '🚨 Escalated',
+                                ])
+                                ->default('open')
+                                ->required()
+                                ->reactive()
+                                ->native(false),
 
-                        Forms\Components\Select::make('resolution_type')
-                            ->label('Resolution Type')
-                            ->options([
-                                'refund_full' => 'Full Refund',
-                                'refund_partial' => 'Partial Refund',
-                                'replacement' => 'Replacement',
-                                'compensation' => 'Compensation',
-                                'no_action' => 'No Action Required',
-                                'dismissed' => 'Dismissed',
-                            ])
-                            ->visible(fn (callable $get) => in_array($get('status'), ['resolved', 'closed'])),
+                            Forms\Components\Select::make('resolution_type')
+                                ->label('Resolution Type')
+                                ->options([
+                                    'refund_full' => '💰 Full Refund',
+                                    'refund_partial' => '💵 Partial Refund',
+                                    'replacement' => '🔄 Replacement',
+                                    'compensation' => '🏆 Compensation',
+                                    'no_action' => '➖ No Action Required',
+                                    'dismissed' => '❌ Dismissed',
+                                ])
+                                ->native(false)
+                                ->visible(fn (callable $get) => in_array($get('status'), ['resolved', 'closed'])),
 
+                            Forms\Components\Select::make('resolved_by')
+                                ->label('Resolved By')
+                                ->relationship('resolver', 'name')
+                                ->searchable()
+                                ->visible(fn (callable $get) => in_array($get('status'), ['resolved', 'closed'])),
+
+                            Forms\Components\DateTimePicker::make('resolved_at')
+                                ->label('Resolved At')
+                                ->visible(fn (callable $get) => in_array($get('status'), ['resolved', 'closed'])),
+                        ]),
                         Forms\Components\Textarea::make('resolution')
                             ->label('Resolution Details')
-                            ->rows(4)
+                            ->rows(3)
                             ->visible(fn (callable $get) => in_array($get('status'), ['resolved', 'closed'])),
+                    ])
+                    ->columnSpanFull(),
 
-                        Forms\Components\Select::make('resolved_by')
-                            ->label('Resolved By')
-                            ->relationship('resolver', 'name')
-                            ->searchable()
-                            ->visible(fn (callable $get) => in_array($get('status'), ['resolved', 'closed'])),
-
-                        Forms\Components\DateTimePicker::make('resolved_at')
-                            ->label('Resolved At')
-                            ->visible(fn (callable $get) => in_array($get('status'), ['resolved', 'closed'])),
-                    ])->columns(2),
-
+                // Party Responses Section
                 Schemas\Components\Section::make('Party Responses')
+                    ->icon('heroicon-o-chat-bubble-left-right')
                     ->schema([
-                        Forms\Components\Textarea::make('seller_response')
-                            ->label('Seller Response')
-                            ->rows(3)
-                            ->helperText('Response from the seller'),
+                        Schemas\Components\Grid::make(2)->schema([
+                            Forms\Components\Textarea::make('seller_response')
+                                ->label('Seller Response')
+                                ->rows(3)
+                                ->helperText('Response from the seller'),
 
-                        Forms\Components\Textarea::make('buyer_response')
-                            ->label('Buyer Response')
-                            ->rows(3)
-                            ->helperText('Response from the buyer'),
-
+                            Forms\Components\Textarea::make('buyer_response')
+                                ->label('Buyer Response')
+                                ->rows(3)
+                                ->helperText('Response from the buyer'),
+                        ]),
                         Forms\Components\Textarea::make('admin_notes')
                             ->label('Admin Notes')
-                            ->rows(3)
+                            ->rows(2)
                             ->helperText('Internal notes (not visible to users)'),
-                    ])->columns(1),
+                    ])
+                    ->columnSpanFull()
+                    ->collapsible(),
 
+                // Additional Data Section
                 Schemas\Components\Section::make('Additional Data')
+                    ->icon('heroicon-o-code-bracket')
                     ->schema([
                         Forms\Components\KeyValue::make('metadata')
                             ->label('Metadata')
                             ->helperText('Additional JSON data'),
-                    ])->collapsed(),
+                    ])
+                    ->columnSpanFull()
+                    ->collapsible()
+                    ->collapsed(),
             ]);
     }
 

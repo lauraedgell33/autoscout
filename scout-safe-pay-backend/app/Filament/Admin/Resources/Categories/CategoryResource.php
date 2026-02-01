@@ -39,9 +39,13 @@ class CategoryResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $modelLabel = 'Category';
+
+    protected static ?string $pluralModelLabel = 'Categories';
+
     public static function getNavigationGroup(): ?string
     {
-        return 'Content';
+        return 'Settings';
     }
 
     public static function getNavigationSort(): ?int
@@ -58,43 +62,48 @@ class CategoryResource extends Resource
     {
         return $schema
             ->components([
+                // Category Details Section
                 Section::make('Category Details')
+                    ->icon('heroicon-o-tag')
                     ->schema([
-                        TextInput::make('name')
-                            ->required()
-                            ->maxLength(100)
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
+                        Schemas\Components\Grid::make(4)->schema([
+                            TextInput::make('name')
+                                ->required()
+                                ->maxLength(100)
+                                ->live(onBlur: true)
+                                ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
 
-                        TextInput::make('slug')
-                            ->required()
-                            ->maxLength(100)
-                            ->unique(ignoreRecord: true),
+                            TextInput::make('slug')
+                                ->required()
+                                ->maxLength(100)
+                                ->unique(ignoreRecord: true),
 
+                            TextInput::make('icon')
+                                ->label('Icon (Heroicon name)')
+                                ->placeholder('heroicon-o-truck')
+                                ->maxLength(100),
+
+                            TextInput::make('sort_order')
+                                ->numeric()
+                                ->default(0)
+                                ->minValue(0),
+                        ]),
+                        Schemas\Components\Grid::make(4)->schema([
+                            TextInput::make('image_url')
+                                ->label('Image URL')
+                                ->url()
+                                ->maxLength(255),
+
+                            Toggle::make('is_active')
+                                ->label('Active')
+                                ->default(true)
+                                ->onColor('success'),
+                        ]),
                         Textarea::make('description')
-                            ->rows(3)
+                            ->rows(2)
                             ->maxLength(500),
-
-                        TextInput::make('icon')
-                            ->label('Icon (Heroicon name)')
-                            ->placeholder('heroicon-o-truck')
-                            ->maxLength(100),
-
-                        TextInput::make('image_url')
-                            ->label('Image URL')
-                            ->url()
-                            ->maxLength(255),
-
-                        TextInput::make('sort_order')
-                            ->numeric()
-                            ->default(0)
-                            ->minValue(0),
-
-                        Toggle::make('is_active')
-                            ->label('Active')
-                            ->default(true),
                     ])
-                    ->columns(2),
+                    ->columnSpanFull(),
             ]);
     }
 

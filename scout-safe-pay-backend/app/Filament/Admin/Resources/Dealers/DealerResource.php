@@ -18,9 +18,13 @@ class DealerResource extends Resource
 {
     protected static ?string $model = Dealer::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-storefront';
     
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?string $modelLabel = 'Dealer';
+
+    protected static ?string $pluralModelLabel = 'Dealers';
     
     public static function getNavigationGroup(): ?string
     {
@@ -29,7 +33,17 @@ class DealerResource extends Resource
     
     public static function getNavigationSort(): ?int
     {
-        return 1;
+        return 4;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', 'pending')->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
     }
     
     public static function getGloballySearchableAttributes(): array

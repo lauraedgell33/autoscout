@@ -39,14 +39,28 @@ class DocumentResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'file_name';
 
+    protected static ?string $modelLabel = 'Document';
+
+    protected static ?string $pluralModelLabel = 'Documents';
+
     public static function getNavigationGroup(): ?string
     {
-        return 'Content';
+        return 'Management';
     }
 
     public static function getNavigationSort(): ?int
     {
-        return 10;
+        return 3;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('is_verified', false)->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
     }
 
     public static function getGloballySearchableAttributes(): array
@@ -58,54 +72,65 @@ class DocumentResource extends Resource
     {
         return $schema
             ->components([
+                // Document Information Section
                 Section::make('Document Information')
+                    ->icon('heroicon-o-document-text')
                     ->schema([
-                        Select::make('transaction_id')
-                            ->relationship('transaction', 'transaction_code')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
+                        Schemas\Components\Grid::make(4)->schema([
+                            Select::make('transaction_id')
+                                ->relationship('transaction', 'transaction_code')
+                                ->searchable()
+                                ->preload()
+                                ->required(),
 
-                        Select::make('uploaded_by')
-                            ->relationship('uploader', 'name')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
+                            Select::make('uploaded_by')
+                                ->relationship('uploader', 'name')
+                                ->searchable()
+                                ->preload()
+                                ->required(),
 
-                        Select::make('type')
-                            ->options(Document::getTypes())
-                            ->required(),
+                            Select::make('type')
+                                ->options(Document::getTypes())
+                                ->required()
+                                ->native(false),
 
-                        FileUpload::make('file_path')
-                            ->label('Document File')
-                            ->directory('documents')
-                            ->visibility('private')
-                            ->maxSize(10240),
+                            TextInput::make('file_name')
+                                ->required()
+                                ->maxLength(255),
+                        ]),
+                        Schemas\Components\Grid::make(2)->schema([
+                            FileUpload::make('file_path')
+                                ->label('Document File')
+                                ->directory('documents')
+                                ->visibility('private')
+                                ->maxSize(10240),
 
-                        TextInput::make('file_name')
-                            ->required()
-                            ->maxLength(255),
-
-                        Textarea::make('description')
-                            ->rows(3)
-                            ->maxLength(1000),
+                            Textarea::make('description')
+                                ->rows(3)
+                                ->maxLength(1000),
+                        ]),
                     ])
-                    ->columns(2),
+                    ->columnSpanFull(),
 
+                // Verification Section
                 Section::make('Verification')
+                    ->icon('heroicon-o-shield-check')
                     ->schema([
-                        Toggle::make('is_verified')
-                            ->label('Verified'),
+                        Schemas\Components\Grid::make(4)->schema([
+                            Toggle::make('is_verified')
+                                ->label('Verified')
+                                ->onColor('success'),
 
-                        Select::make('verified_by')
-                            ->relationship('verifier', 'name')
-                            ->searchable()
-                            ->preload(),
-
+                            Select::make('verified_by')
+                                ->relationship('verifier', 'name')
+                                ->searchable()
+                                ->preload(),
+                        ]),
                         Textarea::make('verification_notes')
                             ->rows(2),
                     ])
-                    ->columns(3),
+                    ->columnSpanFull()
+                    ->collapsible(),
             ]);
     }
 

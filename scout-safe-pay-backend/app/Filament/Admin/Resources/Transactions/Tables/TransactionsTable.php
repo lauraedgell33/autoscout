@@ -7,7 +7,9 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
@@ -17,118 +19,121 @@ class TransactionsTable
     {
         return $table
             ->columns([
+                // Primary Info
                 TextColumn::make('transaction_code')
-                    ->searchable(),
-                TextColumn::make('buyer.name')
-                    ->searchable(),
-                TextColumn::make('seller.name')
-                    ->searchable(),
-                TextColumn::make('dealer.name')
-                    ->searchable(),
-                TextColumn::make('vehicle.id')
-                    ->searchable(),
-                TextColumn::make('amount')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('currency')
-                    ->searchable(),
-                TextColumn::make('service_fee')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('dealer_commission')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('escrow_account_iban')
-                    ->searchable(),
-                TextColumn::make('escrow_account_country')
-                    ->searchable(),
-                TextColumn::make('payment_reference')
-                    ->searchable(),
-                TextColumn::make('payment_proof_url')
-                    ->searchable(),
-                TextColumn::make('payment_proof_type')
-                    ->searchable(),
-                TextColumn::make('payment_proof_uploaded_at')
-                    ->dateTime()
-                    ->sortable(),
+                    ->label('Code')
+                    ->searchable()
+                    ->sortable()
+                    ->copyable()
+                    ->weight('bold')
+                    ->color('primary'),
+                    
                 TextColumn::make('status')
-                    ->searchable(),
-                TextColumn::make('payment_verified_by')
-                    ->numeric()
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'payment_pending' => 'warning',
+                        'payment_uploaded' => 'info',
+                        'payment_verified' => 'success',
+                        'contract_pending' => 'info',
+                        'contract_signed' => 'success',
+                        'in_delivery' => 'info',
+                        'delivered' => 'success',
+                        'completed' => 'success',
+                        'cancelled' => 'danger',
+                        'refunded' => 'danger',
+                        'disputed' => 'danger',
+                        default => 'gray',
+                    })
                     ->sortable(),
-                TextColumn::make('payment_verified_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('payment_confirmed_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('inspection_date')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('ownership_transfer_date')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('completed_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('cancelled_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
+                    
+                // Parties
+                TextColumn::make('buyer.name')
+                    ->label('Buyer')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                    
+                TextColumn::make('seller.name')
+                    ->label('Seller')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                    
+                TextColumn::make('dealer.name')
+                    ->label('Dealer')
+                    ->searchable()
+                    ->placeholder('—')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                    
+                // Financial
+                TextColumn::make('amount')
+                    ->money(fn ($record) => $record->currency ?? 'EUR')
+                    ->sortable()
+                    ->weight('bold'),
+                    
+                TextColumn::make('service_fee')
+                    ->money(fn ($record) => $record->currency ?? 'EUR')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
+                    
+                // Payment
+                TextColumn::make('payment_reference')
+                    ->label('Payment Ref')
+                    ->searchable()
+                    ->copyable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('payment_proof')
-                    ->searchable(),
-                TextColumn::make('contract_url')
-                    ->searchable(),
-                TextColumn::make('signed_contract_url')
-                    ->searchable(),
-                TextColumn::make('contract_generated_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('contract_signed_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('signature_type')
-                    ->searchable(),
-                TextColumn::make('bank_account_iban')
-                    ->searchable(),
-                TextColumn::make('bank_account_holder')
-                    ->searchable(),
-                TextColumn::make('bank_name')
-                    ->searchable(),
+                    
                 TextColumn::make('payment_deadline')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('invoice_number')
-                    ->searchable(),
-                TextColumn::make('invoice_url')
-                    ->searchable(),
-                TextColumn::make('invoice_issued_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('delivery_date')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('delivery_contact')
-                    ->searchable(),
-                TextColumn::make('delivered_at')
-                    ->dateTime()
-                    ->sortable(),
+                    ->label('Deadline')
+                    ->date()
+                    ->sortable()
+                    ->color(fn ($record) => $record->payment_deadline && $record->payment_deadline < now() && $record->status === 'payment_pending' ? 'danger' : null),
+                    
+                // Contract
+                TextColumn::make('contract_signed_at')
+                    ->label('Contract Signed')
+                    ->date()
+                    ->sortable()
+                    ->placeholder('Not signed')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                    
+                // Dates
+                TextColumn::make('created_at')
+                    ->label('Created')
+                    ->dateTime('M j, Y H:i')
+                    ->sortable()
+                    ->toggleable(),
+                    
+                TextColumn::make('completed_at')
+                    ->label('Completed')
+                    ->dateTime('M j, Y')
+                    ->sortable()
+                    ->placeholder('—')
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
+                SelectFilter::make('status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'payment_pending' => 'Payment Pending',
+                        'payment_uploaded' => 'Payment Uploaded',
+                        'payment_verified' => 'Payment Verified',
+                        'contract_pending' => 'Contract Pending',
+                        'contract_signed' => 'Contract Signed',
+                        'in_delivery' => 'In Delivery',
+                        'delivered' => 'Delivered',
+                        'completed' => 'Completed',
+                        'cancelled' => 'Cancelled',
+                        'refunded' => 'Refunded',
+                        'disputed' => 'Disputed',
+                    ])
+                    ->multiple(),
                 TrashedFilter::make(),
             ])
             ->recordActions([
+                ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([
@@ -137,6 +142,8 @@ class TransactionsTable
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->striped()
+            ->paginated([10, 25, 50, 100]);
     }
 }

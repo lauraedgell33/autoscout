@@ -17,9 +17,13 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
     
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?string $modelLabel = 'User';
+
+    protected static ?string $pluralModelLabel = 'Users';
     
     public static function getNavigationGroup(): ?string
     {
@@ -28,7 +32,17 @@ class UserResource extends Resource
     
     public static function getNavigationSort(): ?int
     {
-        return 2;
+        return 1;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('kyc_status', 'submitted')->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
     }
     
     public static function getGloballySearchableAttributes(): array

@@ -7,8 +7,11 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
@@ -18,50 +21,107 @@ class BankAccountsTable
     {
         return $table
             ->columns([
-                TextColumn::make('accountable_type')
-                    ->searchable(),
-                TextColumn::make('accountable_id')
-                    ->numeric()
-                    ->sortable(),
+                // Account Info
                 TextColumn::make('account_holder_name')
-                    ->searchable(),
+                    ->label('Account Holder')
+                    ->searchable()
+                    ->sortable()
+                    ->weight('bold'),
+                    
+                TextColumn::make('iban')
+                    ->label('IBAN')
+                    ->searchable()
+                    ->copyable()
+                    ->fontFamily('mono')
+                    ->limit(20),
+                    
                 TextColumn::make('swift_bic')
-                    ->searchable(),
+                    ->label('SWIFT/BIC')
+                    ->searchable()
+                    ->copyable()
+                    ->fontFamily('mono')
+                    ->placeholder('—'),
+                    
+                // Bank Info
                 TextColumn::make('bank_name')
-                    ->searchable(),
+                    ->label('Bank')
+                    ->searchable()
+                    ->sortable(),
+                    
                 TextColumn::make('bank_country')
-                    ->searchable(),
+                    ->label('Country')
+                    ->badge()
+                    ->sortable(),
+                    
                 TextColumn::make('currency')
-                    ->searchable(),
+                    ->badge()
+                    ->color('info')
+                    ->sortable(),
+                    
+                // Status
                 IconColumn::make('is_verified')
-                    ->boolean(),
+                    ->label('Verified')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-badge')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger'),
+                    
                 IconColumn::make('is_primary')
-                    ->boolean(),
-                TextColumn::make('verified_by')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Primary')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-star')
+                    ->falseIcon('heroicon-o-minus')
+                    ->trueColor('warning')
+                    ->falseColor('gray'),
+                    
+                // Owner Info
+                TextColumn::make('accountable_type')
+                    ->label('Owner Type')
+                    ->formatStateUsing(fn (string $state): string => class_basename($state))
+                    ->badge()
+                    ->color('gray')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                    
+                // Verification
                 TextColumn::make('verified_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('bank_statement_url')
-                    ->searchable(),
+                    ->label('Verified At')
+                    ->dateTime('M j, Y')
+                    ->sortable()
+                    ->placeholder('Not verified')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                    
+                // Timestamps
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
+                    ->label('Created')
+                    ->dateTime('M j, Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
+                TernaryFilter::make('is_verified')
+                    ->label('Verification Status')
+                    ->trueLabel('Verified')
+                    ->falseLabel('Not Verified'),
+                TernaryFilter::make('is_primary')
+                    ->label('Primary Account')
+                    ->trueLabel('Primary')
+                    ->falseLabel('Secondary'),
+                SelectFilter::make('currency')
+                    ->options([
+                        'EUR' => 'EUR',
+                        'USD' => 'USD',
+                        'GBP' => 'GBP',
+                        'CHF' => 'CHF',
+                        'RON' => 'RON',
+                        'PLN' => 'PLN',
+                    ])
+                    ->multiple(),
                 TrashedFilter::make(),
             ])
             ->recordActions([
+                ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([
@@ -70,6 +130,8 @@ class BankAccountsTable
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->striped()
+            ->paginated([10, 25, 50, 100]);
     }
 }

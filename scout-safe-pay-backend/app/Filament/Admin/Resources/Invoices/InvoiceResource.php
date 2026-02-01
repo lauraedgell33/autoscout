@@ -41,14 +41,28 @@ class InvoiceResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'invoice_number';
 
+    protected static ?string $modelLabel = 'Invoice';
+
+    protected static ?string $pluralModelLabel = 'Invoices';
+
     public static function getNavigationGroup(): ?string
     {
-        return 'Finance';
+        return 'Financial';
     }
 
     public static function getNavigationSort(): ?int
     {
-        return 2;
+        return 4;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', 'pending')->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'info';
     }
 
     public static function getGloballySearchableAttributes(): array
@@ -60,109 +74,134 @@ class InvoiceResource extends Resource
     {
         return $schema
             ->components([
+                // Invoice Information Section
                 Section::make('Invoice Information')
+                    ->icon('heroicon-o-document-text')
                     ->schema([
-                        TextInput::make('invoice_number')
-                            ->default(fn () => Invoice::generateInvoiceNumber())
-                            ->required()
-                            ->unique(ignoreRecord: true),
+                        Schemas\Components\Grid::make(4)->schema([
+                            TextInput::make('invoice_number')
+                                ->default(fn () => Invoice::generateInvoiceNumber())
+                                ->required()
+                                ->unique(ignoreRecord: true),
 
-                        Select::make('transaction_id')
-                            ->relationship('transaction', 'transaction_code')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
+                            Select::make('transaction_id')
+                                ->relationship('transaction', 'transaction_code')
+                                ->searchable()
+                                ->preload()
+                                ->required(),
 
-                        Select::make('buyer_id')
-                            ->relationship('buyer', 'name')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
+                            Select::make('buyer_id')
+                                ->relationship('buyer', 'name')
+                                ->searchable()
+                                ->preload()
+                                ->required(),
 
-                        Select::make('seller_id')
-                            ->relationship('seller', 'name')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
+                            Select::make('seller_id')
+                                ->relationship('seller', 'name')
+                                ->searchable()
+                                ->preload()
+                                ->required(),
+                        ]),
+                        Schemas\Components\Grid::make(4)->schema([
+                            Select::make('vehicle_id')
+                                ->relationship('vehicle', 'make')
+                                ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->make} {$record->model} ({$record->year})")
+                                ->searchable()
+                                ->preload(),
 
-                        Select::make('vehicle_id')
-                            ->relationship('vehicle', 'make')
-                            ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->make} {$record->model} ({$record->year})")
-                            ->searchable()
-                            ->preload(),
-
-                        Select::make('status')
-                            ->options([
-                                'pending' => 'Pending',
-                                'paid' => 'Paid',
-                                'confirmed' => 'Confirmed',
-                                'cancelled' => 'Cancelled',
-                            ])
-                            ->default('pending')
-                            ->required(),
+                            Select::make('status')
+                                ->options([
+                                    'pending' => '⏳ Pending',
+                                    'paid' => '💰 Paid',
+                                    'confirmed' => '✅ Confirmed',
+                                    'cancelled' => '❌ Cancelled',
+                                ])
+                                ->default('pending')
+                                ->required()
+                                ->native(false),
+                        ]),
                     ])
-                    ->columns(2),
+                    ->columnSpanFull(),
 
+                // Amount Details Section
                 Section::make('Amount Details')
+                    ->icon('heroicon-o-currency-euro')
                     ->schema([
-                        TextInput::make('amount')
-                            ->numeric()
-                            ->prefix('€')
-                            ->required(),
+                        Schemas\Components\Grid::make(4)->schema([
+                            TextInput::make('amount')
+                                ->numeric()
+                                ->prefix('€')
+                                ->required(),
 
-                        TextInput::make('currency')
-                            ->default('EUR')
-                            ->required(),
+                            TextInput::make('currency')
+                                ->default('EUR')
+                                ->required(),
 
-                        TextInput::make('vat_percentage')
-                            ->numeric()
-                            ->suffix('%')
-                            ->default(19),
+                            TextInput::make('vat_percentage')
+                                ->numeric()
+                                ->suffix('%')
+                                ->default(19),
 
-                        TextInput::make('vat_amount')
-                            ->numeric()
-                            ->prefix('€')
-                            ->disabled(),
-
-                        TextInput::make('total_amount')
-                            ->numeric()
-                            ->prefix('€')
-                            ->disabled(),
+                            TextInput::make('vat_amount')
+                                ->numeric()
+                                ->prefix('€')
+                                ->disabled(),
+                        ]),
+                        Schemas\Components\Grid::make(4)->schema([
+                            TextInput::make('total_amount')
+                                ->numeric()
+                                ->prefix('€')
+                                ->disabled(),
+                        ]),
                     ])
-                    ->columns(3),
+                    ->columnSpanFull(),
 
+                // Dates Section
                 Section::make('Dates')
+                    ->icon('heroicon-o-calendar')
                     ->schema([
-                        DateTimePicker::make('issued_at')
-                            ->default(now()),
+                        Schemas\Components\Grid::make(4)->schema([
+                            DateTimePicker::make('issued_at')
+                                ->default(now()),
 
-                        DateTimePicker::make('due_at'),
+                            DateTimePicker::make('due_at'),
 
-                        DateTimePicker::make('paid_at'),
+                            DateTimePicker::make('paid_at'),
+                        ]),
                     ])
-                    ->columns(3),
+                    ->columnSpanFull(),
 
+                // Bank Details Section
                 Section::make('Bank Details')
+                    ->icon('heroicon-o-building-library')
                     ->schema([
-                        TextInput::make('bank_name'),
-                        TextInput::make('bank_iban'),
-                        TextInput::make('bank_bic'),
-                        TextInput::make('bank_account_holder'),
+                        Schemas\Components\Grid::make(4)->schema([
+                            TextInput::make('bank_name'),
+                            TextInput::make('bank_iban'),
+                            TextInput::make('bank_bic'),
+                            TextInput::make('bank_account_holder'),
+                        ]),
                     ])
-                    ->columns(2)
+                    ->columnSpanFull()
+                    ->collapsible()
                     ->collapsed(),
 
+                // Payment Proof Section
                 Section::make('Payment Proof')
+                    ->icon('heroicon-o-document-check')
                     ->schema([
-                        FileUpload::make('payment_proof_path')
-                            ->label('Payment Proof')
-                            ->directory('invoices/proofs')
-                            ->visibility('private'),
+                        Schemas\Components\Grid::make(2)->schema([
+                            FileUpload::make('payment_proof_path')
+                                ->label('Payment Proof')
+                                ->directory('invoices/proofs')
+                                ->visibility('private'),
 
-                        Textarea::make('notes')
-                            ->rows(3),
+                            Textarea::make('notes')
+                                ->rows(3),
+                        ]),
                     ])
-                    ->columns(1),
+                    ->columnSpanFull()
+                    ->collapsible(),
             ]);
     }
 
