@@ -65,6 +65,19 @@ function CheckoutPageContent() {
     }
     fetchVehicle()
   }, [vehicleId, router])
+  
+  // Helper function to get full image URL
+  const getImageUrl = (imagePath: string | null | undefined): string => {
+    const placeholderImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23e5e7eb' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='18' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ENo Image%3C/text%3E%3C/svg%3E";
+    
+    if (!imagePath) return placeholderImage;
+    if (imagePath.startsWith('http')) return imagePath;
+    if (imagePath.startsWith('data:')) return imagePath;
+    
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api';
+    const baseUrl = apiUrl.replace('/api', '');
+    return `${baseUrl}/storage/${imagePath}`;
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target
