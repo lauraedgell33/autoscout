@@ -16,10 +16,19 @@ class KYCController extends Controller
     public function submit(Request $request)
     {
         $validated = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'required|string|max:50',
+            'date_of_birth' => 'required|date|before:today',
+            'street' => 'required|string|max:255',
+            'house_number' => 'required|string|max:50',
+            'city' => 'required|string|max:255',
+            'postal_code' => 'required|string|max:20',
+            'country' => 'required|string|size:2',
             'id_document_type' => 'required|in:passport,id_card,drivers_license',
             'id_document_number' => 'required|string|max:50',
-            'id_document_image' => 'required|image|max:5120', // 5MB
-            'selfie_image' => 'required|image|max:5120', // 5MB
+            'id_document_image' => 'required|image|max:10240', // 10MB
+            'selfie_image' => 'required|image|max:10240', // 10MB
         ]);
 
         $user = $request->user();
@@ -50,8 +59,17 @@ class KYCController extends Controller
             'public'
         );
 
-        // Update user
+        // Update user with all KYC data
         $user->update([
+            'name' => $validated['full_name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'date_of_birth' => $validated['date_of_birth'],
+            'street' => $validated['street'],
+            'house_number' => $validated['house_number'],
+            'city' => $validated['city'],
+            'postal_code' => $validated['postal_code'],
+            'country' => $validated['country'],
             'id_document_type' => $validated['id_document_type'],
             'id_document_number' => $validated['id_document_number'],
             'id_document_image' => $idDocumentPath,
