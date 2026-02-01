@@ -102,9 +102,20 @@ export default function VehicleDetailsPage() {
 
   const placeholderImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23e5e7eb' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ENo Image Available%3C/text%3E%3C/svg%3E"
   
+  // Helper function to get full image URL
+  const getImageUrl = (imagePath: string | null | undefined): string => {
+    if (!imagePath) return placeholderImage;
+    if (imagePath.startsWith('http')) return imagePath;
+    if (imagePath.startsWith('data:')) return imagePath;
+    // Add backend storage URL prefix
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api';
+    const baseUrl = apiUrl.replace('/api', '');
+    return `${baseUrl}/storage/${imagePath}`;
+  };
+  
   const images = vehicle.images && vehicle.images.length > 0
-    ? vehicle.images
-    : [vehicle.primary_image || placeholderImage]
+    ? vehicle.images.map(getImageUrl)
+    : [getImageUrl(vehicle.primary_image)];
 
   return (
     <div className="min-h-screen bg-gray-50">
