@@ -159,7 +159,7 @@ export default function Navigation() {
                       <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">{user?.role}</p>
                     </div>
                     <Link
-                      href={user?.role === 'seller' ? '/dashboard/seller' : '/dashboard/buyer'}
+                      href={(user?.user_type || user?.role) === 'seller' || (user?.user_type || user?.role) === 'dealer' ? '/dashboard/seller' : '/dashboard/buyer'}
                       className="flex items-center gap-3 px-4 py-2.5 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-gray-50 dark:focus-visible:bg-gray-700"
                       onClick={() => setUserMenuOpen(false)}
                       role="menuitem"
@@ -176,7 +176,7 @@ export default function Navigation() {
                       <Settings size={18} aria-hidden="true" />
                       <span>Profile Settings</span>
                     </Link>
-                    {user?.role === 'seller' && (
+                    {((user?.user_type || user?.role) === 'seller' || (user?.user_type || user?.role) === 'dealer') && (
                       <Link
                         href="/dashboard/vehicles"
                         className="flex items-center gap-3 px-4 py-2.5 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus-visible:bg-gray-50 dark:focus-visible:bg-gray-700"
@@ -257,11 +257,11 @@ export default function Navigation() {
                     </div>
                   </div>
                   <MobileNavSection>
-                    <MobileNavLink href={user?.role === 'seller' ? '/dashboard/seller' : '/dashboard/buyer'} onClick={() => setMobileMenuOpen(false)}>
+                    <MobileNavLink href={(user?.user_type || user?.role) === 'seller' || (user?.user_type || user?.role) === 'dealer' ? '/dashboard/seller' : '/dashboard/buyer'} onClick={() => setMobileMenuOpen(false)}>
                       <LayoutDashboard size={20} aria-hidden="true" />
                       <span>Dashboard</span>
                     </MobileNavLink>
-                    {user?.role === 'seller' && (
+                    {((user?.user_type || user?.role) === 'seller' || (user?.user_type || user?.role) === 'dealer') && (
                       <MobileNavLink href="/dashboard/vehicles" onClick={() => setMobileMenuOpen(false)}>
                         <Car size={20} aria-hidden="true" />
                         <span>My Vehicles</span>

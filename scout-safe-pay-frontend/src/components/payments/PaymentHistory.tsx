@@ -204,11 +204,15 @@ export const PaymentHistory: React.FC<PaymentHistoryProps> = ({
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
           <input
+            id="payment-search"
+            name="payment-search"
             type="text"
             placeholder="Search by transaction ID, description..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            autoComplete="off"
+            aria-label="Search payments"
           />
         </div>
 
@@ -216,9 +220,12 @@ export const PaymentHistory: React.FC<PaymentHistoryProps> = ({
         <div className="flex items-center gap-2">
           <Filter className="w-5 h-5 text-gray-600" />
           <select
+            id="payment-status-filter"
+            name="payment-status-filter"
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            aria-label="Filter by payment status"
           >
             <option value="all">All Status</option>
             <option value="succeeded">Succeeded</option>
