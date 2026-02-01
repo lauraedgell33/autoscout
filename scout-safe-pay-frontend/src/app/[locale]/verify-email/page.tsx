@@ -39,12 +39,12 @@ export default function VerifyEmailPage() {
       }
 
       try {
-        const response = await apiClient.get(
+        const response = await apiClient.get<{ message?: string }>(
           `/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`
         );
 
         setStatus('success');
-        setMessage(response.data.message || 'Email verified successfully!');
+        setMessage(response.data?.message || 'Email verified successfully!');
         
         // Redirect to dashboard after 3 seconds
         setTimeout(() => {
