@@ -258,14 +258,14 @@ function CheckoutPageContent() {
                     {idImagePreview ? (
                       <div><img src={idImagePreview} alt="ID" className="max-h-40 mx-auto rounded-lg" /><button type="button" onClick={() => { setIdImagePreview(null); setFormData(prev => ({ ...prev, idImage: null })) }} className="mt-2 text-xs text-red-600">Remove</button></div>
                     ) : (
-                      <label className="cursor-pointer text-sm text-primary-900 font-medium"><span>{t('kyc.front')}</span><input type="file" accept="image/*" onChange={handleIdImageChange} className="hidden" /></label>
+                      <label htmlFor="id-image-upload" className="cursor-pointer text-sm text-primary-900 font-medium"><span>{t('kyc.front')}</span><input id="id-image-upload" name="idImage" type="file" accept="image/*" onChange={handleIdImageChange} className="hidden" /></label>
                     )}
                   </div>
                   <div className="border-2 border-dashed border-gray-200 p-5 text-center rounded-xl hover:border-primary-300 transition">
                     {selfiePreview ? (
                       <div><img src={selfiePreview} alt="Selfie" className="max-h-40 mx-auto rounded-lg" /><button type="button" onClick={() => { setSelfiePreview(null); setFormData(prev => ({ ...prev, selfieImage: null })) }} className="mt-2 text-xs text-red-600">Remove</button></div>
                     ) : (
-                      <label className="cursor-pointer text-sm text-primary-900 font-medium"><span>{t('kyc.back')}</span><input type="file" accept="image/*" onChange={handleSelfieChange} className="hidden" /></label>
+                      <label htmlFor="selfie-upload" className="cursor-pointer text-sm text-primary-900 font-medium"><span>{t('kyc.back')}</span><input id="selfie-upload" name="selfieImage" type="file" accept="image/*" onChange={handleSelfieChange} className="hidden" /></label>
                     )}
                   </div>
                 </div>
