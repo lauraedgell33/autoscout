@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Crypt;
 
 class BankAccount extends Model
 {
@@ -32,8 +35,38 @@ class BankAccount extends Model
         'is_verified' => 'boolean',
         'is_primary' => 'boolean',
         'verified_at' => 'datetime',
-        'iban' => 'encrypted',
+        // Note: iban encryption is handled by the accessor below
     ];
+
+    /**
+     * Get the IBAN attribute with safe decryption.
+     */
+    protected function iban(): Attribute
+    {
+        return Attribute::make(
+            get: function (?string $value) {
+                if ($value === null) {
+                    return null;
+                }
+                try {
+                    return Crypt::decryptString($value);
+                } catch (DecryptException $e) {
+                    // Return masked value if decryption fails (wrong APP_KEY)
+                    return '****' . substr($value, -4);
+                }
+            },
+            set: function (?string $value) {
+                if ($value === null) {
+                    return null;
+                }
+                // Don't re-encrypt if already encrypted
+                if (str_starts_with($value, 'eyJ')) {
+                    return $value;
+                }
+                return Crypt::encryptString($value);
+            },
+        );
+    }
 
     protected $hidden = [
         'iban',
