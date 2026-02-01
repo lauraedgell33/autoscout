@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, useParams } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, XCircle, Loader2, Mail, AlertTriangle } from 'lucide-react';
@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 export default function VerifyEmailPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const params = useParams();
   const [status, setStatus] = useState<'loading' | 'success' | 'error' | 'required'>('loading');
   const [message, setMessage] = useState('');
   const [canResend, setCanResend] = useState(false);
@@ -49,7 +50,7 @@ export default function VerifyEmailPage() {
         // Redirect to appropriate dashboard based on user role
         setTimeout(() => {
           const userRole = localStorage.getItem('userRole') || 'buyer';
-          const locale = params?.locale || 'en';
+          const locale = (params?.locale as string) || 'en';
           
           if (userRole === 'seller') {
             router.push(`/${locale}/dashboard/seller`);

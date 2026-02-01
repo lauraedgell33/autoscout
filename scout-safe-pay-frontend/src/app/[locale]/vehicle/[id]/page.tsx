@@ -59,7 +59,8 @@ export default function VehicleDetailsPage() {
     const token = localStorage.getItem('auth_token')
     if (!token) {
       alert(t('login_required'))
-      router.push('/login?redirect=/vehicle/' + vehicleId)
+      const locale = (params.locale as string) || 'en'
+      router.push(`/${locale}/login?redirect=/vehicle/${vehicleId}`)
       return
     }
 
