@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { 
   Heart, MapPin, Calendar, Gauge, Fuel, Settings, Eye, Share2,
@@ -98,7 +98,7 @@ export default function EnhancedVehicleCard({
       onMouseEnter={() => setShowQuickView(true)}
       onMouseLeave={() => setShowQuickView(false)}
     >
-      <Link href={`/vehicles/${id}`}>
+      <Link href={`/vehicle/${id}`}>
         {/* Image Section */}
         <div 
           className="relative aspect-[4/3] overflow-hidden bg-gray-100"
