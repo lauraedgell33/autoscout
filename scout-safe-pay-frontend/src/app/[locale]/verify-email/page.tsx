@@ -126,7 +126,7 @@ export default function VerifyEmailPage() {
           <Button
             onClick={() => router.push('/')}
             className="w-full"
-            variant={status === 'error' || status === 'required' ? 'default' : 'outline'}
+            variant={status === 'error' || status === 'required' ? 'primary' : 'outline'}
           >
             Return to Home
           </Button>
