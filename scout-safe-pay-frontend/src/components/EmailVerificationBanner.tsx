@@ -22,8 +22,8 @@ export function EmailVerificationBanner({ show = true }: EmailVerificationBanner
 
   const checkVerificationStatus = async () => {
     try {
-      const response = await apiClient.get('/email/verification-status');
-      setIsVerified(response.data.email_verified);
+      const response = await apiClient.get<{ email_verified: boolean }>('/email/verification-status');
+      setIsVerified(response.email_verified);
     } catch (error) {
       console.error('Failed to check verification status:', error);
     }
