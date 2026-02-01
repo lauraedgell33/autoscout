@@ -1,0 +1,1 @@
+# Removed laravel-lang packages - see composer.json
