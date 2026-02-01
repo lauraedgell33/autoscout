@@ -74,6 +74,20 @@ class OptimizedAPIClient {
           ErrorRecovery.handleAuthError();
         }
         
+        // Handle 403 Forbidden - check if it's email verification issue
+        if (status === 403) {
+          const errorMessage = (error.response?.data as any)?.message || '';
+          if (errorMessage.toLowerCase().includes('email') || errorMessage.toLowerCase().includes('verify')) {
+            // Email not verified - redirect to verification notice
+            if (typeof window !== 'undefined') {
+              const currentPath = window.location.pathname;
+              if (!currentPath.includes('/verify-email') && !currentPath.includes('/login')) {
+                window.location.href = '/verify-email?required=true';
+              }
+            }
+          }
+        }
+        
         // Retry logic for network errors and retryable status codes
         if (isRetryable && retryCount < this.maxRetries) {
           config._retry = retryCount + 1;

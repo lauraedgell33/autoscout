@@ -4,18 +4,28 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, XCircle, Loader2, Mail } from 'lucide-react';
+import { CheckCircle, XCircle, Loader2, Mail, AlertTriangle } from 'lucide-react';
 import { apiClient } from '@/lib/api-client';
 import toast from 'react-hot-toast';
 
 export default function VerifyEmailPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
+  const [status, setStatus] = useState<'loading' | 'success' | 'error' | 'required'>('loading');
   const [message, setMessage] = useState('');
   const [canResend, setCanResend] = useState(false);
 
   useEffect(() => {
+    // Check if this is a "verification required" redirect
+    const required = searchParams.get('required');
+    
+    if (required === 'true') {
+      setStatus('required');
+      setMessage('Please verify your email address to access this feature.');
+      setCanResend(true);
+      return;
+    }
+
     const verifyEmail = async () => {
       const id = searchParams.get('id');
       const hash = searchParams.get('hash');
@@ -55,6 +65,7 @@ export default function VerifyEmailPage() {
       await apiClient.post('/email/resend');
       toast.success('Verification email sent! Please check your inbox.');
       setCanResend(false);
+      setTimeout(() => setCanResend(true), 60000); // Allow resend after 1 minute
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Failed to resend email');
     }
@@ -74,11 +85,15 @@ export default function VerifyEmailPage() {
             {status === 'error' && (
               <XCircle className="h-16 w-16 text-red-500" />
             )}
+            {status === 'required' && (
+              <AlertTriangle className="h-16 w-16 text-yellow-500" />
+            )}
           </div>
           <CardTitle className="text-2xl">
             {status === 'loading' && 'Verifying Your Email'}
             {status === 'success' && 'Email Verified!'}
             {status === 'error' && 'Verification Failed'}
+            {status === 'required' && 'Email Verification Required'}
           </CardTitle>
           <CardDescription>{message}</CardDescription>
         </CardHeader>
@@ -90,10 +105,12 @@ export default function VerifyEmailPage() {
             </div>
           )}
 
-          {status === 'error' && canResend && (
+          {(status === 'error' || status === 'required') && canResend && (
             <div className="space-y-4">
               <p className="text-sm text-gray-600 text-center">
-                Didn't receive the email? Check your spam folder or request a new one.
+                {status === 'required' 
+                  ? "We've sent a verification link to your email. Click the link to verify your account."
+                  : "Didn't receive the email? Check your spam folder or request a new one."}
               </p>
               <Button
                 onClick={handleResendEmail}
@@ -109,7 +126,7 @@ export default function VerifyEmailPage() {
           <Button
             onClick={() => router.push('/')}
             className="w-full"
-            variant={status === 'error' ? 'default' : 'outline'}
+            variant={status === 'error' || status === 'required' ? 'default' : 'outline'}
           >
             Return to Home
           </Button>

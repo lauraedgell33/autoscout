@@ -35,6 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'rate.limit.ip' => \App\Http\Middleware\RateLimitByIP::class,
             'role' => \App\Http\Middleware\CheckRole::class,
+            'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         ]);
     })
     ->withSchedule(function ($schedule) {
