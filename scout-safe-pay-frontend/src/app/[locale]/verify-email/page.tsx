@@ -46,9 +46,18 @@ export default function VerifyEmailPage() {
         setStatus('success');
         setMessage(response.message || 'Email verified successfully!');
         
-        // Redirect to dashboard after 3 seconds
+        // Redirect to appropriate dashboard based on user role
         setTimeout(() => {
-          router.push('/dashboard/buyer');
+          const userRole = localStorage.getItem('userRole') || 'buyer';
+          const locale = params?.locale || 'en';
+          
+          if (userRole === 'seller') {
+            router.push(`/${locale}/dashboard/seller`);
+          } else if (userRole === 'dealer') {
+            router.push(`/${locale}/dealer/dashboard`);
+          } else {
+            router.push(`/${locale}/dashboard/buyer`);
+          }
         }, 3000);
       } catch (error: any) {
         setStatus('error');

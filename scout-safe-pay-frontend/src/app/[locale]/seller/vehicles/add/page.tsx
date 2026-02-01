@@ -20,7 +20,7 @@ export default function AddVehiclePage() {
     e.preventDefault();
     // Add vehicle logic
     alert('Vehicle added successfully!');
-    router.push(`/${locale}/seller/listings`);
+    router.push(`/${locale}/seller/vehicles`);
   };
 
   return (

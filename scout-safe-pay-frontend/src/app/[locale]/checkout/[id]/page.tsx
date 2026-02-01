@@ -58,7 +58,7 @@ function CheckoutPageContent() {
       } catch (error) {
         console.error('Failed to load vehicle:', error)
         alert(t('vehicle_not_found'))
-        router.push('/marketplace')
+        router.push(`/${params.locale}/marketplace`)
       } finally {
         setLoading(false)
       }
@@ -123,7 +123,7 @@ function CheckoutPageContent() {
     const token = localStorage.getItem('auth_token')
     if (!token) {
       alert(t('login_required'))
-      router.push('/login')
+      router.push(`/${params.locale}/login`)
       return
     }
     
