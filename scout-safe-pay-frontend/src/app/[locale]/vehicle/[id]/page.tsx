@@ -5,6 +5,7 @@ import { Link } from '@/i18n/routing';
 import { useParams, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useCurrency } from '@/contexts/CurrencyContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { useState, useEffect } from 'react';
 import vehicleService, { Vehicle } from '@/lib/api/vehicles';
 import { transactionService } from '@/lib/api/transactions';
@@ -18,13 +19,16 @@ import {
   Gauge, Fuel, Settings, Phone, Mail, Star, ChevronLeft, ChevronRight,
   Heart, Share2, Eye, Award
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function VehicleDetailsPage() {
   const t = useTranslations()
   const { formatPrice } = useCurrency()
+  const { user, isAuthenticated } = useAuth()
   const params = useParams()
   const router = useRouter()
   const vehicleId = parseInt(params.id as string)
+  const locale = (params.locale as string) || 'en'
   
   const [vehicle, setVehicle] = useState<Vehicle | null>(null)
   const [loading, setLoading] = useState(true)
@@ -56,16 +60,29 @@ export default function VehicleDetailsPage() {
   const handleBuyNow = async () => {
     if (!vehicle) return
     
-    const token = localStorage.getItem('auth_token')
-    if (!token) {
-      alert(t('login_required'))
-      const locale = (params.locale as string) || 'en'
+    // Check authentication using AuthContext
+    if (!isAuthenticated || !user) {
+      toast.error(t('login_required') || 'Please login to continue')
       router.push(`/${locale}/login?redirect=/vehicle/${vehicleId}`)
       return
     }
 
     // Redirect to checkout page with vehicle details
-    router.push(`/checkout/${vehicle.id}`)
+    router.push(`/${locale}/checkout/${vehicle.id}`)
+  }
+  
+  const handleContactSeller = async () => {
+    if (!vehicle) return
+    
+    // Check authentication
+    if (!isAuthenticated || !user) {
+      toast.error(t('login_required') || 'Please login to continue')
+      router.push(`/${locale}/login?redirect=/vehicle/${vehicleId}`)
+      return
+    }
+    
+    // TODO: Implement contact seller functionality (open modal or redirect to messages)
+    toast.success('Contact seller feature coming soon!')
   }
 
   if (loading) {
@@ -358,6 +375,7 @@ export default function VehicleDetailsPage() {
               </Button>
 
               <Button 
+                onClick={handleContactSeller}
                 variant="outline" 
                 className="w-full border border-gray-200 text-gray-700 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-50 transition mb-5"
               >
