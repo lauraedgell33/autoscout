@@ -156,7 +156,7 @@ test.describe('Protected Routes', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     const homeUrl = page.url();
-    expect(homeUrl).toContain(homeUrl); // Should stay on same page
+    expect(homeUrl).not.toContain('/login'); // Should not redirect to login
 
     // Vehicles listing should be accessible
     await page.goto('/vehicles');

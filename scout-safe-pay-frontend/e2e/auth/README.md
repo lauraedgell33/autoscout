@@ -12,7 +12,7 @@ This test suite provides complete coverage of authentication flows including reg
 
 ## 📁 Test Files
 
-### 1. **registration.spec.ts** (13 tests)
+### 1. **registration.spec.ts** (12 tests)
 Tests complete user registration flows for all user types.
 
 **Coverage:**
@@ -36,7 +36,7 @@ Tests complete user registration flows for all user types.
 - `should validate duplicate email`
 - `should validate required fields`
 
-### 2. **login.spec.ts** (16 tests)
+### 2. **login.spec.ts** (14 tests)
 Tests login functionality for different user types and scenarios.
 
 **Coverage:**
@@ -81,7 +81,7 @@ Tests logout functionality and session clearing.
 - `should not be able to access seller dashboard after logout`
 - `should clear all storage data after logout`
 
-### 4. **password-reset.spec.ts** (16 tests)
+### 4. **password-reset.spec.ts** (17 tests)
 Tests complete password reset flow.
 
 **Coverage:**
@@ -103,7 +103,7 @@ Tests complete password reset flow.
 - `should show error for invalid or expired token`
 - `should have link to forgot password from login page`
 
-### 5. **email-verification.spec.ts** (17 tests)
+### 5. **email-verification.spec.ts** (16 tests)
 Tests email verification flow.
 
 **Coverage:**
@@ -124,7 +124,7 @@ Tests email verification flow.
 - `should send verification email on registration`
 - `should preserve verification state after logout and login`
 
-### 6. **protected-routes.spec.ts** (23 tests)
+### 6. **protected-routes.spec.ts** (26 tests)
 Tests route protection and access control.
 
 **Coverage:**
@@ -213,12 +213,12 @@ From `e2e/helpers/fixtures.ts`:
 
 | Feature | Tests | Status |
 |---------|-------|--------|
-| Registration | 13 | ✅ Complete |
-| Login | 16 | ✅ Complete |
+| Registration | 12 | ✅ Complete |
+| Login | 14 | ✅ Complete |
 | Logout | 17 | ✅ Complete |
-| Password Reset | 16 | ✅ Complete |
-| Email Verification | 17 | ✅ Complete |
-| Protected Routes | 23 | ✅ Complete |
+| Password Reset | 17 | ✅ Complete |
+| Email Verification | 16 | ✅ Complete |
+| Protected Routes | 26 | ✅ Complete |
 
 ## 🔍 Test Patterns
 
