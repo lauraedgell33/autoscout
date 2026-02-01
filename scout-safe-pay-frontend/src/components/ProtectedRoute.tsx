@@ -30,7 +30,15 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
       const userRole = user.user_type || user.role;
       if (userRole && !allowedRoles.includes(userRole)) {
         // User doesn't have required role, redirect to appropriate dashboard
-        router.push('/dashboard');
+        if (userRole === 'admin') {
+          window.location.href = '/admin';
+        } else if (userRole === 'dealer') {
+          router.push('/dealer/dashboard');
+        } else if (userRole === 'seller') {
+          router.push('/seller/dashboard');
+        } else {
+          router.push('/dashboard/buyer');
+        }
       }
     }
   }, [isMounted, isAuthenticated, user, allowedRoles, router]);
