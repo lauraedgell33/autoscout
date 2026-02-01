@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Shield, CheckCircle, Lock, TrendingUp, User, Home, Camera, FileText } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { COUNTRIES, POPULAR_COUNTRIES } from '@/lib/constants/countries';
 
 function CheckoutPageContent() {
   const t = useTranslations('checkout')
@@ -168,7 +169,7 @@ function CheckoutPageContent() {
       
       if (response.transaction && response.transaction.id) {
         toast.success('Order placed successfully!')
-        router.push(`/transaction/${response.transaction.id}`)
+        router.push(`/${params.locale}/transaction/${response.transaction.id}`)
       } else {
         throw new Error('Invalid transaction response')
       }
@@ -437,9 +438,20 @@ function CheckoutPageContent() {
                         onChange={handleInputChange} 
                         className="w-full px-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                       >
-                        <option value="DE">{t('countries.germany')}</option>
-                        <option value="AT">{t('countries.austria')}</option>
-                        <option value="CH">{t('countries.switzerland')}</option>
+                        <optgroup label="Popular Countries">
+                          {COUNTRIES.filter(c => POPULAR_COUNTRIES.includes(c.code)).map(country => (
+                            <option key={country.code} value={country.code}>
+                              {country.flag} {country.name}
+                            </option>
+                          ))}
+                        </optgroup>
+                        <optgroup label="All Countries">
+                          {COUNTRIES.map(country => (
+                            <option key={country.code} value={country.code}>
+                              {country.flag} {country.name}
+                            </option>
+                          ))}
+                        </optgroup>
                       </select>
                     </div>
                   </CardContent>
