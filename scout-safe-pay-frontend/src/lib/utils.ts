@@ -37,7 +37,7 @@ export function getImageUrl(imagePath: string | null | undefined): string {
   
   // If path starts with /storage, it's already correct - prepend backend domain
   if (imagePath.startsWith('/storage/')) {
-    const backendUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api').replace('/api', '')
+    const backendUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api').replace('/api', '').trim()
     return `${backendUrl}${imagePath}`
   }
   
@@ -47,6 +47,6 @@ export function getImageUrl(imagePath: string | null | undefined): string {
   }
   
   // Relative path - prepend storage URL (e.g., "vehicles/1/image.png")
-  const backendUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api').replace('/api', '')
+  const backendUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api').replace('/api', '').trim()
   return `${backendUrl}/storage/${imagePath}`
 }
