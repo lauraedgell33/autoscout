@@ -132,11 +132,11 @@ class VehiclesTable
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'draft' => 'Draft',
-                        'active' => 'Active',
-                        'pending' => 'Pending',
-                        'sold' => 'Sold',
-                        'reserved' => 'Reserved',
+                        'draft' => '📝 Draft',
+                        'active' => '✅ Active',
+                        'pending' => '⏳ Pending',
+                        'sold' => '🏷️ Sold',
+                        'reserved' => '🔒 Reserved',
                         default => $state,
                     })
                     ->color(fn (string $state): string => match ($state) {

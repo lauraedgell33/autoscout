@@ -300,6 +300,13 @@ class InvoiceResource extends Resource
 
                 TextColumn::make('status')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'pending' => '⏳ Pending',
+                        'paid' => '💵 Paid',
+                        'confirmed' => '✅ Confirmed',
+                        'cancelled' => '❌ Cancelled',
+                        default => $state,
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
                         'paid' => 'info',

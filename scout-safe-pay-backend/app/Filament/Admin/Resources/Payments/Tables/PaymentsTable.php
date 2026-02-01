@@ -37,6 +37,13 @@ class PaymentsTable
                     ->sortable(),
                 TextColumn::make('payment_method')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'bank_transfer' => '🏦 Bank Transfer',
+                        'credit_card' => '💳 Credit Card',
+                        'paypal' => '🅿️ PayPal',
+                        'stripe' => '💰 Stripe',
+                        default => $state,
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'bank_transfer' => 'primary',
                         'credit_card' => 'success',
@@ -47,6 +54,13 @@ class PaymentsTable
                     ->label('Method'),
                 TextColumn::make('status')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'pending' => '⏳ Pending',
+                        'verified' => '✅ Verified',
+                        'rejected' => '❌ Rejected',
+                        'paid' => '💵 Paid',
+                        default => $state,
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
                         'verified' => 'success',

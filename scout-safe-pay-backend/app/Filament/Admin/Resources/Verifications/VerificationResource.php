@@ -161,6 +161,13 @@ class VerificationResource extends Resource
 
                 TextColumn::make('type')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'identity' => '🆔 Identity',
+                        'address' => '🏠 Address',
+                        'vehicle' => '🚗 Vehicle',
+                        'dealer' => '🏢 Dealer',
+                        default => $state,
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'identity' => 'info',
                         'address' => 'success',
@@ -171,6 +178,14 @@ class VerificationResource extends Resource
 
                 TextColumn::make('status')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'approved' => '✅ Approved',
+                        'rejected' => '❌ Rejected',
+                        'pending' => '⏳ Pending',
+                        'in_review' => '🔍 In Review',
+                        'expired' => '⌛ Expired',
+                        default => $state,
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'approved' => 'success',
                         'rejected' => 'danger',

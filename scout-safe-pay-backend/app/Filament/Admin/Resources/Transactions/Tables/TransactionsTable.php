@@ -30,6 +30,21 @@ class TransactionsTable
                     
                 TextColumn::make('status')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'pending' => '⏳ Pending',
+                        'payment_pending' => '💳 Payment Pending',
+                        'payment_uploaded' => '📄 Payment Uploaded',
+                        'payment_verified' => '✅ Payment Verified',
+                        'contract_pending' => '📝 Contract Pending',
+                        'contract_signed' => '✍️ Contract Signed',
+                        'in_delivery' => '🚚 In Delivery',
+                        'delivered' => '📦 Delivered',
+                        'completed' => '✅ Completed',
+                        'cancelled' => '❌ Cancelled',
+                        'refunded' => '💰 Refunded',
+                        'disputed' => '⚠️ Disputed',
+                        default => $state,
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
                         'payment_pending' => 'warning',

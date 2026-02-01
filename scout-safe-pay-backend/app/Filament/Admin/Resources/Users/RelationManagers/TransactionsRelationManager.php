@@ -46,8 +46,19 @@ class TransactionsRelationManager extends RelationManager
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'pending' => '⏳ Pending',
+                        'pending_payment' => '💳 Payment Pending',
+                        'payment_verified' => '✅ Payment Verified',
+                        'completed' => '✅ Completed',
+                        'cancelled' => '❌ Cancelled',
+                        'refunded' => '💰 Refunded',
+                        'dispute' => '⚠️ Disputed',
+                        default => $state,
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'completed' => 'success',
+                        'payment_verified' => 'success',
                         'pending', 'pending_payment' => 'warning',
                         'cancelled', 'refunded' => 'danger',
                         'dispute' => 'danger',

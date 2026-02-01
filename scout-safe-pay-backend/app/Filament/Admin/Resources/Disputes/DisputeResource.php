@@ -249,13 +249,25 @@ class DisputeResource extends Resource
 
                 Tables\Columns\TextColumn::make('type')
                     ->label('Type')
-                    ->colors([
-                        'danger' => 'fraud',
-                        'warning' => 'payment',
-                        'info' => 'delivery',
-                        'success' => 'documentation',
-                        'primary' => fn ($state) => in_array($state, ['vehicle_condition', 'other']),
-                    ])
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'fraud' => '🚨 Fraud',
+                        'payment' => '💳 Payment',
+                        'delivery' => '🚚 Delivery',
+                        'documentation' => '📄 Documentation',
+                        'vehicle_condition' => '🚗 Vehicle Condition',
+                        'other' => '📋 Other',
+                        default => $state,
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'fraud' => 'danger',
+                        'payment' => 'warning',
+                        'delivery' => 'info',
+                        'documentation' => 'success',
+                        'vehicle_condition' => 'primary',
+                        'other' => 'primary',
+                        default => 'gray',
+                    })
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('reason')
@@ -266,13 +278,25 @@ class DisputeResource extends Resource
 
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
-                    ->colors([
-                        'danger' => 'open',
-                        'warning' => fn ($state) => in_array($state, ['investigating', 'awaiting_response']),
-                        'success' => 'resolved',
-                        'gray' => 'closed',
-                        'info' => 'escalated',
-                    ])
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'open' => '🔴 Open',
+                        'investigating' => '🔍 Investigating',
+                        'awaiting_response' => '⏳ Awaiting Response',
+                        'resolved' => '✅ Resolved',
+                        'closed' => '⚫ Closed',
+                        'escalated' => '⚠️ Escalated',
+                        default => $state,
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'open' => 'danger',
+                        'investigating' => 'warning',
+                        'awaiting_response' => 'warning',
+                        'resolved' => 'success',
+                        'closed' => 'gray',
+                        'escalated' => 'info',
+                        default => 'gray',
+                    })
                     ->sortable(),
 
                 Tables\Columns\IconColumn::make('evidence_urls')

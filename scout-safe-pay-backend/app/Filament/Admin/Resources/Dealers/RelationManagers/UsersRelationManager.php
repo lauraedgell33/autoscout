@@ -76,6 +76,13 @@ class UsersRelationManager extends RelationManager
                     
                 TextColumn::make('user_type')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'admin' => '👑 Admin',
+                        'dealer' => '🏢 Dealer',
+                        'seller' => '📤 Seller',
+                        'buyer' => '🛒 Buyer',
+                        default => $state,
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'admin' => 'danger',
                         'dealer' => 'warning',
@@ -86,6 +93,13 @@ class UsersRelationManager extends RelationManager
                     
                 TextColumn::make('status')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'active' => '✅ Active',
+                        'inactive' => '⚫ Inactive',
+                        'suspended' => '⚠️ Suspended',
+                        'banned' => '🚫 Banned',
+                        default => $state,
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'active' => 'success',
                         'inactive' => 'gray',

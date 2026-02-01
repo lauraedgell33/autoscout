@@ -44,6 +44,13 @@ class DealersTable
                     ->label('Verified'),
                 TextColumn::make('status')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'active' => '✅ Active',
+                        'inactive' => '⚫ Inactive',
+                        'suspended' => '⚠️ Suspended',
+                        'pending' => '⏳ Pending',
+                        default => $state,
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'active' => 'success',
                         'inactive' => 'gray',
