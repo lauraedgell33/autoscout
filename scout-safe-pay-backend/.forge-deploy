@@ -4,8 +4,20 @@ echo "Starting deployment..."
 cd /home/forge/adminautoscout.dev
 git pull origin main
 composer install --no-dev --optimize-autoloader
+
+# Clear all caches BEFORE caching (fixes Livewire 500 errors)
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+
+# Rebuild caches for production
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 php artisan optimize
+
+# Fix storage permissions
+chmod -R 775 storage bootstrap/cache
+
 echo "✅ Deployment complete!"
