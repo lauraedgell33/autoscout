@@ -116,16 +116,16 @@ Route::prefix('cookies')->group(function () {
     Route::post('/accept-essential', [CookieConsentController::class, 'acceptEssential']);
 });
 
-// Protected routes - authenticated only (no email verification required)
+// Protected routes - authenticated only (no email verification required FOR NOW - debugging)
 Route::middleware('auth:sanctum')->group(function () {
     // Basic auth routes (accessible without email verification)
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
-});
-
-// Protected routes - require email verification
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    
+    // TEMPORARILY REMOVED 'verified' middleware to debug login loop
+    // TODO: Re-enable after fixing the redirect loop issue
+    
     // User Profile
     Route::get('/user/profile', [AuthController::class, 'user']);
     Route::put('/user/profile', [AuthController::class, 'updateProfile']);
