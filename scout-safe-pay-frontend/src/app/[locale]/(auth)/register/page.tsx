@@ -77,60 +77,75 @@ export default function RegisterPage() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">{t('name_label')}</label>
+              <label htmlFor="register-name" className="block text-sm font-medium text-gray-700 mb-1.5">{t('name_label')}</label>
               <input
                 type="text"
+                id="register-name"
+                name="name"
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
                 className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder={t('name_placeholder')}
+                autoComplete="name"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">{t('email_label')}</label>
+              <label htmlFor="register-email" className="block text-sm font-medium text-gray-700 mb-1.5">{t('email_label')}</label>
               <input
                 type="email"
+                id="register-email"
+                name="email"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
                 className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder={t('email_placeholder')}
+                autoComplete="email"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">{t('phone_label')}</label>
+              <label htmlFor="register-phone" className="block text-sm font-medium text-gray-700 mb-1.5">{t('phone_label')}</label>
               <input
                 type="tel"
+                id="register-phone"
+                name="phone"
                 value={formData.phone}
                 onChange={(e) => setFormData({...formData, phone: e.target.value})}
                 className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder={t('phone_placeholder')}
+                autoComplete="tel"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">{t('password_label')}</label>
+              <label htmlFor="register-password" className="block text-sm font-medium text-gray-700 mb-1.5">{t('password_label')}</label>
               <input
                 type="password"
+                id="register-password"
+                name="password"
                 value={formData.password}
                 onChange={(e) => setFormData({...formData, password: e.target.value})}
                 className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder={t('password_placeholder')}
+                autoComplete="new-password"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">{t('password_confirm_label')}</label>
+              <label htmlFor="register-password-confirm" className="block text-sm font-medium text-gray-700 mb-1.5">{t('password_confirm_label')}</label>
               <input
                 type="password"
+                id="register-password-confirm"
+                name="password_confirmation"
                 value={formData.confirmPassword}
                 onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
                 className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder={t('password_confirm_placeholder')}
+                autoComplete="new-password"
                 required
               />
             </div>
