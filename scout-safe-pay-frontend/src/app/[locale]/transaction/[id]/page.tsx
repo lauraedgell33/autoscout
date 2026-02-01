@@ -12,6 +12,8 @@ import { getCategoryLabel } from '@/lib/utils/categoryHelpers'
 import { useRealtimeEvent } from '@/lib/realtime-client'
 import ProtectedRoute from '@/components/ProtectedRoute';
 import toast from 'react-hot-toast';
+import PaymentInstructions from '@/components/orders/PaymentInstructions';
+import UploadSignedContract from '@/components/orders/UploadSignedContract';
 
 function TransactionPageContent() {
   const t = useTranslations('transaction')
@@ -210,6 +212,32 @@ function TransactionPageContent() {
                 </div>
               )}
             </div>
+
+            {/* Payment Instructions - Show when awaiting payment */}
+            {transaction.status === 'pending_payment' && (
+              <PaymentInstructions 
+                transaction={transaction} 
+                onPaymentProofUpload={async () => {
+                  await loadTransaction();
+                }}
+              />
+            )}
+
+            {/* Contract Upload - Show when contract is generated */}
+            {(transaction as any).contract_url && (
+              <UploadSignedContract
+                transactionId={transaction.id.toString()}
+                contractUrl={(transaction as any).contract_url}
+                signedContractUrl={(transaction as any).signed_contract_url}
+                onUploadSuccess={() => {
+                  toast.success('Contract uploaded successfully!');
+                  loadTransaction();
+                }}
+                onError={(error) => {
+                  toast.error('Failed to upload contract');
+                }}
+              />
+            )}
 
             {/* Transaction Timeline */}
             <div className="bg-white rounded-xl shadow-sm p-6">
