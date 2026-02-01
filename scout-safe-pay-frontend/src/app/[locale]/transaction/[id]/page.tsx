@@ -173,8 +173,8 @@ function TransactionPageContent() {
           <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
             <div className="flex items-start justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('transaction.title')} #{transaction.id}</h1>
-                <p className="text-gray-600">{t('transaction.created')}: {new Date(transaction.created_at).toLocaleDateString()}</p>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('title')} #{transaction.id}</h1>
+                <p className="text-gray-600">{t('created')}: {new Date(transaction.created_at).toLocaleDateString()}</p>
               </div>
             <div>
               <span className={`px-4 py-2 rounded-full text-sm font-semibold border ${statusColors[transaction.status] || 'bg-gray-100 text-gray-800'}`}>
@@ -189,7 +189,7 @@ function TransactionPageContent() {
           <div className="lg:col-span-2 space-y-6">
             {/* Vehicle Info */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('transaction.vehicle')}</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('vehicle')}</h2>
               {vehicle && (
                 <div className="flex gap-4">
                   {(vehicle as any).images?.[0] && (
@@ -241,7 +241,7 @@ function TransactionPageContent() {
 
             {/* Transaction Timeline */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('transaction.status')}</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('status')}</h2>
               <div className="space-y-4">
                 {transaction.status === 'pending_payment' && (
                   <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
@@ -253,7 +253,7 @@ function TransactionPageContent() {
                       </div>
                       <div className="ml-3">
                         <p className="text-sm text-yellow-700 font-medium">{t('status_messages.awaiting_payment')}</p>
-                        <p className="text-sm text-yellow-700 mt-1">{t('transaction.payment_instructions')}</p>
+                        <p className="text-sm text-yellow-700 mt-1">{t('payment_instructions')}</p>
                       </div>
                     </div>
                   </div>
@@ -269,7 +269,7 @@ function TransactionPageContent() {
                       </div>
                       <div className="ml-3">
                         <p className="text-sm text-green-700 font-medium">{t('status_messages.payment_received')}</p>
-                        <p className="text-sm text-green-700 mt-1">{t('transaction.payment_instructions')}</p>
+                        <p className="text-sm text-green-700 mt-1">{t('payment_instructions')}</p>
                       </div>
                     </div>
                   </div>
@@ -285,7 +285,7 @@ function TransactionPageContent() {
                       </div>
                       <div className="ml-3">
                         <p className="text-sm text-green-700 font-medium">{t('status_messages.completed')}</p>
-                        <p className="text-sm text-green-700 mt-1">{t('transaction.support_message')}</p>
+                        <p className="text-sm text-green-700 mt-1">{t('support_message')}</p>
                       </div>
                     </div>
                   </div>
@@ -296,8 +296,8 @@ function TransactionPageContent() {
             {/* Payment Proof Upload */}
             {transaction.status === 'pending_payment' && (
               <div className="bg-white rounded-xl shadow-sm p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">{t('transaction.payment_method')}</h2>
-                <p className="text-gray-600 mb-4">{t('transaction.payment_instructions')}</p>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">{t('payment_method')}</h2>
+                <p className="text-gray-600 mb-4">{t('payment_instructions')}</p>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                   <input
                     type="file"
@@ -309,9 +309,9 @@ function TransactionPageContent() {
                   />
                   <label htmlFor="payment-proof" className="cursor-pointer">
                     <div className="text-gray-600 mb-2">
-                      {uploadingProof ? tCommon('loading') : t('transaction.upload_receipt')}
+                      {uploadingProof ? tCommon('loading') : t('upload_receipt')}
                     </div>
-                    <div className="text-sm text-gray-500">{t('transaction.file_formats')}</div>
+                    <div className="text-sm text-gray-500">{t('file_formats')}</div>
                   </label>
                 </div>
               </div>
@@ -322,13 +322,13 @@ function TransactionPageContent() {
           <div className="space-y-6">
             {/* Amount Card */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h3 className="text-sm font-medium text-gray-600 mb-2">{t('transaction.amount')}</h3>
+              <h3 className="text-sm font-medium text-gray-600 mb-2">{t('amount')}</h3>
               <div className="text-3xl font-bold text-accent-500 mb-4">
                 {formatPrice(Number(transaction.amount) * 1.19)}
               </div>
               <div className="text-sm text-gray-600 space-y-1">
                 <div className="flex justify-between">
-                  <span>{t('transaction.vehicle')}:</span>
+                  <span>{t('vehicle')}:</span>
                   <span>{formatPrice(Number(transaction.amount))}</span>
                 </div>
                 <div className="flex justify-between">
@@ -340,7 +340,7 @@ function TransactionPageContent() {
 
             {/* Documents */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h3 className="font-bold text-gray-900 mb-4">{t('transaction.download_invoice')}</h3>
+              <h3 className="font-bold text-gray-900 mb-4">{t('download_invoice')}</h3>
               <div className="space-y-3">
                 {/* Contract */}
                 <div>
@@ -363,7 +363,7 @@ function TransactionPageContent() {
                     onClick={handleDownloadContract}
                     className="w-full mt-2 text-sm text-primary-600 hover:underline"
                   >
-                    {t('transaction.download_invoice')}
+                    {t('download_invoice')}
                   </button>
                 </div>
 
@@ -388,7 +388,7 @@ function TransactionPageContent() {
                     onClick={handleDownloadInvoice}
                     className="w-full mt-2 text-sm text-orange-600 hover:underline"
                   >
-                    {t('transaction.download_invoice')}
+                    {t('download_invoice')}
                   </button>
                 </div>
               </div>
@@ -397,7 +397,7 @@ function TransactionPageContent() {
             {/* Actions */}
             {transaction.status === 'pending_payment' && (
               <div className="bg-white rounded-xl shadow-sm p-6">
-                <h3 className="font-bold text-gray-900 mb-4">{t('transaction.actions')}</h3>
+                <h3 className="font-bold text-gray-900 mb-4">{tCommon('actions')}</h3>
                 <button
                   onClick={handleCancelTransaction}
                   className="w-full px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-medium transition"
@@ -409,8 +409,8 @@ function TransactionPageContent() {
 
             {/* Support */}
             <div className="bg-primary-50 rounded-xl p-6">
-              <h3 className="font-bold text-gray-900 mb-2">{t('transaction.contact_support')}</h3>
-              <p className="text-sm text-gray-600 mb-4">{t('transaction.support_message')}</p>
+              <h3 className="font-bold text-gray-900 mb-2">{t('contact_support')}</h3>
+              <p className="text-sm text-gray-600 mb-4">{t('support_message')}</p>
               <a href="mailto:support@autoscout24-safetrade.de" className="text-sm text-primary-600 hover:underline">
                 support@autoscout24-safetrade.de
               </a>
