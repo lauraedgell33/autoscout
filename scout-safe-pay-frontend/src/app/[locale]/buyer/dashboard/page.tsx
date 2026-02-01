@@ -9,6 +9,7 @@ import { transactionService, Transaction } from '@/lib/api/transactions';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import ProtectedRoute from '@/components/ProtectedRoute';
 import toast from 'react-hot-toast';
 
 interface DashboardStats {
@@ -19,7 +20,7 @@ interface DashboardStats {
   total_spent: string;
 }
 
-export default function BuyerDashboardPage() {
+function BuyerDashboardContent() {
   const params = useParams<{ locale: string }>();
   const locale = params.locale;
 
@@ -268,5 +269,13 @@ export default function BuyerDashboardPage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function BuyerDashboardPage() {
+  return (
+    <ProtectedRoute allowedRoles={['buyer']}>
+      <BuyerDashboardContent />
+    </ProtectedRoute>
   );
 }

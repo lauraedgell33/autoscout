@@ -7,8 +7,10 @@ import { Package, TrendingUp, DollarSign, Users, Plus } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { apiClient } from '@/lib/api-client';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
-export default function DealerDashboardPage() {
+function DealerDashboardContent() {
   const params = useParams<{ locale: string }>();
   const locale = params.locale;
 
@@ -119,5 +121,13 @@ export default function DealerDashboardPage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function DealerDashboardPage() {
+  return (
+    <ProtectedRoute allowedRoles={['dealer']}>
+      <DealerDashboardContent />
+    </ProtectedRoute>
   );
 }

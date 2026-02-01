@@ -6,6 +6,7 @@ import { Link } from '@/i18n/routing';
 import { AlertCircle, Plus, MessageCircle, Eye } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 interface Dispute {
   id: number;
@@ -19,7 +20,7 @@ interface Dispute {
   };
 }
 
-export default function DisputesPage() {
+function DisputesPageContent() {
   const params = useParams<{ locale: string }>();
   const locale = params.locale;
 
@@ -146,5 +147,12 @@ export default function DisputesPage() {
         </div>
       </Card>
     </div>
+  );
+}
+export default function DisputesPage() {
+  return (
+    <ProtectedRoute>
+      <DisputesPageContent />
+    </ProtectedRoute>
   );
 }

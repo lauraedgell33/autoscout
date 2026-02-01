@@ -10,8 +10,10 @@ import { contractService } from '@/lib/api/contracts'
 import { invoiceService } from '@/lib/api/invoices'
 import { getCategoryLabel } from '@/lib/utils/categoryHelpers'
 import { useRealtimeEvent } from '@/lib/realtime-client'
+import ProtectedRoute from '@/components/ProtectedRoute';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
-export default function TransactionPage() {
+function TransactionPageContent() {
   const t = useTranslations('transaction')
   const tCommon = useTranslations('common')
   const { formatPrice } = useCurrency()
@@ -391,4 +393,12 @@ export default function TransactionPage() {
       </div>    </>
   )
 }
-// HMR Test - 02:30:37
+
+export default function TransactionPage() {
+  return (
+    <ProtectedRoute>
+      <TransactionPageContent />
+    </ProtectedRoute>
+  );
+}
+

@@ -8,6 +8,7 @@ import { Package, TrendingUp, DollarSign, Eye, Plus, BarChart } from 'lucide-rea
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { apiClient } from '@/lib/api-client';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 interface SellerStats {
   total_listings: number;
@@ -36,7 +37,7 @@ interface SalesResponse {
   data?: RecentSale[];
 }
 
-export default function SellerDashboardPage() {
+function SellerDashboardContent() {
   const params = useParams<{ locale: string }>();
   const locale = params.locale;
 
@@ -257,5 +258,12 @@ export default function SellerDashboardPage() {
         </Link>
       </div>
     </div>
+  );
+}
+export default function SellerDashboardPage() {
+  return (
+    <ProtectedRoute allowedRoles={['seller', 'dealer']}>
+      <SellerDashboardContent />
+    </ProtectedRoute>
   );
 }

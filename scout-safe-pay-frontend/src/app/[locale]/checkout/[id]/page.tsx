@@ -11,8 +11,10 @@ import { vehicleService } from '@/lib/api/vehicles'
 import { transactionService } from '@/lib/api/transactions'
 import { kycService } from '@/lib/api/kyc'
 import { logger } from '@/utils/logger'
+import ProtectedRoute from '@/components/ProtectedRoute';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
-export default function CheckoutPage() {
+function CheckoutPageContent() {
   const t = useTranslations('checkout')
   const tCommon = useTranslations('common')
   const { formatPrice } = useCurrency()
@@ -323,4 +325,12 @@ export default function CheckoutPage() {
       </div>
     </div>
   )
+}
+
+export default function CheckoutPage() {
+  return (
+    <ProtectedRoute allowedRoles={['buyer']}>
+      <CheckoutPageContent />
+    </ProtectedRoute>
+  );
 }

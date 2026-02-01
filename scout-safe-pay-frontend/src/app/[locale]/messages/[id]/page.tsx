@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation'
 import { ArrowLeft, Send, Circle } from 'lucide-react'
 import messageService, { ConversationDetail } from '@/lib/api/messages'
 import realtimeClient, { useRealtimeEvent } from '@/lib/realtime-client'
-import { useAuthStore } from '@/store/auth-store'
+import { useAuth } from '@/contexts/AuthContext'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
@@ -16,7 +16,8 @@ export default function MessageThreadPage() {
   const transactionId = Number(routeParams?.id)
   const hasValidParams = Boolean(locale) && Number.isFinite(transactionId)
 
-  const currentUserId = useAuthStore((state) => state.user?.id)
+  const { user } = useAuth()
+  const currentUserId = user?.id
 
   const [conversation, setConversation] = useState<ConversationDetail | null>(null)
   const [loading, setLoading] = useState(true)
