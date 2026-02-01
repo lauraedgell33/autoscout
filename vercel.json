@@ -2,6 +2,7 @@
   "buildCommand": "cd scout-safe-pay-frontend && npm install && npm run build",
   "devCommand": "cd scout-safe-pay-frontend && npm run dev",
   "installCommand": "cd scout-safe-pay-frontend && npm install",
+  "ignoreCommand": "bash -c 'git diff HEAD^ HEAD --quiet -- scout-safe-pay-frontend'",
   "framework": "nextjs",
   "nodeVersion": "20.x",
   "outputDirectory": "./scout-safe-pay-frontend/.next/standalone"
