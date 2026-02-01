@@ -28,9 +28,9 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H 146.190.185.209 >> ~/.ssh/known_hosts
 
-      - name: Clean and deploy via git repo
+      - name: Fix git remote and deploy
         run: |
-          ssh forge@146.190.185.209 'REPO=$(find /home/forge -name ".git" -type d 2>/dev/null | grep adminautoscout | head -1 | xargs dirname) && cd "$REPO" && git clean -fd && git pull origin main && php artisan migrate --force && php artisan optimize'
+          ssh forge@146.190.185.209 'REPO=$(find /home/forge -name ".git" -type d 2>/dev/null | grep adminautoscout | head -1 | xargs dirname) && cd "$REPO" && git remote set-url origin https://github.com/lauraedgell33/autoscout.git && git clean -fd && git fetch origin && git reset --hard origin/main && php artisan migrate --force && php artisan optimize'
 
       - name: Verify Deployment
         run: |
