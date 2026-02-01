@@ -2,6 +2,8 @@
 
 namespace App\Filament\Admin\Resources\BankAccounts\Schemas;
 
+use App\Models\Dealer;
+use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -17,6 +19,73 @@ class BankAccountForm
     {
         return $schema
             ->components([
+                // Account Owner Section (FIRST - so user selects owner before filling details)
+                Section::make('Account Owner')
+                    ->icon('heroicon-o-user-group')
+                    ->schema([
+                        Grid::make(4)->schema([
+                            Select::make('accountable_type')
+                                ->label('Owner Type')
+                                ->options([
+                                    'App\\Models\\Dealer' => '🏢 Dealer',
+                                    'App\\Models\\User' => '👤 Seller (User)',
+                                ])
+                                ->required()
+                                ->live()
+                                ->native(false)
+                                ->afterStateUpdated(fn (callable $set) => $set('accountable_id', null)),
+                            
+                            Select::make('accountable_id')
+                                ->label('Select Owner')
+                                ->required()
+                                ->searchable()
+                                ->preload()
+                                ->native(false)
+                                ->options(function (callable $get) {
+                                    $type = $get('accountable_type');
+                                    
+                                    if ($type === 'App\\Models\\Dealer') {
+                                        return Dealer::query()
+                                            ->orderBy('name')
+                                            ->get()
+                                            ->mapWithKeys(fn ($dealer) => [
+                                                $dealer->id => "🏢 {$dealer->name}" . ($dealer->company_name ? " ({$dealer->company_name})" : ''),
+                                            ]);
+                                    }
+                                    
+                                    if ($type === 'App\\Models\\User') {
+                                        return User::query()
+                                            ->where('user_type', 'seller')
+                                            ->orderBy('name')
+                                            ->get()
+                                            ->mapWithKeys(fn ($user) => [
+                                                $user->id => "👤 {$user->name} ({$user->email})",
+                                            ]);
+                                    }
+                                    
+                                    return [];
+                                })
+                                ->helperText(fn (callable $get) => match ($get('accountable_type')) {
+                                    'App\\Models\\Dealer' => 'Select a registered dealer',
+                                    'App\\Models\\User' => 'Select a registered seller',
+                                    default => 'First select an owner type',
+                                }),
+                                
+                            Toggle::make('is_primary')
+                                ->label('Primary Account')
+                                ->helperText('Set as primary bank account')
+                                ->onColor('warning')
+                                ->default(true),
+                                
+                            Toggle::make('is_verified')
+                                ->label('Verified Account')
+                                ->helperText('Mark this account as verified')
+                                ->onColor('success')
+                                ->offColor('danger'),
+                        ]),
+                    ])
+                    ->columnSpanFull(),
+
                 // Account Information Section
                 Section::make('Account Information')
                     ->icon('heroicon-o-credit-card')
@@ -82,36 +151,6 @@ class BankAccountForm
                                 ->required()
                                 ->default('EUR')
                                 ->native(false),
-                        ]),
-                    ])
-                    ->columnSpanFull(),
-                
-                // Account Owner & Status Section
-                Section::make('Account Owner & Status')
-                    ->icon('heroicon-o-user')
-                    ->schema([
-                        Grid::make(4)->schema([
-                            Select::make('accountable_type')
-                                ->label('Owner Type')
-                                ->options([
-                                    'App\\Models\\User' => '👤 User',
-                                    'App\\Models\\Company' => '🏢 Company',
-                                ])
-                                ->required()
-                                ->native(false),
-                            TextInput::make('accountable_id')
-                                ->label('Owner ID')
-                                ->required()
-                                ->numeric(),
-                            Toggle::make('is_verified')
-                                ->label('Verified Account')
-                                ->helperText('Mark this account as verified')
-                                ->onColor('success')
-                                ->offColor('danger'),
-                            Toggle::make('is_primary')
-                                ->label('Primary Account')
-                                ->helperText('Set as primary bank account')
-                                ->onColor('warning'),
                         ]),
                     ])
                     ->columnSpanFull(),

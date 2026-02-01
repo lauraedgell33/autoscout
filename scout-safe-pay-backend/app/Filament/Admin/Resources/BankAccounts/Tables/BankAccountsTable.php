@@ -78,10 +78,33 @@ class BankAccountsTable
                 // Owner Info
                 TextColumn::make('accountable_type')
                     ->label('Owner Type')
-                    ->formatStateUsing(fn (string $state): string => class_basename($state))
+                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                        'App\\Models\\Dealer' => '🏢 Dealer',
+                        'App\\Models\\User' => '👤 Seller',
+                        default => $state ?? 'N/A',
+                    })
                     ->badge()
-                    ->color('gray')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->color(fn (?string $state): string => match ($state) {
+                        'App\\Models\\Dealer' => 'warning',
+                        'App\\Models\\User' => 'info',
+                        default => 'gray',
+                    }),
+                    
+                TextColumn::make('owner_name')
+                    ->label('Owner')
+                    ->getStateUsing(fn ($record) => $record->accountable?->name ?? 'N/A')
+                    ->searchable(query: function ($query, string $search) {
+                        // Search in both dealers and users
+                        return $query->where(function ($q) use ($search) {
+                            $q->whereHasMorph('accountable', ['App\\Models\\Dealer'], function ($query) use ($search) {
+                                $query->where('name', 'like', "%{$search}%");
+                            })->orWhereHasMorph('accountable', ['App\\Models\\User'], function ($query) use ($search) {
+                                $query->where('name', 'like', "%{$search}%");
+                            });
+                        });
+                    })
+                    ->sortable()
+                    ->weight('medium'),
                     
                 // Verification
                 TextColumn::make('verified_at')
@@ -100,6 +123,12 @@ class BankAccountsTable
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
+                SelectFilter::make('accountable_type')
+                    ->label('Owner Type')
+                    ->options([
+                        'App\\Models\\Dealer' => '🏢 Dealer',
+                        'App\\Models\\User' => '👤 Seller',
+                    ]),
                 TernaryFilter::make('is_verified')
                     ->label('Verification Status')
                     ->trueLabel('Verified')
