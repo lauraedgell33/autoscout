@@ -31,15 +31,12 @@ class NewPurchaseRequestNotification extends Notification implements ShouldQueue
         
         return (new MailMessage)
             ->subject('New Purchase Request - Transaction #' . $this->transaction->id)
-            ->greeting('Hello ' . $notifiable->name . '!')
-            ->line('You have received a new purchase request for your vehicle.')
-            ->line('**Vehicle:** ' . $vehicle->make . ' ' . $vehicle->model)
-            ->line('**Buyer:** ' . $buyer->name)
-            ->line('**Amount:** €' . number_format($this->transaction->amount, 2))
-            ->line('The buyer will complete the payment process. You will be notified once payment is verified.')
-            ->action('View Transaction', url('/admin'))
-            ->line('Please prepare the vehicle for delivery once payment is confirmed.')
-            ->line('Thank you for using AutoScout24 SafeTrade!');
+            ->view('emails.transactions.new-purchase-request', [
+                'transaction' => $this->transaction,
+                'vehicle' => $vehicle,
+                'buyer' => $buyer,
+                'seller' => $notifiable,
+            ]);
     }
 
     public function toArray(object $notifiable): array

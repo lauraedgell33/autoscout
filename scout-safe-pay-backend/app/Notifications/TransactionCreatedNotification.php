@@ -27,15 +27,11 @@ class TransactionCreatedNotification extends Notification implements ShouldQueue
         
         return (new MailMessage)
             ->subject('Purchase Confirmed - Transaction #' . $this->transaction->id)
-            ->greeting('Hello ' . $notifiable->name . '!')
-            ->line('Your purchase request has been confirmed.')
-            ->line('**Vehicle:** ' . $vehicle->make . ' ' . $vehicle->model)
-            ->line('**Amount:** €' . number_format($this->transaction->amount, 2))
-            ->line('**Status:** ' . ucfirst($this->transaction->status))
-            ->line('Please generate and download your invoice from the transaction page.')
-            ->action('View Transaction', url('/transaction/' . $this->transaction->id))
-            ->line('After making the payment, upload your payment proof for verification.')
-            ->line('Thank you for using AutoScout24 SafeTrade!');
+            ->view('emails.transactions.transaction-created', [
+                'transaction' => $this->transaction,
+                'vehicle' => $vehicle,
+                'user' => $notifiable,
+            ]);
     }
 
     public function toArray(object $notifiable): array
