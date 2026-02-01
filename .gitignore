@@ -42,3 +42,12 @@ scout-safe-pay-backend/bootstrap/cache/*
 *.tmp
 .vercel
 .env*.local
+
+# Security - Never commit sensitive documentation
+*CREDENTIALS*.md
+*SECRET*.md
+*PASSWORD*.md
+*SMTP*.txt
+*API_KEY*.txt
+*.backup.*
+.env.backup*
