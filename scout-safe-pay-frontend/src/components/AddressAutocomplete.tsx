@@ -66,13 +66,16 @@ export default function AddressAutocomplete({
 
     setLoading(true);
     try {
+      // Improved query parameters for better results
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?` +
           `q=${encodeURIComponent(searchQuery)}` +
           `&format=json` +
           `&addressdetails=1` +
-          `&limit=5` +
-          `&countrycodes=de,at,ch,fr,it,es,nl,be,gb,us`, // Limit to relevant countries
+          `&limit=10` + // Increased from 5 to 10 for more results
+          `&dedupe=1` + // Remove duplicate results
+          // No country filter to show all possible addresses
+          `&accept-language=en`, // Force English for consistency
         {
           headers: {
             'User-Agent': 'AutoScout24SafeTrade/1.0', // Required by Nominatim
@@ -107,7 +110,7 @@ export default function AddressAutocomplete({
 
     debounceTimer.current = setTimeout(() => {
       searchAddress(value);
-    }, 500); // Wait 500ms after user stops typing
+    }, 300); // Reduced from 500ms to 300ms for faster response
   };
 
   const handleSelect = (result: AddressResult) => {
@@ -203,32 +206,54 @@ export default function AddressAutocomplete({
 
       {/* Results Dropdown */}
       {showResults && results.length > 0 && (
-        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-80 overflow-y-auto">
-          {results.map((result, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => handleSelect(result)}
-              className={`
-                w-full text-left px-4 py-3 hover:bg-primary-50 transition-colors border-b border-gray-100 last:border-b-0
-                ${index === selectedIndex ? 'bg-primary-50' : ''}
-              `}
-            >
-              <div className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-primary-600 mt-0.5 flex-shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">
-                    {result.address.road && result.address.house_number
-                      ? `${result.address.road} ${result.address.house_number}`
-                      : result.address.road || 'Address'}
-                  </p>
-                  <p className="text-xs text-gray-600 truncate">
-                    {result.address.postcode || ''} {result.address.city || result.address.town || result.address.village || ''}, {result.address.country || ''}
-                  </p>
+        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-96 overflow-y-auto">
+          {results.map((result, index) => {
+            const address = result.address;
+            const streetDisplay = address.road && address.house_number
+              ? `${address.road} ${address.house_number}`
+              : address.road || address.city || address.town || 'Address';
+            const cityDisplay = address.city || address.town || address.village || '';
+            const countryDisplay = address.country || '';
+            const postcodeDisplay = address.postcode || '';
+
+            return (
+              <button
+                key={index}
+                type="button"
+                onClick={() => handleSelect(result)}
+                className={`
+                  w-full text-left px-4 py-3 hover:bg-primary-50 transition-colors border-b border-gray-100 last:border-b-0
+                  ${index === selectedIndex ? 'bg-primary-50' : ''}
+                `}
+              >
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-gray-900 truncate">
+                      {streetDisplay}
+                    </p>
+                    <div className="flex items-center gap-2 mt-1">
+                      {postcodeDisplay && (
+                        <span className="text-xs font-medium text-gray-700 bg-gray-100 px-2 py-0.5 rounded">
+                          {postcodeDisplay}
+                        </span>
+                      )}
+                      {cityDisplay && (
+                        <span className="text-xs text-gray-600">
+                          {cityDisplay}
+                        </span>
+                      )}
+                      {countryDisplay && (
+                        <span className="text-xs text-gray-500">
+                          • {countryDisplay}
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </button>
-          ))}
+              </button>
+            );
+          })}
         </div>
       )}
 
@@ -242,7 +267,7 @@ export default function AddressAutocomplete({
       )}
 
       <p className="text-xs text-gray-500 mt-1">
-        Start typing to search for your address (minimum 3 characters)
+        💡 Tip: Type street name + city for better results (e.g., "Hauptstrasse Berlin" or "Maximilianstrasse Munich")
       </p>
     </div>
   );
