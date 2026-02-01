@@ -28,13 +28,9 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H 146.190.185.209 >> ~/.ssh/known_hosts
 
-      - name: Clean untracked files via Forge deployment directory
+      - name: Clean and deploy via git repo
         run: |
-          ssh forge@146.190.185.209 'find /home/forge -name ".git" -type d 2>/dev/null | grep adminautoscout | head -1 | xargs -I {} bash -c "cd {} && cd .. && pwd && git clean -fd && git status"'
-
-      - name: Deploy to Forge
-        run: |
-          ssh forge@146.190.185.209 'bash /home/forge/adminautoscout.dev/.deployment'
+          ssh forge@146.190.185.209 'REPO=$(find /home/forge -name ".git" -type d 2>/dev/null | grep adminautoscout | head -1 | xargs dirname) && cd "$REPO" && git clean -fd && git pull origin main && php artisan migrate --force && php artisan optimize'
 
       - name: Verify Deployment
         run: |
