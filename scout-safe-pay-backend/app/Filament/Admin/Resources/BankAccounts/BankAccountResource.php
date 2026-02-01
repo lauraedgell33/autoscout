@@ -208,8 +208,12 @@ class BankAccountResource extends Resource
                 Tables\Columns\TextColumn::make('iban')
                     ->label('IBAN')
                     ->formatStateUsing(function ($state) {
-                        // Show only last 4 characters for security
-                        return '****' . substr($state, -4);
+                        try {
+                            // Show only last 4 characters for security
+                            return $state ? '****' . substr($state, -4) : '—';
+                        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                            return '[Decryption Error]';
+                        }
                     })
                     ->copyable()
                     ->copyMessage('IBAN copied')

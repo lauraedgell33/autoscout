@@ -344,8 +344,10 @@ class VehicleForm
                         '4:3',
                         '1:1',
                     ])
+                    ->disk('public')
                     ->maxSize(5120)
                     ->directory('vehicles/primary')
+                    ->visibility('public')
                     ->columnSpanFull(),
                 
                 FileUpload::make('images')
@@ -353,9 +355,11 @@ class VehicleForm
                     ->image()
                     ->multiple()
                     ->reorderable()
+                    ->disk('public')
                     ->maxFiles(20)
                     ->maxSize(5120)
                     ->directory('vehicles/gallery')
+                    ->visibility('public')
                     ->columnSpanFull()
                     ->helperText('You can add up to 20 images'),
 
