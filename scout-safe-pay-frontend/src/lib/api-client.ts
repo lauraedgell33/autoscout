@@ -77,8 +77,8 @@ class OptimizedAPIClient {
         // Handle 403 Forbidden - check if it's email verification issue
         if (status === 403) {
           const errorMessage = (error.response?.data as any)?.message || '';
-          const isEmailVerificationError = errorMessage.toLowerCase().includes('email') && 
-                                          errorMessage.toLowerCase().includes('verif');
+          // EXACT match for Laravel's email verification error
+          const isEmailVerificationError = errorMessage === 'Your email address is not verified.';
           
           if (isEmailVerificationError) {
             // Email not verified - redirect to verification notice (only once)
