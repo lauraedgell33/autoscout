@@ -77,12 +77,28 @@ class OptimizedAPIClient {
         // Handle 403 Forbidden - check if it's email verification issue
         if (status === 403) {
           const errorMessage = (error.response?.data as any)?.message || '';
-          if (errorMessage.toLowerCase().includes('email') || errorMessage.toLowerCase().includes('verify')) {
-            // Email not verified - redirect to verification notice
+          const isEmailVerificationError = errorMessage.toLowerCase().includes('email') && 
+                                          errorMessage.toLowerCase().includes('verif');
+          
+          if (isEmailVerificationError) {
+            // Email not verified - redirect to verification notice (only once)
             if (typeof window !== 'undefined') {
               const currentPath = window.location.pathname;
-              if (!currentPath.includes('/verify-email') && !currentPath.includes('/login')) {
-                window.location.href = '/verify-email?required=true';
+              // Don't redirect if already on verify-email, login, or register page
+              const excludedPaths = ['/verify-email', '/login', '/register', '/email'];
+              const shouldRedirect = !excludedPaths.some(path => currentPath.includes(path));
+              
+              if (shouldRedirect) {
+                // Set flag to prevent multiple redirects
+                const redirectKey = 'email_verification_redirect';
+                const lastRedirect = sessionStorage.getItem(redirectKey);
+                const now = Date.now();
+                
+                // Only redirect once per minute to prevent loops
+                if (!lastRedirect || (now - parseInt(lastRedirect)) > 60000) {
+                  sessionStorage.setItem(redirectKey, now.toString());
+                  window.location.href = '/verify-email?required=true';
+                }
               }
             }
           }
