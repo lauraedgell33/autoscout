@@ -26,7 +26,7 @@ function CheckoutPageContent() {
   const { formatPrice } = useCurrency()
   const router = useRouter()
   const params = useParams()
-  const { user } = useAuth()
+  const { user, isAuthenticated } = useAuth()
   const vehicleId = params.id as string
 
   const [vehicle, setVehicle] = useState<any>(null)
@@ -140,8 +140,8 @@ function CheckoutPageContent() {
       return
     }
     
-    const token = localStorage.getItem('auth_token')
-    if (!token) {
+    // Use AuthContext instead of localStorage directly
+    if (!user || !isAuthenticated) {
       toast.error(t('login_required'))
       router.push(`/${params.locale}/login`)
       return
