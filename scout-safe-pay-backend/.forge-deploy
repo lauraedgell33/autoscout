@@ -2,7 +2,11 @@
 # Forge deployment script - triggered by GitHub Actions
 echo "Starting deployment..."
 cd /home/forge/adminautoscout.dev
-git pull origin main
+
+# Force pull latest code (overwrites any local changes)
+git fetch origin
+git reset --hard origin/main
+
 composer install --no-dev --optimize-autoloader
 
 # Clear all caches BEFORE caching (fixes Livewire 500 errors)
