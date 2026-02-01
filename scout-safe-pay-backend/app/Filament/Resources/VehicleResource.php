@@ -306,7 +306,7 @@ class VehicleResource extends Resource
                     ->money('EUR')
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('status')
+                Tables\Columns\TextColumn::make('status')
                     ->colors([
                         'secondary' => 'draft',
                         'success' => 'active',

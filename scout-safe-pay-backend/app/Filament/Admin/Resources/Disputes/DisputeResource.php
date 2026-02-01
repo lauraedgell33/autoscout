@@ -216,7 +216,7 @@ class DisputeResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                Tables\Columns\BadgeColumn::make('type')
+                Tables\Columns\TextColumn::make('type')
                     ->label('Type')
                     ->colors([
                         'danger' => 'fraud',
@@ -233,7 +233,7 @@ class DisputeResource extends Resource
                     ->searchable()
                     ->toggleable(),
 
-                Tables\Columns\BadgeColumn::make('status')
+                Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->colors([
                         'danger' => 'open',

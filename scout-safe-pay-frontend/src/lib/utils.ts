@@ -30,13 +30,23 @@ export function getImageUrl(imagePath: string | null | undefined): string {
   
   if (!imagePath) return placeholderSvg;
   
-  // Already a full URL
-  if (imagePath.startsWith('http://') || imagePath.startsWith('https://') || imagePath.startsWith('/')) {
+  // Already a full URL (including absolute paths starting with /)
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
     return imagePath
   }
   
-  // Relative path - prepend storage URL
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api'
-  const storageUrl = baseUrl.replace('/api', '/storage')
-  return `${storageUrl}/${imagePath}`
+  // If path starts with /storage, it's already correct - prepend backend domain
+  if (imagePath.startsWith('/storage/')) {
+    const backendUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api').replace('/api', '')
+    return `${backendUrl}${imagePath}`
+  }
+  
+  // If absolute path but not /storage, return as is (for Next.js public folder)
+  if (imagePath.startsWith('/')) {
+    return imagePath
+  }
+  
+  // Relative path - prepend storage URL (e.g., "vehicles/1/image.png")
+  const backendUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api').replace('/api', '')
+  return `${backendUrl}/storage/${imagePath}`
 }

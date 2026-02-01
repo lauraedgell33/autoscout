@@ -24,13 +24,13 @@ class TransactionResource extends Resource
     {
         return $schema
             ->schema([
-                Forms\Components\Section::make('Transaction Information')
+                Schemas\Components\Section::make('Transaction Information')
                     ->schema([
-                        Forms\Components\TextInput::make('id')
+                        Schemas\Components\TextInput::make('id')
                             ->label('Transaction ID')
                             ->disabled(),
                         
-                        Forms\Components\Select::make('status')
+                        Schemas\Components\Select::make('status')
                             ->options([
                                 'pending' => 'Pending',
                                 'payment_received' => 'Payment Received',
@@ -40,74 +40,74 @@ class TransactionResource extends Resource
                             ])
                             ->required(),
 
-                        Forms\Components\TextInput::make('amount')
+                        Schemas\Components\TextInput::make('amount')
                             ->prefix('€')
                             ->numeric()
                             ->disabled(),
 
-                        Forms\Components\TextInput::make('payment_reference')
+                        Schemas\Components\TextInput::make('payment_reference')
                             ->disabled(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Buyer & Seller')
+                Schemas\Components\Section::make('Buyer & Seller')
                     ->schema([
-                        Forms\Components\TextInput::make('buyer.name')
+                        Schemas\Components\TextInput::make('buyer.name')
                             ->label('Buyer')
                             ->disabled(),
                         
-                        Forms\Components\TextInput::make('buyer.email')
+                        Schemas\Components\TextInput::make('buyer.email')
                             ->label('Buyer Email')
                             ->disabled(),
 
-                        Forms\Components\TextInput::make('seller.name')
+                        Schemas\Components\TextInput::make('seller.name')
                             ->label('Seller')
                             ->disabled(),
 
-                        Forms\Components\TextInput::make('seller.email')
+                        Schemas\Components\TextInput::make('seller.email')
                             ->label('Seller Email')
                             ->disabled(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Vehicle Information')
+                Schemas\Components\Section::make('Vehicle Information')
                     ->schema([
-                        Forms\Components\TextInput::make('vehicle.make')
+                        Schemas\Components\TextInput::make('vehicle.make')
                             ->label('Make')
                             ->disabled(),
                         
-                        Forms\Components\TextInput::make('vehicle.model')
+                        Schemas\Components\TextInput::make('vehicle.model')
                             ->label('Model')
                             ->disabled(),
 
-                        Forms\Components\TextInput::make('vehicle.year')
+                        Schemas\Components\TextInput::make('vehicle.year')
                             ->label('Year')
                             ->disabled(),
 
-                        Forms\Components\TextInput::make('vehicle.vin')
+                        Schemas\Components\TextInput::make('vehicle.vin')
                             ->label('VIN')
                             ->disabled(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Dates')
+                Schemas\Components\Section::make('Dates')
                     ->schema([
-                        Forms\Components\DateTimePicker::make('created_at')
+                        Schemas\Components\DateTimePicker::make('created_at')
                             ->disabled(),
 
-                        Forms\Components\DateTimePicker::make('payment_verified_at')
+                        Schemas\Components\DateTimePicker::make('payment_verified_at')
                             ->disabled(),
 
-                        Forms\Components\DateTimePicker::make('completed_at')
+                        Schemas\Components\DateTimePicker::make('completed_at')
                             ->disabled(),
 
-                        Forms\Components\DateTimePicker::make('cancelled_at')
+                        Schemas\Components\DateTimePicker::make('cancelled_at')
                             ->disabled(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Notes')
+                Schemas\Components\Section::make('Notes')
                     ->schema([
-                        Forms\Components\Textarea::make('notes')
+                        Schemas\Components\Textarea::make('notes')
                             ->rows(3),
 
-                        Forms\Components\Textarea::make('verification_notes')
+                        Schemas\Components\Textarea::make('verification_notes')
                             ->rows(3),
                     ]),
             ]);
@@ -138,14 +138,16 @@ class TransactionResource extends Resource
                     ->money('EUR')
                     ->sortable(),
 
-                Tables\Columns\BadgeColumn::make('status')
-                    ->colors([
-                        'warning' => 'pending',
-                        'info' => 'payment_received',
-                        'primary' => 'in_delivery',
-                        'success' => 'completed',
-                        'danger' => 'cancelled',
-                    ])
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn ($state) => match ($state) {
+                        'pending' => 'warning',
+                        'payment_received' => 'info',
+                        'in_delivery' => 'primary',
+                        'completed' => 'success',
+                        'cancelled' => 'danger',
+                        default => 'gray',
+                    })
                     ->formatStateUsing(fn ($state) => ucfirst(str_replace('_', ' ', $state))),
 
                 Tables\Columns\IconColumn::make('payment_proof')
@@ -182,9 +184,9 @@ class TransactionResource extends Resource
 
                 Tables\Filters\Filter::make('created_at')
                     ->form([
-                        Forms\Components\DatePicker::make('created_from')
+                        Schemas\Components\DatePicker::make('created_from')
                             ->label('Created From'),
-                        Forms\Components\DatePicker::make('created_until')
+                        Schemas\Components\DatePicker::make('created_until')
                             ->label('Created Until'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
@@ -232,7 +234,7 @@ class TransactionResource extends Resource
                     ->color('danger')
                     ->requiresConfirmation()
                     ->form([
-                        Forms\Components\Textarea::make('reason')
+                        Schemas\Components\Textarea::make('reason')
                             ->label('Cancellation Reason')
                             ->required(),
                     ])

@@ -156,7 +156,7 @@ class UserResource extends Resource
                     ->sortable()
                     ->copyable(),
 
-                Tables\Columns\BadgeColumn::make('user_type')
+                Tables\Columns\TextColumn::make('user_type')
                     ->label('Role')
                     ->colors([
                         'info' => 'buyer',
@@ -178,7 +178,7 @@ class UserResource extends Resource
                     ->trueColor('success')
                     ->falseColor('danger'),
 
-                Tables\Columns\BadgeColumn::make('kyc_status')
+                Tables\Columns\TextColumn::make('kyc_status')
                     ->label('KYC')
                     ->colors([
                         'secondary' => fn ($state) => $state === null,
