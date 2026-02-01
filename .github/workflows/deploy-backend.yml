@@ -28,6 +28,10 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H 146.190.185.209 >> ~/.ssh/known_hosts
 
+      - name: Cleanup untracked files on server
+        run: |
+          ssh forge@146.190.185.209 'cd adminautoscout.dev && git clean -fd'
+
       - name: Deploy to Forge
         run: |
           ssh forge@146.190.185.209 'bash adminautoscout.dev/.deployment'
