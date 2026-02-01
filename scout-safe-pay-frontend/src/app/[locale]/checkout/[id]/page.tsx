@@ -300,9 +300,14 @@ function CheckoutPageContent() {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sticky top-8">
               <h3 className="text-sm font-semibold mb-3">{t('order_summary')}</h3>
-              {vehicle.images?.[0] && (
+              {(vehicle.images?.[0] || vehicle.primary_image) && (
                 <div className="relative w-full h-32 rounded-xl overflow-hidden mb-3">
-                  <Image src={vehicle.images[0]} alt={vehicle.make} fill className="object-cover" />
+                  <Image 
+                    src={getImageUrl(vehicle.images?.[0] || vehicle.primary_image)} 
+                    alt={vehicle.make} 
+                    fill 
+                    className="object-cover" 
+                  />
                 </div>
               )}
               <h4 className="text-sm font-semibold">{vehicle.make} {vehicle.model}</h4>
