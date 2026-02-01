@@ -35,7 +35,7 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
         } else if (userRole === 'dealer') {
           router.push('/dealer/dashboard');
         } else if (userRole === 'seller') {
-          router.push('/seller/dashboard');
+          router.push('/dashboard/seller');
         } else {
           router.push('/dashboard/buyer');
         }

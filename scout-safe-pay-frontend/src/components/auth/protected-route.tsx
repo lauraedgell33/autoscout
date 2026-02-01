@@ -30,7 +30,15 @@ export function ProtectedRoute({ children, requiredRoles }: ProtectedRouteProps)
     if (requiredRoles && user && !requiredRoles.includes(user.user_type)) {
       // Redirect to appropriate dashboard
       const locale = pathname.split('/')[1];
-      router.push(`/${locale}/${user.user_type}/dashboard`);
+      if (user.user_type === 'seller') {
+        router.push(`/${locale}/dashboard/seller`);
+      } else if (user.user_type === 'dealer') {
+        router.push(`/${locale}/dealer/dashboard`);
+      } else if (user.user_type === 'admin') {
+        router.push(`/${locale}/admin`);
+      } else {
+        router.push(`/${locale}/dashboard/buyer`);
+      }
     }
   }, [isAuthenticated, user, requiredRoles, router, pathname]);
 
