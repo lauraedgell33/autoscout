@@ -18,6 +18,7 @@ import { Badge } from '@/components/ui/badge'
 import { Shield, CheckCircle, Lock, TrendingUp, User, Home, Camera, FileText } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { COUNTRIES, POPULAR_COUNTRIES } from '@/lib/constants/countries';
+import AddressAutocomplete from '@/components/AddressAutocomplete';
 
 function CheckoutPageContent() {
   const t = useTranslations('checkout')
@@ -359,6 +360,30 @@ function CheckoutPageContent() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
+                    {/* Address Autocomplete */}
+                    <AddressAutocomplete
+                      onSelect={(address) => {
+                        setFormData(prev => ({
+                          ...prev,
+                          street: address.street || prev.street,
+                          houseNumber: address.houseNumber || prev.houseNumber,
+                          city: address.city || prev.city,
+                          postalCode: address.postalCode || prev.postalCode,
+                          country: address.country || prev.country,
+                        }));
+                      }}
+                      placeholder="Search for your address..."
+                    />
+
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-200"></div>
+                      </div>
+                      <div className="relative flex justify-center text-xs">
+                        <span className="bg-white px-2 text-gray-500">Or enter manually</span>
+                      </div>
+                    </div>
+
                     <div className="grid grid-cols-3 gap-3">
                       <div className="col-span-2">
                         <label htmlFor="checkout-street" className="text-sm font-semibold text-gray-700 mb-1 block">
