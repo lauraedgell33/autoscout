@@ -351,3 +351,17 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(functi
     Route::get('/errors/statistics', [ErrorLogController::class, 'statistics']);
     Route::get('/errors/{index}', [ErrorLogController::class, 'show']);
 });
+
+// Email Verification Routes (outside auth middleware to allow public access)
+Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verification.verify');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/email/resend', [AuthController::class, 'resendVerification'])
+        ->middleware('throttle:6,1')
+        ->name('verification.resend');
+    
+    Route::get('/email/verification-status', [AuthController::class, 'verificationStatus'])
+        ->name('verification.status');
+});

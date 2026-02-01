@@ -8,6 +8,8 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Support\Facades\URL;
 
 class AuthController extends Controller
 {
@@ -34,13 +36,17 @@ class AuthController extends Controller
             'country' => $validated['country'] ?? 'DE',
         ]);
 
+        // Send email verification notification
+        $user->sendEmailVerificationNotification();
+
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'User registered successfully',
+            'message' => 'User registered successfully. Please check your email to verify your account.',
             'user' => $user,
             'token' => $token,
             'token_type' => 'Bearer',
+            'email_verified' => false,
         ], 201);
     }
 
@@ -235,6 +241,69 @@ class AuthController extends Controller
                 'completed_transactions' => $completedTransactions,
             ],
             'recent_transactions' => $recentTransactions,
+        ]);
+    }
+
+    /**
+     * Verify email address
+     */
+    public function verifyEmail(Request $request, $id, $hash)
+    {
+        $user = User::findOrFail($id);
+
+        if (!hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
+            return response()->json([
+                'message' => 'Invalid verification link',
+            ], 403);
+        }
+
+        if ($user->hasVerifiedEmail()) {
+            return response()->json([
+                'message' => 'Email already verified',
+                'verified' => true,
+            ]);
+        }
+
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
+        }
+
+        return response()->json([
+            'message' => 'Email verified successfully',
+            'verified' => true,
+        ]);
+    }
+
+    /**
+     * Resend email verification notification
+     */
+    public function resendVerification(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->hasVerifiedEmail()) {
+            return response()->json([
+                'message' => 'Email already verified',
+            ], 400);
+        }
+
+        $user->sendEmailVerificationNotification();
+
+        return response()->json([
+            'message' => 'Verification email sent successfully',
+        ]);
+    }
+
+    /**
+     * Get email verification status
+     */
+    public function verificationStatus(Request $request)
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'email_verified' => $user->hasVerifiedEmail(),
+            'email' => $user->email,
         ]);
     }
 }

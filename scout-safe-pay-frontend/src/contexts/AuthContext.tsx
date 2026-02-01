@@ -95,7 +95,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error('Registration failed - no user returned')
       }
 
-      toast.success('Successfully registered!')
+      // Check if email verification is needed
+      const emailVerified = (user as any).email_verified !== false
+      
+      if (!emailVerified) {
+        toast.success('Registration successful! Please check your email to verify your account.')
+      } else {
+        toast.success('Successfully registered!')
+      }
       
       // Redirect based on user type after registration
       const role = user.user_type || user.role

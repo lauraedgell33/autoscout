@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import DashboardLayout from '@/components/DashboardLayout'
 import { useAuth } from '@/contexts/AuthContext'
+import { EmailVerificationBanner } from '@/components/EmailVerificationBanner'
 
 export default function SellerDashboardPage() {
   const t = useTranslations('dashboard.seller')
@@ -14,6 +15,9 @@ export default function SellerDashboardPage() {
     <ProtectedRoute allowedRoles={['seller']}>
       <DashboardLayout>
         <div className="max-w-7xl mx-auto">
+          {/* Email Verification Banner */}
+          <EmailVerificationBanner />
+          
           {/* Welcome Section */}
           <div className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-xl p-8 mb-6">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
