@@ -8,6 +8,8 @@ import { Package, TrendingUp, DollarSign, Eye, Plus, BarChart } from 'lucide-rea
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { apiClient } from '@/lib/api-client';
+import toast from 'react-hot-toast';
+import { DashboardStatsGridSkeleton, TransactionListSkeleton } from '@/components/skeletons/DashboardSkeletons';
 import ProtectedRoute from '@/components/ProtectedRoute';
 
 interface SellerStats {
@@ -66,8 +68,11 @@ function SellerDashboardContent() {
       // Fetch recent sales using apiClient
       const salesData = await apiClient.get('/seller/sales?per_page=5') as SalesResponse;
       setRecentSales(salesData.data ?? []);
-    } catch (error) {
+      
+      toast.success('Dashboard loaded successfully!');
+    } catch (error: any) {
       console.error('Error fetching dashboard data:', error);
+      toast.error(error.response?.data?.message || 'Failed to load dashboard data');
       // Set empty arrays on error to prevent crashes
       setRecentSales([]);
     } finally {
@@ -77,8 +82,10 @@ function SellerDashboardContent() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="max-w-7xl mx-auto p-6 space-y-6">
+        <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-64 mb-6 animate-pulse"></div>
+        <DashboardStatsGridSkeleton />
+        <TransactionListSkeleton />
       </div>
     );
   }

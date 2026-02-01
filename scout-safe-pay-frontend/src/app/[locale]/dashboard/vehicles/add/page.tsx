@@ -1,14 +1,15 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useRouter } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import DashboardLayout from '@/components/DashboardLayout'
 import vehicleService from '@/lib/api/vehicles'
-import { getMakesByCategory, getModelsByMake, VehicleMake } from '@/lib/data/vehicleData'
+import vehicleDataService, { VehicleMake, VehicleModel } from '@/lib/api/vehicle-data'
 import { VEHICLE_CATEGORIES } from '@/lib/constants/categories'
 import { useTheme } from 'next-themes'
+import toast from 'react-hot-toast'
 
 export default function AddVehiclePage() {
   const t = useTranslations('dashboard.add_vehicle')
@@ -18,6 +19,10 @@ export default function AddVehiclePage() {
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [loadingMakes, setLoadingMakes] = useState(false)
+  const [loadingModels, setLoadingModels] = useState(false)
+  const [availableMakes, setAvailableMakes] = useState<VehicleMake[]>([])
+  const [availableModels, setAvailableModels] = useState<VehicleModel[]>([])
   
   const [formData, setFormData] = useState({
     category: 'car',
@@ -39,22 +44,66 @@ export default function AddVehiclePage() {
     status: 'available'
   })
 
-  // Get makes for selected category
-  const availableMakes = useMemo(() => {
-    return getMakesByCategory(formData.category)
+  // Fetch makes when category changes
+  useEffect(() => {
+    const fetchMakes = async () => {
+      if (!formData.category) return
+      
+      setLoadingMakes(true)
+      try {
+        const makes = await vehicleDataService.getMakesByCategory(formData.category)
+        setAvailableMakes(makes)
+      } catch (err) {
+        console.error('Failed to fetch makes:', err)
+        toast.error('Failed to load vehicle makes. You can still enter manually.')
+        setAvailableMakes([])
+      } finally {
+        setLoadingMakes(false)
+      }
+    }
+
+    fetchMakes()
   }, [formData.category])
 
-  // Get models for selected make
-  const availableModels = useMemo(() => {
-    if (!formData.make) return []
-    return getModelsByMake(formData.category, formData.make)
+  // Fetch models when make changes
+  useEffect(() => {
+    const fetchModels = async () => {
+      if (!formData.category || !formData.make) return
+      
+      setLoadingModels(true)
+      try {
+        const models = await vehicleDataService.getModelsByMake(
+          formData.category,
+          formData.make
+        )
+        setAvailableModels(models)
+      } catch (err) {
+        console.error('Failed to fetch models:', err)
+        toast.error('Failed to load vehicle models. You can still enter manually.')
+        setAvailableModels([])
+      } finally {
+        setLoadingModels(false)
+      }
+    }
+
+    fetchModels()
   }, [formData.category, formData.make])
+
+  // Get makes for selected category (deprecated - now using API)
+  const availableMakesLegacy = useMemo(() => {
+    return availableMakes
+  }, [availableMakes])
+
+  // Get models for selected make (deprecated - now using API)
+  const availableModelsLegacy = useMemo(() => {
+    return availableModels
+  }, [availableModels])
 
   // Get make name for display
   const selectedMakeName = useMemo(() => {
-    const make = availableMakes.find(m => m.id === formData.make)
+    const make = availableMakesLegacy.find(m => m.id === formData.make)
     return make?.name || formData.make
-  }, [availableMakes, formData.make])
+  }, [availableMakesLegacy, formData.make])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -164,7 +213,9 @@ export default function AddVehiclePage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="vehicle-make" className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Make *</label>
+                    <label htmlFor="vehicle-make" className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      Make * {loadingMakes && <span className="text-xs text-gray-500">(Loading...)</span>}
+                    </label>
                     <select
                       id="vehicle-make"
                       name="make"
@@ -172,26 +223,29 @@ export default function AddVehiclePage() {
                       onChange={handleChange}
                       className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
                       required
+                      disabled={loadingMakes}
                     >
-                      <option value="">Select Make</option>
-                      {availableMakes.map((make) => (
+                      <option value="">{loadingMakes ? 'Loading makes...' : 'Select Make'}</option>
+                      {availableMakesLegacy.map((make) => (
                         <option key={make.id} value={make.id}>{make.name}</option>
                       ))}
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="vehicle-model" className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Model *</label>
+                    <label htmlFor="vehicle-model" className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      Model * {loadingModels && <span className="text-xs text-gray-500">(Loading...)</span>}
+                    </label>
                     <select
                       id="vehicle-model"
                       name="model"
                       value={formData.model}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'} ${!formData.make ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${isDark ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'} ${!formData.make || loadingModels ? 'opacity-50 cursor-not-allowed' : ''}`}
                       required
-                      disabled={!formData.make}
+                      disabled={!formData.make || loadingModels}
                     >
-                      <option value="">{formData.make ? 'Select Model' : 'Select Make First'}</option>
-                      {availableModels.map((model) => (
+                      <option value="">{!formData.make ? 'Select Make First' : loadingModels ? 'Loading models...' : 'Select Model'}</option>
+                      {availableModelsLegacy.map((model) => (
                         <option key={model.name} value={model.name}>{model.name}</option>
                       ))}
                     </select>

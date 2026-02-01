@@ -5,7 +5,7 @@ import {routing} from '@/i18n/routing';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { CurrencyProvider } from '@/contexts/CurrencyContext';
 import { ToastProvider } from '@/components/providers/toast-provider';
-import { ErrorBoundary } from '@/components/ui/error-boundary';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import CookieBanner from '@/components/CookieBanner';

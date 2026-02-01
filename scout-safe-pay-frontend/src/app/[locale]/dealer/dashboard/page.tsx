@@ -8,6 +8,8 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { apiClient } from '@/lib/api-client';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import toast from 'react-hot-toast';
+import { DashboardStatsGridSkeleton } from '@/components/skeletons/DashboardSkeletons';
 import ProtectedRoute from '@/components/ProtectedRoute';
 
 function DealerDashboardContent() {
@@ -33,17 +35,22 @@ function DealerDashboardContent() {
       // Use apiClient instead of direct fetch
       const data = await apiClient.get('/dealer/stats') as typeof stats;
       setStats(data);
-    } catch (error) {
+      toast.success('Dashboard loaded successfully!');
+    } catch (error: any) {
       console.error('Error fetching dashboard data:', error);
+      toast.error(error.response?.data?.message || 'Failed to load dashboard data');
     } finally {
       setLoading(false);
     }
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-    </div>;
+    return (
+      <div className="max-w-7xl mx-auto p-6 space-y-6">
+        <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-64 mb-6 animate-pulse"></div>
+        <DashboardStatsGridSkeleton />
+      </div>
+    )
   }
 
   return (
