@@ -99,10 +99,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const emailVerified = (user as any).email_verified !== false
       
       if (!emailVerified) {
+        // Email needs verification - redirect to verification page
         toast.success('Registration successful! Please check your email to verify your account.')
-      } else {
-        toast.success('Successfully registered!')
+        router.push('/verify-email?required=true')
+        return
       }
+      
+      // Email already verified (shouldn't happen for new registrations, but handle it)
+      toast.success('Successfully registered!')
       
       // Redirect based on user type after registration
       const role = user.user_type || user.role

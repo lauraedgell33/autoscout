@@ -21,7 +21,7 @@ export default function VerifyEmailPage() {
     
     if (required === 'true') {
       setStatus('required');
-      setMessage('Please verify your email address to access this feature.');
+      setMessage('We\'ve sent a verification email to your inbox. Please check your email (including spam/junk folder) and click the verification link to activate your account.');
       setCanResend(true);
       return;
     }
@@ -93,7 +93,7 @@ export default function VerifyEmailPage() {
             {status === 'loading' && 'Verifying Your Email'}
             {status === 'success' && 'Email Verified!'}
             {status === 'error' && 'Verification Failed'}
-            {status === 'required' && 'Email Verification Required'}
+            {status === 'required' && 'Check Your Email'}
           </CardTitle>
           <CardDescription>{message}</CardDescription>
         </CardHeader>
@@ -109,7 +109,7 @@ export default function VerifyEmailPage() {
             <div className="space-y-4">
               <p className="text-sm text-gray-600 text-center">
                 {status === 'required' 
-                  ? "We've sent a verification link to your email. Click the link to verify your account."
+                  ? "Check your email inbox (and spam/junk folder). Can't find it?"
                   : "Didn't receive the email? Check your spam folder or request a new one."}
               </p>
               <Button
