@@ -1,53 +1,93 @@
 @extends('emails.layouts.base')
 
 @section('content')
-<h2 class="email-title">Welcome Aboard! 🚗✨</h2>
-<p class="email-subtitle">Your account is now active and ready to use</p>
+<h2 class="email-title">🎉 Welcome to AutoScout24 SafeTrade!</h2>
+<p class="email-subtitle">Your account is ready</p>
 
 <div class="email-content">
-    <p>Hi <strong>{{ $user->name }}</strong>,</p>
+    <p>Hello <strong>{{ $user->name }}</strong>,</p>
     
-    <p>🎉 Congratulations! Your email has been verified and your AutoScout24 SafeTrade account is now fully activated.</p>
+    <p>Welcome aboard! We're thrilled to have you as part of Europe's most trusted vehicle trading platform. Your account is now active and ready to use.</p>
     
-    <div style="text-align: center;">
-        <a href="{{ config('app.url') }}/dashboard/{{ $user->user_type }}" class="button button-success">
-            🚀 Go to Dashboard
-        </a>
-    </div>
-    
-    <div style="background-color: #ECFDF5; border-left: 4px solid #10B981; padding: 20px; margin: 24px 0; border-radius: 8px;">
-        <p style="margin: 0 0 12px 0; color: #065F46; font-weight: 600; font-size: 15px;">
-            🎯 Get Started in 3 Simple Steps:
+    <div style="background-color: #EFF6FF; border: 2px solid #3B82F6; padding: 24px; margin: 24px 0; border-radius: 12px; text-align: center;">
+        <div style="font-size: 48px; margin-bottom: 12px;">🚗</div>
+        <p style="margin: 0; color: #1E40AF; font-weight: 700; font-size: 18px;">Start Your Journey Today</p>
+        <p style="margin: 8px 0 0 0; color: #1E3A8A; font-size: 14px;">
+            Browse thousands of verified vehicles or list your own
         </p>
-        <ol style="color: #047857; font-size: 14px; line-height: 2; margin: 0; padding-left: 20px;">
-            <li><strong>Complete your profile</strong> - Add your details and preferences</li>
-            <li><strong>Browse vehicles</strong> - Find your perfect match from thousands of listings</li>
-            <li><strong>Start trading</strong> - Buy or sell with complete peace of mind</li>
-        </ol>
-    </div>
-    
-    <div style="border-top: 1px solid #E5E7EB; margin: 32px 0; padding-top: 24px;">
-        <p style="font-size: 15px; color: #1F2937; font-weight: 600; margin-bottom: 12px;">
-            🔒 Why AutoScout24 SafeTrade?
-        </p>
-        <ul style="color: #4B5563; font-size: 14px; line-height: 1.8;">
-            <li><strong>Secure Escrow System</strong> - Your money is protected until delivery</li>
-            <li><strong>Vehicle Verification</strong> - All listings are thoroughly checked</li>
-            <li><strong>24/7 Support</strong> - Our team is always here to help</li>
-            <li><strong>Buyer Protection</strong> - Safe and transparent transactions</li>
-        </ul>
     </div>
     
     <div class="info-box">
-        <p style="margin: 0; color: #4B5563; font-size: 14px;">
-            <strong>💡 Need Help Getting Started?</strong><br>
-            Visit our <a href="{{ config('app.url') }}/support/help" style="color: #003281; font-weight: 600;">Help Center</a> 
-            or contact our support team anytime.
-        </p>
+        <p style="margin: 0; color: #111827; font-weight: 600; font-size: 15px; margin-bottom: 16px;">✨ What makes us different:</p>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="padding: 10px 0; vertical-align: top; width: 40px;">
+                    <span style="font-size: 24px;">🛡️</span>
+                </td>
+                <td style="padding: 10px 0;">
+                    <strong style="color: #111827; font-size: 14px;">Escrow Protection</strong><br>
+                    <span style="color: #6B7280; font-size: 13px;">Your funds are held securely until delivery is confirmed</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px 0; vertical-align: top;">
+                    <span style="font-size: 24px;">✓</span>
+                </td>
+                <td style="padding: 10px 0;">
+                    <strong style="color: #111827; font-size: 14px;">Verified Sellers</strong><br>
+                    <span style="color: #6B7280; font-size: 13px;">All dealers and sellers are verified through KYC</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px 0; vertical-align: top;">
+                    <span style="font-size: 24px;">📄</span>
+                </td>
+                <td style="padding: 10px 0;">
+                    <strong style="color: #111827; font-size: 14px;">Legal Documentation</strong><br>
+                    <span style="color: #6B7280; font-size: 13px;">Complete contracts, invoices, and ownership transfer</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px 0; vertical-align: top;">
+                    <span style="font-size: 24px;">🚚</span>
+                </td>
+                <td style="padding: 10px 0;">
+                    <strong style="color: #111827; font-size: 14px;">Secure Delivery</strong><br>
+                    <span style="color: #6B7280; font-size: 13px;">Professional delivery service across Europe</span>
+                </td>
+            </tr>
+        </table>
     </div>
     
-    <p style="margin-top: 32px;">
-        Happy trading! 🚗💨
+    <div style="text-align: center; margin: 32px 0;">
+        <a href="{{ config('app.frontend_url') }}/en/marketplace" class="button button-primary" style="margin-right: 8px;">
+            🔍 Browse Vehicles
+        </a>
+        <a href="{{ config('app.frontend_url') }}/en/how-it-works" class="button button-success">
+            📚 How It Works
+        </a>
+    </div>
+    
+    <div style="background-color: #FFFBEB; border-left: 4px solid #F59E0B; padding: 16px 20px; margin: 24px 0; border-radius: 8px;">
+        <p style="margin: 0; color: #92400E; font-weight: 600; font-size: 14px;">🚀 Quick Start Guide:</p>
+        <ol style="margin: 12px 0 0 0; padding-left: 20px; color: #78350F; font-size: 13px; line-height: 1.8;">
+            <li>Complete your profile and KYC verification</li>
+            <li>Browse vehicles or list your own</li>
+            <li>Make secure offers with escrow protection</li>
+            <li>Finalize transactions with legal documentation</li>
+        </ol>
+    </div>
+    
+    <p style="margin-top: 32px; color: #6B7280; font-size: 14px;">
+        Have questions? Our support team is available 24/7 at 
+        <a href="mailto:support@autoscout24safetrade.com" style="color: #003281; text-decoration: none;">
+            support@autoscout24safetrade.com
+        </a>
+    </p>
+    
+    <p style="margin-top: 24px;">
+        Happy trading!<br>
+        <strong>The AutoScout24 SafeTrade Team</strong>
     </p>
 </div>
 @endsection
