@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PaymentReceivedNotification extends Notification implements ShouldQueue
+class VehicleReadyForDeliveryNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -29,8 +29,8 @@ class PaymentReceivedNotification extends Notification implements ShouldQueue
         $vehicle = $this->transaction->vehicle;
         
         return (new MailMessage)
-            ->subject('Payment Received - Transaction #' . $this->transaction->id)
-            ->view('emails.transactions.payment-received', [
+            ->subject('Vehicle Ready for Delivery - Transaction #' . $this->transaction->id)
+            ->view('emails.transactions.ready-for-delivery', [
                 'user' => $notifiable,
                 'transaction' => $this->transaction,
                 'vehicle' => $vehicle
@@ -40,11 +40,10 @@ class PaymentReceivedNotification extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-            'type' => 'payment_received',
+            'type' => 'ready_for_delivery',
             'transaction_id' => $this->transaction->id,
-            'message' => 'Payment verified for transaction #' . $this->transaction->id,
-            'amount' => $this->transaction->amount,
+            'message' => 'Your vehicle is ready for delivery',
+            'vehicle' => $this->transaction->vehicle->make . ' ' . $this->transaction->vehicle->model,
         ];
     }
 }
-

@@ -25,35 +25,29 @@ class PaymentReleased extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         $isSeller = $notifiable->id === $this->transaction->seller_id;
+        $vehicle = $this->transaction->vehicle;
         
         if ($isSeller) {
+            // For seller: payment released
             return (new MailMessage)
                 ->subject('Payment Released - ' . $this->transaction->reference_number)
-                ->greeting('Hello ' . $notifiable->name . '!')
-                ->line('🎉 **Congratulations! Payment Released**')
-                ->line('The buyer has confirmed acceptance and funds have been released from escrow.')
-                ->line('**Transaction:** ' . $this->transaction->reference_number)
-                ->line('**Amount:** €' . number_format($this->amount, 2))
-                ->line('**Vehicle:** ' . $this->transaction->vehicle->make . ' ' . $this->transaction->vehicle->model)
-                ->line('')
-                ->line('The funds will be transferred to your registered bank account within 2-3 business days.')
-                ->line('**Bank Transfer Details:**')
-                ->line('- Account: ' . substr($notifiable->bank_account ?? 'On file', -4))
-                ->line('- Reference: ' . $this->transaction->reference_number)
-                ->action('View Transaction', url('/dashboard/transactions/' . $this->transaction->id))
-                ->line('Thank you for selling with AutoScout24 SafeTrade!');
+                ->view('emails.notifications.action-required', [
+                    'user' => $notifiable,
+                    'message' => 'Congratulations! The buyer has confirmed delivery and your payment has been released from escrow.',
+                    'actionTitle' => 'Payment Released',
+                    'actionDetails' => 'Amount: €' . number_format($this->amount, 2) . ' for ' . $vehicle->make . ' ' . $vehicle->model . '. Funds will be transferred to your bank account within 2-3 business days.',
+                    'actionUrl' => config('app.frontend_url') . '/en/transaction/' . $this->transaction->id,
+                    'actionButtonText' => 'View Transaction'
+                ]);
         } else {
+            // For buyer: order completed
             return (new MailMessage)
                 ->subject('Transaction Completed - ' . $this->transaction->reference_number)
-                ->greeting('Hello ' . $notifiable->name . '!')
-                ->line('✅ **Transaction Completed Successfully**')
-                ->line('Thank you for confirming the vehicle. The payment has been released to the seller.')
-                ->line('**Transaction:** ' . $this->transaction->reference_number)
-                ->line('**Amount:** €' . number_format($this->amount, 2))
-                ->line('**Vehicle:** ' . $this->transaction->vehicle->make . ' ' . $this->transaction->vehicle->model)
-                ->action('View Transaction', url('/dashboard/transactions/' . $this->transaction->id))
-                ->line('We hope you enjoy your new vehicle!')
-                ->line('Thank you for buying with AutoScout24 SafeTrade!');
+                ->view('emails.transactions.order-completed', [
+                    'user' => $notifiable,
+                    'transaction' => $this->transaction,
+                    'vehicle' => $vehicle
+                ]);
         }
     }
 

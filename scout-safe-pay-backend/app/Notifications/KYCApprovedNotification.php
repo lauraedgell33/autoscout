@@ -25,11 +25,9 @@ class KYCApprovedNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->subject('KYC Verification Approved - AutoScout24 SafeTrade')
-            ->greeting('Hello ' . $notifiable->name . '!')
-            ->line('Great news! Your identity verification has been approved.')
-            ->line('You can now proceed with purchasing vehicles on AutoScout24 SafeTrade.')
-            ->action('Browse Vehicles', url('/marketplace'))
-            ->line('Thank you for using AutoScout24 SafeTrade!');
+            ->view('emails.kyc.approved', [
+                'user' => $notifiable
+            ]);
     }
 
     public function toArray(object $notifiable): array

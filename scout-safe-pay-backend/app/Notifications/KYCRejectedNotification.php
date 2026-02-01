@@ -27,15 +27,10 @@ class KYCRejectedNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->subject('KYC Verification - Additional Information Required')
-            ->greeting('Hello ' . $notifiable->name . ',')
-            ->line('We were unable to verify your identity documents at this time.')
-            ->line('**Reason:** ' . $this->reason)
-            ->line('Please resubmit your documents with the following in mind:')
-            ->line('• Ensure all documents are clear and readable')
-            ->line('• Make sure your face is clearly visible in the selfie')
-            ->line('• Use valid, non-expired identification documents')
-            ->action('Resubmit Documents', url('/dashboard'))
-            ->line('If you have questions, please contact our support team.');
+            ->view('emails.kyc.rejected', [
+                'user' => $notifiable,
+                'reason' => $this->reason
+            ]);
     }
 
     public function toArray(object $notifiable): array
