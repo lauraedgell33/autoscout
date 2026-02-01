@@ -28,9 +28,9 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H 146.190.185.209 >> ~/.ssh/known_hosts
 
-      - name: Find and clean untracked files
+      - name: Add git clean to deployment script temporarily
         run: |
-          ssh forge@146.190.185.209 'cd default && pwd && ls -la && git status || echo "Not a git repo, trying adminautoscout.dev..." && cd adminautoscout.dev && pwd && git status'
+          ssh forge@146.190.185.209 'sed -i "2i cd \$FORGE_SITE_PATH && git clean -fd" /home/forge/adminautoscout.dev/.deployment'
 
       - name: Deploy to Forge
         run: |
