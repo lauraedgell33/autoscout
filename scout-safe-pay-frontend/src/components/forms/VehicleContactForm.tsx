@@ -11,10 +11,11 @@ import { Badge } from '@/components/ui/badge';
 
 interface VehicleContactFormProps {
   vehicleId: string;
-  vehicleTitle: string;
-  sellerName: string;
+  vehicleTitle?: string;
+  sellerName?: string;
   sellerPhone?: string;
   onSubmit?: (data: ContactFormData) => Promise<void>;
+  onSuccess?: () => void;
 }
 
 export interface ContactFormData {
@@ -38,6 +39,7 @@ export default function VehicleContactForm({
   sellerName,
   sellerPhone,
   onSubmit,
+  onSuccess,
 }: VehicleContactFormProps) {
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
@@ -59,20 +61,29 @@ export default function VehicleContactForm({
       if (onSubmit) {
         await onSubmit(formData);
       } else {
-        // Default API call
-        const response = await fetch('/api/contact/vehicle', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...formData,
-            vehicleId,
-          }),
-        });
+        // Updated API call to match backend route
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/vehicles/${vehicleId}/contact`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+          }
+        );
 
-        if (!response.ok) throw new Error('Failed to send message');
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.message || 'Failed to send message');
+        }
       }
 
       setSuccess(true);
+      
+      // Call onSuccess callback if provided
+      if (onSuccess) {
+        onSuccess();
+      }
+      
       setTimeout(() => {
         setSuccess(false);
         setFormData({
@@ -137,7 +148,7 @@ export default function VehicleContactForm({
         {/* Request Type Selection */}
         <div className="space-y-3">
           <Label className="text-base font-semibold">I want to:</Label>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3" role="group" aria-label="Select request type">
             {[
               { type: 'inquiry' as const, label: 'General Inquiry', icon: MessageSquare },
               { type: 'test-drive' as const, label: 'Test Drive', icon: Phone },
@@ -150,8 +161,10 @@ export default function VehicleContactForm({
                 variant={formData.requestType === type ? 'primary' : 'outline'}
                 className="h-auto py-3 flex-col gap-2"
                 onClick={() => handleTemplateSelect(type)}
+                aria-pressed={formData.requestType === type}
+                aria-label={`Select ${label}`}
               >
-                <Icon className="h-5 w-5" />
+                <Icon className="h-5 w-5" aria-hidden="true" />
                 <span className="text-sm font-medium">{label}</span>
               </Button>
             ))}
@@ -162,15 +175,18 @@ export default function VehicleContactForm({
         <div className="space-y-2">
           <Label htmlFor="name">Your Name *</Label>
           <div className="relative">
-            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" aria-hidden="true" />
             <Input
               id="name"
+              name="name"
               type="text"
               required
               placeholder="John Doe"
               className="pl-10"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              aria-required="true"
+              aria-invalid={error && !formData.name ? 'true' : 'false'}
             />
           </div>
         </div>
@@ -179,31 +195,38 @@ export default function VehicleContactForm({
         <div className="space-y-2">
           <Label htmlFor="email">Email Address *</Label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" aria-hidden="true" />
             <Input
               id="email"
+              name="email"
               type="email"
               required
               placeholder="john@example.com"
               className="pl-10"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              aria-required="true"
+              aria-invalid={error && !formData.email ? 'true' : 'false'}
             />
           </div>
         </div>
 
         {/* Phone */}
         <div className="space-y-2">
-          <Label htmlFor="phone">Phone Number</Label>
+          <Label htmlFor="phone">Phone Number *</Label>
           <div className="relative">
-            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" aria-hidden="true" />
             <Input
               id="phone"
+              name="phone"
               type="tel"
+              required
               placeholder="+40 123 456 789"
               className="pl-10"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              aria-required="true"
+              aria-invalid={error && !formData.phone ? 'true' : 'false'}
             />
           </div>
         </div>
@@ -213,21 +236,29 @@ export default function VehicleContactForm({
           <Label htmlFor="message">Message *</Label>
           <Textarea
             id="message"
+            name="message"
             required
             rows={6}
             placeholder="Type your message here..."
             className="resize-none"
             value={formData.message}
             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+            aria-required="true"
+            aria-invalid={error && !formData.message ? 'true' : 'false'}
+            aria-describedby="message-counter"
           />
-          <p className="text-xs text-gray-500">
+          <p id="message-counter" className="text-xs text-gray-500" aria-live="polite">
             {formData.message.length} characters
           </p>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="bg-red-50 border-2 border-red-200 rounded-lg p-4 text-red-700 text-sm">
+          <div 
+            className="bg-red-50 border-2 border-red-200 rounded-lg p-4 text-red-700 text-sm"
+            role="alert"
+            aria-live="assertive"
+          >
             {error}
           </div>
         )}
@@ -238,15 +269,16 @@ export default function VehicleContactForm({
           size="lg"
           disabled={loading}
           className="w-full bg-accent-500 hover:bg-accent-600 text-lg h-14"
+          aria-label={loading ? 'Sending message' : 'Send message to seller'}
         >
           {loading ? (
             <>
-              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" aria-hidden="true" />
               Sending...
             </>
           ) : (
             <>
-              <Send className="mr-2 h-5 w-5" />
+              <Send className="mr-2 h-5 w-5" aria-hidden="true" />
               Send Message
             </>
           )}
@@ -267,3 +299,6 @@ export default function VehicleContactForm({
     </Card>
   );
 }
+
+// Named export for convenience
+export { VehicleContactForm };

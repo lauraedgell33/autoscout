@@ -25,6 +25,7 @@ use App\Http\Controllers\API\ErrorLogController;
 use App\Http\Controllers\API\FavoritesController;
 use App\Http\Controllers\API\Admin\ReviewModerationController;
 use App\Http\Controllers\Api\VehicleDataController;
+use App\Http\Controllers\API\VehicleContactController;
 use Illuminate\Support\Facades\Route;
 
 // Health check endpoint
@@ -72,6 +73,9 @@ Route::get('/vehicles', [VehicleController::class, 'index']);
 Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show']);
 Route::get('/vehicles-featured', [VehicleController::class, 'featured']);
 Route::get('/vehicles-statistics', [VehicleController::class, 'statistics']);
+
+// Vehicle contact route (public with rate limiting)
+Route::middleware('rate.limit.ip:10,1')->post('/vehicles/{vehicle}/contact', [VehicleContactController::class, 'sendInquiry']);
 
 // Public category routes
 Route::get('/categories', [CategoryController::class, 'index']);

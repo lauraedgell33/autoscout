@@ -347,13 +347,15 @@ export default function VehicleDetailsPage() {
                 )}
               </Button>
 
-              <Button 
-                variant="outline" 
-                className="w-full border border-gray-200 text-gray-700 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-50 transition mb-5"
-              >
-                <Phone className="w-4 h-4 mr-2" />
-                {t('vehicle.contact_seller')}
-              </Button>
+              <Link href={`/vehicle/${vehicleId}/contact`}>
+                <Button 
+                  variant="outline" 
+                  className="w-full border border-gray-200 text-gray-700 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-50 transition mb-5"
+                >
+                  <Phone className="w-4 h-4 mr-2" />
+                  {t('vehicle.contact_seller')}
+                </Button>
+              </Link>
 
               {/* Dealer Information */}
               {vehicle.dealer && (
