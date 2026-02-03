@@ -6,6 +6,7 @@ import { Search, Filter, Edit, Trash2, Package } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { getImageUrl } from '@/lib/utils';
 
 export default function DealerInventoryPage() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -105,7 +106,7 @@ export default function DealerInventoryPage() {
                     <td className="px-6 py-4">
                       <div className="flex items-center">
                         <div className="h-10 w-16 bg-gray-200 rounded mr-3">
-                          {vehicle.primary_image && <img src={vehicle.primary_image} alt="" className="h-full w-full object-cover rounded" />}
+                          {vehicle.primary_image && <img src={getImageUrl(vehicle.primary_image)} alt="" className="h-full w-full object-cover rounded" />}
                         </div>
                         <div>
                           <div className="text-sm font-medium">{vehicle.make} {vehicle.model}</div>

@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Link } from '@/i18n/routing';
+import { getImageUrl } from '@/lib/utils';
 
 // Dynamic import for Leaflet map (requires window)
 const VehicleMap = dynamic(() => import('@/components/map/VehicleMap'), {
@@ -247,7 +248,7 @@ export default function VehicleSearchPage() {
                   <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
                     <div className="aspect-video bg-gray-200 dark:bg-gray-700">
                       {vehicle.primary_image && (
-                        <img src={vehicle.primary_image} alt={`${vehicle.make} ${vehicle.model}`} className="w-full h-full object-cover" />
+                        <img src={getImageUrl(vehicle.primary_image)} alt={`${vehicle.make} ${vehicle.model}`} className="w-full h-full object-cover" />
                       )}
                     </div>
                     <div className="p-4">

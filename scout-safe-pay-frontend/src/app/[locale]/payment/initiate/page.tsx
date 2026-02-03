@@ -6,6 +6,7 @@ import { CreditCard, Building2, ArrowRight, Lock } from 'lucide-react';
 import { transactionService } from '@/lib/api/transactions';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { getImageUrl } from '@/lib/utils';
 
 export default function PaymentInitiatePage() {
   const router = useRouter();
@@ -116,7 +117,7 @@ export default function PaymentInitiatePage() {
             
             <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-4">
               {vehicle.primary_image && (
-                <img src={vehicle.primary_image} alt={`${vehicle.make} ${vehicle.model}`} className="w-full h-full object-cover rounded-lg" />
+                <img src={getImageUrl(vehicle.primary_image)} alt={`${vehicle.make} ${vehicle.model}`} className="w-full h-full object-cover rounded-lg" />
               )}
             </div>
 

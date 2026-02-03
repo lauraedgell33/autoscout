@@ -6,6 +6,7 @@ import { Link } from '@/i18n/routing';
 import { Package, MapPin, Star, Phone, Mail, ArrowLeft } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { getImageUrl } from '@/lib/utils';
 
 interface Dealer {
   id: number;
@@ -134,7 +135,7 @@ export default function DealerPage() {
                 <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
                   <div className="aspect-video bg-gray-200 dark:bg-gray-700">
                     {vehicle.primary_image && (
-                      <img src={vehicle.primary_image} alt={`${vehicle.make} ${vehicle.model}`} className="w-full h-full object-cover" />
+                      <img src={getImageUrl(vehicle.primary_image)} alt={`${vehicle.make} ${vehicle.model}`} className="w-full h-full object-cover" />
                     )}
                   </div>
                   <div className="p-4">

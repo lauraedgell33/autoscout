@@ -13,6 +13,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import VehicleBadge, { StatusBadge, ConditionBadge } from '@/components/vehicle/VehicleBadges';
+import { getImageUrl } from '@/lib/utils';
 import { 
   ShoppingCart, Shield, CheckCircle, MapPin, Calendar, 
   Gauge, Fuel, Settings, Phone, Mail, Star, ChevronLeft, ChevronRight,
@@ -102,9 +103,10 @@ export default function VehicleDetailsPage() {
 
   const placeholderImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23e5e7eb' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ENo Image Available%3C/text%3E%3C/svg%3E"
   
+  // Process images through getImageUrl to ensure proper URLs
   const images = vehicle.images && vehicle.images.length > 0
-    ? vehicle.images
-    : [vehicle.primary_image || placeholderImage]
+    ? vehicle.images.map(img => getImageUrl(img))
+    : [getImageUrl(vehicle.primary_image) || placeholderImage]
 
   return (
     <div className="min-h-screen bg-gray-50">

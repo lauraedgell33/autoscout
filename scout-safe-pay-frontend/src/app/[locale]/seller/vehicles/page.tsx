@@ -7,6 +7,7 @@ import { Plus, Eye, Edit, Trash2, Package } from 'lucide-react';
 import vehicleService, { Vehicle } from '@/lib/api/vehicles';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { getImageUrl } from '@/lib/utils';
 
 export default function SellerVehiclesPage() {
   const params = useParams<{ locale: string }>();
@@ -87,7 +88,7 @@ export default function SellerVehiclesPage() {
             <Card key={vehicle.id} className="overflow-hidden">
               <div className="aspect-video bg-gray-200 dark:bg-gray-700">
                 {vehicle.primary_image ? (
-                  <img src={vehicle.primary_image} alt={`${vehicle.make} ${vehicle.model}`} className="w-full h-full object-cover" />
+                  <img src={getImageUrl(vehicle.primary_image)} alt={`${vehicle.make} ${vehicle.model}`} className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <Package className="h-16 w-16 text-gray-400" />
