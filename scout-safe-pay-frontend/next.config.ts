@@ -68,7 +68,6 @@ const nextConfig: NextConfig = {
         hostname: 'localhost',
       }] : []),
     ],
-    unoptimized: process.env.NODE_ENV === 'development',
   },
   
   // Production optimizations
