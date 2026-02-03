@@ -24,6 +24,7 @@ export function formatDate(date: string | Date): string {
  * Get full image URL from a relative path
  * Handles both full URLs and relative storage paths
  * Ensures consistent rendering for SSR/CSR to avoid hydration errors
+ * Fixed: Properly handles /storage/ prefixed paths from API
  */
 export function getImageUrl(imagePath: string | null | undefined): string {
   // Simple placeholder SVG data URL for missing images
