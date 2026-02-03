@@ -114,5 +114,49 @@ class Vehicle extends Model
     {
         return $this->status === 'active';
     }
+
+    /**
+     * Get the images with /storage/ prefix for API responses
+     * Ensures image paths are properly formatted for frontend consumption
+     */
+    protected function images(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn($value) => $value ? array_map(fn($path) => $this->formatImagePath($path), $value) : []
+        );
+    }
+
+    /**
+     * Get the primary image with /storage/ prefix for API responses
+     */
+    protected function primaryImage(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn($value) => $value ? $this->formatImagePath($value) : null
+        );
+    }
+
+    /**
+     * Format image path to include /storage/ prefix if needed
+     */
+    private function formatImagePath(?string $path): ?string
+    {
+        if (!$path) {
+            return null;
+        }
+
+        // If already a full URL, return as is
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        // If already starts with /storage/, return as is
+        if (str_starts_with($path, '/storage/')) {
+            return $path;
+        }
+
+        // Otherwise prepend /storage/
+        return '/storage/' . $path;
+    }
 }
 
