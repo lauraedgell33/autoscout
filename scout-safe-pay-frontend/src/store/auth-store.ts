@@ -60,6 +60,7 @@ export const useAuthStore = create<AuthState>()(
               'Content-Type': 'application/json',
               'Accept': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify({ email, password }),
           });
 
@@ -67,6 +68,11 @@ export const useAuthStore = create<AuthState>()(
 
           if (!response.ok) {
             throw new Error(data.message || 'Login failed');
+          }
+
+          // Store token in localStorage as well for persistence
+          if (typeof window !== 'undefined' && data.token) {
+            localStorage.setItem('auth_token', data.token);
           }
 
           set({
@@ -96,6 +102,7 @@ export const useAuthStore = create<AuthState>()(
               'Content-Type': 'application/json',
               'Accept': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify(data),
           });
 
@@ -103,6 +110,11 @@ export const useAuthStore = create<AuthState>()(
 
           if (!response.ok) {
             throw new Error(responseData.message || 'Registration failed');
+          }
+
+          // Store token in localStorage for persistence
+          if (typeof window !== 'undefined' && responseData.token) {
+            localStorage.setItem('auth_token', responseData.token);
           }
 
           set({
@@ -123,6 +135,11 @@ export const useAuthStore = create<AuthState>()(
       },
 
       logout: () => {
+        // Clear localStorage
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('auth_token');
+        }
+        
         set({
           user: null,
           token: null,
@@ -144,10 +161,18 @@ export const useAuthStore = create<AuthState>()(
       },
 
       checkAuth: async () => {
-        const { token } = get();
+        let { token } = get();
+        
+        // Try to get token from localStorage if not in store
+        if (!token && typeof window !== 'undefined') {
+          token = localStorage.getItem('auth_token');
+          if (token) {
+            set({ token, isAuthenticated: true });
+          }
+        }
         
         if (!token) {
-          set({ isAuthenticated: false, user: null });
+          set({ isAuthenticated: false, user: null, isLoading: false });
           return;
         }
 
@@ -157,6 +182,7 @@ export const useAuthStore = create<AuthState>()(
               'Authorization': `Bearer ${token}`,
               'Accept': 'application/json',
             },
+            credentials: 'include',
           });
 
           if (!response.ok) {
@@ -164,10 +190,13 @@ export const useAuthStore = create<AuthState>()(
           }
 
           const user = await response.json();
-          set({ user, isAuthenticated: true });
+          set({ user, isAuthenticated: true, isLoading: false });
         } catch (error) {
           // Token invalid, clear auth state
-          set({ user: null, token: null, isAuthenticated: false });
+          if (typeof window !== 'undefined') {
+            localStorage.removeItem('auth_token');
+          }
+          set({ user: null, token: null, isAuthenticated: false, isLoading: false });
         }
       },
     }),
