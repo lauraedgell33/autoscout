@@ -11,7 +11,8 @@ import { vehicleService } from '@/lib/api/vehicles'
 import { transactionService } from '@/lib/api/transactions'
 import { kycService } from '@/lib/api/kyc'
 import { logger } from '@/utils/logger'
-import ProtectedRoute from '@/components/ProtectedRoute';
+import ProtectedRoute from '@/components/ProtectedRoute'
+import CameraCapture from '@/components/CameraCapture'
 
 function CheckoutPageContent() {
   const t = useTranslations('checkout')
@@ -28,6 +29,12 @@ function CheckoutPageContent() {
   const [currentStep, setCurrentStep] = useState(1)
   const [idImagePreview, setIdImagePreview] = useState<string | null>(null)
   const [selfiePreview, setSelfiePreview] = useState<string | null>(null)
+  const [showCamera, setShowCamera] = useState(false)
+  const [cameraMode, setCameraMode] = useState<'selfie' | 'document'>('document')
+  const [idImageFront, setIdImageFront] = useState<File | null>(null)
+  const [idImageBack, setIdImageBack] = useState<File | null>(null)
+  const [idImageFrontPreview, setIdImageFrontPreview] = useState<string | null>(null)
+  const [idImageBackPreview, setIdImageBackPreview] = useState<string | null>(null)
 
   const [formData, setFormData] = useState({
     fullName: user?.name || '',
@@ -77,9 +84,19 @@ function CheckoutPageContent() {
   const handleIdImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0]
-      setFormData(prev => ({ ...prev, idImage: file }))
+      setIdImageFront(file)
       const reader = new FileReader()
-      reader.onloadend = () => setIdImagePreview(reader.result as string)
+      reader.onloadend = () => setIdImageFrontPreview(reader.result as string)
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleIdImageBackChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0]
+      setIdImageBack(file)
+      const reader = new FileReader()
+      reader.onloadend = () => setIdImageBackPreview(reader.result as string)
       reader.readAsDataURL(file)
     }
   }
@@ -94,12 +111,39 @@ function CheckoutPageContent() {
     }
   }
 
+  const openCamera = (mode: 'selfie' | 'document') => {
+    setCameraMode(mode)
+    setShowCamera(true)
+  }
+
+  const handleCameraCapture = (file: File) => {
+    if (cameraMode === 'selfie') {
+      setFormData(prev => ({ ...prev, selfieImage: file }))
+      const reader = new FileReader()
+      reader.onloadend = () => setSelfiePreview(reader.result as string)
+      reader.readAsDataURL(file)
+    } else {
+      // For document, we'll capture both front and back
+      if (!idImageFront) {
+        setIdImageFront(file)
+        const reader = new FileReader()
+        reader.onloadend = () => setIdImageFrontPreview(reader.result as string)
+        reader.readAsDataURL(file)
+      } else {
+        setIdImageBack(file)
+        const reader = new FileReader()
+        reader.onloadend = () => setIdImageBackPreview(reader.result as string)
+        reader.readAsDataURL(file)
+      }
+    }
+  }
+
   const validateStep = (step: number) => {
     if (step === 1) return formData.fullName && formData.email && formData.phone && formData.dateOfBirth
     if (step === 2) return formData.street && formData.houseNumber && formData.city && formData.postalCode
     if (step === 3) {
       if (isDealer) return true
-      return formData.idType && formData.idNumber && formData.idImage && formData.selfieImage
+      return formData.idType && formData.idNumber && idImageFront && formData.selfieImage
     }
     if (step === 4) return formData.acceptTerms && formData.acceptDataProcessing && formData.acceptContract
     return true
@@ -129,12 +173,12 @@ function CheckoutPageContent() {
     
     setSubmitting(true)
     try {
-      if (!isDealer && formData.idImage && formData.selfieImage) {
+      if (!isDealer && idImageFront && formData.selfieImage) {
         logger.info('Submitting KYC documents...')
         await kycService.submit({
           id_document_type: formData.idType as any,
           id_document_number: formData.idNumber,
-          id_document_image: formData.idImage,
+          id_document_image: idImageFront,
           selfie_image: formData.selfieImage,
         })
         logger.info('KYC submitted successfully')
@@ -248,25 +292,156 @@ function CheckoutPageContent() {
                   <div className="bg-primary-50 border border-primary-100 rounded-xl p-3">
                     <p className="text-xs text-gray-700">{t('kyc.instructions')}</p>
                   </div>
-                  <select id="checkout-id-type" name="idType" value={formData.idType} onChange={handleInputChange} className="w-full px-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl">
-                    <option value="passport">{t('kyc.id_types.passport')}</option>
-                    <option value="id_card">{t('kyc.id_types.id_card')}</option>
-                    <option value="drivers_license">{t('kyc.id_types.drivers_license')}</option>
-                  </select>
-                  <input id="checkout-id-number" type="text" name="idNumber" value={formData.idNumber} onChange={handleInputChange} placeholder="ID Number *" required className="w-full px-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl" autoComplete="off" />
-                  <div className="border-2 border-dashed border-gray-200 p-5 text-center rounded-xl hover:border-primary-300 transition">
-                    {idImagePreview ? (
-                      <div><img src={idImagePreview} alt="ID" className="max-h-40 mx-auto rounded-lg" /><button type="button" onClick={() => { setIdImagePreview(null); setFormData(prev => ({ ...prev, idImage: null })) }} className="mt-2 text-xs text-red-600">Remove</button></div>
-                    ) : (
-                      <label htmlFor="id-image-upload" className="cursor-pointer text-sm text-primary-900 font-medium"><span>{t('kyc.front')}</span><input id="id-image-upload" name="idImage" type="file" accept="image/*" onChange={handleIdImageChange} className="hidden" /></label>
-                    )}
+                  
+                  {/* ID Type and Number */}
+                  <div className="space-y-3">
+                    <label className="block">
+                      <span className="text-sm font-medium text-gray-700 mb-1.5 block">ID Type *</span>
+                      <select id="checkout-id-type" name="idType" value={formData.idType} onChange={handleInputChange} className="w-full px-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl">
+                        <option value="passport">{t('kyc.id_types.passport')}</option>
+                        <option value="id_card">{t('kyc.id_types.id_card')}</option>
+                        <option value="drivers_license">{t('kyc.id_types.drivers_license')}</option>
+                      </select>
+                    </label>
+                    <label className="block">
+                      <span className="text-sm font-medium text-gray-700 mb-1.5 block">ID Number *</span>
+                      <input id="checkout-id-number" type="text" name="idNumber" value={formData.idNumber} onChange={handleInputChange} placeholder="ID Number" required className="w-full px-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl" autoComplete="off" />
+                    </label>
                   </div>
-                  <div className="border-2 border-dashed border-gray-200 p-5 text-center rounded-xl hover:border-primary-300 transition">
-                    {selfiePreview ? (
-                      <div><img src={selfiePreview} alt="Selfie" className="max-h-40 mx-auto rounded-lg" /><button type="button" onClick={() => { setSelfiePreview(null); setFormData(prev => ({ ...prev, selfieImage: null })) }} className="mt-2 text-xs text-red-600">Remove</button></div>
-                    ) : (
-                      <label htmlFor="selfie-upload" className="cursor-pointer text-sm text-primary-900 font-medium"><span>{t('kyc.back')}</span><input id="selfie-upload" name="selfieImage" type="file" accept="image/*" onChange={handleSelfieChange} className="hidden" /></label>
-                    )}
+
+                  {/* ID Document Front */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Upload Front Side *</label>
+                    <div className="border-2 border-dashed border-gray-200 rounded-xl overflow-hidden hover:border-primary-300 transition">
+                      {idImageFrontPreview ? (
+                        <div className="relative">
+                          <img src={idImageFrontPreview} alt="ID Front" className="w-full h-48 object-cover" />
+                          <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition flex items-center justify-center gap-2">
+                            <button type="button" onClick={() => openCamera('document')} className="px-4 py-2 bg-white text-gray-900 rounded-lg text-sm font-medium">Retake</button>
+                            <button type="button" onClick={() => { setIdImageFrontPreview(null); setIdImageFront(null) }} className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium">Remove</button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="p-6 text-center space-y-3">
+                          <div className="flex items-center justify-center gap-3">
+                            <button
+                              type="button"
+                              onClick={() => openCamera('document')}
+                              className="flex-1 flex flex-col items-center gap-2 px-4 py-3 bg-accent-500 hover:bg-accent-600 text-white rounded-xl transition"
+                            >
+                              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                              </svg>
+                              <span className="text-sm font-medium">Take Photo</span>
+                            </button>
+                            <label htmlFor="id-image-upload" className="flex-1 flex flex-col items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-xl cursor-pointer transition">
+                              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                              </svg>
+                              <span className="text-sm font-medium">Upload File</span>
+                              <input id="id-image-upload" name="idImage" type="file" accept="image/*" onChange={handleIdImageChange} className="hidden" />
+                            </label>
+                          </div>
+                          <p className="text-xs text-gray-500">Click to upload or take photo of the front side of your ID</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* ID Document Back (Optional) */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Upload Back Side (Optional)</label>
+                    <div className="border-2 border-dashed border-gray-200 rounded-xl overflow-hidden hover:border-primary-300 transition">
+                      {idImageBackPreview ? (
+                        <div className="relative">
+                          <img src={idImageBackPreview} alt="ID Back" className="w-full h-48 object-cover" />
+                          <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition flex items-center justify-center gap-2">
+                            <button type="button" onClick={() => openCamera('document')} className="px-4 py-2 bg-white text-gray-900 rounded-lg text-sm font-medium">Retake</button>
+                            <button type="button" onClick={() => { setIdImageBackPreview(null); setIdImageBack(null) }} className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium">Remove</button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="p-6 text-center space-y-3">
+                          <div className="flex items-center justify-center gap-3">
+                            <button
+                              type="button"
+                              onClick={() => openCamera('document')}
+                              className="flex-1 flex flex-col items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-xl transition"
+                            >
+                              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                              </svg>
+                              <span className="text-sm font-medium">Take Photo</span>
+                            </button>
+                            <label htmlFor="id-image-back-upload" className="flex-1 flex flex-col items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-xl cursor-pointer transition">
+                              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                              </svg>
+                              <span className="text-sm font-medium">Upload File</span>
+                              <input id="id-image-back-upload" name="idImageBack" type="file" accept="image/*" onChange={handleIdImageBackChange} className="hidden" />
+                            </label>
+                          </div>
+                          <p className="text-xs text-gray-500">Click to upload or take photo of the back side</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Selfie */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Selfie Verification *</label>
+                    <div className="border-2 border-dashed border-gray-200 rounded-xl overflow-hidden hover:border-primary-300 transition">
+                      {selfiePreview ? (
+                        <div className="relative">
+                          <img src={selfiePreview} alt="Selfie" className="w-full h-48 object-cover" />
+                          <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition flex items-center justify-center gap-2">
+                            <button type="button" onClick={() => openCamera('selfie')} className="px-4 py-2 bg-white text-gray-900 rounded-lg text-sm font-medium">Retake</button>
+                            <button type="button" onClick={() => { setSelfiePreview(null); setFormData(prev => ({ ...prev, selfieImage: null })) }} className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium">Remove</button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="p-6 text-center space-y-3">
+                          <div className="flex items-center justify-center gap-3">
+                            <button
+                              type="button"
+                              onClick={() => openCamera('selfie')}
+                              className="flex-1 flex flex-col items-center gap-2 px-4 py-3 bg-accent-500 hover:bg-accent-600 text-white rounded-xl transition"
+                            >
+                              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                              </svg>
+                              <span className="text-sm font-medium">Take Selfie</span>
+                            </button>
+                            <label htmlFor="selfie-upload" className="flex-1 flex flex-col items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-xl cursor-pointer transition">
+                              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                              </svg>
+                              <span className="text-sm font-medium">Upload File</span>
+                              <input id="selfie-upload" name="selfieImage" type="file" accept="image/*" onChange={handleSelfieChange} className="hidden" />
+                            </label>
+                          </div>
+                          <p className="text-xs text-gray-500">Take a selfie to verify your identity</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Security Icons */}
+                  <div className="grid grid-cols-3 gap-3 pt-2">
+                    <div className="text-center p-3 bg-gray-50 rounded-lg">
+                      <div className="text-2xl mb-1">🔒</div>
+                      <p className="text-xs text-gray-600">Escrow Protected</p>
+                    </div>
+                    <div className="text-center p-3 bg-gray-50 rounded-lg">
+                      <div className="text-2xl mb-1">🔐</div>
+                      <p className="text-xs text-gray-600">Secure Payment</p>
+                    </div>
+                    <div className="text-center p-3 bg-gray-50 rounded-lg">
+                      <div className="text-2xl mb-1">✓</div>
+                      <p className="text-xs text-gray-600">Verified</p>
+                    </div>
                   </div>
                 </div>
               )}
@@ -322,6 +497,15 @@ function CheckoutPageContent() {
           </div>
         </div>
       </div>
+
+      {/* Camera Modal */}
+      {showCamera && (
+        <CameraCapture
+          mode={cameraMode}
+          onCapture={handleCameraCapture}
+          onClose={() => setShowCamera(false)}
+        />
+      )}
     </div>
   )
 }

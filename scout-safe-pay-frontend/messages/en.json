@@ -306,7 +306,22 @@
       },
       "upload": "Upload Document",
       "front": "Upload Front Side",
-      "back": "Upload Back Side"
+      "back": "Upload Back Side",
+      "camera": {
+        "selfie_title": "Take a Selfie",
+        "document_title": "Capture ID Document",
+        "selfie_guide": "Position your face in the center",
+        "document_guide": "Place your ID within the frame",
+        "selfie_instruction": "Look at the camera and stay still",
+        "document_instruction": "Ensure all details are clearly visible",
+        "permission_denied": "Camera access denied. Please allow camera access in your browser settings.",
+        "not_found": "No camera found. Please check your device.",
+        "error": "Failed to access camera. Please try again.",
+        "capture_error": "Failed to capture image. Please try again.",
+        "retry": "Retry",
+        "retake": "Retake",
+        "use_photo": "Use Photo"
+      }
     },
     "countries": {
       "germany": "Germany",

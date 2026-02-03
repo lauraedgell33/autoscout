@@ -306,7 +306,22 @@
       },
       "upload": "Dokument Hochladen",
       "front": "Vorderseite Hochladen",
-      "back": "Rückseite Hochladen"
+      "back": "Rückseite Hochladen",
+      "camera": {
+        "selfie_title": "Selfie Aufnehmen",
+        "document_title": "Ausweisdokument Aufnehmen",
+        "selfie_guide": "Positionieren Sie Ihr Gesicht in der Mitte",
+        "document_guide": "Platzieren Sie Ihren Ausweis im Rahmen",
+        "selfie_instruction": "Schauen Sie in die Kamera und bleiben Sie still",
+        "document_instruction": "Stellen Sie sicher, dass alle Details deutlich sichtbar sind",
+        "permission_denied": "Kamerazugriff verweigert. Bitte erlauben Sie den Kamerazugriff in Ihren Browsereinstellungen.",
+        "not_found": "Keine Kamera gefunden. Bitte überprüfen Sie Ihr Gerät.",
+        "error": "Kamera konnte nicht aufgerufen werden. Bitte versuchen Sie es erneut.",
+        "capture_error": "Bild konnte nicht aufgenommen werden. Bitte versuchen Sie es erneut.",
+        "retry": "Erneut Versuchen",
+        "retake": "Erneut Aufnehmen",
+        "use_photo": "Foto Verwenden"
+      }
     },
     "countries": {
       "germany": "Deutschland",

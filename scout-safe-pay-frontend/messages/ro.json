@@ -292,7 +292,22 @@
       },
       "upload": "Încarcă Document",
       "front": "Încarcă Față",
-      "back": "Încarcă Verso"
+      "back": "Încarcă Verso",
+      "camera": {
+        "selfie_title": "Faceți un Selfie",
+        "document_title": "Capturați Documentul de Identitate",
+        "selfie_guide": "Poziționați fața în centru",
+        "document_guide": "Plasați actul în cadru",
+        "selfie_instruction": "Priviți camera și stați nemișcat",
+        "document_instruction": "Asigurați-vă că toate detaliile sunt clar vizibile",
+        "permission_denied": "Acces camera refuzat. Vă rugăm să permiteți accesul la cameră în setările browserului.",
+        "not_found": "Nu s-a găsit nicio cameră. Verificați dispozitivul.",
+        "error": "Nu s-a putut accesa camera. Încercați din nou.",
+        "capture_error": "Nu s-a putut captura imaginea. Încercați din nou.",
+        "retry": "Reîncercați",
+        "retake": "Refaceți",
+        "use_photo": "Folosește Fotografia"
+      }
     },
     "countries": {
       "germany": "Germania",
