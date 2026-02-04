@@ -120,7 +120,8 @@
     "show_filters": "Arată Filtre Avansate",
     "hide_filters": "Ascunde Filtre Avansate",
     "no_results_desc": "Încearcă să ajustezi filtrele sau căutarea pentru a găsi mai multe vehicule.",
-    "clear_filters_btn": "Șterge Filtrele"
+    "clear_filters_btn": "Șterge Filtrele",
+    "send_message_to_seller": "Trimite un mesaj vânzătorului despre acest vehicul"
   },
   "vehicle": {
     "details": "Detalii Vehicul",

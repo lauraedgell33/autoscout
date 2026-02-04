@@ -24,6 +24,8 @@ export default function VehicleContactPage() {
   const params = useParams();
   const router = useRouter();
   const t = useTranslations();
+  const tVehicle = useTranslations('vehicle');
+  const tCommon = useTranslations('common');
   const vehicleId = params.id as string;
   const locale = params.locale as string;
   
@@ -81,16 +83,16 @@ export default function VehicleContactPage() {
         <div className="max-w-4xl mx-auto px-4 py-12">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6">
             <h2 className="text-xl font-semibold text-red-800 mb-2">
-              {t('common.error')}
+              {tCommon('error')}
             </h2>
             <p className="text-red-600">
-              {error || t('vehicles.notFound')}
+              {error || tVehicle('not_found')}
             </p>
             <Link
-              href={`/${locale}/vehicles/search`}
+              href={`/${locale}/marketplace`}
               className="inline-block mt-4 text-blue-600 hover:text-blue-700"
             >
-              {t('common.backToSearch')}
+              {tVehicle('back_to_marketplace')}
             </Link>
           </div>
         </div>
@@ -108,7 +110,7 @@ export default function VehicleContactPage() {
             className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            {t('common.backToVehicle')}
+            {tCommon('back')}
           </Link>
         </div>
 
@@ -161,10 +163,10 @@ export default function VehicleContactPage() {
         {/* Contact Form */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
           <h2 className="text-xl font-bold text-gray-900 mb-2">
-            {t('vehicles.contactSeller')}
+            {tVehicle('contact_seller')}
           </h2>
           <p className="text-gray-600 mb-6">
-            {t('vehicles.contactDescription')}
+            {t('marketplace.send_message_to_seller')}
           </p>
 
           <VehicleContactForm

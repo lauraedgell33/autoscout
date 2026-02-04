@@ -120,7 +120,8 @@
     "show_filters": "Erweiterte Filter anzeigen",
     "hide_filters": "Erweiterte Filter ausblenden",
     "no_results_desc": "Versuchen Sie, Ihre Filter oder Suchanfrage anzupassen, um mehr Fahrzeuge zu finden.",
-    "clear_filters_btn": "Filter zurücksetzen"
+    "clear_filters_btn": "Filter zurücksetzen",
+    "send_message_to_seller": "Senden Sie eine Nachricht an den Verkäufer zu diesem Fahrzeug"
   },
   "vehicle": {
     "details": "Fahrzeugdetails",

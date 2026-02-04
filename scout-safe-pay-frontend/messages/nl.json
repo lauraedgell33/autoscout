@@ -120,7 +120,8 @@
     "show_filters": "Toon Geavanceerde Filters",
     "hide_filters": "Verberg Geavanceerde Filters",
     "no_results_desc": "Probeer je filters of zoekopdracht aan te passen om meer voertuigen te vinden.",
-    "clear_filters_btn": "Filters Wissen"
+    "clear_filters_btn": "Filters Wissen",
+    "send_message_to_seller": "Stuur een bericht naar de verkoper over dit voertuig"
   },
   "vehicle": {
     "details": "Voertuiggegevens",

@@ -11,6 +11,7 @@ import { vehicleService } from '@/lib/api/vehicles'
 import { transactionService } from '@/lib/api/transactions'
 import { kycService } from '@/lib/api/kyc'
 import { logger } from '@/utils/logger'
+import { getImageUrl } from '@/lib/utils'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import CameraCapture from '@/components/CameraCapture'
 
@@ -217,13 +218,13 @@ function CheckoutPageContent() {
 
   const steps = isDealer 
     ? [
-        { number: 1, title: t('checkout.buyer_info'), icon: '👤' },
-        { number: 2, title: t('checkout.delivery_address'), icon: '🏠' },
+        { number: 1, title: t('buyer_info'), icon: '👤' },
+        { number: 2, title: t('delivery_address'), icon: '🏠' },
         { number: 3, title: tCommon('confirm'), icon: '✓' },
       ]
     : [
-        { number: 1, title: t('checkout.buyer_info'), icon: '👤' },
-        { number: 2, title: t('checkout.delivery_address'), icon: '🏠' },
+        { number: 1, title: t('buyer_info'), icon: '👤' },
+        { number: 2, title: t('delivery_address'), icon: '🏠' },
         { number: 3, title: 'KYC', icon: '📸' },
         { number: 4, title: tCommon('confirm'), icon: '✓' },
       ]
@@ -234,8 +235,8 @@ function CheckoutPageContent() {
     <div className="min-h-screen bg-gray-50 py-6 sm:py-8">
       <div className="max-w-7xl mx-auto px-4">
         <Link href={`/vehicle/${vehicleId}`} className="text-sm text-primary-900 hover:underline mb-4 inline-flex items-center gap-1">← {tCommon('back')}</Link>
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">{t('checkout.title')}</h1>
-        <p className="text-sm text-gray-600 mb-6">{t('checkout.escrow_desc')}</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">{t('title')}</h1>
+        <p className="text-sm text-gray-600 mb-6">{t('escrow_desc')}</p>
 
         {/* Steps */}
         <div className="mb-6 flex items-center justify-between">
@@ -257,7 +258,7 @@ function CheckoutPageContent() {
             <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
               {currentStep === 1 && (
                 <div className="space-y-4">
-                  <h2 className="text-base sm:text-lg font-bold mb-3">{t('checkout.buyer_info')}</h2>
+                  <h2 className="text-base sm:text-lg font-bold mb-3">{t('buyer_info')}</h2>
                   <input id="checkout-fullname" type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} placeholder="Full Name *" required className="w-full px-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500" autoComplete="name" />
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <input id="checkout-email" type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email *" required className="w-full px-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500" autoComplete="email" />
@@ -269,7 +270,7 @@ function CheckoutPageContent() {
 
               {currentStep === 2 && (
                 <div className="space-y-4">
-                  <h2 className="text-base sm:text-lg font-bold mb-3">{t('checkout.delivery_address')}</h2>
+                  <h2 className="text-base sm:text-lg font-bold mb-3">{t('delivery_address')}</h2>
                   <div className="grid grid-cols-3 gap-3">
                     <input id="checkout-street" type="text" name="street" value={formData.street} onChange={handleInputChange} placeholder="Street *" required className="col-span-2 px-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500" autoComplete="address-line1" />
                     <input id="checkout-house-number" type="text" name="houseNumber" value={formData.houseNumber} onChange={handleInputChange} placeholder="No. *" required className="px-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500" autoComplete="off" />
@@ -455,7 +456,7 @@ function CheckoutPageContent() {
                     <p className="text-xs text-gray-600">{formData.street} {formData.houseNumber}, {formData.postalCode} {formData.city}</p>
                     {!isDealer && <p className="text-green-600 text-xs mt-2">✓ KYC Verification submitted</p>}
                   </div>
-                  <label htmlFor="checkout-accept-terms" className="flex items-start gap-2"><input id="checkout-accept-terms" type="checkbox" name="acceptTerms" checked={formData.acceptTerms} onChange={handleInputChange} required className="mt-0.5 rounded" /><span className="text-xs text-gray-700">{t('checkout.terms_agree')} {t('checkout.terms_link')} *</span></label>
+                  <label htmlFor="checkout-accept-terms" className="flex items-start gap-2"><input id="checkout-accept-terms" type="checkbox" name="acceptTerms" checked={formData.acceptTerms} onChange={handleInputChange} required className="mt-0.5 rounded" /><span className="text-xs text-gray-700">{t('terms_agree')} {t('terms_link')} *</span></label>
                   <label htmlFor="checkout-accept-data" className="flex items-start gap-2"><input id="checkout-accept-data" type="checkbox" name="acceptDataProcessing" checked={formData.acceptDataProcessing} onChange={handleInputChange} required className="mt-0.5 rounded" /><span className="text-xs text-gray-700">{t('consents.data_processing')} *</span></label>
                   <label htmlFor="checkout-accept-contract" className="flex items-start gap-2"><input id="checkout-accept-contract" type="checkbox" name="acceptContract" checked={formData.acceptContract} onChange={handleInputChange} required className="mt-0.5 rounded" /><span className="text-xs text-gray-700">{t('consents.purchase_contract')} *</span></label>
                 </div>
@@ -466,7 +467,7 @@ function CheckoutPageContent() {
                 {currentStep < maxSteps ? (
                   <button type="button" onClick={handleNext} className="px-5 py-2.5 text-sm bg-accent-500 hover:bg-accent-600 text-white rounded-xl font-medium transition">{tCommon('next')} →</button>
                 ) : (
-                  <button type="submit" disabled={submitting} className="px-5 py-2.5 text-sm bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition">{submitting ? t('checkout.processing') : t('checkout.place_order')}</button>
+                  <button type="submit" disabled={submitting} className="px-5 py-2.5 text-sm bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition">{submitting ? t('processing') : t('place_order')}</button>
                 )}
               </div>
             </form>
@@ -474,23 +475,23 @@ function CheckoutPageContent() {
 
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sticky top-8">
-              <h3 className="text-sm font-semibold mb-3">{t('checkout.order_summary')}</h3>
-              {vehicle.images?.[0] && (
+              <h3 className="text-sm font-semibold mb-3">{t('order_summary')}</h3>
+              {(vehicle.primary_image || vehicle.images?.[0]) && (
                 <div className="relative w-full h-32 rounded-xl overflow-hidden mb-3">
-                  <Image src={vehicle.images[0]} alt={vehicle.make} fill className="object-cover" />
+                  <Image src={getImageUrl(vehicle.primary_image || vehicle.images[0])} alt={vehicle.make} fill className="object-cover" />
                 </div>
               )}
               <h4 className="text-sm font-semibold">{vehicle.make} {vehicle.model}</h4>
-              <p className="text-xs text-gray-500 mb-3">Year: {vehicle.year}</p>
+              <p className="text-xs text-gray-500 mb-3">{tCommon('year')}: {vehicle.year}</p>
               <div className="border-t border-gray-100 pt-3 space-y-2">
-                <div className="flex justify-between text-xs"><span className="text-gray-600">{t('checkout.vehicle_details')}</span><span>{formatPrice(Number(vehicle.price))}</span></div>
-                <div className="flex justify-between text-xs"><span className="text-gray-600">{t('checkout.service_fee')}</span><span>{formatPrice(Math.max(Number(vehicle.price) * 0.025, 25))}</span></div>
-                <div className="flex justify-between text-xs"><span className="text-gray-600">{t('checkout.vat')}</span><span>{formatPrice((Number(vehicle.price) + Math.max(Number(vehicle.price) * 0.025, 25)) * 0.19)}</span></div>
-                <div className="flex justify-between font-semibold text-sm border-t border-gray-100 pt-2 mt-2"><span>{t('checkout.total')}</span><span className="text-accent-500">{formatPrice((Number(vehicle.price) + Math.max(Number(vehicle.price) * 0.025, 25)) * 1.19)}</span></div>
+                <div className="flex justify-between text-xs"><span className="text-gray-600">{t('vehicle_details')}</span><span>{formatPrice(Number(vehicle.price))}</span></div>
+                <div className="flex justify-between text-xs"><span className="text-gray-600">{t('service_fee')}</span><span>{formatPrice(Math.max(Number(vehicle.price) * 0.025, 25))}</span></div>
+                <div className="flex justify-between text-xs"><span className="text-gray-600">{t('vat')}</span><span>{formatPrice((Number(vehicle.price) + Math.max(Number(vehicle.price) * 0.025, 25)) * 0.19)}</span></div>
+                <div className="flex justify-between font-semibold text-sm border-t border-gray-100 pt-2 mt-2"><span>{t('total')}</span><span className="text-accent-500">{formatPrice((Number(vehicle.price) + Math.max(Number(vehicle.price) * 0.025, 25)) * 1.19)}</span></div>
               </div>
               {isDealer && (
                 <div className="mt-3 bg-green-50 border border-green-100 rounded-xl p-2.5">
-                  <p className="text-xs text-green-800">{t('checkout.dealer_info')}</p>
+                  <p className="text-xs text-green-800">{t('dealer_info')}</p>
                 </div>
               )}
             </div>

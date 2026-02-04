@@ -120,7 +120,8 @@
     "show_filters": "Mostra Filtri Avanzati",
     "hide_filters": "Nascondi Filtri Avanzati",
     "no_results_desc": "Prova a regolare i filtri o la ricerca per trovare più veicoli.",
-    "clear_filters_btn": "Cancella Filtri"
+    "clear_filters_btn": "Cancella Filtri",
+    "send_message_to_seller": "Invia un messaggio al venditore riguardo questo veicolo"
   },
   "vehicle": {
     "details": "Dettagli del veicolo",
