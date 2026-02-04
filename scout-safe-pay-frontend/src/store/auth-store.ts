@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface User {
   id: number;
@@ -17,6 +17,7 @@ interface AuthState {
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  isHydrated: boolean;
   error: string | null;
   
   // Actions
@@ -27,6 +28,7 @@ interface AuthState {
   setToken: (token: string) => void;
   clearError: () => void;
   checkAuth: () => Promise<void>;
+  setHydrated: () => void;
 }
 
 interface RegisterData {
@@ -47,8 +49,13 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       token: null,
       isAuthenticated: false,
-      isLoading: typeof window === 'undefined', // true on server, false on client
+      isLoading: true,
+      isHydrated: false,
       error: null,
+      
+      setHydrated: () => {
+        set({ isHydrated: true });
+      },
 
       login: async (email: string, password: string) => {
         set({ isLoading: true, error: null });
@@ -161,13 +168,15 @@ export const useAuthStore = create<AuthState>()(
       },
 
       checkAuth: async () => {
+        set({ isLoading: true });
+        
         let { token } = get();
         
-        // Try to get token from localStorage if not in store
+        // Try to get token from localStorage if not in store (backup)
         if (!token && typeof window !== 'undefined') {
           token = localStorage.getItem('auth_token');
           if (token) {
-            set({ token, isAuthenticated: true });
+            set({ token });
           }
         }
         
@@ -202,11 +211,16 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: 'auth-storage',
+      storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         user: state.user,
         token: state.token,
         isAuthenticated: state.isAuthenticated,
       }),
+      onRehydrateStorage: () => (state) => {
+        // Called after hydration is complete
+        state?.setHydrated();
+      },
     }
   )
 );

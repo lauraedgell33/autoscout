@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, ReactNode, useEffect } from 'react'
+import { createContext, useContext, ReactNode, useEffect, useRef } from 'react'
 import { useRouter } from '@/i18n/routing'
 import { useAuthStore } from '@/store/auth-store'
 import toast from 'react-hot-toast'
@@ -40,13 +40,21 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter()
   const authStore = useAuthStore()
+  const hasCheckedAuth = useRef(false)
 
   useEffect(() => {
-    // Check authentication on mount (client-side only)
-    if (typeof window !== 'undefined') {
-      authStore.checkAuth()
+    // Wait for store to hydrate before checking auth
+    if (typeof window !== 'undefined' && authStore.isHydrated && !hasCheckedAuth.current) {
+      hasCheckedAuth.current = true
+      // If we have a token after hydration, validate it with the server
+      if (authStore.token) {
+        authStore.checkAuth()
+      } else {
+        // No token, just mark as not loading
+        useAuthStore.setState({ isLoading: false })
+      }
     }
-  }, [])
+  }, [authStore.isHydrated, authStore.token])
 
   const login = async (email: string, password: string) => {
     try {
