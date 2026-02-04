@@ -7,7 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { VehicleContactForm } from '@/components/forms/VehicleContactForm';
 import { getImageUrl } from '@/lib/utils';
-import { useTranslations } from '@/lib/i18n/client';
+import { useTranslations } from 'next-intl';
 
 interface Vehicle {
   id: number;
