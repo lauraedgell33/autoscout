@@ -10,6 +10,7 @@ import { contractService } from '@/lib/api/contracts'
 import { invoiceService } from '@/lib/api/invoices'
 import { getCategoryLabel } from '@/lib/utils/categoryHelpers'
 import { useRealtimeEvent } from '@/lib/realtime-client'
+import { getImageUrl } from '@/lib/utils'
 import ProtectedRoute from '@/components/ProtectedRoute';
 
 function TransactionPageContent() {
@@ -170,8 +171,8 @@ function TransactionPageContent() {
           <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
             <div className="flex items-start justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('transaction.title')} #{transaction.id}</h1>
-                <p className="text-gray-600">{t('transaction.created')}: {new Date(transaction.created_at).toLocaleDateString()}</p>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('title')} #{transaction.id}</h1>
+                <p className="text-gray-600">{t('created')}: {new Date(transaction.created_at).toLocaleDateString()}</p>
               </div>
             <div>
               <span className={`px-4 py-2 rounded-full text-sm font-semibold border ${statusColors[transaction.status] || 'bg-gray-100 text-gray-800'}`}>
@@ -186,12 +187,15 @@ function TransactionPageContent() {
           <div className="lg:col-span-2 space-y-6">
             {/* Vehicle Info */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('transaction.vehicle')}</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('vehicle')}</h2>
               {vehicle && (
                 <div className="flex gap-4">
-                  {(vehicle as any).images?.[0] && (
-                    <img src={(vehicle as any).images[0]} alt={vehicle.make} className="w-32 h-24 object-cover rounded-lg" />
-                  )}
+                  <img 
+                    src={getImageUrl((vehicle as any).primary_image || (vehicle as any).images?.[0]) || '/placeholder-car.jpg'} 
+                    alt={`${vehicle.make} ${vehicle.model}`} 
+                    className="w-40 h-28 object-cover rounded-lg flex-shrink-0"
+                    onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder-car.jpg' }}
+                  />
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
                       <h3 className="text-xl font-bold">{vehicle.make} {vehicle.model}</h3>
@@ -212,7 +216,7 @@ function TransactionPageContent() {
 
             {/* Transaction Timeline */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('transaction.status')}</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('status')}</h2>
               <div className="space-y-4">
                 {transaction.status === 'pending_payment' && (
                   <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
@@ -224,7 +228,7 @@ function TransactionPageContent() {
                       </div>
                       <div className="ml-3">
                         <p className="text-sm text-yellow-700 font-medium">{t('status_messages.awaiting_payment')}</p>
-                        <p className="text-sm text-yellow-700 mt-1">{t('transaction.payment_instructions')}</p>
+                        <p className="text-sm text-yellow-700 mt-1">{t('payment_instructions')}</p>
                       </div>
                     </div>
                   </div>
@@ -240,7 +244,7 @@ function TransactionPageContent() {
                       </div>
                       <div className="ml-3">
                         <p className="text-sm text-green-700 font-medium">{t('status_messages.payment_received')}</p>
-                        <p className="text-sm text-green-700 mt-1">{t('transaction.payment_instructions')}</p>
+                        <p className="text-sm text-green-700 mt-1">{t('payment_instructions')}</p>
                       </div>
                     </div>
                   </div>
@@ -256,7 +260,7 @@ function TransactionPageContent() {
                       </div>
                       <div className="ml-3">
                         <p className="text-sm text-green-700 font-medium">{t('status_messages.completed')}</p>
-                        <p className="text-sm text-green-700 mt-1">{t('transaction.support_message')}</p>
+                        <p className="text-sm text-green-700 mt-1">{t('support_message')}</p>
                       </div>
                     </div>
                   </div>
@@ -267,8 +271,8 @@ function TransactionPageContent() {
             {/* Payment Proof Upload */}
             {transaction.status === 'pending_payment' && (
               <div className="bg-white rounded-xl shadow-sm p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">{t('transaction.payment_method')}</h2>
-                <p className="text-gray-600 mb-4">{t('transaction.payment_instructions')}</p>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">{t('payment_method')}</h2>
+                <p className="text-gray-600 mb-4">{t('payment_instructions')}</p>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                   <input
                     type="file"
@@ -280,9 +284,9 @@ function TransactionPageContent() {
                   />
                   <label htmlFor="payment-proof" className="cursor-pointer">
                     <div className="text-gray-600 mb-2">
-                      {uploadingProof ? tCommon('loading') : t('transaction.upload_receipt')}
+                    {uploadingProof ? tCommon('loading') : t('upload_receipt')}
                     </div>
-                    <div className="text-sm text-gray-500">{t('transaction.file_formats')}</div>
+                    <div className="text-sm text-gray-500">{t('file_formats')}</div>
                   </label>
                 </div>
               </div>
@@ -293,13 +297,13 @@ function TransactionPageContent() {
           <div className="space-y-6">
             {/* Amount Card */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h3 className="text-sm font-medium text-gray-600 mb-2">{t('transaction.amount')}</h3>
+              <h3 className="text-sm font-medium text-gray-600 mb-2">{t('amount')}</h3>
               <div className="text-3xl font-bold text-accent-500 mb-4">
                 {formatPrice(Number(transaction.amount) * 1.19)}
               </div>
               <div className="text-sm text-gray-600 space-y-1">
                 <div className="flex justify-between">
-                  <span>{t('transaction.vehicle')}:</span>
+                  <span>{t('vehicle')}:</span>
                   <span>{formatPrice(Number(transaction.amount))}</span>
                 </div>
                 <div className="flex justify-between">
@@ -311,56 +315,66 @@ function TransactionPageContent() {
 
             {/* Documents */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h3 className="font-bold text-gray-900 mb-4">{t('transaction.download_invoice')}</h3>
+              <h3 className="font-bold text-gray-900 mb-4">{t('documents.contract')} & {t('documents.invoice')}</h3>
               <div className="space-y-3">
                 {/* Contract */}
-                <div>
-                  <button
-                    onClick={handleGenerateContract}
-                    disabled={generatingContract}
-                    className="w-full flex items-center justify-between px-4 py-3 bg-primary-50 hover:bg-blue-100 rounded-lg transition"
-                  >
-                    <div className="flex items-center gap-2">
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
                       <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
-                      <span className="font-medium text-gray-900">{t('documents.contract')}</span>
                     </div>
-                    <svg className="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={handleDownloadContract}
-                    className="w-full mt-2 text-sm text-primary-600 hover:underline"
-                  >
-                    {t('transaction.download_invoice')}
-                  </button>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{t('documents.contract')}</h4>
+                      <p className="text-xs text-gray-500">PDF</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleGenerateContract}
+                      disabled={generatingContract}
+                      className="flex-1 px-3 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm rounded-lg transition disabled:opacity-50"
+                    >
+                      {generatingContract ? tCommon('loading') : 'Generează'}
+                    </button>
+                    <button
+                      onClick={handleDownloadContract}
+                      className="flex-1 px-3 py-2 border border-primary-600 text-primary-600 hover:bg-primary-50 text-sm rounded-lg transition"
+                    >
+                      Descarcă
+                    </button>
+                  </div>
                 </div>
 
                 {/* Invoice */}
-                <div>
-                  <button
-                    onClick={handleGenerateInvoice}
-                    disabled={generatingInvoice}
-                    className="w-full flex items-center justify-between px-4 py-3 bg-accent-50 hover:bg-accent-100 rounded-lg transition"
-                  >
-                    <div className="flex items-center gap-2">
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
                       <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2zM10 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 5a.5.5 0 11-1 0 .5.5 0 011 0z" />
                       </svg>
-                      <span className="font-medium text-orange-900">{t('documents.invoice')}</span>
                     </div>
-                    <svg className="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={handleDownloadInvoice}
-                    className="w-full mt-2 text-sm text-orange-600 hover:underline"
-                  >
-                    {t('transaction.download_invoice')}
-                  </button>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{t('documents.invoice')}</h4>
+                      <p className="text-xs text-gray-500">PDF</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleGenerateInvoice}
+                      disabled={generatingInvoice}
+                      className="flex-1 px-3 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm rounded-lg transition disabled:opacity-50"
+                    >
+                      {generatingInvoice ? tCommon('loading') : 'Generează'}
+                    </button>
+                    <button
+                      onClick={handleDownloadInvoice}
+                      className="flex-1 px-3 py-2 border border-orange-600 text-orange-600 hover:bg-orange-50 text-sm rounded-lg transition"
+                    >
+                      {t('download_invoice')}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -368,7 +382,7 @@ function TransactionPageContent() {
             {/* Actions */}
             {transaction.status === 'pending_payment' && (
               <div className="bg-white rounded-xl shadow-sm p-6">
-                <h3 className="font-bold text-gray-900 mb-4">{t('transaction.actions')}</h3>
+                <h3 className="font-bold text-gray-900 mb-4">{tCommon('actions')}</h3>
                 <button
                   onClick={handleCancelTransaction}
                   className="w-full px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-medium transition"
@@ -380,8 +394,8 @@ function TransactionPageContent() {
 
             {/* Support */}
             <div className="bg-primary-50 rounded-xl p-6">
-              <h3 className="font-bold text-gray-900 mb-2">{t('transaction.contact_support')}</h3>
-              <p className="text-sm text-gray-600 mb-4">{t('transaction.support_message')}</p>
+              <h3 className="font-bold text-gray-900 mb-2">{t('contact_support')}</h3>
+              <p className="text-sm text-gray-600 mb-4">{t('support_message')}</p>
               <a href="mailto:support@autoscout24-safetrade.de" className="text-sm text-primary-600 hover:underline">
                 support@autoscout24-safetrade.de
               </a>
