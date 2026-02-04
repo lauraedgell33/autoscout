@@ -15,17 +15,17 @@ class DeliveryConfirmed extends Mailable
     use Queueable, SerializesModels;
 
     public Transaction $transaction;
-    public string $locale;
+    protected string $userLocale;
 
     public function __construct(Transaction $transaction)
     {
         $this->transaction = $transaction->load(['buyer', 'vehicle', 'dealer']);
-        $this->locale = $transaction->buyer->preferred_language ?? 'en';
+        $this->userLocale = $transaction->buyer->preferred_language ?? 'en';
     }
 
     public function envelope(): Envelope
     {
-        App::setLocale($this->locale);
+        App::setLocale($this->userLocale);
         
         return new Envelope(
             subject: __('emails.delivery_confirmed.subject'),
@@ -34,7 +34,7 @@ class DeliveryConfirmed extends Mailable
 
     public function content(): Content
     {
-        App::setLocale($this->locale);
+        App::setLocale($this->userLocale);
         
         return new Content(
             view: 'emails.delivery-confirmed',
@@ -49,7 +49,7 @@ class DeliveryConfirmed extends Mailable
                 'reviewUrl' => config('app.frontend_url') . '/reviews/create/' . $this->transaction->dealer_id,
                 'documentsUrl' => config('app.frontend_url') . '/transactions/' . $this->transaction->id . '/documents',
                 'supportUrl' => config('app.frontend_url') . '/support',
-                'locale' => $this->locale,
+                'locale' => $this->userLocale,
             ],
         );
     }

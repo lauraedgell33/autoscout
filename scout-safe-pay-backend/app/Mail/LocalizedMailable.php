@@ -15,9 +15,9 @@ abstract class LocalizedMailable extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * The locale for this email.
+     * The user locale for this email.
      */
-    public string $locale = 'en';
+    protected string $userLocale = 'en';
 
     /**
      * Supported locales for emails.
@@ -27,10 +27,18 @@ abstract class LocalizedMailable extends Mailable
     /**
      * Set the locale for this email.
      */
-    public function locale(string $locale): self
+    public function setUserLocale(string $locale): self
     {
-        $this->locale = in_array($locale, self::$supportedLocales) ? $locale : 'en';
+        $this->userLocale = in_array($locale, self::$supportedLocales) ? $locale : 'en';
         return $this;
+    }
+
+    /**
+     * Get the user locale.
+     */
+    public function getUserLocale(): string
+    {
+        return $this->userLocale;
     }
 
     /**
@@ -40,7 +48,7 @@ abstract class LocalizedMailable extends Mailable
     {
         // Set the application locale for this email
         $previousLocale = App::getLocale();
-        App::setLocale($this->locale);
+        App::setLocale($this->userLocale);
 
         // Let child class build the email
         $result = $this->buildContent();
@@ -62,7 +70,7 @@ abstract class LocalizedMailable extends Mailable
     protected function getLocalizedViewData(array $data = []): array
     {
         return array_merge($data, [
-            'locale' => $this->locale,
+            'locale' => $this->userLocale,
         ]);
     }
 
@@ -75,7 +83,7 @@ abstract class LocalizedMailable extends Mailable
         
         // Get user's preferred language
         $locale = $user->preferred_language ?? $user->locale ?? 'en';
-        $instance->locale($locale);
+        $instance->setUserLocale($locale);
         
         return $instance;
     }

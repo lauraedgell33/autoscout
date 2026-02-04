@@ -15,17 +15,17 @@ class OrderCancelled extends Mailable
     use Queueable, SerializesModels;
 
     public Transaction $transaction;
-    public string $locale;
+    protected string $userLocale;
 
     public function __construct(Transaction $transaction)
     {
         $this->transaction = $transaction->load(['buyer', 'vehicle', 'dealer']);
-        $this->locale = $transaction->buyer->preferred_language ?? 'en';
+        $this->userLocale = $transaction->buyer->preferred_language ?? 'en';
     }
 
     public function envelope(): Envelope
     {
-        App::setLocale($this->locale);
+        App::setLocale($this->userLocale);
         
         return new Envelope(
             subject: __('emails.order_cancelled.subject'),
@@ -34,7 +34,7 @@ class OrderCancelled extends Mailable
 
     public function content(): Content
     {
-        App::setLocale($this->locale);
+        App::setLocale($this->userLocale);
         
         return new Content(
             view: 'emails.order-cancelled',
@@ -47,7 +47,7 @@ class OrderCancelled extends Mailable
                 'cancelledAt' => $this->transaction->cancelled_at?->format('d.m.Y H:i'),
                 'supportUrl' => config('app.frontend_url') . '/support',
                 'searchUrl' => config('app.frontend_url') . '/vehicles/search',
-                'locale' => $this->locale,
+                'locale' => $this->userLocale,
             ],
         );
     }
