@@ -11,6 +11,7 @@ import { apiClient } from '@/lib/api-client';
 import toast from 'react-hot-toast';
 import { DashboardStatsGridSkeleton, TransactionListSkeleton } from '@/components/skeletons/DashboardSkeletons';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import { getImageUrl } from '@/lib/utils';
 
 interface SellerStats {
   total_listings: number;
@@ -196,7 +197,7 @@ function SellerDashboardContent() {
                   <div className="h-16 w-16 bg-gray-200 dark:bg-gray-700 rounded-lg">
                     {sale.vehicle.primary_image && (
                       <img
-                        src={sale.vehicle.primary_image}
+                        src={getImageUrl(sale.vehicle.primary_image)}
                         alt={`${sale.vehicle.make} ${sale.vehicle.model}`}
                         className="h-full w-full object-cover rounded-lg"
                       />

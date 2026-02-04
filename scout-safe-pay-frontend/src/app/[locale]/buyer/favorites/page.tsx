@@ -9,6 +9,7 @@ import { favoritesService } from '@/lib/api/favorites';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import toast from 'react-hot-toast';
+import { getImageUrl } from '@/lib/utils';
 
 interface FavoriteVehicle {
   id: number;
@@ -114,7 +115,7 @@ export default function BuyerFavoritesPage() {
                 <div className="aspect-video bg-gray-200 dark:bg-gray-700">
                   {favorite.vehicle.primary_image ? (
                     <img
-                      src={favorite.vehicle.primary_image}
+                      src={getImageUrl(favorite.vehicle.primary_image)}
                       alt={`${favorite.vehicle.make} ${favorite.vehicle.model}`}
                       className="w-full h-full object-cover"
                     />

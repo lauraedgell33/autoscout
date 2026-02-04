@@ -7,6 +7,7 @@ import { Search, Filter, Eye, Package } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { getImageUrl } from '@/lib/utils';
 
 export default function SellerSalesPage() {
   const params = useParams<{ locale: string }>();
@@ -115,7 +116,7 @@ export default function SellerSalesPage() {
                     <td className="px-6 py-4">
                       <div className="flex items-center">
                         <div className="h-10 w-10 bg-gray-200 rounded mr-3">
-                          {sale.vehicle?.primary_image && <img src={sale.vehicle.primary_image} alt="" className="h-full w-full object-cover rounded" />}
+                          {sale.vehicle?.primary_image && <img src={getImageUrl(sale.vehicle.primary_image)} alt="" className="h-full w-full object-cover rounded" />}
                         </div>
                         <div>
                           <div className="text-sm font-medium">{sale.vehicle?.make} {sale.vehicle?.model}</div>

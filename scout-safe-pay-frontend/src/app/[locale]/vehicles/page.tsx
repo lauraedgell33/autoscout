@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Star, ExternalLink, MapPin } from 'lucide-react';
 import Link from 'next/link';
+import { getImageUrl } from '@/lib/utils';
 
 export default function VehiclesPage() {
   const t = useTranslations();
@@ -39,7 +40,7 @@ export default function VehiclesPage() {
                   <CardContent>
                     <div className="space-y-4">
                       <img 
-                        src={vehicle.primary_image || '/placeholder-car.jpg'} 
+                        src={getImageUrl(vehicle.primary_image) || '/placeholder-car.jpg'} 
                         alt={`${vehicle.make} ${vehicle.model}`}
                         className="w-full h-48 object-cover rounded"
                       />

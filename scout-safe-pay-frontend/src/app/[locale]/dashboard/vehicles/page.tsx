@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import DashboardLayout from '@/components/DashboardLayout'
 import vehicleService, { Vehicle } from '@/lib/api/vehicles'
+import { getImageUrl } from '@/lib/utils'
 
 export default function MyVehiclesPage() {
   const t = useTranslations('dashboard.vehicles')
@@ -144,7 +145,7 @@ export default function MyVehiclesPage() {
                   {/* Vehicle Image */}
                   <div className="relative h-48 bg-gray-200">
                     <img
-                      src={vehicle.primary_image || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23e5e7eb' width='600' height='400'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ENo Image%3C/text%3E%3C/svg%3E"}
+                      src={getImageUrl(vehicle.primary_image) || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23e5e7eb' width='600' height='400'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ENo Image%3C/text%3E%3C/svg%3E"}
                       alt={`${vehicle.make} ${vehicle.model}`}
                       className="w-full h-full object-cover"
                       onError={(e) => { (e.target as HTMLImageElement).src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23e5e7eb' width='600' height='400'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23999999' text-anchor='middle' dominant-baseline='middle'%3ENo Image%3C/text%3E%3C/svg%3E" }}

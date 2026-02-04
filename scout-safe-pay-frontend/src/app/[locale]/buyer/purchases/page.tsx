@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { Package, Eye, Download, FileText } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { getImageUrl } from '@/lib/utils';
 
 interface Purchase {
   id: string;
@@ -113,7 +114,7 @@ export default function BuyerPurchasesPage() {
                   <div className="h-24 w-32 bg-gray-200 dark:bg-gray-700 rounded-lg flex-shrink-0">
                     {purchase.vehicle.primary_image ? (
                       <img
-                        src={purchase.vehicle.primary_image}
+                        src={getImageUrl(purchase.vehicle.primary_image)}
                         alt={`${purchase.vehicle.make} ${purchase.vehicle.model}`}
                         className="h-full w-full object-cover rounded-lg"
                       />
