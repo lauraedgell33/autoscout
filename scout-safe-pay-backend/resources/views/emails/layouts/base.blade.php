@@ -461,31 +461,31 @@
                 </div>
                 
                 <p class="footer-text">
-                    <strong>AutoScout24 SafeTrade</strong><br>
-                    Europe's Trusted Secure Vehicle Trading Platform
+                    <strong>{{ __('emails.footer.company') }}</strong><br>
+                    {{ __('emails.footer.tagline') }}
                 </p>
                 
                 <!-- Footer Links -->
                 <div class="footer-links">
-                    <a href="{{ config('app.frontend_url') }}/{{ $locale ?? 'en' }}/help">Help Center</a>
-                    <a href="{{ config('app.frontend_url') }}/{{ $locale ?? 'en' }}/privacy">Privacy</a>
-                    <a href="{{ config('app.frontend_url') }}/{{ $locale ?? 'en' }}/terms">Terms</a>
-                    <a href="{{ config('app.frontend_url') }}/{{ $locale ?? 'en' }}/contact">Contact</a>
+                    <a href="{{ config('app.frontend_url') }}/{{ $locale ?? 'en' }}/help">{{ __('emails.footer.help_center') }}</a>
+                    <a href="{{ config('app.frontend_url') }}/{{ $locale ?? 'en' }}/privacy">{{ __('emails.footer.privacy') }}</a>
+                    <a href="{{ config('app.frontend_url') }}/{{ $locale ?? 'en' }}/terms">{{ __('emails.footer.terms') }}</a>
+                    <a href="{{ config('app.frontend_url') }}/{{ $locale ?? 'en' }}/contact">{{ __('emails.footer.contact') }}</a>
                 </div>
                 
                 <p class="footer-text" style="margin-top: 16px;">
-                    © {{ date('Y') }} AutoScout24 SafeTrade. All rights reserved.
+                    {{ __('emails.footer.copyright', ['year' => date('Y')]) }}
                 </p>
                 
                 <!-- Unsubscribe -->
                 @if(isset($unsubscribeUrl))
                 <p class="unsubscribe-text">
-                    Don't want these emails? <a href="{{ $unsubscribeUrl }}">Unsubscribe</a> or 
-                    <a href="{{ config('app.frontend_url') }}/{{ $locale ?? 'en' }}/profile/notifications">manage preferences</a>
+                    {{ __('emails.footer.unsubscribe') }} <a href="{{ $unsubscribeUrl }}">Unsubscribe</a> | 
+                    <a href="{{ config('app.frontend_url') }}/{{ $locale ?? 'en' }}/profile/notifications">{{ __('emails.footer.manage_preferences') }}</a>
                 </p>
                 @else
                 <p class="unsubscribe-text">
-                    <a href="{{ config('app.frontend_url') }}/{{ $locale ?? 'en' }}/profile/notifications">Manage email preferences</a>
+                    <a href="{{ config('app.frontend_url') }}/{{ $locale ?? 'en' }}/profile/notifications">{{ __('emails.footer.manage_preferences') }}</a>
                 </p>
                 @endif
             </div>
