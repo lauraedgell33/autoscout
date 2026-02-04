@@ -104,8 +104,11 @@ export default function CameraCapture({ onCapture, onClose, mode, title }: Camer
     const video = videoRef.current
     const canvas = canvasRef.current
     
-    canvas.width = video.videoWidth
-    canvas.height = video.videoHeight
+    // Calculate optimal dimensions (max 1920px width for quality/size balance)
+    const maxWidth = 1920
+    const scale = video.videoWidth > maxWidth ? maxWidth / video.videoWidth : 1
+    canvas.width = video.videoWidth * scale
+    canvas.height = video.videoHeight * scale
     
     const ctx = canvas.getContext('2d')
     if (!ctx) return
@@ -116,11 +119,23 @@ export default function CameraCapture({ onCapture, onClose, mode, title }: Camer
       ctx.scale(-1, 1)
     }
     
-    ctx.drawImage(video, 0, 0)
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
     
-    const imageDataUrl = canvas.toDataURL('image/jpeg', 0.9)
+    // Use lower quality for better compression (target ~500KB)
+    const quality = mode === 'selfie' ? 0.85 : 0.88
+    const imageDataUrl = canvas.toDataURL('image/jpeg', quality)
     setCapturedImage(imageDataUrl)
     setCountdown(null)
+    
+    // Haptic feedback on mobile
+    triggerHapticFeedback()
+  }
+  
+  // Trigger haptic feedback on supported devices
+  const triggerHapticFeedback = () => {
+    if (typeof window !== 'undefined' && 'vibrate' in navigator) {
+      navigator.vibrate(50) // Short vibration
+    }
   }
 
   const retakePhoto = () => {

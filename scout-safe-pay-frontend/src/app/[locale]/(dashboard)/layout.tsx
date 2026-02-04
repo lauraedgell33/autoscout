@@ -14,6 +14,7 @@ import {
   Menu,
   X
 } from 'lucide-react'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 export default function DashboardLayout({
   children,
@@ -146,7 +147,9 @@ export default function DashboardLayout({
           ${sidebarCollapsed ? 'lg:ml-0' : 'lg:ml-0'}
         `}>
           <div className="max-w-7xl mx-auto">
-            {children}
+            <ErrorBoundary>
+              {children}
+            </ErrorBoundary>
           </div>
         </main>
       </div>
