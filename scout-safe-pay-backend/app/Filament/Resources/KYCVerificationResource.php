@@ -153,9 +153,14 @@ class KYCVerificationResource extends Resource
                         $record->update([
                             'kyc_status' => 'approved',
                             'kyc_verified_at' => now(),
+                            'kyc_verified_by' => auth()->id(),
+                            'is_verified' => true,
                         ]);
                         
                         $record->notify(new \App\Notifications\KYCApprovedNotification());
+                        
+                        // Send KYC approval email
+                        \App\Services\EmailNotificationService::sendKYCResult($record, 'verified');
                         
                         \Filament\Notifications\Notification::make()
                             ->title('KYC Approved')
@@ -178,9 +183,17 @@ class KYCVerificationResource extends Resource
                         $record->update([
                             'kyc_status' => 'rejected',
                             'kyc_rejection_reason' => $data['reason'],
+                            'kyc_verified_at' => now(),
+                            'kyc_verified_by' => auth()->id(),
+                            // Clear images so user can resubmit
+                            'id_document_image' => null,
+                            'selfie_image' => null,
                         ]);
                         
                         $record->notify(new \App\Notifications\KYCRejectedNotification($data['reason']));
+                        
+                        // Send KYC rejection email
+                        \App\Services\EmailNotificationService::sendKYCResult($record, 'rejected', $data['reason']);
                         
                         \Filament\Notifications\Notification::make()
                             ->title('KYC Rejected')

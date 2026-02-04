@@ -11,6 +11,8 @@ use App\Mail\PaymentInstructions;
 use App\Mail\PaymentConfirmed;
 use App\Mail\ReadyForDelivery;
 use App\Mail\OrderCompleted;
+use App\Mail\OrderCancelled;
+use App\Mail\DeliveryConfirmed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -376,6 +378,9 @@ class OrderController extends Controller
         // Update vehicle status
         $transaction->vehicle->update(['status' => 'sold']);
 
+        // Send delivery confirmation email to buyer
+        Mail::to($transaction->buyer->email)->send(new DeliveryConfirmed($transaction));
+
         return response()->json([
             'message' => 'Order marked as delivered successfully',
         ]);
@@ -434,6 +439,9 @@ class OrderController extends Controller
 
         // Release vehicle
         $transaction->vehicle->update(['status' => 'active']);
+
+        // Send cancellation email to buyer
+        Mail::to($transaction->buyer->email)->send(new OrderCancelled($transaction));
 
         return response()->json([
             'message' => 'Order cancelled successfully',
