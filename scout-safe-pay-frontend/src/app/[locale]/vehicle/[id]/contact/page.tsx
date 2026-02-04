@@ -81,16 +81,16 @@ export default function VehicleContactPage() {
         <div className="max-w-4xl mx-auto px-4 py-12">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6">
             <h2 className="text-xl font-semibold text-red-800 mb-2">
-              {t('common.error', 'Error')}
+              {t('common.error')}
             </h2>
             <p className="text-red-600">
-              {error || t('vehicles.notFound', 'Vehicle not found')}
+              {error || t('vehicles.notFound')}
             </p>
             <Link
               href={`/${locale}/vehicles/search`}
               className="inline-block mt-4 text-blue-600 hover:text-blue-700"
             >
-              {t('common.backToSearch', 'Back to Search')}
+              {t('common.backToSearch')}
             </Link>
           </div>
         </div>
@@ -108,7 +108,7 @@ export default function VehicleContactPage() {
             className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            {t('common.backToVehicle', 'Back to Vehicle')}
+            {t('common.backToVehicle')}
           </Link>
         </div>
 
@@ -161,13 +161,10 @@ export default function VehicleContactPage() {
         {/* Contact Form */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
           <h2 className="text-xl font-bold text-gray-900 mb-2">
-            {t('vehicles.contactSeller', 'Contact Seller')}
+            {t('vehicles.contactSeller')}
           </h2>
           <p className="text-gray-600 mb-6">
-            {t(
-              'vehicles.contactDescription',
-              'Send a message to the seller about this vehicle. They will respond directly to your email.'
-            )}
+            {t('vehicles.contactDescription')}
           </p>
 
           <VehicleContactForm
