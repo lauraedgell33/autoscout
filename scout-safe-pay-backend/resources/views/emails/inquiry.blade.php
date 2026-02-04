@@ -37,7 +37,7 @@
         <p style="margin: 0; color: #1E40AF; font-weight: 700; font-size: 15px; margin-bottom: 12px;">💬 Message from Potential Buyer:</p>
         <div style="background-color: #ffffff; padding: 16px; border-radius: 8px; margin-top: 8px;">
             <p style="margin: 0; color: #1F2937; font-size: 14px; line-height: 1.7;">
-                {!! nl2br(e($message)) !!}
+                {!! nl2br(e($buyerMessage)) !!}
             </p>
         </div>
     </div>
