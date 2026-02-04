@@ -1,61 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: #28a745; color: white; padding: 20px; text-align: center; }
-        .content { padding: 30px 20px; background: #f9f9f9; }
-        .success-box { background: #d4edda; padding: 20px; border-left: 4px solid #28a745; margin: 20px 0; }
-        .button { display: inline-block; padding: 12px 30px; background: #ff6600; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
-        .info-box { background: white; padding: 15px; border: 1px solid #ddd; margin: 20px 0; }
-        .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>✅ Plata Confirmată!</h1>
-        </div>
-        
-        <div class="content">
-            <h2>Bună {{ $buyerName }},</h2>
-            
-            <div class="success-box">
-                <h3 style="margin-top: 0;">🎉 Plata dumneavoastră a fost confirmată cu succes!</h3>
-                <p>Vă mulțumim pentru achiziționarea vehiculului <strong>{{ $vehicleTitle }}</strong>.</p>
-            </div>
-            
-            <div class="info-box">
-                <h3>📄 Factura dumneavoastră</h3>
-                <p><strong>Număr factură:</strong> {{ $invoiceNumber }}</p>
-                <p><strong>Sumă plătită:</strong> {{ $amount }} {{ $currency }}</p>
-                <center>
-                    <a href="{{ $invoiceUrl }}" class="button">📥 Descarcă Factura</a>
-                </center>
-            </div>
-            
-            <h3>📦 Următorii pași:</h3>
-            <ol>
-                <li>Vehiculul va fi pregătit pentru livrare</li>
-                <li>Veți fi contactat de {{ $dealerName }} pentru programarea livrării</li>
-                <li>Veți primi toate documentele necesare (carte de identitate vehicul, etc.)</li>
-            </ol>
-            
-            <div class="info-box">
-                <h4>📞 Contact Dealer:</h4>
-                <p><strong>{{ $dealerName }}</strong><br>
-                Telefon: {{ $dealerPhone }}</p>
-            </div>
-            
-            <p>Pentru orice întrebări, nu ezitați să ne contactați!</p>
-        </div>
-        
-        <div class="footer">
-            <p>© 2026 AutoScout24 SafeTrade. Toate drepturile rezervate.</p>
-            <p>Mulțumim pentru încredere!</p>
+@extends('emails.layouts.base')
+
+@section('content')
+<h2 class="email-title">{{ __('emails.payment_confirmed.title') }}</h2>
+<p class="email-subtitle">{{ __('emails.payment_confirmed.subtitle') }}</p>
+
+<div class="email-content">
+    <p>{{ __('emails.common.greeting', ['name' => $buyerName]) }}</p>
+    
+    <div class="alert-box alert-success" style="text-align: center;">
+        <div style="font-size: 56px; margin-bottom: 12px;">✅</div>
+        <p style="margin: 0; color: #047857; font-weight: 700; font-size: 18px;">{{ __('emails.payment_confirmed.success') }}</p>
+        <p style="margin: 8px 0 0 0; color: #065F46; font-size: 14px;">{{ $vehicleTitle }}</p>
+    </div>
+    
+    <div class="card">
+        <p style="margin: 0; color: #111827; font-weight: 700; font-size: 16px; margin-bottom: 16px;">{{ __('emails.payment_confirmed.invoice_title') }}</p>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="padding: 8px 0; color: #6B7280; font-size: 13px; width: 140px;">{{ __('emails.payment_confirmed.invoice_number') }}:</td>
+                <td style="padding: 8px 0; color: #111827; font-weight: 600; font-size: 14px; font-family: monospace;">{{ $invoiceNumber }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0; color: #6B7280; font-size: 13px;">{{ __('emails.payment_confirmed.amount_paid') }}:</td>
+                <td style="padding: 8px 0; color: #003281; font-weight: 700; font-size: 18px;">{{ $amount }} {{ $currency }}</td>
+            </tr>
+        </table>
+        <div style="text-align: center; margin-top: 16px;">
+            <a href="{{ $invoiceUrl }}" class="button button-primary" style="margin: 0;">
+                {{ __('emails.payment_confirmed.download_invoice') }}
+            </a>
         </div>
     </div>
-</body>
-</html>
+    
+    <div class="alert-box alert-info">
+        <p style="margin: 0; color: #1E40AF; font-weight: 700; font-size: 15px; margin-bottom: 12px;">{{ __('emails.payment_confirmed.next_steps_title') }}</p>
+        <ol style="margin: 0; padding-left: 20px; color: #1E3A8A; font-size: 14px; line-height: 1.8;">
+            <li style="margin-bottom: 8px;">{{ __('emails.payment_confirmed.step1') }}</li>
+            <li style="margin-bottom: 8px;">{{ __('emails.payment_confirmed.step2', ['dealer' => $dealerName]) }}</li>
+            <li style="margin-bottom: 8px;">{{ __('emails.payment_confirmed.step3') }}</li>
+        </ol>
+    </div>
+    
+    <div class="info-box">
+        <p style="margin: 0; color: #111827; font-weight: 600; font-size: 14px; margin-bottom: 8px;">{{ __('emails.payment_confirmed.dealer_contact') }}</p>
+        <p style="margin: 0; color: #4B5563; font-size: 14px;">
+            <strong>{{ $dealerName }}</strong><br>
+            {{ __('emails.inquiry.phone') }}: {{ $dealerPhone }}
+        </p>
+    </div>
+    
+    <p style="margin-top: 24px;">
+        {{ __('emails.common.regards') }}<br>
+        <strong>{{ __('emails.common.team') }}</strong>
+    </p>
+</div>
+@endsection
