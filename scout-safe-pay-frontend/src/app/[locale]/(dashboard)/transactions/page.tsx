@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
 import { transactionService } from '@/lib/api/transactions'
@@ -17,6 +17,22 @@ export default function TransactionsPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
+  const loadTransactions = useCallback(async () => {
+    try {
+      const data = await transactionService.list()
+      setTransactions(data.data || [])
+    } catch (err: unknown) {
+      const error = err as { response?: { status: number } }
+      if (error.response?.status === 401) {
+        router.push('/login')
+      } else {
+        setError(t('transactions.failed_to_load'))
+      }
+    } finally {
+      setLoading(false)
+    }
+  }, [router, t])
+
   useEffect(() => {
     if (!authLoading && !user) {
       router.push('/login')
@@ -25,22 +41,7 @@ export default function TransactionsPage() {
     if (user) {
       loadTransactions()
     }
-  }, [user, authLoading])
-
-  const loadTransactions = async () => {
-    try {
-      const data = await transactionService.list()
-      setTransactions(data.data || [])
-    } catch (err: any) {
-      if (err.response?.status === 401) {
-        router.push('/login')
-      } else {
-        setError(t('transactions.failed_to_load'))
-      }
-    } finally {
-      setLoading(false)
-    }
-  }
+  }, [user, authLoading, router, loadTransactions])
 
   if (loading) return <div className="flex justify-center py-12"><div className="animate-spin h-8 w-8 border-4 border-teal-600 border-t-transparent rounded-full"></div></div>
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { Package, MapPin, Star, Phone, Mail, ArrowLeft } from 'lucide-react';
@@ -30,12 +30,7 @@ export default function DealerPage() {
   const [vehicles, setVehicles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchDealer();
-    fetchVehicles();
-  }, [dealerId]);
-
-  const fetchDealer = async () => {
+  const fetchDealer = useCallback(async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dealers/${dealerId}`);
       const data = await response.json();
@@ -45,9 +40,9 @@ export default function DealerPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dealerId]);
 
-  const fetchVehicles = async () => {
+  const fetchVehicles = useCallback(async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dealers/${dealerId}/vehicles`);
       const data = await response.json();
@@ -55,7 +50,12 @@ export default function DealerPage() {
     } catch (error) {
       console.error('Error fetching vehicles:', error);
     }
-  };
+  }, [dealerId]);
+
+  useEffect(() => {
+    fetchDealer();
+    fetchVehicles();
+  }, [fetchDealer, fetchVehicles]);
 
   if (loading) {
     return <div className="flex items-center justify-center min-h-screen">

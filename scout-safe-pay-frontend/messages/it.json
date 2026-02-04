@@ -267,7 +267,13 @@
     "available": "Disponibile",
     "checkBackLater": "Torna più tardi per nuovi annunci",
     "gridView": "Vista griglia",
-    "listView": "Vista elenco"
+    "listView": "Vista elenco",
+    "viewDetails": "Vedi dettagli",
+    "visitUs": "Visitaci",
+    "beTheFirstToReview": "Sii il primo a lasciare una recensione!",
+    "writeAReview": "Scrivi una recensione",
+    "verifiedDealer": "Concessionario verificato",
+    "verifiedDealerDescription": "Questo concessionario è stato verificato dal nostro team e soddisfa tutti gli standard di qualità."
   },
   "checkout": {
     "title": "Pagamento sicuro",
@@ -300,7 +306,22 @@
       },
       "upload": "Carica documento",
       "front": "Carica lato anteriore",
-      "back": "Carica il lato posteriore"
+      "back": "Carica il lato posteriore",
+      "camera": {
+        "selfie_title": "Scatta un selfie",
+        "document_title": "Cattura il documento d'identità",
+        "selfie_guide": "Posiziona il viso al centro",
+        "document_guide": "Posiziona il documento all'interno della cornice",
+        "selfie_instruction": "Guarda la fotocamera e resta fermo",
+        "document_instruction": "Assicurati che tutti i dettagli siano visibili",
+        "permission_denied": "Accesso alla fotocamera negato. Consenti l'accesso alla fotocamera nelle impostazioni del browser.",
+        "not_found": "Nessuna fotocamera trovata. Controlla il tuo dispositivo.",
+        "error": "Impossibile accedere alla fotocamera. Riprova.",
+        "capture_error": "Impossibile catturare l'immagine. Riprova.",
+        "retry": "Riprova",
+        "retake": "Rifai",
+        "use_photo": "Usa foto"
+      }
     },
     "countries": {
       "germany": "Germania",
@@ -1324,15 +1345,15 @@
       "sold": "Venduto",
       "total_views": "Visualizzazioni Totali",
       "total_earnings": "Guadagni Totali",
-      "add_new_vehicle": "Aggiungi Nuovo Veicolo",
-      "add_new_vehicle_desc": "Pubblica un veicolo in vendita",
       "my_vehicles": "I Miei Veicoli",
       "my_vehicles_desc": "Visualizza e gestisci gli annunci",
       "selling_guide": "Guida alla Vendita",
       "selling_guide_desc": "Impara a vendere in sicurezza",
       "view_all": "Vedi Tutto →",
       "no_vehicles": "Non hai ancora pubblicato veicoli",
-      "add_first_vehicle": "Aggiungi il Tuo Primo Veicolo"
+      "add_first_vehicle": "Aggiungi il Tuo Primo Veicolo",
+      "add_vehicle": "Aggiungi nuovo veicolo",
+      "add_vehicle_desc": "Pubblica un veicolo in vendita"
     },
     "common": {
       "quick_stats": "Statistiche Rapide",
@@ -1506,8 +1527,8 @@
       "have_account": "Hai già un account?",
       "signin_link": "Registrazione",
       "secure_registration": "Registrazione sicura",
-      "support_24_7": "Supporto 24 ore su 24, 7 giorni su 7",
-      "trusted": "Scelto da oltre 50.000 persone",
+      "support_24_7": "Supporto 24/7",
+      "trusted": "Più di 50.000 utenti",
       "logo_tagline": "Pagamento sicuro",
       "error_password_mismatch": "Le password non corrispondono",
       "error_password_length": "La password deve contenere almeno 8 caratteri",
@@ -1570,8 +1591,25 @@
       "last_updated": "Ultimo aggiornamento",
       "phone": "Telefono",
       "email": "E-mail",
-      "address": "Indirizzo"
+      "address": "Indirizzo",
+      "liability": "Responsabilità per i contenuti",
+      "liability_text": "I contenuti delle nostre pagine sono stati creati con la massima cura. Tuttavia, non possiamo garantire l'accuratezza, la completezza o l'attualità dei contenuti. Secondo le disposizioni di legge, siamo responsabili dei nostri contenuti su queste pagine web.",
+      "all_rights_reserved": "Tutti i diritti riservati."
     }
   },
-  "login_required": "Effettua il login per continuare"
+  "login_required": "Effettua il login per continuare",
+  "kyc": {
+    "camera": {
+      "selfie_title": "Scatta un selfie",
+      "document_title": "Cattura il documento d'identità",
+      "selfie_guide": "Posiziona il viso al centro",
+      "document_guide": "Posiziona il documento all'interno della cornice",
+      "selfie_instruction": "Guarda la fotocamera e resta fermo",
+      "document_instruction": "Assicurati che tutti i dettagli siano visibili",
+      "permission_denied": "Accesso alla fotocamera negato. Consenti l'accesso alla fotocamera nelle impostazioni del browser.",
+      "not_found": "Nessuna fotocamera trovata. Controlla il tuo dispositivo.",
+      "error": "Impossibile accedere alla fotocamera. Riprova.",
+      "capture_error": "Impossibile catturare l'immagine. Riprova."
+    }
+  }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
 import ProtectedRoute from '@/components/ProtectedRoute'
@@ -18,29 +18,29 @@ export default function MyVehiclesPage() {
     vehicle: null
   })
 
-  useEffect(() => {
-    fetchVehicles()
-  }, [])
-
-  const fetchVehicles = async () => {
+  const fetchVehicles = useCallback(async () => {
     try {
       setLoading(true)
       const response = await vehicleService.getMyVehicles()
       setVehicles(response.data)
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to fetch vehicles:', err)
       setError(t("delete_failed"))
     } finally {
       setLoading(false)
     }
-  }
+  }, [t])
+
+  useEffect(() => {
+    fetchVehicles()
+  }, [fetchVehicles])
 
   const handleDelete = async (vehicle: Vehicle) => {
     try {
       await vehicleService.deleteVehicle(vehicle.id)
       setVehicles(vehicles.filter(v => v.id !== vehicle.id))
       setDeleteModal({ open: false, vehicle: null })
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to delete vehicle:', err)
       alert(t("delete_failed"))
     }

@@ -1,43 +1,92 @@
 'use client';
 
-import React from 'react';
+import React, { forwardRef, useCallback } from 'react';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   hoverable?: boolean;
   interactive?: boolean;
+  /** Accessible label for interactive cards */
+  'aria-label'?: string;
+  /** ID of element that labels this card */
+  'aria-labelledby'?: string;
+  /** Visual variant */
+  variant?: 'default' | 'elevated' | 'outlined' | 'filled';
+  /** Padding size */
+  padding?: 'none' | 'sm' | 'md' | 'lg';
 }
 
-export const Card = ({ 
+const variantClasses = {
+  default: 'border border-gray-200 bg-white shadow-sm',
+  elevated: 'border-0 bg-white shadow-lg',
+  outlined: 'border-2 border-gray-200 bg-transparent shadow-none',
+  filled: 'border-0 bg-gray-50 shadow-none',
+};
+
+const paddingClasses = {
+  none: '',
+  sm: 'p-3',
+  md: 'p-4',
+  lg: 'p-6',
+};
+
+export const Card = forwardRef<HTMLDivElement, CardProps>(({ 
   children, 
   className = '', 
   hoverable = false,
   interactive = false,
+  variant = 'default',
+  padding = 'none',
   onClick,
+  onKeyDown,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
   ...props 
-}: CardProps) => {
-  const hoverClasses = hoverable || interactive 
-    ? 'transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.01]' 
+}, ref) => {
+  const isClickable = interactive || !!onClick;
+  
+  const hoverClasses = hoverable || isClickable 
+    ? 'transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5' 
     : '';
   
-  const interactiveClasses = interactive 
+  const interactiveClasses = isClickable 
     ? 'cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2' 
     : '';
 
-  const Component = interactive || onClick ? 'button' : 'div';
+  // Handle keyboard interaction for interactive cards
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (isClickable && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      onClick?.(e as unknown as React.MouseEvent<HTMLDivElement>);
+    }
+    onKeyDown?.(e);
+  }, [isClickable, onClick, onKeyDown]);
 
   return (
-    <Component 
-      className={`rounded-lg border border-gray-200 bg-white shadow-sm ${hoverClasses} ${interactiveClasses} ${className}`}
+    <div 
+      ref={ref}
+      className={`
+        rounded-xl
+        ${variantClasses[variant]}
+        ${paddingClasses[padding]}
+        ${hoverClasses} 
+        ${interactiveClasses} 
+        ${className}
+      `}
       onClick={onClick}
-      role={interactive ? 'button' : undefined}
-      tabIndex={interactive ? 0 : undefined}
-      {...props as any}
+      onKeyDown={handleKeyDown}
+      role={isClickable ? 'button' : undefined}
+      tabIndex={isClickable ? 0 : undefined}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      {...props}
     >
       {children}
-    </Component>
+    </div>
   );
-};
+});
+
+Card.displayName = 'Card';
 
 export const CardHeader = ({ 
   children, 

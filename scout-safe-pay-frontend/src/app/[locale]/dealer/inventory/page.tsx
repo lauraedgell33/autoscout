@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import vehicleService, { Vehicle } from '@/lib/api/vehicles';
 import { Search, Filter, Edit, Trash2, Package } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -14,13 +14,9 @@ export default function DealerInventoryPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
 
-  useEffect(() => {
-    fetchInventory();
-  }, [statusFilter]);
-
-  const fetchInventory = async () => {
+  const fetchInventory = useCallback(async () => {
     try {
-      const filters: any = { per_page: 100 };
+      const filters: Record<string, string | number> = { per_page: 100 };
       if (statusFilter !== 'all') filters.status = statusFilter;
       const response = await vehicleService.getVehicles(filters);
       setVehicles(response.data);
@@ -29,7 +25,11 @@ export default function DealerInventoryPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [statusFilter]);
+
+  useEffect(() => {
+    fetchInventory();
+  }, [fetchInventory]);
 
   const filteredVehicles = vehicles.filter(v =>
     searchQuery === '' ||

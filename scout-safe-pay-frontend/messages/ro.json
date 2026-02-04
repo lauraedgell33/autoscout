@@ -232,11 +232,11 @@
     "noReviewsYet": "Nicio recenzie deocamdată",
     "regarding": "Privitor la",
     "view": "Vizualizare",
-    "viewDetails": "Vezi Detalii",
-    "visitUs": "Vizitați-ne",
+    "viewDetails": "Vezi detalii",
+    "visitUs": "Vizitează-ne",
     "beTheFirstToReview": "Fii primul care lasă o recenzie!",
-    "writeAReview": "Scrie o Recenzie",
-    "verifiedDealer": "Dealer Verificat",
+    "writeAReview": "Scrie o recenzie",
+    "verifiedDealer": "Dealer verificat",
     "verifiedDealerDescription": "Acest dealer a fost verificat de echipa noastră și îndeplinește toate standardele de calitate.",
     "contactInfo": "Informații Contact",
     "callNow": "Sună Acum",
@@ -259,7 +259,21 @@
     "available": "Disponibil",
     "checkBackLater": "Reveniți mai târziu pentru noi anunțuri",
     "gridView": "Vizualizare Grilă",
-    "listView": "Vizualizare Listă"
+    "listView": "Vizualizare Listă",
+    "independent": "Independent",
+    "franchise": "Franciză",
+    "verifiedDealers": "Dealeri verificați",
+    "qualityChecked": "Verificat calitativ",
+    "support": "Suport",
+    "findYourDealer": "Găsește dealerul perfect",
+    "filterResults": "Folosește filtrele pentru a restrânge căutarea",
+    "dealersFound": "dealeri găsiți",
+    "page": "Pagina",
+    "of": "din",
+    "clearFilters": "Șterge toate filtrele",
+    "dealerType": "Tip dealer",
+    "activeListings": "Anunțuri active",
+    "viewProfile": "Vezi profilul"
   },
   "checkout": {
     "title": "Finalizare Comandă Securizată",
@@ -294,19 +308,19 @@
       "front": "Încarcă Față",
       "back": "Încarcă Verso",
       "camera": {
-        "selfie_title": "Faceți un Selfie",
-        "document_title": "Capturați Documentul de Identitate",
-        "selfie_guide": "Poziționați fața în centru",
-        "document_guide": "Plasați actul în cadru",
-        "selfie_instruction": "Priviți camera și stați nemișcat",
-        "document_instruction": "Asigurați-vă că toate detaliile sunt clar vizibile",
-        "permission_denied": "Acces camera refuzat. Vă rugăm să permiteți accesul la cameră în setările browserului.",
-        "not_found": "Nu s-a găsit nicio cameră. Verificați dispozitivul.",
-        "error": "Nu s-a putut accesa camera. Încercați din nou.",
-        "capture_error": "Nu s-a putut captura imaginea. Încercați din nou.",
-        "retry": "Reîncercați",
-        "retake": "Refaceți",
-        "use_photo": "Folosește Fotografia"
+        "selfie_title": "Fă un selfie",
+        "document_title": "Captează documentul de identitate",
+        "selfie_guide": "Poziționează fața în centru",
+        "document_guide": "Plasează actul de identitate în cadru",
+        "selfie_instruction": "Privește camera și stai nemișcat",
+        "document_instruction": "Asigură-te că toate detaliile sunt vizibile",
+        "permission_denied": "Acces cameră refuzat. Te rugăm să permiți accesul la cameră în setările browserului.",
+        "not_found": "Nu s-a găsit nicio cameră. Verifică dispozitivul.",
+        "error": "Eroare la accesarea camerei. Te rugăm să încerci din nou.",
+        "capture_error": "Eroare la capturarea imaginii. Te rugăm să încerci din nou.",
+        "retry": "Reîncearcă",
+        "retake": "Refă",
+        "use_photo": "Folosește poza"
       }
     },
     "countries": {
@@ -1331,15 +1345,15 @@
       "sold": "Vândute",
       "total_views": "Total Vizualizări",
       "total_earnings": "Total Câștiguri",
-      "add_new_vehicle": "Adaugă Vehicul Nou",
-      "add_new_vehicle_desc": "Listează un vehicul pentru vânzare",
       "my_vehicles": "Vehiculele Mele",
       "my_vehicles_desc": "Vezi și gestionează anunțurile",
       "selling_guide": "Ghid de Vânzare",
       "selling_guide_desc": "Învață cum să vinzi în siguranță",
       "view_all": "Vezi Tot →",
       "no_vehicles": "Nu ai listat încă niciun vehicul",
-      "add_first_vehicle": "Adaugă Primul Vehicul"
+      "add_first_vehicle": "Adaugă Primul Vehicul",
+      "add_vehicle": "Adaugă vehicul nou",
+      "add_vehicle_desc": "Listează un vehicul de vânzare"
     },
     "common": {
       "quick_stats": "Statistici Rapide",
@@ -1578,10 +1592,24 @@
       "phone": "Telefon",
       "email": "Email",
       "address": "Adresă",
-      "liability": "Răspundere pentru conținut",
-      "liability_text": "Conținutul paginilor noastre a fost creat cu cea mai mare grijă. Cu toate acestea, nu putem garanta acuratețea, completitudinea sau actualitatea conținutului. Conform prevederilor legale, suntem responsabili pentru propriul nostru conținut de pe aceste pagini web. În acest context, vă rugăm să rețineți că nu suntem obligați să monitorizăm informațiile transmise sau stocate de terți sau să investigăm circumstanțe care indică activități ilegale.",
+      "liability": "Responsabilitate pentru conținut",
+      "liability_text": "Conținutul paginilor noastre a fost creat cu cea mai mare grijă. Cu toate acestea, nu putem garanta acuratețea, completitudinea sau actualitatea conținutului. Conform prevederilor legale, suntem responsabili pentru propriul conținut de pe aceste pagini web.",
       "all_rights_reserved": "Toate drepturile rezervate."
     }
   },
-  "login_required": "Vă rugăm să vă conectați pentru a continua"
+  "login_required": "Vă rugăm să vă conectați pentru a continua",
+  "kyc": {
+    "camera": {
+      "selfie_title": "Fă un selfie",
+      "document_title": "Captează documentul de identitate",
+      "selfie_guide": "Poziționează fața în centru",
+      "document_guide": "Plasează actul de identitate în cadru",
+      "selfie_instruction": "Privește camera și stai nemișcat",
+      "document_instruction": "Asigură-te că toate detaliile sunt vizibile",
+      "permission_denied": "Acces cameră refuzat. Te rugăm să permiți accesul la cameră în setările browserului.",
+      "not_found": "Nu s-a găsit nicio cameră. Verifică dispozitivul.",
+      "error": "Eroare la accesarea camerei. Te rugăm să încerci din nou.",
+      "capture_error": "Eroare la capturarea imaginii. Te rugăm să încerci din nou."
+    }
+  }
 }

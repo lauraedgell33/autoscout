@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -38,7 +38,7 @@ export default function ReviewModerationQueue({ initialPage = 1 }: ReviewModerat
   
   const { addToast } = useUIStore();
 
-  const fetchReviews = async (page: number = currentPage) => {
+  const fetchReviews = useCallback(async (page: number) => {
     setLoading(true);
     try {
       const data = await reviewService.getPendingReviews(page, 10);
@@ -46,19 +46,20 @@ export default function ReviewModerationQueue({ initialPage = 1 }: ReviewModerat
       setCurrentPage(data.current_page);
       setTotalPages(data.last_page);
       setTotal(data.total);
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to fetch pending reviews';
       addToast({
         type: 'error',
-        message: error.message || 'Failed to fetch pending reviews',
+        message: errorMessage,
       });
     } finally {
       setLoading(false);
     }
-  };
+  }, [addToast]);
 
   useEffect(() => {
     fetchReviews(currentPage);
-  }, [currentPage]);
+  }, [currentPage, fetchReviews]);
 
   const handleVerify = async (review: Review) => {
     setProcessingId(review.id);
@@ -80,10 +81,11 @@ export default function ReviewModerationQueue({ initialPage = 1 }: ReviewModerat
           return updated;
         });
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to verify review';
       addToast({
         type: 'error',
-        message: error.message || 'Failed to verify review',
+        message: errorMessage,
       });
     } finally {
       setProcessingId(null);
@@ -126,10 +128,11 @@ export default function ReviewModerationQueue({ initialPage = 1 }: ReviewModerat
           return updated;
         });
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to reject review';
       addToast({
         type: 'error',
-        message: error.message || 'Failed to reject review',
+        message: errorMessage,
       });
     } finally {
       setProcessingId(null);

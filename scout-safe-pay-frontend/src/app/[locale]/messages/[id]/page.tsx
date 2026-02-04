@@ -132,12 +132,15 @@ export default function MessageThreadPage() {
 
   useEffect(() => {
     return () => {
-      sendTyping(false)
+      realtimeClient.send('typing', {
+        transaction_id: transactionId,
+        is_typing: false,
+      })
       if (typingTimeoutRef.current) {
         clearTimeout(typingTimeoutRef.current)
       }
     }
-  }, [])
+  }, [transactionId])
 
   if (loading) {
     return (

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -45,7 +45,7 @@ export default function FlaggedReviewsPanel({ initialPage = 1 }: FlaggedReviewsP
   
   const { addToast } = useUIStore();
 
-  const fetchReviews = async (page: number = currentPage) => {
+  const fetchReviews = useCallback(async (page: number) => {
     setLoading(true);
     try {
       const data = await reviewService.getFlaggedReviews(page, 10);
@@ -53,19 +53,20 @@ export default function FlaggedReviewsPanel({ initialPage = 1 }: FlaggedReviewsP
       setCurrentPage(data.current_page);
       setTotalPages(data.last_page);
       setTotal(data.total);
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to fetch flagged reviews';
       addToast({
         type: 'error',
-        message: error.message || 'Failed to fetch flagged reviews',
+        message: errorMessage,
       });
     } finally {
       setLoading(false);
     }
-  };
+  }, [addToast]);
 
   useEffect(() => {
     fetchReviews(currentPage);
-  }, [currentPage]);
+  }, [currentPage, fetchReviews]);
 
   const toggleExpanded = (reviewId: number) => {
     setExpandedReviews((prev) => {
@@ -104,10 +105,11 @@ export default function FlaggedReviewsPanel({ initialPage = 1 }: FlaggedReviewsP
       
       setReviews((prev) => prev.filter((r) => r.id !== review.id));
       setTotal((prev) => prev - 1);
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to keep review';
       addToast({
         type: 'error',
-        message: error.message || 'Failed to keep review',
+        message: errorMessage,
       });
     } finally {
       setProcessingId(null);
@@ -142,10 +144,11 @@ export default function FlaggedReviewsPanel({ initialPage = 1 }: FlaggedReviewsP
       setTotal((prev) => prev - 1);
       setRejectModalOpen(false);
       setSelectedReview(null);
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to remove review';
       addToast({
         type: 'error',
-        message: error.message || 'Failed to remove review',
+        message: errorMessage,
       });
     } finally {
       setProcessingId(null);

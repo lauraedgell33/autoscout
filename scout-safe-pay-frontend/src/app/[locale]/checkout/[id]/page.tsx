@@ -71,7 +71,7 @@ function CheckoutPageContent() {
       }
     }
     fetchVehicle()
-  }, [vehicleId, router])
+  }, [vehicleId, router, t])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target

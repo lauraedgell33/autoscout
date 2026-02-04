@@ -267,7 +267,13 @@
     "gridView": "Rasterweergave",
     "listView": "Lijstweergave",
     "dealers": "dealers",
-    "found": "gevonden"
+    "found": "gevonden",
+    "viewDetails": "Details bekijken",
+    "visitUs": "Bezoek ons",
+    "beTheFirstToReview": "Wees de eerste om een review te schrijven!",
+    "writeAReview": "Schrijf een review",
+    "verifiedDealer": "Geverifieerde dealer",
+    "verifiedDealerDescription": "Deze dealer is geverifieerd door ons team en voldoet aan alle kwaliteitsnormen."
   },
   "checkout": {
     "title": "Veilig afrekenen",
@@ -300,7 +306,22 @@
       },
       "upload": "Document uploaden",
       "front": "Upload voorzijde",
-      "back": "Upload achterkant"
+      "back": "Upload achterkant",
+      "camera": {
+        "selfie_title": "Neem een selfie",
+        "document_title": "Leg het identiteitsbewijs vast",
+        "selfie_guide": "Positioneer je gezicht in het midden",
+        "document_guide": "Plaats je ID binnen het kader",
+        "selfie_instruction": "Kijk naar de camera en blijf stilstaan",
+        "document_instruction": "Zorg ervoor dat alle details zichtbaar zijn",
+        "permission_denied": "Cameratoegang geweigerd. Sta cameratoegang toe in je browserinstellingen.",
+        "not_found": "Geen camera gevonden. Controleer je apparaat.",
+        "error": "Kan geen toegang krijgen tot de camera. Probeer het opnieuw.",
+        "capture_error": "Kan de afbeelding niet vastleggen. Probeer het opnieuw.",
+        "retry": "Opnieuw proberen",
+        "retake": "Opnieuw maken",
+        "use_photo": "Foto gebruiken"
+      }
     },
     "countries": {
       "germany": "Duitsland",
@@ -1324,15 +1345,15 @@
       "sold": "Verkocht",
       "total_views": "Totaal Weergaven",
       "total_earnings": "Totaal Inkomsten",
-      "add_new_vehicle": "Nieuw Voertuig Toevoegen",
-      "add_new_vehicle_desc": "Plaats een voertuig te koop",
       "my_vehicles": "Mijn Voertuigen",
       "my_vehicles_desc": "Bekijk en beheer advertenties",
       "selling_guide": "Verkoopgids",
       "selling_guide_desc": "Leer veilig verkopen",
       "view_all": "Bekijk Alles →",
       "no_vehicles": "Je hebt nog geen voertuigen geplaatst",
-      "add_first_vehicle": "Voeg Je Eerste Voertuig Toe"
+      "add_first_vehicle": "Voeg Je Eerste Voertuig Toe",
+      "add_vehicle": "Nieuw voertuig toevoegen",
+      "add_vehicle_desc": "Een voertuig te koop aanbieden"
     },
     "common": {
       "quick_stats": "Snelle Statistieken",
@@ -1570,8 +1591,25 @@
       "last_updated": "Laatst bijgewerkt",
       "phone": "Telefoon",
       "email": "E-mail",
-      "address": "Adres"
+      "address": "Adres",
+      "liability": "Aansprakelijkheid voor inhoud",
+      "liability_text": "De inhoud van onze pagina's is met de grootste zorg gemaakt. We kunnen echter niet garanderen dat de inhoud nauwkeurig, volledig of actueel is. Volgens de wettelijke bepalingen zijn wij verantwoordelijk voor onze eigen inhoud op deze webpagina's.",
+      "all_rights_reserved": "Alle rechten voorbehouden."
     }
   },
-  "login_required": "Log in om door te gaan"
+  "login_required": "Log in om door te gaan",
+  "kyc": {
+    "camera": {
+      "selfie_title": "Neem een selfie",
+      "document_title": "Leg het identiteitsbewijs vast",
+      "selfie_guide": "Positioneer je gezicht in het midden",
+      "document_guide": "Plaats je ID binnen het kader",
+      "selfie_instruction": "Kijk naar de camera en blijf stilstaan",
+      "document_instruction": "Zorg ervoor dat alle details zichtbaar zijn",
+      "permission_denied": "Cameratoegang geweigerd. Sta cameratoegang toe in je browserinstellingen.",
+      "not_found": "Geen camera gevonden. Controleer je apparaat.",
+      "error": "Kan geen toegang krijgen tot de camera. Probeer het opnieuw.",
+      "capture_error": "Kan de afbeelding niet vastleggen. Probeer het opnieuw."
+    }
+  }
 }

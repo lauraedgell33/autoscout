@@ -267,7 +267,13 @@
     "gridView": "Vue grille",
     "listView": "Vue liste",
     "dealers": "revendeurs",
-    "found": "trouvés"
+    "found": "trouvés",
+    "viewDetails": "Voir les détails",
+    "visitUs": "Visitez-nous",
+    "beTheFirstToReview": "Soyez le premier à laisser un avis !",
+    "writeAReview": "Écrire un avis",
+    "verifiedDealer": "Concessionnaire vérifié",
+    "verifiedDealerDescription": "Ce concessionnaire a été vérifié par notre équipe et répond à toutes les normes de qualité."
   },
   "checkout": {
     "title": "Paiement sécurisé",
@@ -300,7 +306,22 @@
       },
       "upload": "Télécharger un document",
       "front": "Télécharger le recto",
-      "back": "Télécharger le verso"
+      "back": "Télécharger le verso",
+      "camera": {
+        "selfie_title": "Prenez un selfie",
+        "document_title": "Capturez le document d'identité",
+        "selfie_guide": "Positionnez votre visage au centre",
+        "document_guide": "Placez votre pièce d'identité dans le cadre",
+        "selfie_instruction": "Regardez la caméra et restez immobile",
+        "document_instruction": "Assurez-vous que tous les détails sont visibles",
+        "permission_denied": "Accès à la caméra refusé. Veuillez autoriser l'accès à la caméra dans les paramètres de votre navigateur.",
+        "not_found": "Aucune caméra trouvée. Veuillez vérifier votre appareil.",
+        "error": "Échec de l'accès à la caméra. Veuillez réessayer.",
+        "capture_error": "Échec de la capture d'image. Veuillez réessayer.",
+        "retry": "Réessayer",
+        "retake": "Reprendre",
+        "use_photo": "Utiliser la photo"
+      }
     },
     "countries": {
       "germany": "Allemagne",
@@ -1324,15 +1345,15 @@
       "sold": "Vendu",
       "total_views": "Vues Totales",
       "total_earnings": "Gains Totaux",
-      "add_new_vehicle": "Ajouter un Nouveau Véhicule",
-      "add_new_vehicle_desc": "Mettre un véhicule en vente",
       "my_vehicles": "Mes Véhicules",
       "my_vehicles_desc": "Voir et gérer les annonces",
       "selling_guide": "Guide de Vente",
       "selling_guide_desc": "Apprenez à vendre en toute sécurité",
       "view_all": "Voir Tout →",
       "no_vehicles": "Vous n'avez pas encore listé de véhicules",
-      "add_first_vehicle": "Ajouter Votre Premier Véhicule"
+      "add_first_vehicle": "Ajouter Votre Premier Véhicule",
+      "add_vehicle": "Ajouter un nouveau véhicule",
+      "add_vehicle_desc": "Mettre un véhicule en vente"
     },
     "common": {
       "quick_stats": "Statistiques Rapides",
@@ -1506,8 +1527,8 @@
       "have_account": "Vous avez déjà un compte ?",
       "signin_link": "Se connecter",
       "secure_registration": "Inscription sécurisée",
-      "support_24_7": "Assistance 24h/24 et 7j/7",
-      "trusted": "Plus de 50 000 personnes nous font confiance",
+      "support_24_7": "Support 24/7",
+      "trusted": "Plus de 50 000 utilisateurs",
       "logo_tagline": "Paiement SafeTrade",
       "error_password_mismatch": "Les mots de passe ne correspondent pas",
       "error_password_length": "Le mot de passe doit contenir au moins 8 caractères",
@@ -1570,8 +1591,25 @@
       "last_updated": "Dernière mise à jour",
       "phone": "Téléphone",
       "email": "E-mail",
-      "address": "Adresse"
+      "address": "Adresse",
+      "liability": "Responsabilité du contenu",
+      "liability_text": "Le contenu de nos pages a été créé avec le plus grand soin. Cependant, nous ne pouvons garantir l'exactitude, l'exhaustivité ou l'actualité du contenu. Conformément aux dispositions légales, nous sommes responsables de notre propre contenu sur ces pages web.",
+      "all_rights_reserved": "Tous droits réservés."
     }
   },
-  "login_required": "Veuillez vous connecter pour continuer"
+  "login_required": "Veuillez vous connecter pour continuer",
+  "kyc": {
+    "camera": {
+      "selfie_title": "Prenez un selfie",
+      "document_title": "Capturez le document d'identité",
+      "selfie_guide": "Positionnez votre visage au centre",
+      "document_guide": "Placez votre pièce d'identité dans le cadre",
+      "selfie_instruction": "Regardez la caméra et restez immobile",
+      "document_instruction": "Assurez-vous que tous les détails sont visibles",
+      "permission_denied": "Accès à la caméra refusé. Veuillez autoriser l'accès à la caméra dans les paramètres de votre navigateur.",
+      "not_found": "Aucune caméra trouvée. Veuillez vérifier votre appareil.",
+      "error": "Échec de l'accès à la caméra. Veuillez réessayer.",
+      "capture_error": "Échec de la capture d'image. Veuillez réessayer."
+    }
+  }
 }

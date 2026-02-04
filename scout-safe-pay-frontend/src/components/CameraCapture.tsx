@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 
 interface CameraCaptureProps {
@@ -22,14 +22,17 @@ export default function CameraCapture({ onCapture, onClose, mode, title }: Camer
   const [capturedImage, setCapturedImage] = useState<string | null>(null)
   const [countdown, setCountdown] = useState<number | null>(null)
 
-  useEffect(() => {
-    startCamera()
-    return () => {
-      stopCamera()
+  const stopCamera = useCallback(() => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop())
+      streamRef.current = null
     }
-  }, [isFrontCamera])
+    if (videoRef.current) {
+      videoRef.current.srcObject = null
+    }
+  }, [])
 
-  const startCamera = async () => {
+  const startCamera = useCallback(async () => {
     try {
       setError(null)
       setIsReady(false)
@@ -58,27 +61,26 @@ export default function CameraCapture({ onCapture, onClose, mode, title }: Camer
           setIsReady(true)
         }
       }
-    } catch (err: any) {
-      console.error('Camera error:', err)
-      if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+    } catch (err: unknown) {
+      const error = err as Error & { name: string }
+      console.error('Camera error:', error)
+      if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
         setError(t('camera.permission_denied'))
-      } else if (err.name === 'NotFoundError') {
+      } else if (error.name === 'NotFoundError') {
         setError(t('camera.not_found'))
       } else {
         setError(t('camera.error'))
       }
     }
-  }
+  }, [isFrontCamera, t])
 
-  const stopCamera = () => {
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach(track => track.stop())
-      streamRef.current = null
+  useEffect(() => {
+    // eslint-disable-next-line react-compiler/react-compiler -- Camera initialization on mount
+    startCamera()
+    return () => {
+      stopCamera()
     }
-    if (videoRef.current) {
-      videoRef.current.srcObject = null
-    }
-  }
+  }, [startCamera, stopCamera])
 
   const switchCamera = () => {
     setIsFrontCamera(prev => !prev)

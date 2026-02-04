@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Star, Inbox } from 'lucide-react';
 import { ReviewCard } from './ReviewCard';
 import { Review, ReviewFilters } from '@/types/review';
@@ -26,11 +26,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({ vehicleId, userId, revie
   const [hasMore, setHasMore] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
 
-  useEffect(() => {
-    loadReviews();
-  }, [vehicleId, userId, activeTab, sortBy, page]);
-
-  const loadReviews = async () => {
+  const loadReviews = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -65,7 +61,11 @@ export const ReviewList: React.FC<ReviewListProps> = ({ vehicleId, userId, revie
     } finally {
       setLoading(false);
     }
-  };
+  }, [vehicleId, userId, activeTab, sortBy, page, reviewType]);
+
+  useEffect(() => {
+    loadReviews();
+  }, [loadReviews]);
 
   const handleVote = async (reviewId: number, isHelpful: boolean) => {
     try {

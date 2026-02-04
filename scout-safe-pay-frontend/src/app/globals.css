@@ -360,12 +360,92 @@ body {
 /* Input & Form Enhancements */
 /* ============================================ */
 
-/* Enhanced focus visibility */
+/* Enhanced focus visibility - WCAG 2.1 compliant */
 *:focus-visible {
+  outline: 2px solid var(--as24-blue, #003281);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Remove default focus for mouse users */
+*:focus:not(:focus-visible) {
   outline: none;
-  ring: 2px;
-  ring-color: #0ea5e9;
-  ring-offset: 2px;
+}
+
+/* Ensure minimum touch target size (44x44px) */
+button,
+[role="button"],
+a,
+input[type="checkbox"],
+input[type="radio"],
+select {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Exception for inline links */
+a:not([class*="btn"]):not([class*="button"]) {
+  min-height: auto;
+  min-width: auto;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --as24-blue: #000066;
+    --as24-orange: #cc7700;
+  }
+  
+  .border-gray-200,
+  .border-gray-300 {
+    border-width: 2px !important;
+  }
+}
+
+/* ============================================ */
+/* Accessibility Utilities */
+/* ============================================ */
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Not screen reader only (visible on focus) */
+.not-sr-only {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Focus within for parent elements */
+.focus-within\:ring-2:focus-within {
+  box-shadow: 0 0 0 2px var(--as24-blue, #003281);
 }
 
 /* Skip to content link */

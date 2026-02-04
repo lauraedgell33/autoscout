@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { Package, TrendingUp, DollarSign, Users, Plus } from 'lucide-react';
@@ -25,23 +25,24 @@ function DealerDashboardContent() {
   });
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
-
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       // Use apiClient instead of direct fetch
       const data = await apiClient.get('/dealer/stats') as typeof stats;
       setStats(data);
       toast.success('Dashboard loaded successfully!');
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
       console.error('Error fetching dashboard data:', error);
-      toast.error(error.response?.data?.message || 'Failed to load dashboard data');
+      toast.error(err.response?.data?.message || 'Failed to load dashboard data');
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, [fetchDashboardData]);
 
   if (loading) {
     return (

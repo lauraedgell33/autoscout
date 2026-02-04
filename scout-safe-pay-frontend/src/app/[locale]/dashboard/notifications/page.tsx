@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link } from '@/i18n/routing'
 import { notificationService, type Notification, type NotificationPreferences } from '@/lib/api/notifications'
 import { Card } from '@/components/ui/card'
@@ -15,11 +15,7 @@ export default function NotificationsPage() {
   const [showPreferences, setShowPreferences] = useState(false)
   const [filter, setFilter] = useState<'all' | 'unread'>('all')
 
-  useEffect(() => {
-    loadData()
-  }, [filter])
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       setLoading(true)
       const [notifs, prefs] = await Promise.all([
@@ -33,7 +29,11 @@ export default function NotificationsPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [filter])
+
+  useEffect(() => {
+    loadData()
+  }, [loadData])
 
   const handleMarkAsRead = async (id: string) => {
     try {

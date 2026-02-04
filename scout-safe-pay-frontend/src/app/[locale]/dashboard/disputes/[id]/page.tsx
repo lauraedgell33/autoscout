@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { verificationService, Dispute } from '@/lib/api/verification'
 import { useRouter, useParams } from 'next/navigation'
 
@@ -17,20 +17,21 @@ export default function DisputeDetailsPage() {
   const [sending, setSending] = useState(false)
   const [success, setSuccess] = useState('')
 
-  useEffect(() => {
-    loadDispute()
-  }, [disputeId])
-
-  const loadDispute = async () => {
+  const loadDispute = useCallback(async () => {
     try {
       const data = await verificationService.getDisputeById(disputeId)
       setDispute(data)
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to load dispute')
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } } }
+      setError(error.response?.data?.message || 'Failed to load dispute')
     } finally {
       setLoading(false)
     }
-  }
+  }, [disputeId])
+
+  useEffect(() => {
+    loadDispute()
+  }, [loadDispute])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || [])
@@ -56,8 +57,9 @@ export default function DisputeDetailsPage() {
       setAttachments([])
       // Reload dispute to show new message
       await loadDispute()
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to send message')
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } } }
+      setError(error.response?.data?.message || 'Failed to send message')
     } finally {
       setSending(false)
     }

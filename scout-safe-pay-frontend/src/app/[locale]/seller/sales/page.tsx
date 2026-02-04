@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { Search, Filter, Eye, Package } from 'lucide-react';
@@ -17,17 +17,13 @@ export default function SellerSalesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
 
-  useEffect(() => {
-    fetchSales();
-  }, [statusFilter]);
-
-  const fetchSales = async () => {
+  const fetchSales = useCallback(async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const params = new URLSearchParams();
-      if (statusFilter !== 'all') params.append('status', statusFilter);
+      const urlParams = new URLSearchParams();
+      if (statusFilter !== 'all') urlParams.append('status', statusFilter);
       
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seller/sales?${params}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seller/sales?${urlParams}`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();
@@ -37,7 +33,11 @@ export default function SellerSalesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [statusFilter]);
+
+  useEffect(() => {
+    fetchSales();
+  }, [fetchSales]);
 
   const filteredSales = sales.filter(sale =>
     searchQuery === '' ||

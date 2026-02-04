@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import PaymentInstructions from '@/components/orders/PaymentInstructions';
 import UploadSignedContract from '@/components/orders/UploadSignedContract';
@@ -54,13 +54,7 @@ export default function OrderPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (orderId) {
-      fetchTransaction();
-    }
-  }, [orderId]);
-
-  const fetchTransaction = async () => {
+  const fetchTransaction = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch(`/api/transactions/${orderId}`, {
@@ -80,7 +74,13 @@ export default function OrderPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [orderId]);
+
+  useEffect(() => {
+    if (orderId) {
+      fetchTransaction();
+    }
+  }, [orderId, fetchTransaction]);
 
   const handleContractUploaded = () => {
     // Refresh transaction to get updated status and payment instructions

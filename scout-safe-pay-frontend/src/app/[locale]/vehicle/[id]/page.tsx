@@ -41,7 +41,7 @@ export default function VehicleDetailsPage() {
         
         const data = await vehicleService.getVehicle(vehicleId)
         setVehicle(data)
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Failed to fetch vehicle:', err)
         setError(t('error_loading'))
       } finally {
@@ -52,7 +52,7 @@ export default function VehicleDetailsPage() {
     if (vehicleId) {
       fetchVehicle()
     }
-  }, [vehicleId])
+  }, [vehicleId, t])
 
   const handleBuyNow = async () => {
     if (!vehicle) return

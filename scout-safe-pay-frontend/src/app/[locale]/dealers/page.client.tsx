@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Search, MapPin, Building2, Star, Users, Car, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -26,10 +26,10 @@ export default function DealersPageClient() {
   const [totalPages, setTotalPages] = useState(1)
   const [cities, setCities] = useState<string[]>([])
 
-  const fetchDealers = async (page = 1) => {
+  const fetchDealers = useCallback(async (page = 1) => {
     try {
       setLoading(true)
-      const params: any = { page }
+      const params: Record<string, string | number> = { page }
       if (searchTerm) params.search = searchTerm
       if (selectedCity) params.city = selectedCity
       if (selectedType) params.type = selectedType
@@ -47,11 +47,11 @@ export default function DealersPageClient() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [searchTerm, selectedCity, selectedType])
 
   useEffect(() => {
     fetchDealers()
-  }, [searchTerm, selectedCity, selectedType])
+  }, [fetchDealers])
 
   const handleSearch = () => {
     setCurrentPage(1)

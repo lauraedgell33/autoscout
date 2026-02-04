@@ -253,7 +253,8 @@ export const TwoColumnLayout: React.FC<TwoColumnLayoutProps> = ({
   );
 };
 
-export default {
+// Named export object for convenience (can also import individual components)
+export const LayoutComponents = {
   PageContainer,
   SectionLayout,
   CardGrid,
@@ -263,3 +264,5 @@ export default {
   LoadingState,
   TwoColumnLayout,
 };
+
+export default LayoutComponents;

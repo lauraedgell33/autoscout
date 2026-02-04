@@ -5,7 +5,7 @@
  * Displays all user transactions with status and actions
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import {
   Download,
@@ -72,29 +72,29 @@ export const PaymentHistory: React.FC<PaymentHistoryProps> = ({
   const { success, error: showError } = useNotification();
 
   // Fetch payment history
+  const fetchPayments = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const endpoint = userId
+        ? `/api/payments/history?userId=${userId}&limit=${limit}`
+        : `/api/payments/history?limit=${limit}`;
+
+      const response = await apiClient.get(endpoint);
+      setPayments((response as { data?: { payments?: Payment[] } }).data?.payments || []);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to load payments';
+      setError(message);
+      showError(message, { title: 'Error Loading Payments' });
+    } finally {
+      setLoading(false);
+    }
+  }, [userId, limit, showError]);
+
   useEffect(() => {
-    const fetchPayments = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const endpoint = userId
-          ? `/api/payments/history?userId=${userId}&limit=${limit}`
-          : `/api/payments/history?limit=${limit}`;
-
-        const response = await apiClient.get(endpoint);
-        setPayments((response as any).data?.payments || []);
-      } catch (err) {
-        const message = err instanceof Error ? err.message : 'Failed to load payments';
-        setError(message);
-        showError(message, { title: 'Error Loading Payments' });
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchPayments();
-  }, [userId, limit]);
+  }, [fetchPayments]);
 
   // Filter payments based on search and status
   useEffect(() => {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { BarChart, TrendingUp, DollarSign, Package, Download } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -16,11 +16,7 @@ export default function DealerAnalyticsPage() {
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState('monthly');
 
-  useEffect(() => {
-    fetchAnalytics();
-  }, [period]);
-
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     try {
       // Use apiClient instead of direct fetch
       const data = await apiClient.get(`/dealer/analytics?period=${period}`) as typeof analytics;
@@ -30,7 +26,11 @@ export default function DealerAnalyticsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [period]);
+
+  useEffect(() => {
+    fetchAnalytics();
+  }, [fetchAnalytics]);
 
   if (loading) {
     return <div className="flex items-center justify-center min-h-screen">
