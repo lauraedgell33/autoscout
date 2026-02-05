@@ -75,7 +75,7 @@ export default function CameraCapture({ onCapture, onClose, mode, title }: Camer
   }, [isFrontCamera, t])
 
   useEffect(() => {
-    // eslint-disable-next-line react-compiler/react-compiler -- Camera initialization on mount
+    // Note: Camera initialization on mount
     startCamera()
     return () => {
       stopCamera()

@@ -132,6 +132,13 @@ class Vehicle extends Model
                     return [];
                 }
                 return array_map(fn($path) => $this->formatImagePath($path), $arr);
+            },
+            set: function ($value) {
+                // Convert array to JSON string for database storage
+                if (is_array($value)) {
+                    return json_encode($value);
+                }
+                return $value;
             }
         );
     }

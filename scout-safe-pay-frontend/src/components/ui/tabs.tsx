@@ -23,6 +23,11 @@ const useTabsContext = () => {
   return context;
 };
 
+// Hook that allows optional context (for backwards compatibility)
+const useOptionalTabsContext = () => {
+  return useContext(TabsContext);
+};
+
 // Main Tabs container
 interface TabsProps {
   children: React.ReactNode;
@@ -130,13 +135,8 @@ export const TabsTrigger: React.FC<TabsTriggerProps> = ({
   active: activeProp,
   onClick: onClickProp,
 }) => {
-  // Try to get context, but allow standalone usage for backwards compatibility
-  let contextValue: TabsContextType | null = null;
-  try {
-    contextValue = useTabsContext();
-  } catch {
-    // Component is used outside Tabs context (legacy usage)
-  }
+  // Use optional context hook for backwards compatibility
+  const contextValue = useOptionalTabsContext();
   
   const activeTab = contextValue?.activeTab;
   const setActiveTab = contextValue?.setActiveTab;
@@ -262,13 +262,8 @@ export const TabsContent: React.FC<TabsContentProps> = ({
   forceMount = false,
   active: activeProp,
 }) => {
-  // Try to get context, but allow standalone usage for backwards compatibility
-  let contextValue: TabsContextType | null = null;
-  try {
-    contextValue = useTabsContext();
-  } catch {
-    // Component is used outside Tabs context (legacy usage)
-  }
+  // Use optional context hook for backwards compatibility
+  const contextValue = useOptionalTabsContext();
   
   const activeTab = contextValue?.activeTab;
   const tabsId = contextValue?.tabsId || 'tabs';

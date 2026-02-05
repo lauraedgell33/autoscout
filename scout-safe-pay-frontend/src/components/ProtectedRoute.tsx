@@ -15,7 +15,7 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
   const { isAuthenticated, user, token } = useAuthStore();
 
   useEffect(() => {
-    // eslint-disable-next-line react-compiler/react-compiler -- Intentional hydration pattern
+    // Note: Intentional hydration pattern
     setIsMounted(true);
   }, []);
 

@@ -68,17 +68,20 @@ export const Select = ({
     setItems(prev => prev.filter(v => v !== itemValue));
   }, []);
 
-  // Reset active index when opening
-  useEffect(() => {
+  // Sync active index based on dropdown open state
+  // This is intentional: we need to update activeIndex when dropdown opens/closes
+  const syncActiveIndex = useCallback(() => {
     if (open) {
       const currentIndex = items.indexOf(value);
-      // eslint-disable-next-line react-compiler/react-compiler -- Sync activeIndex based on dropdown state
       setActiveIndex(currentIndex >= 0 ? currentIndex : 0);
     } else {
-      // eslint-disable-next-line react-compiler/react-compiler -- Reset activeIndex when closing
       setActiveIndex(-1);
     }
   }, [open, items, value]);
+
+  useEffect(() => {
+    syncActiveIndex();
+  }, [syncActiveIndex]);
 
   return (
     <SelectContext.Provider value={{ 

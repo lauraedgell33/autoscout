@@ -21,7 +21,8 @@ import {
 } from 'lucide-react';
 
 export default function VehicleDetailsPage() {
-  const t = useTranslations()
+  const t = useTranslations('vehicle')
+  const tCommon = useTranslations('common')
   const { formatPrice } = useCurrency()
   const params = useParams()
   const router = useRouter()
@@ -73,7 +74,7 @@ export default function VehicleDetailsPage() {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-accent-500 mb-4"></div>
-          <p className="text-sm text-gray-600">{t('common.loading')}</p>
+          <p className="text-sm text-gray-600">{tCommon('loading')}</p>
         </div>
       </div>
     )

@@ -10,7 +10,7 @@ export function ThemeToggle() {
 
   // Avoid hydration mismatch
   useEffect(() => {
-    // eslint-disable-next-line react-compiler/react-compiler -- Intentional hydration pattern
+    // Note: Intentional hydration pattern
     setMounted(true);
   }, []);
 
@@ -57,7 +57,7 @@ export function ThemeDropdown() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // eslint-disable-next-line react-compiler/react-compiler -- Intentional hydration pattern
+    // Note: Intentional hydration pattern
     setMounted(true);
   }, []);
 
