@@ -208,11 +208,15 @@ class VehicleInfolist
 
                 ImageEntry::make('primary_image')
                     ->label('Primary Image')
+                    ->disk('public')
+                    ->visibility('public')
                     ->defaultImageUrl(url('/images/placeholder-vehicle.png'))
                     ->size(300),
 
                 ImageEntry::make('images')
                     ->label('Image Gallery')
+                    ->disk('public')
+                    ->visibility('public')
                     ->columnSpanFull()
                     ->limit(10)
                     ->size(150),

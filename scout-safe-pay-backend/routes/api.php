@@ -56,6 +56,10 @@ Route::middleware('rate.limit.ip:5,1')->post('/login', [AuthController::class, '
 // Email verification (public - token based)
 Route::post('/verify-email', [AuthController::class, 'verifyEmail']);
 
+// Password reset (public with rate limiting)
+Route::middleware('rate.limit.ip:5,1')->post('/password/email', [AuthController::class, 'forgotPassword']);
+Route::middleware('rate.limit.ip:5,1')->post('/password/reset', [AuthController::class, 'resetPassword']);
+
 // Error logging routes (FREE Sentry alternative)
 Route::post('/errors', [ErrorLogController::class, 'log']);
 Route::post('/security/violations', [ErrorLogController::class, 'logViolation']);

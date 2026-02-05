@@ -49,7 +49,7 @@ class Vehicle extends Model
         'latitude' => 'decimal:8',
         'longitude' => 'decimal:8',
         'autoscout_data' => 'array',
-        'images' => 'array',
+        // Note: 'images' cast removed - handled by custom accessor to ensure proper formatting
     ];
 
     public function dealer(): BelongsTo
@@ -122,7 +122,17 @@ class Vehicle extends Model
     protected function images(): \Illuminate\Database\Eloquent\Casts\Attribute
     {
         return \Illuminate\Database\Eloquent\Casts\Attribute::make(
-            get: fn($value) => $value ? array_map(fn($path) => $this->formatImagePath($path), $value) : []
+            get: function ($value) {
+                if (!$value) {
+                    return [];
+                }
+                // Handle both JSON string (raw from DB) and already-decoded array
+                $arr = is_string($value) ? json_decode($value, true) : $value;
+                if (!is_array($arr)) {
+                    return [];
+                }
+                return array_map(fn($path) => $this->formatImagePath($path), $arr);
+            }
         );
     }
 

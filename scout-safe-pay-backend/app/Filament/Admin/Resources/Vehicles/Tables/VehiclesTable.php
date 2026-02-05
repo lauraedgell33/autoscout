@@ -24,8 +24,11 @@ class VehiclesTable
                 ImageColumn::make('primary_image')
                     ->label('Image')
                     ->circular()
+                    ->disk('public')
+                    ->visibility('public')
                     ->defaultImageUrl(url('/images/placeholder-vehicle.png'))
-                    ->size(60),
+                    ->size(60)
+                    ->state(fn ($record) => $record->getAttributes()['primary_image'] ?? null),
                 
                 TextColumn::make('make')
                     ->label('Make')

@@ -14,7 +14,7 @@ interface Vehicle {
   make: string;
   model: string;
   year: number;
-  price: number;
+  price: string | number;
   currency: string;
   primary_image?: string;
   status: string;
@@ -45,7 +45,8 @@ export default function VehicleContactPage() {
         }
 
         const data = await response.json();
-        setVehicle(data.data || data);
+        // API returns { vehicle: {...} } for single vehicle
+        setVehicle(data.vehicle || data.data || data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load vehicle');
       } finally {
@@ -146,7 +147,7 @@ export default function VehicleContactPage() {
                   {new Intl.NumberFormat(locale, {
                     style: 'currency',
                     currency: vehicle.currency || 'EUR',
-                  }).format(vehicle.price)}
+                  }).format(typeof vehicle.price === 'string' ? parseFloat(vehicle.price) : vehicle.price)}
                 </span>
               </div>
               {vehicle.status && (
