@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
 import { useAuth } from '@/contexts/AuthContext'
-import { api } from '@/lib/api'
+import { apiClient } from '@/lib/api'
 import { Shield, Mail, Loader2, CheckCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
 
@@ -17,7 +17,7 @@ export default function VerifyEmailPendingPage() {
   const handleResend = async () => {
     setResending(true)
     try {
-      await api.post('/resend-verification-email')
+      await apiClient.post('/resend-verification-email')
       setResent(true)
       toast.success('Verification email sent!')
     } catch (error: any) {

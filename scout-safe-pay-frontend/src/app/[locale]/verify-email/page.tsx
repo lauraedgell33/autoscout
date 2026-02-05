@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
-import { api } from '@/lib/api'
+import { apiClient } from '@/lib/api'
 import { useAuthStore } from '@/store/auth-store'
 import { Shield, CheckCircle, XCircle, Loader2 } from 'lucide-react'
 
@@ -29,21 +29,21 @@ export default function VerifyEmailPage() {
       }
       
       try {
-        const response = await api.post('/verify-email', { token, email })
+        const response = await apiClient.post<{ token?: string; user?: any; message?: string }>('/verify-email', { token, email })
         
-        if (response.data.token) {
+        if (response.token) {
           // Store the new token and user
-          setToken(response.data.token)
-          setUser(response.data.user)
-          localStorage.setItem('auth_token', response.data.token)
+          setToken(response.token)
+          setUser(response.user)
+          localStorage.setItem('auth_token', response.token)
         }
         
         setStatus('success')
-        setMessage(response.data.message || 'Your email has been verified successfully!')
+        setMessage(response.message || 'Your email has been verified successfully!')
         
         // Redirect to dashboard after 3 seconds
         setTimeout(() => {
-          const userType = response.data.user?.user_type || 'buyer'
+          const userType = response.user?.user_type || 'buyer'
           if (userType === 'seller') {
             router.push('/seller/dashboard')
           } else {

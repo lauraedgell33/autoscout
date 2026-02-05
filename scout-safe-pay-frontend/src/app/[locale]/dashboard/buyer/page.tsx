@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import DashboardLayout from '@/components/DashboardLayout'
 import { useAuth } from '@/contexts/AuthContext'
-import { api } from '@/lib/api'
+import { apiClient } from '@/lib/api'
 
 interface DashboardStats {
   total_balance: string
@@ -38,18 +38,18 @@ export default function BuyerDashboardPage() {
     const fetchDashboardData = async () => {
       try {
         // Fetch dashboard stats
-        const dashboardRes = await api.get('/dashboard')
-        if (dashboardRes.data.stats) {
-          setStats(dashboardRes.data.stats)
+        const dashboardRes = await apiClient.get<{ stats: DashboardStats; recent_transactions: RecentTransaction[] }>('/dashboard')
+        if (dashboardRes.stats) {
+          setStats(dashboardRes.stats)
         }
-        if (dashboardRes.data.recent_transactions) {
-          setRecentTransactions(dashboardRes.data.recent_transactions)
+        if (dashboardRes.recent_transactions) {
+          setRecentTransactions(dashboardRes.recent_transactions)
         }
         
         // Fetch favorites count
         try {
-          const favRes = await api.get('/favorites')
-          const favData = favRes.data.data || favRes.data || []
+          const favRes = await apiClient.get<{ data: any[] } | any[]>('/favorites')
+          const favData = Array.isArray(favRes) ? favRes : (favRes.data || [])
           setFavorites(Array.isArray(favData) ? favData.length : 0)
         } catch {
           setFavorites(0)
