@@ -183,7 +183,8 @@ class TransactionsTable
                     ->label('View Invoice')
                     ->icon('heroicon-o-document-text')
                     ->color('gray')
-                    ->url(fn ($record) => route('filament.admin.resources.invoices.view', $record->invoice_id)),
+                    ->visible(fn ($record) => $record->invoice_id !== null)
+                    ->url(fn ($record) => $record->invoice_id ? route('filament.admin.resources.invoices.view', $record->invoice_id) : null),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
