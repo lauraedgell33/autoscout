@@ -14,6 +14,8 @@ import { logger } from '@/utils/logger'
 import { getImageUrl } from '@/lib/utils'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import CameraCapture from '@/components/CameraCapture'
+import toast from 'react-hot-toast'
+import { AlertTriangle, XCircle } from 'lucide-react'
 
 function CheckoutPageContent() {
   const t = useTranslations('checkout')
@@ -27,6 +29,7 @@ function CheckoutPageContent() {
   const [vehicle, setVehicle] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
+  const [unavailable, setUnavailable] = useState(false)
   const [currentStep, setCurrentStep] = useState(1)
   const [idImagePreview, setIdImagePreview] = useState<string | null>(null)
   const [selfiePreview, setSelfiePreview] = useState<string | null>(null)
@@ -63,9 +66,36 @@ function CheckoutPageContent() {
       try {
         const data = await vehicleService.getById(vehicleId)
         setVehicle(data)
+        
+        // Check if vehicle is available for purchase
+        if (data.status !== 'active') {
+          setUnavailable(true)
+          toast.custom((toastObj) => (
+            <div className="bg-white shadow-xl rounded-2xl p-4 border border-red-100 max-w-md flex items-start gap-3">
+              <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <XCircle className="w-5 h-5 text-red-500" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-gray-900">Vehicle Not Available</h4>
+                <p className="text-sm text-gray-600 mt-1">
+                  This vehicle is no longer available for purchase. It may have been sold or reserved.
+                </p>
+                <button
+                  onClick={() => {
+                    toast.dismiss(toastObj.id)
+                    router.push('/marketplace')
+                  }}
+                  className="mt-3 text-sm font-medium text-accent-500 hover:text-accent-600"
+                >
+                  Browse Other Vehicles →
+                </button>
+              </div>
+            </div>
+          ), { duration: 10000 })
+        }
       } catch (error) {
         console.error('Failed to load vehicle:', error)
-        alert(t('vehicle_not_found'))
+        toast.error(t('vehicle_not_found'))
         router.push('/marketplace')
       } finally {
         setLoading(false)
@@ -214,6 +244,35 @@ function CheckoutPageContent() {
       </div>
     </div>
   )
+  
+  if (unavailable) return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 max-w-md text-center">
+        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <XCircle className="w-8 h-8 text-red-500" />
+        </div>
+        <h2 className="text-xl font-bold text-gray-900 mb-2">Vehicle Not Available</h2>
+        <p className="text-gray-600 mb-6">
+          This vehicle is no longer available for purchase. It may have been sold, reserved, or removed from the marketplace.
+        </p>
+        <div className="space-y-3">
+          <Link
+            href="/marketplace"
+            className="block w-full bg-accent-500 hover:bg-accent-600 text-white py-3 rounded-xl font-semibold transition"
+          >
+            Browse Other Vehicles
+          </Link>
+          <Link
+            href={`/vehicle/${vehicleId}`}
+            className="block w-full border border-gray-200 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-50 transition"
+          >
+            Back to Vehicle Details
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+  
   if (!vehicle) return null
 
   const steps = isDealer 

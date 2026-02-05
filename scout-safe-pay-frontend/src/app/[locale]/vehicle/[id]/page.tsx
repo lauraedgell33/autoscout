@@ -139,7 +139,7 @@ export default function VehicleDetailsPage() {
                 <div className="absolute top-3 left-3">
                   <Badge className="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 text-xs flex items-center gap-1.5">
                     <Shield className="w-3.5 h-3.5" />
-                    {t('vehicle.safetrade_protected')}
+                    {t('safetrade_protected')}
                   </Badge>
                 </div>
                 
@@ -265,7 +265,7 @@ export default function VehicleDetailsPage() {
               <Card className="p-4 sm:p-6 mb-6 rounded-2xl border border-gray-100">
                 <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
                   <Eye className="w-4 h-4 text-accent-500" />
-                  {t('vehicle.description')}
+                  {t('description')}
                 </h2>
                 <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{vehicle.description}</p>
               </Card>
@@ -276,7 +276,7 @@ export default function VehicleDetailsPage() {
               <Card className="p-4 sm:p-6 mb-6 rounded-2xl border border-gray-100">
                 <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-accent-500" />
-                  {t('vehicle.location') || 'Location'}
+                  {t('location')}
                 </h2>
                 <VehicleMap
                   latitude={vehicle.latitude}
@@ -295,10 +295,10 @@ export default function VehicleDetailsPage() {
 
             {/* Technical Specifications */}
             <Card className="p-4 sm:p-6 rounded-2xl border border-gray-100">
-              <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-                <Settings className="w-4 h-4 text-accent-500" />
-                {t('vehicle.overview')}
-              </h2>
+                <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                  <Settings className="w-4 h-4 text-accent-500" />
+                  {t('overview')}
+                </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {[
                   { label: t('fields.make'), value: vehicle.make },
@@ -343,7 +343,7 @@ export default function VehicleDetailsPage() {
                 ) : (
                   <>
                     <ShoppingCart className="w-4 h-4" />
-                    {t('vehicle.buy_now')}
+                    {t('buy_now')}
                   </>
                 )}
               </Button>
@@ -354,7 +354,7 @@ export default function VehicleDetailsPage() {
                   className="w-full border border-gray-200 text-gray-700 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-50 transition mb-5"
                 >
                   <Phone className="w-4 h-4 mr-2" />
-                  {t('vehicle.contact_seller')}
+                  {t('contact_seller')}
                 </Button>
               </Link>
 
@@ -453,28 +453,28 @@ export default function VehicleDetailsPage() {
               <div className="border-t border-gray-100 pt-5">
                 <h3 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
                   <Shield className="w-4 h-4 text-green-500" />
-                  {t('vehicle.safetrade_protection')}
+                  {t('safetrade_protection')}
                 </h3>
                 <ul className="space-y-2 text-xs">
                   <li className="flex items-start gap-2 p-2 bg-green-50 rounded-lg">
                     <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">{t('vehicle.benefits.escrow')}</span>
+                    <span className="text-gray-700">{t('benefits.escrow')}</span>
                   </li>
                   <li className="flex items-start gap-2 p-2 bg-green-50 rounded-lg">
                     <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">{t('vehicle.benefits.verified')}</span>
+                    <span className="text-gray-700">{t('benefits.verified')}</span>
                   </li>
                   <li className="flex items-start gap-2 p-2 bg-green-50 rounded-lg">
                     <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">{t('vehicle.benefits.inspection')}</span>
+                    <span className="text-gray-700">{t('benefits.inspection')}</span>
                   </li>
                   <li className="flex items-start gap-2 p-2 bg-green-50 rounded-lg">
                     <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">{t('vehicle.benefits.guarantee')}</span>
+                    <span className="text-gray-700">{t('benefits.guarantee')}</span>
                   </li>
                   <li className="flex items-start gap-2 p-2 bg-green-50 rounded-lg">
                     <CheckCircle className="w-3.5 h-3.5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">{t('vehicle.benefits.support')}</span>
+                    <span className="text-gray-700">{t('benefits.support')}</span>
                   </li>
                 </ul>
               </div>

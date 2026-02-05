@@ -49,7 +49,7 @@ class Vehicle extends Model
         'latitude' => 'decimal:8',
         'longitude' => 'decimal:8',
         'autoscout_data' => 'array',
-        // Note: 'images' cast removed - handled by custom accessor to ensure proper formatting
+        'images' => 'array',
     ];
 
     public function dealer(): BelongsTo
@@ -116,31 +116,21 @@ class Vehicle extends Model
     }
 
     /**
-     * Get the images with /storage/ prefix for API responses
-     * Ensures image paths are properly formatted for frontend consumption
+     * Get formatted images with /storage/ prefix for API responses
+     * Note: Uses a different attribute name to not conflict with the 'images' cast
      */
-    protected function images(): \Illuminate\Database\Eloquent\Casts\Attribute
+    public function getFormattedImagesAttribute(): array
     {
-        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
-            get: function ($value) {
-                if (!$value) {
-                    return [];
-                }
-                // Handle both JSON string (raw from DB) and already-decoded array
-                $arr = is_string($value) ? json_decode($value, true) : $value;
-                if (!is_array($arr)) {
-                    return [];
-                }
-                return array_map(fn($path) => $this->formatImagePath($path), $arr);
-            },
-            set: function ($value) {
-                // Convert array to JSON string for database storage
-                if (is_array($value)) {
-                    return json_encode($value);
-                }
-                return $value;
-            }
-        );
+        $value = $this->attributes['images'] ?? null;
+        if (!$value) {
+            return [];
+        }
+        // Handle both JSON string (raw from DB) and already-decoded array
+        $arr = is_string($value) ? json_decode($value, true) : $value;
+        if (!is_array($arr)) {
+            return [];
+        }
+        return array_map(fn($path) => $this->formatImagePath($path), $arr);
     }
 
     /**

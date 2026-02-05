@@ -1081,7 +1081,8 @@
     "from": "from",
     "to": "to",
     "km": "km",
-    "per_page": "per page"
+    "per_page": "per page",
+    "year": "Year"
   },
   "footer": {
     "about": "About",
@@ -1534,6 +1535,16 @@
       "error_password_mismatch": "Passwords do not match",
       "error_password_length": "Password must be at least 8 characters",
       "error_registration_failed": "Registration failed. Please try again."
+    },
+    "verify_email": {
+      "pending_title": "Verify Your Email",
+      "pending_message": "We've sent a verification email to:",
+      "pending_instructions": "Please click the link in the email to verify your account. The link will expire in 24 hours.",
+      "resend_button": "Resend Verification Email",
+      "resending": "Sending...",
+      "resent_success": "Email sent! Check your inbox.",
+      "go_home": "Go to Homepage",
+      "spam_notice": "Didn't receive the email? Check your spam folder."
     }
   },
   "pages": {
