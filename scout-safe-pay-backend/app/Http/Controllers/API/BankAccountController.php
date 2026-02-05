@@ -13,11 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class BankAccountController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
-
     /**
      * Display user's bank accounts
      */
