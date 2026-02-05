@@ -45,12 +45,22 @@ class TransactionsTable
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'gray',
+                        'awaiting_payment' => 'warning',
                         'payment_pending' => 'warning',
-                        'payment_verified' => 'info',
+                        'payment_submitted' => 'info',
+                        'payment_received' => 'info',
+                        'payment_verified' => 'success',
+                        'inspection_scheduled' => 'info',
+                        'inspection_passed' => 'success',
+                        'inspection_failed' => 'danger',
+                        'ownership_transferred' => 'success',
                         'completed' => 'success',
                         'cancelled' => 'danger',
+                        'disputed' => 'danger',
+                        'refunded' => 'warning',
                         default => 'gray',
-                    }),
+                    })
+                    ->formatStateUsing(fn (string $state): string => ucwords(str_replace('_', ' ', $state))),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable(),
@@ -114,16 +124,95 @@ class TransactionsTable
                 TrashedFilter::make(),
             ])
             ->actions([
+                // Approve pending transaction - mark as awaiting payment
+                Action::make('approve_transaction')
+                    ->label('Approve')
+                    ->icon('heroicon-o-check-circle')
+                    ->color('success')
+                    ->visible(fn ($record) => $record->status === 'pending')
+                    ->requiresConfirmation()
+                    ->modalHeading('Approve Transaction')
+                    ->modalDescription('Approve this transaction and notify buyer to make payment.')
+                    ->action(function ($record) {
+                        $record->update(['status' => 'awaiting_payment']);
+                        
+                        Notification::make()
+                            ->title('Transaction Approved')
+                            ->body('Buyer has been notified to make payment.')
+                            ->success()
+                            ->send();
+                    }),
+
+                // Reject pending transaction
+                Action::make('reject_transaction')
+                    ->label('Reject')
+                    ->icon('heroicon-o-x-circle')
+                    ->color('danger')
+                    ->visible(fn ($record) => $record->status === 'pending')
+                    ->requiresConfirmation()
+                    ->modalHeading('Reject Transaction')
+                    ->modalDescription('Reject this transaction request.')
+                    ->form([
+                        \Filament\Forms\Components\Textarea::make('rejection_reason')
+                            ->label('Rejection Reason')
+                            ->required()
+                            ->placeholder('Enter the reason for rejection...'),
+                    ])
+                    ->action(function ($record, array $data) {
+                        $record->update([
+                            'status' => 'cancelled',
+                            'notes' => 'Rejected: ' . $data['rejection_reason'],
+                            'cancelled_at' => now(),
+                        ]);
+                        
+                        // Release vehicle back to active
+                        if ($record->vehicle) {
+                            $record->vehicle->update(['status' => 'active']);
+                        }
+                        
+                        Notification::make()
+                            ->title('Transaction Rejected')
+                            ->body('Transaction has been rejected.')
+                            ->warning()
+                            ->send();
+                    }),
+
+                // Confirm payment received
+                Action::make('confirm_payment')
+                    ->label('Confirm Payment')
+                    ->icon('heroicon-o-banknotes')
+                    ->color('info')
+                    ->visible(fn ($record) => in_array($record->status, ['awaiting_payment', 'payment_submitted']))
+                    ->requiresConfirmation()
+                    ->modalHeading('Confirm Payment Received')
+                    ->modalDescription('Confirm that you have received the bank transfer from the buyer.')
+                    ->action(function ($record) {
+                        $record->update([
+                            'status' => 'payment_received',
+                            'payment_confirmed_at' => now(),
+                        ]);
+                        
+                        Notification::make()
+                            ->title('Payment Confirmed')
+                            ->body('Payment has been marked as received.')
+                            ->success()
+                            ->send();
+                    }),
+
+                // Verify payment (after confirmation)
                 Action::make('verify_payment')
                     ->label('Verify Payment')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
-                    ->visible(fn ($record) => $record->status === 'payment_pending')
+                    ->visible(fn ($record) => in_array($record->status, ['payment_received', 'payment_pending']))
                     ->requiresConfirmation()
                     ->modalHeading('Verify Bank Transfer Payment')
-                    ->modalDescription('Confirm that you have received the bank transfer from the buyer.')
+                    ->modalDescription('Verify that the payment amount is correct and complete.')
                     ->action(function ($record) {
-                        $record->update(['status' => 'payment_verified']);
+                        $record->update([
+                            'status' => 'payment_verified',
+                            'payment_verified_at' => now(),
+                        ]);
                         
                         Notification::make()
                             ->title('Payment Verified')
@@ -131,9 +220,10 @@ class TransactionsTable
                             ->send();
                     }),
                     
+                // Release funds to seller
                 Action::make('release_funds')
                     ->label('Release to Seller')
-                    ->icon('heroicon-o-banknotes')
+                    ->icon('heroicon-o-paper-airplane')
                     ->color('primary')
                     ->visible(fn ($record) => $record->status === 'payment_verified')
                     ->requiresConfirmation()
@@ -145,6 +235,11 @@ class TransactionsTable
                             'completed_at' => now(),
                         ]);
                         
+                        // Mark vehicle as sold
+                        if ($record->vehicle) {
+                            $record->vehicle->update(['status' => 'sold']);
+                        }
+                        
                         Notification::make()
                             ->title('Funds Released')
                             ->body('Funds have been released to the seller.')
@@ -152,11 +247,12 @@ class TransactionsTable
                             ->send();
                     }),
                     
+                // Refund buyer
                 Action::make('refund')
-                    ->label('Refund Buyer')
+                    ->label('Refund')
                     ->icon('heroicon-o-arrow-uturn-left')
                     ->color('warning')
-                    ->visible(fn ($record) => in_array($record->status, ['payment_verified', 'payment_pending']))
+                    ->visible(fn ($record) => in_array($record->status, ['payment_verified', 'payment_received', 'payment_pending', 'awaiting_payment']))
                     ->requiresConfirmation()
                     ->modalHeading('Refund Buyer')
                     ->modalDescription('Return the escrow funds to the buyer. This will cancel the transaction.')
@@ -168,19 +264,25 @@ class TransactionsTable
                     ])
                     ->action(function ($record, array $data) {
                         $record->update([
-                            'status' => 'cancelled',
+                            'status' => 'refunded',
                             'notes' => 'Refund: ' . $data['refund_reason'],
                         ]);
                         
+                        // Release vehicle back to active
+                        if ($record->vehicle) {
+                            $record->vehicle->update(['status' => 'active']);
+                        }
+                        
                         Notification::make()
                             ->title('Refund Processed')
-                            ->body('Transaction cancelled and buyer refunded.')
+                            ->body('Transaction refunded and vehicle released.')
                             ->success()
                             ->send();
                     }),
                     
+                // View invoice
                 Action::make('view_invoice')
-                    ->label('View Invoice')
+                    ->label('Invoice')
                     ->icon('heroicon-o-document-text')
                     ->color('gray')
                     ->visible(fn ($record) => $record->invoice_id !== null)
