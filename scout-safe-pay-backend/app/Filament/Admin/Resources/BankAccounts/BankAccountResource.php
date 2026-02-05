@@ -17,7 +17,8 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Schemas\Components;
+use Filament\Forms\Components as FormComponents;
+use Filament\Schemas\Components as SchemaComponents;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -60,9 +61,9 @@ class BankAccountResource extends Resource
     {
         return $schema
             ->schema([
-                Components\Section::make('Account Information')
+                SchemaComponents\Section::make('Account Information')
                     ->schema([
-                        Components\Select::make('accountable_type')
+                        FormComponents\Select::make('accountable_type')
                             ->label('Account Owner Type')
                             ->options([
                                 'App\Models\User' => 'User',
@@ -72,7 +73,7 @@ class BankAccountResource extends Resource
                             ->reactive()
                             ->searchable(),
 
-                        Components\Select::make('accountable_id')
+                        FormComponents\Select::make('accountable_id')
                             ->label('Account Owner')
                             ->options(function (callable $get) {
                                 $type = $get('accountable_type');
@@ -86,29 +87,29 @@ class BankAccountResource extends Resource
                             ->required()
                             ->searchable(),
 
-                        Components\TextInput::make('account_holder_name')
+                        FormComponents\TextInput::make('account_holder_name')
                             ->label('Account Holder Name')
                             ->required()
                             ->maxLength(255),
 
-                        Components\TextInput::make('iban')
+                        FormComponents\TextInput::make('iban')
                             ->label('IBAN')
                             ->required()
                             ->maxLength(34)
                             ->placeholder('DE89370400440532013000')
                             ->helperText('Will be encrypted in database'),
 
-                        Components\TextInput::make('swift_bic')
+                        FormComponents\TextInput::make('swift_bic')
                             ->label('SWIFT/BIC Code')
                             ->maxLength(11)
                             ->placeholder('COBADEFFXXX'),
 
-                        Components\TextInput::make('bank_name')
+                        FormComponents\TextInput::make('bank_name')
                             ->label('Bank Name')
                             ->required()
                             ->maxLength(255),
 
-                        Components\Select::make('bank_country')
+                        FormComponents\Select::make('bank_country')
                             ->label('Bank Country')
                             ->options([
                                 'DE' => 'Germany',
@@ -125,7 +126,7 @@ class BankAccountResource extends Resource
                             ->required()
                             ->searchable(),
 
-                        Components\Select::make('currency')
+                        FormComponents\Select::make('currency')
                             ->label('Currency')
                             ->options([
                                 'EUR' => 'Euro (EUR)',
@@ -137,34 +138,34 @@ class BankAccountResource extends Resource
                             ->required(),
                     ])->columns(2),
 
-                Components\Section::make('Verification')
+                SchemaComponents\Section::make('Verification')
                     ->schema([
-                        Components\Toggle::make('is_verified')
+                        FormComponents\Toggle::make('is_verified')
                             ->label('Verified')
                             ->default(false)
                             ->reactive(),
 
-                        Components\Toggle::make('is_primary')
+                        FormComponents\Toggle::make('is_primary')
                             ->label('Primary Account')
                             ->default(false)
                             ->helperText('Only one primary account per owner'),
 
-                        Components\Select::make('verified_by')
+                        FormComponents\Select::make('verified_by')
                             ->label('Verified By')
                             ->relationship('verifier', 'name')
                             ->searchable()
                             ->visible(fn (callable $get) => $get('is_verified')),
 
-                        Components\DateTimePicker::make('verified_at')
+                        FormComponents\DateTimePicker::make('verified_at')
                             ->label('Verified At')
                             ->visible(fn (callable $get) => $get('is_verified')),
 
-                        Components\Textarea::make('verification_notes')
+                        FormComponents\Textarea::make('verification_notes')
                             ->label('Verification Notes')
                             ->rows(3)
                             ->visible(fn (callable $get) => $get('is_verified')),
 
-                        Components\FileUpload::make('bank_statement_url')
+                        FormComponents\FileUpload::make('bank_statement_url')
                             ->label('Bank Statement')
                             ->directory('bank-statements')
                             ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/png'])
