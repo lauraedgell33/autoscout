@@ -1,14 +1,68 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { Link } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import DashboardLayout from '@/components/DashboardLayout'
 import { useAuth } from '@/contexts/AuthContext'
+import { api } from '@/lib/api'
+
+interface DashboardStats {
+  total_balance: string
+  active_transactions: number
+  completed_transactions: number
+}
+
+interface RecentTransaction {
+  id: number
+  status: string
+  amount: string
+  created_at: string
+  vehicle?: {
+    make: string
+    model: string
+    year: number
+  }
+}
 
 export default function BuyerDashboardPage() {
   const t = useTranslations('dashboard.buyer')
   const { user } = useAuth()
+  const [stats, setStats] = useState<DashboardStats>({ total_balance: '0', active_transactions: 0, completed_transactions: 0 })
+  const [recentTransactions, setRecentTransactions] = useState<RecentTransaction[]>([])
+  const [favorites, setFavorites] = useState<number>(0)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        // Fetch dashboard stats
+        const dashboardRes = await api.get('/dashboard')
+        if (dashboardRes.data.stats) {
+          setStats(dashboardRes.data.stats)
+        }
+        if (dashboardRes.data.recent_transactions) {
+          setRecentTransactions(dashboardRes.data.recent_transactions)
+        }
+        
+        // Fetch favorites count
+        try {
+          const favRes = await api.get('/favorites')
+          const favData = favRes.data.data || favRes.data || []
+          setFavorites(Array.isArray(favData) ? favData.length : 0)
+        } catch {
+          setFavorites(0)
+        }
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    fetchDashboardData()
+  }, [])
 
   return (
     <ProtectedRoute allowedRoles={['buyer']}>
@@ -35,7 +89,9 @@ export default function BuyerDashboardPage() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">{t('my_purchases')}</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">0</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {loading ? '...' : stats.completed_transactions}
+                  </p>
                 </div>
               </div>
             </div>
@@ -49,7 +105,9 @@ export default function BuyerDashboardPage() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">{t('favorites')}</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">0</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {loading ? '...' : favorites}
+                  </p>
                 </div>
               </div>
             </div>
@@ -63,7 +121,9 @@ export default function BuyerDashboardPage() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">{t('active_deals')}</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">0</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {loading ? '...' : stats.active_transactions}
+                  </p>
                 </div>
               </div>
             </div>
@@ -109,21 +169,60 @@ export default function BuyerDashboardPage() {
           {/* Recent Activity */}
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{t('recent_activity')}</h2>
-            <div className="text-center py-12">
-              <svg className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">{t('no_activity')}</p>
-              <Link
-                href="/marketplace"
-                className="inline-flex items-center gap-2 bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 rounded-lg font-semibold transition"
-              >
-                {t('start_browsing')}
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            {recentTransactions.length > 0 ? (
+              <div className="space-y-4">
+                {recentTransactions.map((tx) => (
+                  <Link
+                    key={tx.id}
+                    href={`/transaction/${tx.id}`}
+                    className="block p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium text-gray-900 dark:text-white">
+                          {tx.vehicle ? `${tx.vehicle.make} ${tx.vehicle.model} (${tx.vehicle.year})` : `Transaction #${tx.id}`}
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {new Date(tx.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-semibold text-accent-500">€{parseFloat(tx.amount).toLocaleString()}</p>
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          tx.status === 'completed' ? 'bg-green-100 text-green-800' :
+                          tx.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}>
+                          {tx.status}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+                <Link
+                  href="/buyer/purchases"
+                  className="block text-center text-accent-500 hover:text-accent-600 font-medium pt-2"
+                >
+                  View all transactions →
+                </Link>
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <svg className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-              </Link>
-            </div>
+                <p className="text-gray-600 dark:text-gray-400 mb-4">{t('no_activity')}</p>
+                <Link
+                  href="/marketplace"
+                  className="inline-flex items-center gap-2 bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 rounded-lg font-semibold transition"
+                >
+                  {t('start_browsing')}
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </DashboardLayout>

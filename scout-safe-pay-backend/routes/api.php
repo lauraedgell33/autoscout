@@ -53,6 +53,9 @@ Route::prefix('locale')->group(function () {
 Route::middleware('rate.limit.ip:5,1')->post('/register', [AuthController::class, 'register']);
 Route::middleware('rate.limit.ip:5,1')->post('/login', [AuthController::class, 'login']);
 
+// Email verification (public - token based)
+Route::post('/verify-email', [AuthController::class, 'verifyEmail']);
+
 // Error logging routes (FREE Sentry alternative)
 Route::post('/errors', [ErrorLogController::class, 'log']);
 Route::post('/security/violations', [ErrorLogController::class, 'logViolation']);
@@ -126,6 +129,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::post('/resend-verification-email', [AuthController::class, 'resendVerificationEmail']);
     
     // User Profile
     Route::get('/user/profile', [AuthController::class, 'user']);

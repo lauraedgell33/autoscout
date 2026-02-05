@@ -43,13 +43,41 @@ export default function BuyerPurchasesPage() {
   const fetchPurchases = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/purchases`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transactions`, {
         headers: {
           'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
         },
       });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch transactions');
+      }
+      
       const data = await response.json();
-      setPurchases(data.data || []);
+      
+      // Transform transactions to purchases format
+      const transactions = data.data || data || [];
+      const transformedPurchases = Array.isArray(transactions) ? transactions.map((tx: any) => ({
+        id: tx.id,
+        transaction_id: tx.id,
+        vehicle: tx.vehicle || {
+          id: tx.vehicle_id,
+          make: tx.metadata?.vehicle_title?.split(' ')[0] || 'Unknown',
+          model: tx.metadata?.vehicle_title?.split(' ').slice(1).join(' ') || '',
+          year: '',
+          vin: '',
+          primary_image: null,
+        },
+        amount: tx.amount,
+        status: tx.status,
+        purchase_date: tx.created_at,
+        delivery_status: tx.status,
+        contract_url: tx.contract_url,
+        invoice_url: tx.invoice_url,
+      })) : [];
+      
+      setPurchases(transformedPurchases);
     } catch (error) {
       console.error('Error fetching purchases:', error);
     } finally {

@@ -103,22 +103,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error('Registration failed - no user returned')
       }
 
-      toast.success('Successfully registered!')
+      toast.success('Registration successful! Please check your email to verify your account.')
       
-      // Redirect based on user type after registration
-      const role = user.user_type || user.role
-      if (role === 'admin') {
-        window.location.href = '/admin'
-      } else if (role === 'dealer') {
-        router.push('/dealer/dashboard')
-      } else if (role === 'seller') {
-        router.push('/seller/dashboard')
-      } else if (role === 'buyer') {
-        router.push('/dashboard/buyer')
-      } else {
-        // Default to buyer dashboard
-        router.push('/dashboard/buyer')
-      }
+      // Redirect to email verification pending page
+      router.push('/verify-email-pending')
     } catch (error: any) {
       const message = error.response?.data?.message || error.message || 'Registration failed'
       toast.error(message)

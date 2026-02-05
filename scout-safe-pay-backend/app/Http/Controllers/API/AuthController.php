@@ -5,8 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Transaction;
+use App\Notifications\EmailVerificationNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -32,16 +35,111 @@ class AuthController extends Controller
             'user_type' => $validated['user_type'],
             'phone' => $validated['phone'] ?? null,
             'country' => $validated['country'] ?? 'DE',
+            // email_verified_at is null by default - user must verify
         ]);
+
+        // Generate verification token and send email
+        $verificationToken = Str::random(64);
+        Cache::put('email_verification_' . $verificationToken, $user->id, now()->addHours(24));
+        
+        try {
+            $user->notify(new EmailVerificationNotification($verificationToken));
+        } catch (\Exception $e) {
+            \Log::error('Failed to send verification email: ' . $e->getMessage());
+        }
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'User registered successfully',
+            'message' => 'User registered successfully. Please check your email to verify your account.',
             'user' => $user,
             'token' => $token,
             'token_type' => 'Bearer',
+            'email_verification_required' => true,
         ], 201);
+    }
+
+    /**
+     * Verify email address
+     */
+    public function verifyEmail(Request $request)
+    {
+        $request->validate([
+            'token' => 'required|string',
+            'email' => 'required|email',
+        ]);
+
+        $userId = Cache::get('email_verification_' . $request->token);
+
+        if (!$userId) {
+            return response()->json([
+                'message' => 'Invalid or expired verification token',
+            ], 422);
+        }
+
+        $user = User::where('id', $userId)
+            ->where('email', $request->email)
+            ->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found',
+            ], 404);
+        }
+
+        if ($user->email_verified_at) {
+            return response()->json([
+                'message' => 'Email already verified',
+                'user' => $user,
+            ]);
+        }
+
+        $user->update([
+            'email_verified_at' => now(),
+        ]);
+
+        // Clear the token
+        Cache::forget('email_verification_' . $request->token);
+
+        // Create a fresh token for the user
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Email verified successfully',
+            'user' => $user,
+            'token' => $token,
+            'token_type' => 'Bearer',
+        ]);
+    }
+
+    /**
+     * Resend verification email
+     */
+    public function resendVerificationEmail(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->email_verified_at) {
+            return response()->json([
+                'message' => 'Email already verified',
+            ]);
+        }
+
+        // Generate new verification token
+        $verificationToken = Str::random(64);
+        Cache::put('email_verification_' . $verificationToken, $user->id, now()->addHours(24));
+
+        try {
+            $user->notify(new EmailVerificationNotification($verificationToken));
+            return response()->json([
+                'message' => 'Verification email sent successfully',
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Failed to send verification email: ' . $e->getMessage());
+            return response()->json([
+                'message' => 'Failed to send verification email. Please try again later.',
+            ], 500);
+        }
     }
 
     /**
