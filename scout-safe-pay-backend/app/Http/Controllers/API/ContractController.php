@@ -46,7 +46,7 @@ class ContractController extends Controller
 
         Document::create([
             'transaction_id' => $transaction->id,
-            'type' => 'contract',
+            'type' => 'sales_contract',
             'file_path' => $path,
             'file_name' => $filename,
             'file_size' => strlen($pdf->output()),
@@ -73,7 +73,7 @@ class ContractController extends Controller
         }
 
         $document = Document::where('transaction_id', $transaction->id)
-            ->where('type', 'contract')
+            ->where('type', 'sales_contract')
             ->latest()
             ->first();
 
