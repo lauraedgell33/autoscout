@@ -1081,7 +1081,8 @@
     "from": "da",
     "to": "to",
     "km": "km",
-    "per_page": "per pagina"
+    "per_page": "per pagina",
+    "year": "Year"
   },
   "footer": {
     "about": "Di",
@@ -1534,6 +1535,16 @@
       "error_password_mismatch": "Le password non corrispondono",
       "error_password_length": "La password deve contenere almeno 8 caratteri",
       "error_registration_failed": "La registrazione non è riuscita. Per favore riprova."
+    },
+    "verify_email": {
+      "pending_title": "Verifica la tua email",
+      "pending_message": "Abbiamo inviato un'email di verifica a:",
+      "pending_instructions": "Clicca sul link nell'email per verificare il tuo account. Il link scadrà tra 24 ore.",
+      "resend_button": "Reinvia email di verifica",
+      "resending": "Invio in corso...",
+      "resent_success": "Email inviata! Controlla la tua casella di posta.",
+      "go_home": "Vai alla home",
+      "spam_notice": "Non hai ricevuto l'email? Controlla la cartella spam."
     }
   },
   "pages": {

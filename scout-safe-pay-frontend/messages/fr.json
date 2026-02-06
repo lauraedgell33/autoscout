@@ -1081,7 +1081,8 @@
     "from": "depuis",
     "to": "to",
     "km": "km",
-    "per_page": "par page"
+    "per_page": "par page",
+    "year": "Year"
   },
   "footer": {
     "about": "À propos",
@@ -1534,6 +1535,16 @@
       "error_password_mismatch": "Les mots de passe ne correspondent pas",
       "error_password_length": "Le mot de passe doit contenir au moins 8 caractères",
       "error_registration_failed": "L'enregistrement a échoué. Veuillez réessayer."
+    },
+    "verify_email": {
+      "pending_title": "Vérifiez votre e-mail",
+      "pending_message": "Nous avons envoyé un e-mail de vérification à :",
+      "pending_instructions": "Veuillez cliquer sur le lien dans l'e-mail pour vérifier votre compte. Le lien expirera dans 24 heures.",
+      "resend_button": "Renvoyer l'e-mail de vérification",
+      "resending": "Envoi en cours...",
+      "resent_success": "E-mail envoyé ! Vérifiez votre boîte de réception.",
+      "go_home": "Aller à l'accueil",
+      "spam_notice": "Vous n'avez pas reçu l'e-mail ? Vérifiez votre dossier spam."
     }
   },
   "pages": {

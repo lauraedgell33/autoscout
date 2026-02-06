@@ -1081,7 +1081,8 @@
     "from": "de",
     "to": "to",
     "km": "km",
-    "per_page": "por página"
+    "per_page": "por página",
+    "year": "Year"
   },
   "footer": {
     "about": "Acerca de",
@@ -1534,6 +1535,16 @@
       "error_password_mismatch": "Las contraseñas no coinciden",
       "error_password_length": "La contraseña debe tener al menos 8 caracteres.",
       "error_registration_failed": "El registro falló. Por favor inténtalo de nuevo."
+    },
+    "verify_email": {
+      "pending_title": "Verifica tu correo electrónico",
+      "pending_message": "Hemos enviado un correo de verificación a:",
+      "pending_instructions": "Por favor haz clic en el enlace del correo para verificar tu cuenta. El enlace expirará en 24 horas.",
+      "resend_button": "Reenviar correo de verificación",
+      "resending": "Enviando...",
+      "resent_success": "¡Correo enviado! Revisa tu bandeja de entrada.",
+      "go_home": "Ir al inicio",
+      "spam_notice": "¿No recibiste el correo? Revisa tu carpeta de spam."
     }
   },
   "pages": {

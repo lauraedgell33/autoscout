@@ -1081,7 +1081,8 @@
     "from": "de la",
     "to": "la",
     "km": "km",
-    "per_page": "per pagină"
+    "per_page": "per pagină",
+    "year": "Year"
   },
   "footer": {
     "about": "Despre",
@@ -1534,6 +1535,16 @@
       "error_password_mismatch": "Parolele nu se potrivesc",
       "error_password_length": "Parola trebuie să conțină cel puțin 8 caractere",
       "error_registration_failed": "Înregistrarea a eșuat. Vă rugăm să încercați din nou."
+    },
+    "verify_email": {
+      "pending_title": "Verifică-ți emailul",
+      "pending_message": "Am trimis un email de verificare la:",
+      "pending_instructions": "Te rugăm să dai click pe linkul din email pentru a-ți verifica contul. Linkul expiră în 24 de ore.",
+      "resend_button": "Retrimite emailul de verificare",
+      "resending": "Se trimite...",
+      "resent_success": "Email trimis! Verifică-ți inbox-ul.",
+      "go_home": "Mergi la pagină principală",
+      "spam_notice": "Nu ai primit emailul? Verifică folderul de spam."
     }
   },
   "pages": {

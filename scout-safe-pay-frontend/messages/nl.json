@@ -1081,7 +1081,8 @@
     "from": "van",
     "to": "to",
     "km": "km",
-    "per_page": "per pagina"
+    "per_page": "per pagina",
+    "year": "Year"
   },
   "footer": {
     "about": "Over",
@@ -1534,6 +1535,16 @@
       "error_password_mismatch": "Wachtwoorden komen niet overeen",
       "error_password_length": "Wachtwoord moet minimaal 8 tekens lang zijn",
       "error_registration_failed": "Registratie mislukt. Probeer het opnieuw."
+    },
+    "verify_email": {
+      "pending_title": "Verifieer je e-mail",
+      "pending_message": "We hebben een verificatie-e-mail gestuurd naar:",
+      "pending_instructions": "Klik op de link in de e-mail om je account te verifiëren. De link verloopt over 24 uur.",
+      "resend_button": "Verificatie-e-mail opnieuw verzenden",
+      "resending": "Verzenden...",
+      "resent_success": "E-mail verzonden! Controleer je inbox.",
+      "go_home": "Ga naar home",
+      "spam_notice": "Geen e-mail ontvangen? Controleer je spammap."
     }
   },
   "pages": {
