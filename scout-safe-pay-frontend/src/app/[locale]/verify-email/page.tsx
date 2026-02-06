@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { Link } from '@/i18n/routing'
+import { Link, useRouter } from '@/i18n/routing'
 import { apiClient } from '@/lib/api'
 import { useAuthStore } from '@/store/auth-store'
 import { Shield, CheckCircle, XCircle, Loader2 } from 'lucide-react'

@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams , useParams} from 'next/navigation';
-import Link from 'next/link';
+import { useSearchParams, useParams } from 'next/navigation';
+import { useRouter, Link } from '@/i18n/routing';
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -48,7 +48,7 @@ export default function ResetPasswordPage() {
 
       if (response.ok) {
         // Redirect to login page with success message
-        router.push(`/${locale}/auth/login?reset=success`);
+        router.push('/login?reset=success');
       } else {
         setError(data.message || 'Failed to reset password. Please try again.');
       }
@@ -79,7 +79,7 @@ export default function ResetPasswordPage() {
               </p>
               <div className="mt-4">
                 <Link
-                  href={`/${locale}/auth/forgot-password`}
+                  href="/forgot-password"
                   className="font-medium text-primary-600 hover:text-blue-500"
                 >
                   Request new reset link

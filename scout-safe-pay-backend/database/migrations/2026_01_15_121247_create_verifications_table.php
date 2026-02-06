@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('verifications', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('type', ['identity', 'phone', 'address', 'vehicle_vin', 'dealer_business'])->index();
             $table->enum('status', ['pending', 'in_review', 'approved', 'rejected'])->default('pending')->index();
             
@@ -30,12 +30,12 @@ return new class extends Migration
             $table->date('document_expiry')->nullable();
             
             // Vehicle VIN specific
-            $table->foreignUuid('vehicle_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('vehicle_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('vin_number')->nullable();
             $table->json('vin_check_result')->nullable();
             
             // Review information
-            $table->foreignUuid('reviewed_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('reviewed_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamp('reviewed_at')->nullable();
             $table->text('review_notes')->nullable();
             $table->text('rejection_reason')->nullable();

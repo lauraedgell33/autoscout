@@ -224,6 +224,36 @@ class DealerController extends Controller
     }
 
     /**
+     * Get vehicles for a specific dealer
+     */
+    public function vehicles($id, Request $request)
+    {
+        $dealer = Dealer::where('is_verified', true)
+            ->where('status', 'active')
+            ->findOrFail($id);
+
+        $query = $dealer->vehicles()
+            ->where('status', 'active')
+            ->select('id', 'dealer_id', 'seller_id', 'make', 'model', 'year', 'price', 'currency', 'mileage', 'fuel_type', 'transmission', 'images', 'primary_image', 'location_city', 'location_country', 'created_at');
+
+        // Sorting
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+        $query->orderBy($sortBy, $sortOrder);
+
+        $vehicles = $query->paginate($request->get('per_page', 12));
+
+        return response()->json([
+            'dealer' => [
+                'id' => $dealer->id,
+                'name' => $dealer->name,
+                'company_name' => $dealer->company_name,
+            ],
+            'vehicles' => $vehicles,
+        ]);
+    }
+
+    /**
      * Get dealer statistics
      */
     public function statistics()

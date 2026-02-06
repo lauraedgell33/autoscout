@@ -9,14 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('invoices', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('invoice_number')->unique();
             
             // Relations
-            $table->foreignUuid('transaction_id')->constrained()->onDelete('cascade');
-            $table->foreignUuid('buyer_id')->constrained('users')->onDelete('cascade');
-            $table->foreignUuid('seller_id')->constrained('users')->onDelete('cascade');
-            $table->foreignUuid('vehicle_id')->constrained()->onDelete('cascade');
+            $table->foreignId('transaction_id')->constrained()->onDelete('cascade');
+            $table->foreignId('buyer_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('seller_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('vehicle_id')->constrained()->onDelete('cascade');
             
             // Invoice Details
             $table->decimal('amount', 12, 2);
@@ -40,7 +40,7 @@ return new class extends Migration
             // Payment Proof
             $table->string('payment_proof_path')->nullable();
             $table->timestamp('payment_proof_uploaded_at')->nullable();
-            $table->foreignUuid('verified_by')->nullable()->constrained('users');
+            $table->foreignId('verified_by')->nullable()->constrained('users');
             $table->timestamp('verified_at')->nullable();
             $table->text('verification_notes')->nullable();
             

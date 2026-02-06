@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { useRouter } from '@/i18n/routing';
 import { useAuthStore } from '@/store/auth-store';
 
 interface ProtectedRouteProps {
@@ -21,16 +22,14 @@ export function ProtectedRoute({ children, requiredRoles }: ProtectedRouteProps)
   useEffect(() => {
     if (!isAuthenticated) {
       // Redirect to login with return URL
-      const locale = pathname.split('/')[1];
-      router.push(`/${locale}/login?returnUrl=${encodeURIComponent(pathname)}`);
+      router.push(`/login?returnUrl=${encodeURIComponent(pathname)}`);
       return;
     }
 
     // Check if user has required role
     if (requiredRoles && user && !requiredRoles.includes(user.user_type)) {
       // Redirect to appropriate dashboard
-      const locale = pathname.split('/')[1];
-      router.push(`/${locale}/${user.user_type}/dashboard`);
+      router.push(`/${user.user_type}/dashboard`);
     }
   }, [isAuthenticated, user, requiredRoles, router, pathname]);
 

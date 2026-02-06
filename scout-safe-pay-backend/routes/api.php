@@ -112,6 +112,7 @@ Route::middleware('auth:sanctum')->prefix('search')->group(function () {
 // Public dealer routes
 Route::get('/dealers', [App\Http\Controllers\API\DealerController::class, 'index']);
 Route::get('/dealers/{dealer}', [App\Http\Controllers\API\DealerController::class, 'show']);
+Route::get('/dealers/{dealer}/vehicles', [App\Http\Controllers\API\DealerController::class, 'vehicles']);
 Route::get('/dealers-statistics', [App\Http\Controllers\API\DealerController::class, 'statistics']);
 
 // Public review routes
