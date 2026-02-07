@@ -82,5 +82,39 @@ export default defineConfig({
         baseURL: 'https://adminautoscout.dev', // Start from admin, tests navigate between servers
       },
     },
+
+    // Comprehensive Tests - User flows, API, Dashboard, Transactions
+    {
+      name: 'comprehensive-user-flows',
+      testMatch: '**/complete-user-flows.spec.ts',
+      use: { 
+        ...devices['Desktop Chrome'],
+        baseURL: 'https://www.autoscout24safetrade.com',
+      },
+    },
+    {
+      name: 'comprehensive-api',
+      testMatch: '**/backend-api-tests.spec.ts',
+      use: { 
+        ...devices['Desktop Chrome'],
+        baseURL: 'https://adminautoscout.dev',
+      },
+    },
+    {
+      name: 'comprehensive-dashboard',
+      testMatch: '**/dashboard-seller-flows.spec.ts',
+      use: { 
+        ...devices['Desktop Chrome'],
+        baseURL: 'https://www.autoscout24safetrade.com',
+      },
+    },
+    {
+      name: 'comprehensive-transactions',
+      testMatch: '**/transaction-flow.spec.ts',
+      use: { 
+        ...devices['Desktop Chrome'],
+        baseURL: 'https://www.autoscout24safetrade.com',
+      },
+    },
   ],
 });

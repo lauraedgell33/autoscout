@@ -12,8 +12,10 @@ use App\Services\EmailNotificationService;
 use App\Services\PushNotificationService;
 use App\Services\ContractGenerator;
 use App\Services\InvoiceGenerator;
+use App\Services\GeocodeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class TransactionController extends Controller
@@ -83,6 +85,10 @@ class TransactionController extends Controller
         // Generate unique payment reference
         $paymentReference = 'AS24-' . strtoupper(Str::random(8)) . '-' . $vehicle->id;
         
+        // Collect device info and location
+        $deviceInfo = $this->collectDeviceInfo($request);
+        $locationInfo = $this->collectLocationInfo($request);
+        
         // Create transaction
         $transaction = Transaction::create([
             'transaction_code' => 'TXN-' . strtoupper(Str::random(10)),
@@ -102,6 +108,10 @@ class TransactionController extends Controller
                 'buyer_phone' => $user->phone,
                 'seller_name' => $vehicle->seller->name,
                 'vehicle_title' => "{$vehicle->make} {$vehicle->model} ({$vehicle->year})",
+                'device_info' => $deviceInfo,
+                'location_info' => $locationInfo,
+                'created_from_ip' => $request->ip(),
+                'created_at_timestamp' => now()->toISOString(),
             ]
         ]);
 
@@ -681,5 +691,115 @@ class TransactionController extends Controller
             'disputed' => $disputed,
             'total_value' => number_format($totalValue, 2),
         ]);
+    }
+    
+    /**
+     * Collect device information from request
+     */
+    protected function collectDeviceInfo(Request $request): array
+    {
+        $userAgent = $request->userAgent() ?? 'Unknown';
+        
+        // Parse user agent
+        $browser = 'Unknown';
+        $platform = 'Unknown';
+        $device = 'Desktop';
+        
+        // Detect browser
+        if (preg_match('/Firefox\/([\d.]+)/i', $userAgent, $m)) {
+            $browser = 'Firefox ' . $m[1];
+        } elseif (preg_match('/Chrome\/([\d.]+)/i', $userAgent, $m)) {
+            $browser = 'Chrome ' . $m[1];
+        } elseif (preg_match('/Safari\/([\d.]+)/i', $userAgent, $m)) {
+            $browser = 'Safari ' . $m[1];
+        } elseif (preg_match('/Edge\/([\d.]+)/i', $userAgent, $m)) {
+            $browser = 'Edge ' . $m[1];
+        } elseif (preg_match('/MSIE ([\d.]+)/i', $userAgent, $m)) {
+            $browser = 'IE ' . $m[1];
+        }
+        
+        // Detect platform
+        if (preg_match('/Windows NT ([\d.]+)/i', $userAgent, $m)) {
+            $versions = ['10.0' => '10', '6.3' => '8.1', '6.2' => '8', '6.1' => '7'];
+            $platform = 'Windows ' . ($versions[$m[1]] ?? $m[1]);
+        } elseif (preg_match('/Mac OS X ([\d_]+)/i', $userAgent, $m)) {
+            $platform = 'macOS ' . str_replace('_', '.', $m[1]);
+        } elseif (preg_match('/Linux/i', $userAgent)) {
+            $platform = 'Linux';
+        } elseif (preg_match('/Android ([\d.]+)/i', $userAgent, $m)) {
+            $platform = 'Android ' . $m[1];
+            $device = 'Mobile';
+        } elseif (preg_match('/iPhone|iPad/i', $userAgent)) {
+            preg_match('/OS ([\d_]+)/i', $userAgent, $m);
+            $platform = 'iOS ' . (isset($m[1]) ? str_replace('_', '.', $m[1]) : '');
+            $device = preg_match('/iPad/i', $userAgent) ? 'Tablet' : 'Mobile';
+        }
+        
+        // Detect if mobile
+        if (preg_match('/Mobile|Android|iPhone|iPad|iPod|webOS|BlackBerry|Opera Mini|IEMobile/i', $userAgent)) {
+            $device = $device === 'Desktop' ? 'Mobile' : $device;
+        }
+        
+        return [
+            'user_agent' => $userAgent,
+            'browser' => $browser,
+            'platform' => $platform,
+            'device_type' => $device,
+            'language' => $request->header('Accept-Language', 'Unknown'),
+            'referer' => $request->header('Referer'),
+        ];
+    }
+    
+    /**
+     * Collect location information from IP
+     */
+    protected function collectLocationInfo(Request $request): array
+    {
+        $ip = $request->ip();
+        
+        // Skip for local IPs
+        if (in_array($ip, ['127.0.0.1', '::1']) || str_starts_with($ip, '192.168.') || str_starts_with($ip, '10.')) {
+            return [
+                'ip' => $ip,
+                'is_local' => true,
+                'city' => 'Local Network',
+                'country' => 'Local',
+                'country_code' => 'LO',
+            ];
+        }
+        
+        try {
+            // Use ip-api.com (free, no key required, 45 requests/minute)
+            $response = Http::timeout(3)->get("http://ip-api.com/json/{$ip}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query");
+            
+            if ($response->successful() && $response->json('status') === 'success') {
+                $data = $response->json();
+                return [
+                    'ip' => $ip,
+                    'is_local' => false,
+                    'city' => $data['city'] ?? null,
+                    'region' => $data['regionName'] ?? null,
+                    'country' => $data['country'] ?? null,
+                    'country_code' => $data['countryCode'] ?? null,
+                    'zip' => $data['zip'] ?? null,
+                    'latitude' => $data['lat'] ?? null,
+                    'longitude' => $data['lon'] ?? null,
+                    'timezone' => $data['timezone'] ?? null,
+                    'isp' => $data['isp'] ?? null,
+                    'org' => $data['org'] ?? null,
+                ];
+            }
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::warning('IP geolocation failed', [
+                'ip' => $ip,
+                'error' => $e->getMessage()
+            ]);
+        }
+        
+        return [
+            'ip' => $ip,
+            'is_local' => false,
+            'lookup_failed' => true,
+        ];
     }
 }

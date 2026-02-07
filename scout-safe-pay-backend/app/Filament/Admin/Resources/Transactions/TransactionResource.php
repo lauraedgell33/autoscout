@@ -6,6 +6,7 @@ use App\Filament\Admin\Resources\Transactions\Pages\CreateTransaction;
 use App\Filament\Admin\Resources\Transactions\Pages\CreateTransactionWizard;
 use App\Filament\Admin\Resources\Transactions\Pages\EditTransaction;
 use App\Filament\Admin\Resources\Transactions\Pages\ListTransactions;
+use App\Filament\Admin\Resources\Transactions\Pages\ViewTransaction;
 use App\Filament\Admin\Resources\Transactions\Schemas\TransactionForm;
 use App\Filament\Admin\Resources\Transactions\Tables\TransactionsTable;
 use App\Models\Transaction;
@@ -61,6 +62,7 @@ class TransactionResource extends Resource
             'index' => ListTransactions::route('/'),
             'create' => CreateTransaction::route('/create'),
             'wizard' => CreateTransactionWizard::route('/wizard'),
+            'view' => ViewTransaction::route('/{record}'),
             'edit' => EditTransaction::route('/{record}/edit'),
         ];
     }

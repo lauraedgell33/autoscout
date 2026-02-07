@@ -3,8 +3,10 @@
 namespace App\Filament\Admin\Resources\Transactions\Tables;
 
 use Filament\Forms;
-
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\Filter;
@@ -61,6 +63,34 @@ class TransactionsTable
                         default => 'gray',
                     })
                     ->formatStateUsing(fn (string $state): string => ucwords(str_replace('_', ' ', $state))),
+                TextColumn::make('metadata.device_info.device_type')
+                    ->label('Device')
+                    ->badge()
+                    ->color(fn (?string $state): string => match ($state) {
+                        'Mobile' => 'warning',
+                        'Tablet' => 'info',
+                        'Desktop' => 'success',
+                        default => 'gray',
+                    })
+                    ->default('N/A')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('metadata.location_info.country')
+                    ->label('Country')
+                    ->formatStateUsing(function ($state, $record) {
+                        $code = $record->metadata['location_info']['country_code'] ?? '';
+                        if ($code && strlen($code) === 2) {
+                            $regionalOffset = 0x1F1E6 - ord('A');
+                            $flag = mb_chr(ord(strtoupper($code)[0]) + $regionalOffset) . 
+                                    mb_chr(ord(strtoupper($code)[1]) + $regionalOffset);
+                            return $flag . ' ' . ($state ?? 'Unknown');
+                        }
+                        return $state ?? 'Unknown';
+                    })
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('metadata.created_from_ip')
+                    ->label('IP')
+                    ->copyable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable(),
@@ -124,6 +154,9 @@ class TransactionsTable
                 TrashedFilter::make(),
             ])
             ->actions([
+                ViewAction::make(),
+                EditAction::make(),
+                
                 // Approve pending transaction - mark as awaiting payment
                 Action::make('approve_transaction')
                     ->label('Approve')
