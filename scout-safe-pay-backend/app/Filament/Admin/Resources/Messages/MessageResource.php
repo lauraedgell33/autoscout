@@ -6,7 +6,7 @@ use App\Filament\Admin\Resources\Messages\Pages\ListMessages;
 use App\Filament\Admin\Resources\Messages\Pages\ViewMessage;
 use App\Models\Message;
 use Filament\Infolists\Components\IconEntry;
-use Filament\Infolists\Components\Section as InfolistSection;
+use Filament\Schemas\Components\Section as InfolistSection;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

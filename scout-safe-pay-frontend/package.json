@@ -31,7 +31,8 @@
     "test:api": "playwright test --config=playwright.live.config.ts e2e/live/backend-api-tests.spec.ts",
     "test:dashboard": "playwright test --config=playwright.live.config.ts e2e/live/dashboard-seller-flows.spec.ts",
     "test:transactions": "playwright test --config=playwright.live.config.ts e2e/live/transaction-flow.spec.ts",
-    "test:all-comprehensive": "playwright test --config=playwright.live.config.ts e2e/live/ --workers=2"
+    "test:all-comprehensive": "playwright test --config=playwright.live.config.ts e2e/live/ --workers=2",
+    "test:integration": "playwright test --config=playwright.live.config.ts e2e/live/integration-tests.spec.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

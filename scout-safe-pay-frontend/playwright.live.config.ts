@@ -15,7 +15,7 @@ export default defineConfig({
   timeout: 90000, // Longer timeout for live servers
   
   reporter: [
-    ['html', { outputFolder: 'test-results/live-report' }],
+    ['html', { outputFolder: 'playwright-report/live' }],
     ['json', { outputFile: 'test-results/live-results.json' }],
     ['list']
   ],
@@ -112,6 +112,16 @@ export default defineConfig({
       name: 'comprehensive-transactions',
       testMatch: '**/transaction-flow.spec.ts',
       use: { 
+        ...devices['Desktop Chrome'],
+        baseURL: 'https://www.autoscout24safetrade.com',
+      },
+    },
+
+    // Integration tests that verify persistence across frontend/backend
+    {
+      name: 'integration',
+      testMatch: '**/integration-tests.spec.ts',
+      use: {
         ...devices['Desktop Chrome'],
         baseURL: 'https://www.autoscout24safetrade.com',
       },

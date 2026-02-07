@@ -15,7 +15,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\IconEntry;
-use Filament\Infolists\Components\Section as InfolistSection;
+use Filament\Schemas\Components\Section as InfolistSection;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;

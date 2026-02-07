@@ -1,0 +1,673 @@
+{
+  "config": {
+    "configFile": "/home/x/Documents/autoscout/scout-safe-pay-frontend/playwright.live.config.ts",
+    "rootDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live",
+    "forbidOnly": true,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "frontend-chrome",
+        "name": "frontend-chrome",
+        "testDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live",
+        "testIgnore": [],
+        "testMatch": [
+          "**/frontend*.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "frontend-firefox",
+        "name": "frontend-firefox",
+        "testDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live",
+        "testIgnore": [],
+        "testMatch": [
+          "**/frontend*.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "frontend-mobile",
+        "name": "frontend-mobile",
+        "testDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live",
+        "testIgnore": [],
+        "testMatch": [
+          "**/frontend*.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "admin-chrome",
+        "name": "admin-chrome",
+        "testDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live",
+        "testIgnore": [],
+        "testMatch": [
+          "**/admin*.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "admin-firefox",
+        "name": "admin-firefox",
+        "testDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live",
+        "testIgnore": [],
+        "testMatch": [
+          "**/admin*.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "e2e-flows",
+        "name": "e2e-flows",
+        "testDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live",
+        "testIgnore": [],
+        "testMatch": [
+          "**/e2e-complete*.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "comprehensive-user-flows",
+        "name": "comprehensive-user-flows",
+        "testDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live",
+        "testIgnore": [],
+        "testMatch": [
+          "**/complete-user-flows.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "comprehensive-api",
+        "name": "comprehensive-api",
+        "testDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live",
+        "testIgnore": [],
+        "testMatch": [
+          "**/backend-api-tests.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "comprehensive-dashboard",
+        "name": "comprehensive-dashboard",
+        "testDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live",
+        "testIgnore": [],
+        "testMatch": [
+          "**/dashboard-seller-flows.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "comprehensive-transactions",
+        "name": "comprehensive-transactions",
+        "testDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live",
+        "testIgnore": [],
+        "testMatch": [
+          "**/transaction-flow.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "integration",
+        "name": "integration",
+        "testDir": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live",
+        "testIgnore": [],
+        "testMatch": [
+          "**/integration-tests.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report/live"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/live-results.json"
+        }
+      ],
+      [
+        "list",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "integration-tests.spec.ts",
+      "file": "integration-tests.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Vehicle Inquiry Integration Tests",
+          "file": "integration-tests.spec.ts",
+          "line": 24,
+          "column": 6,
+          "specs": [
+            {
+              "title": "inquiry submitted from frontend is saved in backend database",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "integration",
+                  "projectName": "integration",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 24476,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Testing with vehicle ID: 15\n"
+                        },
+                        {
+                          "text": "Form submitted, success indicator: true\n"
+                        },
+                        {
+                          "text": "Inquiry submitted and form processing completed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-07T12:52:53.686Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "146c778a088c8b5e3480-7abdf1cfb403ff870568",
+              "file": "integration-tests.spec.ts",
+              "line": 26,
+              "column": 7
+            },
+            {
+              "title": "vehicle contact API saves inquiry to database",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "integration",
+                  "projectName": "integration",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2239,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Inquiry submission status: 200\n"
+                        },
+                        {
+                          "text": "Warning: inquiry_id not returned but request succeeded\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-07T12:53:18.244Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "146c778a088c8b5e3480-feec838b551086528ea2",
+              "file": "integration-tests.spec.ts",
+              "line": 122,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Authentication Integration Tests",
+          "file": "integration-tests.spec.ts",
+          "line": 173,
+          "column": 6,
+          "specs": [
+            {
+              "title": "registration creates user in database",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "integration",
+                  "projectName": "integration",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 997,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Registration status: 201\n"
+                        },
+                        {
+                          "text": "User registered with ID: 23\n"
+                        },
+                        {
+                          "text": "New user can login successfully\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-07T12:53:20.492Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "146c778a088c8b5e3480-4c4537826f5ad2fdd127",
+              "file": "integration-tests.spec.ts",
+              "line": 175,
+              "column": 7
+            },
+            {
+              "title": "login returns valid token for authenticated requests",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "integration",
+                  "projectName": "integration",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 744,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Login successful, token obtained\n"
+                        },
+                        {
+                          "text": "Token works for authenticated requests\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-07T12:53:21.499Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "146c778a088c8b5e3480-2c1df1ead3fb852818d3",
+              "file": "integration-tests.spec.ts",
+              "line": 217,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Favorites Integration Tests",
+          "file": "integration-tests.spec.ts",
+          "line": 245,
+          "column": 6,
+          "specs": [
+            {
+              "title": "adding favorite saves to database and is retrievable",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "integration",
+                  "projectName": "integration",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1798,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Add favorite status: 201\n"
+                        },
+                        {
+                          "text": "Favorites retrieved: {\"success\":true,\"data\":[{\"id\":1,\"user_id\":20,\"vehicle_id\":15,\"created_at\":\"2026-02-07T12:53:23.00000...\n"
+                        },
+                        {
+                          "text": "Favorite removed (cleanup)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-07T12:53:22.251Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "146c778a088c8b5e3480-c65ce72a0a86a14c3327",
+              "file": "integration-tests.spec.ts",
+              "line": 247,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Transaction Message Integration Tests",
+          "file": "integration-tests.spec.ts",
+          "line": 299,
+          "column": 6,
+          "specs": [
+            {
+              "title": "message sent in transaction is saved and retrievable",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "integration",
+                  "projectName": "integration",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 7870,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m500\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m500\u001b[39m\n    at /home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live/integration-tests.spec.ts:357:41",
+                        "location": {
+                          "file": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live/integration-tests.spec.ts",
+                          "column": 41,
+                          "line": 357
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 355 |\u001b[39m       \u001b[36mconst\u001b[39m messagesResponse \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39m\u001b[36mget\u001b[39m(\u001b[32m`${API_BASE}/transactions/${transactionId}/messages`\u001b[39m\u001b[33m,\u001b[39m { headers })\u001b[33m;\u001b[39m\n \u001b[90m 356 |\u001b[39m       \n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 357 |\u001b[39m       expect(messagesResponse\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m200\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 358 |\u001b[39m       \n \u001b[90m 359 |\u001b[39m       \u001b[36mconst\u001b[39m messagesData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m messagesResponse\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n \u001b[90m 360 |\u001b[39m       \u001b[36mconst\u001b[39m messages \u001b[33m=\u001b[39m messagesData\u001b[33m.\u001b[39mmessages \u001b[33m||\u001b[39m messagesData\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live/integration-tests.spec.ts",
+                            "column": 41,
+                            "line": 357
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m500\u001b[39m\n\n\u001b[0m \u001b[90m 355 |\u001b[39m       \u001b[36mconst\u001b[39m messagesResponse \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39m\u001b[36mget\u001b[39m(\u001b[32m`${API_BASE}/transactions/${transactionId}/messages`\u001b[39m\u001b[33m,\u001b[39m { headers })\u001b[33m;\u001b[39m\n \u001b[90m 356 |\u001b[39m       \n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 357 |\u001b[39m       expect(messagesResponse\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m200\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 358 |\u001b[39m       \n \u001b[90m 359 |\u001b[39m       \u001b[36mconst\u001b[39m messagesData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m messagesResponse\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n \u001b[90m 360 |\u001b[39m       \u001b[36mconst\u001b[39m messages \u001b[33m=\u001b[39m messagesData\u001b[33m.\u001b[39mmessages \u001b[33m||\u001b[39m messagesData\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live/integration-tests.spec.ts:357:41\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "Send message status: 201\n"
+                        },
+                        {
+                          "text": "Message saved with ID: 1\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-07T12:53:24.056Z",
+                      "annotations": [],
+                      "attachments": [],
+                      "errorLocation": {
+                        "file": "/home/x/Documents/autoscout/scout-safe-pay-frontend/e2e/live/integration-tests.spec.ts",
+                        "column": 41,
+                        "line": 357
+                      }
+                    },
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 775,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Login failed, skipping message test\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-02-07T12:53:32.793Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/x/Documents/autoscout/scout-safe-pay-frontend/test-results/integration-tests-Transact-855c9-on-is-saved-and-retrievable-integration-retry1/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "flaky"
+                }
+              ],
+              "id": "146c778a088c8b5e3480-10600e4f965a9ed4ea33",
+              "file": "integration-tests.spec.ts",
+              "line": 301,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Vehicle CRUD Integration Tests",
+          "file": "integration-tests.spec.ts",
+          "line": 378,
+          "column": 6,
+          "specs": [
+            {
+              "title": "vehicle created via API is retrievable",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "integration",
+                  "projectName": "integration",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 242,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Login failed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-07T12:53:33.599Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "146c778a088c8b5e3480-8ce186414744dfb5c176",
+              "file": "integration-tests.spec.ts",
+              "line": 380,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Notification Integration Tests",
+          "file": "integration-tests.spec.ts",
+          "line": 447,
+          "column": 6,
+          "specs": [
+            {
+              "title": "notifications are retrievable for authenticated user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "integration",
+                  "projectName": "integration",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 233,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Login failed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-07T12:53:33.849Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "146c778a088c8b5e3480-89c5379e84f1ccc8103d",
+              "file": "integration-tests.spec.ts",
+              "line": 449,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-02-07T12:52:52.658Z",
+    "duration": 41453.33,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 1
+  }
+}
