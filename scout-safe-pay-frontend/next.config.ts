@@ -52,6 +52,14 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'prod.pictures.autoscout24.net',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.autoscout24.net',
+      },
+      {
+        protocol: 'https',
         hostname: 'images.unsplash.com',
       },
       {
