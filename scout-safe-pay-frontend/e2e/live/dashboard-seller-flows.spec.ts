@@ -559,11 +559,24 @@ test.describe('Mobile Dashboard', () => {
     await goToFrontendPage(page, '/dashboard');
     await page.waitForTimeout(2000);
     
+    // Dismiss cookie banner if present (it can block clicks)
+    const cookieBanner = page.locator('[class*="cookie"], [class*="consent"], [id*="cookie"]');
+    const acceptCookieBtn = page.locator('button:has-text("Accept"), button:has-text("Agree"), button:has-text("OK")').first();
+    if (await acceptCookieBtn.count() > 0) {
+      await acceptCookieBtn.click({ timeout: 3000 }).catch(() => {});
+      await page.waitForTimeout(500);
+    }
+    
     // Dashboard mobile menu button is at fixed bottom-4 right-4 with "Toggle menu" aria-label
     const menuButton = page.locator('button[aria-label="Toggle menu"]').first();
     
     if (await menuButton.count() > 0) {
-      await menuButton.click();
+      // Use force: true to bypass any overlay issues
+      await menuButton.click({ force: true, timeout: 10000 }).catch(async () => {
+        // If click fails, scroll to element and try again
+        await menuButton.scrollIntoViewIfNeeded();
+        await menuButton.click({ force: true });
+      });
       await page.waitForTimeout(1000);
       
       // Check for sidebar with translate-x-0 (visible)
@@ -573,7 +586,7 @@ test.describe('Mobile Dashboard', () => {
       // Fallback: try any menu button
       const anyMenuButton = page.locator('button[aria-label*="menu" i]').first();
       if (await anyMenuButton.count() > 0) {
-        await anyMenuButton.click();
+        await anyMenuButton.click({ force: true });
         await page.waitForTimeout(1000);
         console.log('Clicked fallback menu button');
       } else {

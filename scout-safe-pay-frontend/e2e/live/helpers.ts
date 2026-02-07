@@ -101,12 +101,34 @@ export async function verifyElementVisible(page: Page, selector: string, timeout
 }
 
 /**
+ * Dismiss cookie consent banner if present
+ */
+export async function dismissCookieBanner(page: Page) {
+  try {
+    const acceptBtn = page.locator(
+      'button:has-text("Accept"), button:has-text("Agree"), button:has-text("OK"), ' +
+      'button:has-text("Accept All"), button:has-text("Accept all cookies"), ' +
+      '[class*="cookie"] button, [id*="cookie"] button'
+    ).first();
+    
+    if (await acceptBtn.count() > 0 && await acceptBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+      await acceptBtn.click({ timeout: 3000 });
+      await page.waitForTimeout(500);
+    }
+  } catch {
+    // Cookie banner not present or already dismissed
+  }
+}
+
+/**
  * Navigate to frontend page with locale
  */
 export async function goToFrontendPage(page: Page, path: string) {
   const fullPath = path.startsWith('/en') ? path : `/en${path}`;
   await page.goto(fullPath);
   await waitForPageLoad(page);
+  // Automatically dismiss cookie banner if present
+  await dismissCookieBanner(page);
 }
 
 /**
