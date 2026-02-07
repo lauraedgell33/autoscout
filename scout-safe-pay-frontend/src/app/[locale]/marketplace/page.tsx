@@ -6,7 +6,7 @@ import { useRouter } from '@/i18n/routing'
 import { useState, useEffect, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import { useCurrency } from '@/contexts/CurrencyContext'
-import { Star, MapPin, ExternalLink, ShoppingCart, Search, SlidersHorizontal } from 'lucide-react'
+import { Star, MapPin, ExternalLink, ShoppingCart, Search, SlidersHorizontal, X, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -29,6 +29,7 @@ export default function MarketplacePage() {
   const [error, setError] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false)
+  const [showMobileFilters, setShowMobileFilters] = useState(false)
   const [filters, setFilters] = useState<VehicleFilters>({
     sort_by: 'created_at',
     sort_order: 'desc',
@@ -172,9 +173,142 @@ export default function MarketplacePage() {
             </div>
           )}
 
-          <div className="grid lg:grid-cols-4 gap-6 sm:gap-8">
-            {/* Sidebar Filters */}
-            <div className="lg:col-span-1">
+          {/* Mobile Filter Button */}
+          <div className="lg:hidden mb-4 flex gap-2">
+            <Button
+              onClick={() => setShowMobileFilters(true)}
+              variant="outline"
+              className="flex-1 justify-center gap-2"
+            >
+              <SlidersHorizontal className="w-4 h-4" />
+              {t('filters.title')}
+            </Button>
+            <select
+              value={filters.sort_by}
+              onChange={(e) => handleFilterChange('sort_by', e.target.value)}
+              className="px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm"
+            >
+              <option value="created_at">{t('sort.newest')}</option>
+              <option value="price">{t('sort.price_low')}</option>
+              <option value="-price">{t('sort.price_high')}</option>
+            </select>
+          </div>
+
+          {/* Mobile Filters Bottom Sheet */}
+          {showMobileFilters && (
+            <div className="fixed inset-0 z-50 lg:hidden">
+              {/* Backdrop */}
+              <div 
+                className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                onClick={() => setShowMobileFilters(false)}
+              />
+              {/* Bottom Sheet */}
+              <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl max-h-[85vh] overflow-hidden animate-slide-up">
+                {/* Handle */}
+                <div className="flex justify-center pt-3 pb-2">
+                  <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
+                </div>
+                {/* Header */}
+                <div className="flex items-center justify-between px-4 pb-3 border-b border-gray-100">
+                  <h3 className="text-lg font-bold text-gray-900">{t('filters.title')}</h3>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowMobileFilters(false)}
+                    className="-mr-2"
+                  >
+                    <X className="w-5 h-5" />
+                  </Button>
+                </div>
+                {/* Filters Content */}
+                <div className="overflow-y-auto max-h-[calc(85vh-120px)] p-4 space-y-4">
+                  {/* Sort */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('filters.sort_by')}</label>
+                    <select
+                      value={filters.sort_by}
+                      onChange={(e) => handleFilterChange('sort_by', e.target.value)}
+                      className="w-full px-3 py-3 bg-gray-50 border border-gray-200 rounded-xl text-base"
+                    >
+                      <option value="created_at">{t('sort.newest')}</option>
+                      <option value="price">{t('sort.price_low')}</option>
+                      <option value="-price">{t('sort.price_high')}</option>
+                      <option value="mileage">{t('sort.mileage_low')}</option>
+                      <option value="year">{t('sort.year_new')}</option>
+                    </select>
+                  </div>
+
+                  {/* Category */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('marketplace.category_label')}</label>
+                    <select
+                      value={filters.category || ''}
+                      onChange={(e) => {
+                        const newCategory = e.target.value || undefined
+                        setFilters(prev => ({
+                          ...prev,
+                          category: newCategory,
+                          make: undefined,
+                          model: undefined,
+                          page: 1
+                        }))
+                      }}
+                      className="w-full px-3 py-3 bg-gray-50 border border-gray-200 rounded-xl text-base"
+                    >
+                      <option value="">{t('categories.all')}</option>
+                      <option value="car">🚗 {t('categories.car')}</option>
+                      <option value="motorcycle">🏍️ {t('categories.motorcycle')}</option>
+                      <option value="van">🚐 {t('categories.van')}</option>
+                      <option value="truck">🚚 {t('categories.truck')}</option>
+                    </select>
+                  </div>
+
+                  {/* Price Range */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('filters.price_range')}</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <input
+                        type="number"
+                        placeholder={tCommon('from')}
+                        value={filters.price_min || ''}
+                        onChange={(e) => handleFilterChange('price_min', e.target.value ? parseInt(e.target.value) : undefined)}
+                        className="px-3 py-3 bg-gray-50 border border-gray-200 rounded-xl text-base"
+                      />
+                      <input
+                        type="number"
+                        placeholder={tCommon('to')}
+                        value={filters.price_max || ''}
+                        onChange={(e) => handleFilterChange('price_max', e.target.value ? parseInt(e.target.value) : undefined)}
+                        className="px-3 py-3 bg-gray-50 border border-gray-200 rounded-xl text-base"
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/* Footer Actions */}
+                <div className="p-4 border-t border-gray-100 flex gap-3 bg-white safe-area-bottom">
+                  <Button
+                    variant="outline"
+                    className="flex-1"
+                    onClick={() => {
+                      setFilters({ sort_by: 'created_at', sort_order: 'desc', per_page: 12 })
+                    }}
+                  >
+                    {t('filters.clear_all')}
+                  </Button>
+                  <Button
+                    className="flex-1 bg-accent-500 hover:bg-accent-600"
+                    onClick={() => setShowMobileFilters(false)}
+                  >
+                    {t('marketplace.show_results', { count: pagination.total })}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="grid lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+            {/* Sidebar Filters - Hidden on mobile */}
+            <div className="hidden lg:block lg:col-span-1">
               <div className="bg-white rounded-2xl border border-gray-100 p-5 sticky top-20 shadow-sm">
                 <h3 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
                   <div className="p-2 bg-primary-50 rounded-lg">
@@ -358,7 +492,7 @@ export default function MarketplacePage() {
                 />
               ) : (
                 <>
-                  <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+                  <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
                     {(vehicles || []).map((vehicle) => (
                       <EnhancedVehicleCard
                         key={vehicle.id}

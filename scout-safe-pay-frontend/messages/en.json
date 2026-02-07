@@ -121,6 +121,7 @@
     "hide_filters": "Hide Advanced Filters",
     "no_results_desc": "Try adjusting your filters or search query to find more vehicles.",
     "clear_filters_btn": "Clear Filters",
+    "show_results": "Show {count} Results",
     "send_message_to_seller": "Send a message to the seller about this vehicle"
   },
   "vehicle": {
