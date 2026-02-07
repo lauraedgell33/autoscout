@@ -15,7 +15,17 @@
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:report": "playwright show-report",
-    "test:e2e:ui": "playwright test --ui"
+    "test:e2e:ui": "playwright test --ui",
+    "test:live": "playwright test --config=playwright.live.config.ts",
+    "test:live:frontend": "playwright test --config=playwright.live.config.ts --project=frontend-chrome",
+    "test:live:admin": "playwright test --config=playwright.live.config.ts --project=admin-chrome",
+    "test:live:flows": "playwright test --config=playwright.live.config.ts e2e/live/*-flows.spec.ts",
+    "test:live:admin-flows": "playwright test --config=playwright.live.config.ts --project=admin-chrome e2e/live/admin-flows.spec.ts",
+    "test:live:frontend-flows": "playwright test --config=playwright.live.config.ts --project=frontend-chrome e2e/live/frontend-flows.spec.ts",
+    "test:live:e2e-flows": "playwright test --config=playwright.live.config.ts e2e/live/e2e-complete-flows.spec.ts",
+    "test:live:headed": "playwright test --config=playwright.live.config.ts --headed",
+    "test:live:ui": "playwright test --config=playwright.live.config.ts --ui",
+    "test:live:report": "playwright show-report test-results/live-report"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
