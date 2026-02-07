@@ -1,17 +1,19 @@
 'use client';
 
-import { useState } from 'react';
-import { Link } from '@/i18n/routing';
+import { useState, useCallback } from 'react';
+import { Link, useRouter } from '@/i18n/routing';
 import Image from 'next/image';
 import { 
   Heart, MapPin, Calendar, Gauge, Fuel, Settings, Eye, Share2,
-  ChevronLeft, ChevronRight, Star, ShieldCheck, TrendingUp
+  ChevronLeft, ChevronRight, Star, ShieldCheck, TrendingUp, Check, Copy, X
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import VehicleBadge, { StatusBadge, ConditionBadge, PriceBadge } from './VehicleBadges';
 import { getImageUrl } from '@/lib/utils';
+import { useAuthStore } from '@/store/auth-store';
+import { toast } from 'sonner';
 
 interface EnhancedVehicleCardProps {
   id: string;
@@ -65,7 +67,13 @@ export default function EnhancedVehicleCard({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isImageHovered, setIsImageHovered] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [showQuickView, setShowQuickView] = useState(false);
+  const [showShareMenu, setShowShareMenu] = useState(false);
+  const [copied, setCopied] = useState(false);
+  
+  const router = useRouter();
+  const { isAuthenticated } = useAuthStore();
 
   const handlePrevImage = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -79,18 +87,77 @@ export default function EnhancedVehicleCard({
     setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
-  const handleSave = (e: React.MouseEvent) => {
+  const handleSave = useCallback(async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsSaved(!isSaved);
-    onSave?.();
-  };
+    
+    if (!isAuthenticated) {
+      toast.error('Please login to save favorites');
+      router.push('/auth/login');
+      return;
+    }
+    
+    setIsSaving(true);
+    try {
+      const apiClient = (await import('@/lib/api-client')).default;
+      
+      if (isSaved) {
+        await apiClient.delete(`/favorites/${id}`);
+        setIsSaved(false);
+        toast.success('Removed from favorites');
+      } else {
+        await apiClient.post('/favorites', { vehicle_id: id });
+        setIsSaved(true);
+        toast.success('Added to favorites');
+      }
+      onSave?.();
+    } catch (error) {
+      toast.error('Failed to update favorites');
+    } finally {
+      setIsSaving(false);
+    }
+  }, [id, isSaved, isAuthenticated, router, onSave]);
 
-  const handleShare = (e: React.MouseEvent) => {
+  const handleShare = useCallback(async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    onShare?.();
-  };
+    
+    const shareUrl = `${window.location.origin}/en/vehicle/${id}`;
+    const shareData = {
+      title: title,
+      text: `Check out this ${make} ${model} (${year}) for €${price.toLocaleString()}`,
+      url: shareUrl,
+    };
+    
+    // Try native share first (mobile)
+    if (navigator.share && /Android|iPhone|iPad/i.test(navigator.userAgent)) {
+      try {
+        await navigator.share(shareData);
+        toast.success('Shared successfully!');
+        onShare?.();
+        return;
+      } catch (err) {
+        // User cancelled or share failed, fall through to clipboard
+      }
+    }
+    
+    // Fallback: copy to clipboard
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      toast.success('Link copied to clipboard!');
+      setTimeout(() => setCopied(false), 2000);
+      onShare?.();
+    } catch (err) {
+      toast.error('Failed to copy link');
+    }
+  }, [id, title, make, model, year, price, onShare]);
+
+  const handleQuickView = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    router.push(`/vehicle/${id}`);
+  }, [id, router]);
 
   return (
     <Card 
@@ -167,20 +234,22 @@ export default function EnhancedVehicleCard({
                 bg-white/90 hover:bg-white shadow-lg
                 ${isSaved ? 'text-red-600' : 'text-gray-700'}
                 group/heart
+                ${isSaving ? 'opacity-50 cursor-wait' : ''}
               `}
               onClick={handleSave}
+              disabled={isSaving}
               aria-label={isSaved ? 'Remove from favorites' : 'Add to favorites'}
               aria-pressed={isSaved}
             >
-              <Heart className={`h-5 w-5 transition-all duration-300 ${isSaved ? 'fill-current scale-110' : 'group-hover/heart:text-red-500 group-hover/heart:scale-110'}`} />
+              <Heart className={`h-5 w-5 transition-all duration-300 ${isSaved ? 'fill-current scale-110' : 'group-hover/heart:text-red-500 group-hover/heart:scale-110'} ${isSaving ? 'animate-pulse' : ''}`} />
             </Button>
             <Button
               variant="ghost"
-              className="w-10 h-10 p-0 rounded-full bg-white/90 hover:bg-white shadow-lg text-gray-700"
+              className={`w-10 h-10 p-0 rounded-full bg-white/90 hover:bg-white shadow-lg ${copied ? 'text-green-600' : 'text-gray-700'}`}
               onClick={handleShare}
               aria-label="Share vehicle"
             >
-              <Share2 className="h-5 w-5" />
+              {copied ? <Check className="h-5 w-5" /> : <Share2 className="h-5 w-5" />}
             </Button>
           </div>
 
@@ -190,10 +259,7 @@ export default function EnhancedVehicleCard({
               <Button
                 size="lg"
                 className="bg-white text-gray-900 hover:bg-gray-100"
-                onClick={(e) => {
-                  e.preventDefault();
-                  // Open quick view modal
-                }}
+                onClick={handleQuickView}
               >
                 <Eye className="mr-2 h-5 w-5" />
                 Quick View
