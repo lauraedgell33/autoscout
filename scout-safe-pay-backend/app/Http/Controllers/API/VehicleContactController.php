@@ -40,11 +40,16 @@ class VehicleContactController extends Controller
         }
 
         // Determine recipient (dealer or seller)
-        $recipient = $vehicle->dealer ? $vehicle->dealer->user : $vehicle->seller;
-
-        if (!$recipient) {
-            return response()->json(['message' => 'Seller contact not found'], 404);
+        $recipient = null;
+        
+        if ($vehicle->dealer && $vehicle->dealer->user) {
+            $recipient = $vehicle->dealer->user;
+        } elseif ($vehicle->seller) {
+            $recipient = $vehicle->seller;
         }
+
+        // If no recipient found, still save the inquiry but skip notification
+        $shouldNotify = $recipient !== null;
 
         try {
             // Save inquiry to database
@@ -61,17 +66,32 @@ class VehicleContactController extends Controller
 
             Log::info('Inquiry saved', ['inquiry_id' => $inquiry->id, 'vehicle_id' => $vehicle->id]);
 
-            // Send notification to seller
-            $recipient->notify(new VehicleInquiryNotification([
-                'inquiry_id' => $inquiry->id,
-                'vehicle_id' => $vehicle->id,
-                'vehicle_title' => "{$vehicle->make} {$vehicle->model} ({$vehicle->year})",
-                'from_name' => $request->name,
-                'from_email' => $request->email,
-                'from_phone' => $request->phone,
-                'message' => $request->message,
-                'request_type' => $request->requestType,
-            ]));
+            // Try to send notification, but don't fail the request if it fails
+            if ($shouldNotify && $recipient) {
+                try {
+                    $recipient->notify(new VehicleInquiryNotification([
+                        'inquiry_id' => $inquiry->id,
+                        'vehicle_id' => $vehicle->id,
+                        'vehicle_title' => "{$vehicle->make} {$vehicle->model} ({$vehicle->year})",
+                        'from_name' => $request->name,
+                        'from_email' => $request->email,
+                        'from_phone' => $request->phone ?? 'Not provided',
+                        'message' => $request->message,
+                        'request_type' => $request->requestType,
+                    ]));
+                } catch (\Exception $notificationError) {
+                    // Log notification failure but don't fail the request
+                    Log::warning('Failed to send inquiry notification: ' . $notificationError->getMessage(), [
+                        'inquiry_id' => $inquiry->id,
+                        'vehicle_id' => $vehicleId,
+                    ]);
+                }
+            } else {
+                Log::info('Inquiry saved without notification - no recipient found', [
+                    'inquiry_id' => $inquiry->id,
+                    'vehicle_id' => $vehicleId,
+                ]);
+            }
 
             return response()->json([
                 'message' => 'Your inquiry has been sent successfully',
@@ -80,9 +100,10 @@ class VehicleContactController extends Controller
             ], 200);
 
         } catch (\Exception $e) {
-            Log::error('Failed to send vehicle inquiry: ' . $e->getMessage(), [
+            Log::error('Failed to save vehicle inquiry: ' . $e->getMessage(), [
                 'vehicle_id' => $vehicleId,
                 'email' => $request->email,
+                'trace' => $e->getTraceAsString(),
             ]);
             
             return response()->json([
