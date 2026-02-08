@@ -95,13 +95,17 @@ export default function CurrencySwitcher() {
         <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
           {/* Search input */}
           <div className="p-2 border-b border-gray-200 dark:border-gray-700">
+            <label htmlFor="currency-search" className="sr-only">Search currency</label>
             <input
+              id="currency-search"
+              name="currency-search"
               type="text"
               placeholder="Search currency..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
               autoFocus
+              autoComplete="off"
             />
           </div>
           

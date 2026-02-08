@@ -51,7 +51,7 @@ export const LoginForm: React.FC = () => {
     >
       {/* Email Field */}
       <div className="space-y-2">
-        <label className="block text-sm font-semibold text-gray-900">
+        <label htmlFor="login-email" className="block text-sm font-semibold text-gray-900">
           Email Address
         </label>
         <div className="relative">
@@ -61,7 +61,9 @@ export const LoginForm: React.FC = () => {
             </svg>
           </div>
           <input
+            id="login-email"
             type="email"
+            autoComplete="email"
             {...register('email')}
             className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
             placeholder="your@email.com"
@@ -79,7 +81,7 @@ export const LoginForm: React.FC = () => {
 
       {/* Password Field */}
       <div className="space-y-2">
-        <label className="block text-sm font-semibold text-gray-900">
+        <label htmlFor="login-password" className="block text-sm font-semibold text-gray-900">
           Password
         </label>
         <div className="relative">
@@ -89,7 +91,9 @@ export const LoginForm: React.FC = () => {
             </svg>
           </div>
           <input
+            id="login-password"
             type="password"
+            autoComplete="current-password"
             {...register('password')}
             className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
             placeholder="••••••••"

@@ -243,13 +243,17 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
       {/* Quick Search */}
       <div className="p-6 space-y-4">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <label htmlFor="vehicle-search" className="sr-only">Search vehicles</label>
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" aria-hidden="true" />
           <Input
+            id="vehicle-search"
+            name="vehicle-search"
             type="text"
             placeholder="Search by make, model, or keyword..."
             value={filters.search || ''}
             onChange={(e) => handleFilterChange('search', e.target.value)}
             className="pl-12 h-12 text-base border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+            autoComplete="off"
           />
         </div>
 
@@ -284,10 +288,12 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
 
         {/* Make Selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="vehicle-make" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Make
           </label>
           <select
+            id="vehicle-make"
+            name="vehicle-make"
             value={filters.make || ''}
             onChange={(e) => handleFilterChange('make', e.target.value || undefined)}
             className="w-full h-12 px-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
@@ -321,10 +327,12 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
         {/* Model Selection */}
         {filters.make && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label htmlFor="vehicle-model" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Model
             </label>
             <select
+              id="vehicle-model"
+              name="vehicle-model"
               value={filters.model || ''}
               onChange={(e) => handleFilterChange('model', e.target.value || undefined)}
               className="w-full h-12 px-4 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
@@ -344,15 +352,17 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
           {/* Price Range */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                <Coins className="h-4 w-4" />
+              <label htmlFor="price-min" className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <Coins className="h-4 w-4" aria-hidden="true" />
                 Min Price ({currencyInfo?.symbol || currency})
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium" aria-hidden="true">
                   {currencyInfo?.symbol || currency}
                 </span>
                 <Input
+                  id="price-min"
+                  name="price-min"
                   type="number"
                   placeholder="5,000"
                   value={filters.priceMin || ''}
@@ -362,15 +372,17 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
               </div>
             </div>
             <div>
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                <Coins className="h-4 w-4" />
+              <label htmlFor="price-max" className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <Coins className="h-4 w-4" aria-hidden="true" />
                 Max Price ({currencyInfo?.symbol || currency})
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium" aria-hidden="true">
                   {currencyInfo?.symbol || currency}
                 </span>
                 <Input
+                  id="price-max"
+                  name="price-max"
                   type="number"
                   placeholder="50,000"
                   value={filters.priceMax || ''}
@@ -384,11 +396,13 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
           {/* Year Range */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                <Calendar className="h-4 w-4" />
+              <label htmlFor="year-from" className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <Calendar className="h-4 w-4" aria-hidden="true" />
                 Year From
               </label>
               <Input
+                id="year-from"
+                name="year-from"
                 type="number"
                 placeholder="2015"
                 value={filters.yearFrom || ''}
@@ -397,11 +411,13 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
               />
             </div>
             <div>
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                <Calendar className="h-4 w-4" />
+              <label htmlFor="year-to" className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <Calendar className="h-4 w-4" aria-hidden="true" />
                 Year To
               </label>
               <Input
+                id="year-to"
+                name="year-to"
                 type="number"
                 placeholder={new Date().getFullYear().toString()}
                 value={filters.yearTo || ''}
@@ -414,11 +430,13 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
           {/* Mileage & Location */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                <Gauge className="h-4 w-4" />
+              <label htmlFor="mileage-max" className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <Gauge className="h-4 w-4" aria-hidden="true" />
                 Max Mileage (km)
               </label>
               <Input
+                id="mileage-max"
+                name="mileage-max"
                 type="number"
                 placeholder="100,000"
                 value={filters.mileageMax || ''}
@@ -427,11 +445,13 @@ export default function AdvancedFilters({ onApplyFilters, onReset, isLoading }: 
               />
             </div>
             <div>
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                <MapPin className="h-4 w-4" />
+              <label htmlFor="vehicle-location" className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <MapPin className="h-4 w-4" aria-hidden="true" />
                 Location
               </label>
               <Input
+                id="vehicle-location"
+                name="vehicle-location"
                 type="text"
                 placeholder="Berlin, Hamburg..."
                 value={filters.location || ''}
