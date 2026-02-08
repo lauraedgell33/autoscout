@@ -14,6 +14,7 @@ use Filament\Schemas\Components\Section as InfolistSection;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Tables\Actions\Action as TableAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -236,14 +237,14 @@ class InquiryResource extends Resource
                 TrashedFilter::make(),
             ])
             ->actions([
-                Action::make('markAsRead')
+                TableAction::make('markAsRead')
                     ->label('Mark Read')
                     ->icon('heroicon-o-eye')
                     ->color('info')
                     ->visible(fn ($record) => $record->status === 'new')
                     ->action(fn ($record) => $record->markAsRead()),
 
-                Action::make('markAsReplied')
+                TableAction::make('markAsReplied')
                     ->label('Mark Replied')
                     ->icon('heroicon-o-check')
                     ->color('success')
