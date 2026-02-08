@@ -43,11 +43,16 @@ export function getImageUrl(imagePath: string | null | undefined): string {
   }
   
   // Get backend URL from environment (same on server and client)
-  const backendUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api').replace('/api', '').trim();
+  // Ensure we have a valid fallback even if env var is empty string
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const backendUrl = (apiUrl && apiUrl.trim() !== '' ? apiUrl : 'https://adminautoscout.dev/api').replace('/api', '').trim();
+  
+  // Safety check - if backendUrl is still somehow empty, use fallback
+  const finalBackendUrl = backendUrl || 'https://adminautoscout.dev';
   
   // If path starts with /storage, prepend backend domain
   if (imagePath.startsWith('/storage/')) {
-    return `${backendUrl}${imagePath}`;
+    return `${finalBackendUrl}${imagePath}`;
   }
   
   // If absolute path but not /storage, return as is (for Next.js public folder)
@@ -56,5 +61,5 @@ export function getImageUrl(imagePath: string | null | undefined): string {
   }
   
   // Relative path - prepend storage URL (e.g., "vehicles/1/image.png")
-  return `${backendUrl}/storage/${imagePath}`;
+  return `${finalBackendUrl}/storage/${imagePath}`;
 }

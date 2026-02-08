@@ -11,7 +11,9 @@ class OptimizedAPIClient {
   private maxRetries = 3;
 
   constructor() {
-    const baseURL = process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api';
+    // Ensure we have a valid fallback even if env var is empty string
+    const envApiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const baseURL = (envApiUrl && envApiUrl.trim() !== '') ? envApiUrl : 'https://adminautoscout.dev/api';
     
     this.client = axios.create({
       baseURL,
