@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter } from '@/i18n/routing'
 import { useAuth } from '@/contexts/AuthContext'
+import { getApiUrl } from '@/lib/utils'
 
 export default function AdminRedirectPage() {
   const router = useRouter()
@@ -19,8 +20,7 @@ export default function AdminRedirectPage() {
         router.push(dashboardPath)
       } else {
         // Is admin - redirect to Filament admin panel
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8002/api'
-        const adminUrl = apiUrl.replace('/api', '/admin')
+        const adminUrl = getApiUrl().replace('/api', '/admin')
         window.location.href = adminUrl
       }
     }

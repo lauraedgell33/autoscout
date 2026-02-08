@@ -6,7 +6,7 @@ import { CreditCard, Building2, ArrowRight, Lock } from 'lucide-react';
 import { transactionService } from '@/lib/api/transactions';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { getImageUrl } from '@/lib/utils';
+import { getImageUrl, getApiUrl } from '@/lib/utils';
 
 export default function PaymentInitiatePage() {
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function PaymentInitiatePage() {
   const fetchVehicle = async (id: string) => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vehicles/${id}`, {
+      const response = await fetch(`${getApiUrl()}/vehicles/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();

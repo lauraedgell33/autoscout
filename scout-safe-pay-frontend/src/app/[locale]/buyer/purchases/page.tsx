@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { Package, Eye, Download, FileText } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { getImageUrl } from '@/lib/utils';
+import { getImageUrl, getApiUrl } from '@/lib/utils';
 
 interface Purchase {
   id: string;
@@ -43,7 +43,7 @@ export default function BuyerPurchasesPage() {
   const fetchPurchases = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transactions`, {
+      const response = await fetch(`${getApiUrl()}/transactions`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Accept': 'application/json',

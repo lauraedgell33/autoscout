@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useSearchParams, useParams } from 'next/navigation';
 import { useRouter, Link } from '@/i18n/routing';
+import { getApiUrl } from '@/lib/utils';
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function ResetPasswordPage() {
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/password/reset`, {
+      const response = await fetch(`${getApiUrl()}/password/reset`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

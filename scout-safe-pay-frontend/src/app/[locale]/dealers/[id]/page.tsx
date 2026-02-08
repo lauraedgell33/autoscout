@@ -6,7 +6,7 @@ import { Link } from '@/i18n/routing';
 import { Package, MapPin, Star, Phone, Mail, ArrowLeft } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { getImageUrl } from '@/lib/utils';
+import { getImageUrl, getApiUrl } from '@/lib/utils';
 
 interface Dealer {
   id: number;
@@ -32,7 +32,7 @@ export default function DealerPage() {
 
   const fetchDealer = useCallback(async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dealers/${dealerId}`);
+      const response = await fetch(`${getApiUrl()}/dealers/${dealerId}`);
       const data = await response.json();
       setDealer(data);
     } catch (error) {
@@ -44,7 +44,7 @@ export default function DealerPage() {
 
   const fetchVehicles = useCallback(async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dealers/${dealerId}/vehicles`);
+      const response = await fetch(`${getApiUrl()}/dealers/${dealerId}/vehicles`);
       const data = await response.json();
       setVehicles(data.data || []);
     } catch (error) {

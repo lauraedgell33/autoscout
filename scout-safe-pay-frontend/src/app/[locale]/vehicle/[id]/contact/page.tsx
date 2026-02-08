@@ -6,7 +6,7 @@ import { ArrowLeft, Car } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { VehicleContactForm } from '@/components/forms/VehicleContactForm';
-import { getImageUrl } from '@/lib/utils';
+import { getImageUrl, getApiUrl } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 
 interface Vehicle {
@@ -36,8 +36,8 @@ export default function VehicleContactPage() {
   useEffect(() => {
     const fetchVehicle = async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/vehicles/${vehicleId}`
+      const response = await fetch(
+          `${getApiUrl()}/vehicles/${vehicleId}`
         );
 
         if (!response.ok) {

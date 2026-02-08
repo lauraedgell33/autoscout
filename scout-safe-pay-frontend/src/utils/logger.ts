@@ -3,6 +3,8 @@
  * Replaces console.log with proper logging that can be disabled in production
  */
 
+import { getApiUrl } from '@/lib/utils'
+
 type LogLevel = 'debug' | 'info' | 'warn' | 'error'
 
 interface LoggerConfig {
@@ -74,7 +76,7 @@ class Logger {
     if (process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_ENABLE_ERROR_TRACKING === 'true') {
       // Send error to backend for centralized logging (FREE)
       if (typeof window !== 'undefined') {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/errors`, {
+        fetch(`${getApiUrl()}/api/errors`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

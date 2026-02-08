@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { getApiUrl } from '@/lib/utils';
 
 export default function SellerProfilePage() {
   const params = useParams<{ locale: string }>();
@@ -18,7 +19,7 @@ export default function SellerProfilePage() {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile`, {
+      const response = await fetch(`${getApiUrl()}/user/profile`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

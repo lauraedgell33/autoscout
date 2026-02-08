@@ -5,6 +5,7 @@ import { UserPlus, Mail, Shield, Trash2, Users } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { getApiUrl } from '@/lib/utils';
 
 interface TeamMember {
   id: number;
@@ -28,7 +29,7 @@ export default function DealerTeamPage() {
   const fetchTeam = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dealer/team`, {
+      const response = await fetch(`${getApiUrl()}/dealer/team`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();
@@ -44,7 +45,7 @@ export default function DealerTeamPage() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('auth_token');
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dealer/team/invite`, {
+      await fetch(`${getApiUrl()}/dealer/team/invite`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -64,7 +65,7 @@ export default function DealerTeamPage() {
     if (!confirm('Remove this team member?')) return;
     try {
       const token = localStorage.getItem('auth_token');
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dealer/team/${id}`, {
+      await fetch(`${getApiUrl()}/dealer/team/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });

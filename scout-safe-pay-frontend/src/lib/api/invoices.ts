@@ -1,4 +1,5 @@
 import apiClient from './client'
+import { getApiUrl } from '@/lib/utils'
 
 export const invoiceService = {
   async generate(transactionId: number) {
@@ -24,7 +25,7 @@ export const invoiceService = {
 
   getPreviewUrl(transactionId: number) {
     const token = localStorage.getItem('auth_token')
-    return `${process.env.NEXT_PUBLIC_API_URL}/transactions/${transactionId}/invoice/preview?token=${token}`
+    return `${getApiUrl()}/transactions/${transactionId}/invoice/preview?token=${token}`
   },
 
   async list() {

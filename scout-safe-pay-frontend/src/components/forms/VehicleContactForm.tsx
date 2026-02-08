@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { getApiUrl } from '@/lib/utils';
 
 interface VehicleContactFormProps {
   vehicleId: string;
@@ -63,7 +64,7 @@ export default function VehicleContactForm({
       } else {
         // Updated API call to match backend route
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/vehicles/${vehicleId}/contact`,
+          `${getApiUrl()}/vehicles/${vehicleId}/contact`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

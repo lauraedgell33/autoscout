@@ -4,6 +4,7 @@
  */
 
 import DOMPurify from 'isomorphic-dompurify'
+import { getApiUrl } from '@/lib/utils'
 
 /**
  * Sanitize HTML to prevent XSS attacks
@@ -246,7 +247,7 @@ export function reportCspViolation(violation: SecurityPolicyViolationEvent): voi
   // Send to backend security logging (FREE alternative)
   if (process.env.NODE_ENV === 'production') {
     // Log CSP violations to backend for security monitoring
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/security/violations`, {
+    fetch(`${getApiUrl()}/api/security/violations`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

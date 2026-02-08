@@ -6,6 +6,7 @@ import { CreditCard, Plus, Trash2, Star } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { getApiUrl } from '@/lib/utils';
 
 interface PaymentMethod {
   id: number;
@@ -31,7 +32,7 @@ export default function BuyerPaymentMethodsPage() {
   const fetchPaymentMethods = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payment-methods`, {
+      const response = await fetch(`${getApiUrl()}/payment-methods`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -48,7 +49,7 @@ export default function BuyerPaymentMethodsPage() {
   const setDefaultPaymentMethod = async (id: number) => {
     try {
       const token = localStorage.getItem('auth_token');
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payment-methods/${id}/default`, {
+      await fetch(`${getApiUrl()}/payment-methods/${id}/default`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -65,7 +66,7 @@ export default function BuyerPaymentMethodsPage() {
     
     try {
       const token = localStorage.getItem('auth_token');
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payment-methods/${id}`, {
+      await fetch(`${getApiUrl()}/payment-methods/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

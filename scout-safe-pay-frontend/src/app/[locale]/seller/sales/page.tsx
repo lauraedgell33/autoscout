@@ -7,7 +7,7 @@ import { Search, Filter, Eye, Package } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { getImageUrl } from '@/lib/utils';
+import { getImageUrl, getApiUrl } from '@/lib/utils';
 
 export default function SellerSalesPage() {
   const params = useParams<{ locale: string }>();
@@ -24,7 +24,7 @@ export default function SellerSalesPage() {
       const urlParams = new URLSearchParams();
       if (statusFilter !== 'all') urlParams.append('status', statusFilter);
       
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seller/sales?${urlParams}`, {
+      const response = await fetch(`${getApiUrl()}/seller/sales?${urlParams}`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();

@@ -5,6 +5,7 @@ import { Plus, Trash2, CheckCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { getApiUrl } from '@/lib/utils';
 
 interface BankAccount {
   id: number;
@@ -33,7 +34,7 @@ export default function SellerBankAccountsPage() {
   const fetchAccounts = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-accounts`, {
+      const response = await fetch(`${getApiUrl()}/bank-accounts`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();
@@ -49,7 +50,7 @@ export default function SellerBankAccountsPage() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('auth_token');
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-accounts`, {
+      await fetch(`${getApiUrl()}/bank-accounts`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -69,7 +70,7 @@ export default function SellerBankAccountsPage() {
     if (!confirm('Delete this bank account?')) return;
     try {
       const token = localStorage.getItem('auth_token');
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-accounts/${id}`, {
+      await fetch(`${getApiUrl()}/bank-accounts/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -82,7 +83,7 @@ export default function SellerBankAccountsPage() {
   const setDefaultAccount = async (id: number) => {
     try {
       const token = localStorage.getItem('auth_token');
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-accounts/${id}/default`, {
+      await fetch(`${getApiUrl()}/bank-accounts/${id}/default`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
       });

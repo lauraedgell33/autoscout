@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { getApiUrl } from '@/lib/utils';
 
 export default function ForgotPasswordPage() {
   const params = useParams<{ locale: string }>();
@@ -19,7 +20,7 @@ export default function ForgotPasswordPage() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/password/email`, {
+      const response = await fetch(`${getApiUrl()}/password/email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

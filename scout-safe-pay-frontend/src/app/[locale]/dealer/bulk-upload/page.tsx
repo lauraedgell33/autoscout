@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Upload, Download, CheckCircle, AlertCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { getApiUrl } from '@/lib/utils';
 
 export default function DealerBulkUploadPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -21,7 +22,7 @@ export default function DealerBulkUploadPage() {
       const formData = new FormData();
       formData.append('file', file);
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dealer/bulk-upload`, {
+      const response = await fetch(`${getApiUrl()}/dealer/bulk-upload`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData,

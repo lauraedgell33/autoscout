@@ -5,6 +5,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+/**
+ * Get API URL with proper fallback for empty/undefined env vars
+ */
+export function getApiUrl(): string {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  return (apiUrl && apiUrl.trim() !== '') ? apiUrl : 'https://adminautoscout.dev/api';
+}
+
 export function formatCurrency(amount: number, currency: string = 'EUR'): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',

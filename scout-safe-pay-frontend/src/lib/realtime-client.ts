@@ -1,6 +1,7 @@
 // Real-time WebSocket client for live updates, messaging, and presence
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { useAuthStore } from '@/store/auth-store';
+import { getApiUrl } from '@/lib/utils';
 
 type EventCallback = (data: any) => void;
 type ConnectionCallback = (status: 'connected' | 'disconnected' | 'error') => void;
@@ -34,7 +35,7 @@ class RealtimeClient {
   }
 
   private getWebSocketURL(): string {
-    const baseURL = process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev';
+    const baseURL = getApiUrl();
     const wsProtocol = baseURL.startsWith('https') ? 'wss' : 'ws';
     const wsPath = baseURL.replace(/^https?:\/\//, '').replace(/\/api$/, '');
     return `${wsProtocol}://${wsPath}`;

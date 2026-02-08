@@ -1,5 +1,6 @@
 // Email notification templates for transactional emails
 // These will be used by the backend via API
+import { getApiUrl } from '@/lib/utils';
 
 export const emailTemplates = {
   /**
@@ -138,7 +139,7 @@ export async function sendEmailNotification(
 ) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/notifications/send-email`,
+      `${getApiUrl()}/notifications/send-email`,
       {
         method: 'POST',
         headers: {
@@ -178,7 +179,7 @@ export async function sendBatchEmails(
 ) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/notifications/send-batch-emails`,
+      `${getApiUrl()}/notifications/send-batch-emails`,
       {
         method: 'POST',
         headers: {

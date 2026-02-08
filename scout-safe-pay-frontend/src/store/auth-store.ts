@@ -41,7 +41,9 @@ interface RegisterData {
   phone?: string;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://adminautoscout.dev/api';
+import { getApiUrl } from '@/lib/utils';
+
+const API_URL = getApiUrl();
 
 export const useAuthStore = create<AuthState>()(
   persist(

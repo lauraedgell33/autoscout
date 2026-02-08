@@ -7,6 +7,7 @@ import { AlertCircle, Plus, MessageCircle, Eye } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import { getApiUrl } from '@/lib/utils';
 
 interface Dispute {
   id: number;
@@ -34,7 +35,7 @@ function DisputesPageContent() {
   const fetchDisputes = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/disputes`, {
+      const response = await fetch(`${getApiUrl()}/disputes`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();
