@@ -99,7 +99,7 @@ export default function EnhancedVehicleCard({
     
     setIsSaving(true);
     try {
-      const apiClient = (await import('@/lib/api-client')).default;
+      const { apiClient } = await import('@/lib/api-client');
       
       if (isSaved) {
         await apiClient.delete(`/favorites/${id}`);
